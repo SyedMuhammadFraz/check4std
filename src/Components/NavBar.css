@@ -35,8 +35,9 @@ nav ul li a{
     text-decoration: none;
     padding: 10px;
     border-radius: 20px;
+    cursor: pointer;
 }
-nav ul li:nth-child(2) a:hover{
+nav ul li:nth-child(3) a:hover{
     background-color: var(--Neutral-Grey-blue);
 }
 

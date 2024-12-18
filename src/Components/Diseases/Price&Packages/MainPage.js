@@ -135,9 +135,30 @@ function MainPage() {
           </div>
         </div>
       </section>
-      <h1 className="center">10 Test Panel Pricing</h1>
       <section className="section2">
-        
+      <h1 className="center">10 Test Panel Pricing</h1>
+        <div className="align">
+          <div className="text">
+            <h4>Doctors recommend our full 10 Test Panel</h4>
+            <p>
+              Our 10-Test Panel is a comprehensive STD testing package that
+              tests for the most common bacterial and viral STDs in the United
+              States. This inclusive STD testing panel has been carefully
+              designed by our physicians to provide you with complete peace of
+              mind.
+            </p>
+            <br />
+            <p>
+              If you are concerned about recent exposure, we recommend adding
+              our HIV RNA Early Detection Test. Our HIV RNA Early Detection Test
+              can detect an HIV infection as early as 6 days after exposure and
+              is conclusive if taken 9-11 days post exposure. Our standard HIV
+              test is a 4th Generation HIV 1 & 2 Antibody/Antigen test that can
+              detect HIV as early as 3 weeks after exposure.
+            </p>
+          </div>
+          <img src="./Doctor.png" />
+        </div>
       </section>
     </section>
   );

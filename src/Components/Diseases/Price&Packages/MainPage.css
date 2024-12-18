@@ -39,3 +39,25 @@
     width: 60px !important;
     height: 60px !important;
 }
+.section2{
+    background-color: white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.align{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80vw;
+}
+
+.text{
+    display: flex;
+    flex-direction: column;
+}
+
+.text h4{
+    font-weight: bold;
+}

@@ -5,7 +5,7 @@
 *{
   margin: 0;
   padding: 0;
-  font-family:  "PT Sans", sans-serif;
+  font-family:  "Trip Sans", sans-serif;
   overflow-x: hidden;
 }
 
@@ -22,7 +22,7 @@
   --Neutral-Grey-blue: #abbed1;
   --Neutral-Silver: #f5f7fa;
   --Neutral-White: #ffffff;
-  --Primary: #fc3887;
+  --Primary: #caedf4;
   --Primary-Active: #d03070;
   --Secondary: #263238;
   --Info: #2194f3;

@@ -8,6 +8,10 @@ function NavBar() {
     navigate("/diseases");
   };
 
+  const onPriceClick = ()=>{
+    navigate("/price-packages");
+  }
+
   return (
     <nav>
       <div id="NavBar">
@@ -20,9 +24,11 @@ function NavBar() {
             <a>Check4std</a>
           </li>
           <li>
+            <a>Home</a>
+            <a>Find a Lab</a>
             <a>How it works</a>
-            <a onClick={onDiseasesClick}>Diseases & Symptoms</a>
-            <a>Get Tested</a>
+            <a onClick={onPriceClick}>Price and Packages</a>
+            <a onClick={onDiseasesClick}>STDs & Symptoms</a>
           </li>
           <li>
             <a>Sign In</a>

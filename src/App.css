@@ -14,7 +14,8 @@
 }
 
 :root {
-  --Neutral-Black: #263238;
+  --Neutral-Black: #333333;
+  --Accent-Color: #F9D71C;
   --Neutral-D_Grey: #4d4d4d;
   --Neutral-Grey: #717171;
   --Neutral-L_Grey: #89939e;
@@ -60,4 +61,10 @@
 
 .button1:hover{
   background-color:#33424a;
+}
+
+.center{
+  text-align: center;
+  font-weight: 700;
+  font-size:28pt;
 }

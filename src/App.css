@@ -52,14 +52,48 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 9.745px 22.274px;
-  border-radius: 20px;
+  padding: 5px 15px;
+  border-radius: 15px;
   border: none;
   font-weight: 700;
   cursor: pointer;
 }
 
+.button2{
+  background-color: var(--Neutral-Black);
+  color: var(--Neutral-White);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9.745px 22.274px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.button3{
+  background-color: var(--Accent-Color);
+  color: var(--Neutral-White);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9.745px 22.274px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.button3:hover{
+  background-color: #f9c21c;
+}
+
 .button1:hover{
+  background-color:#33424a;
+}
+
+.button2:hover{
   background-color:#33424a;
 }
 

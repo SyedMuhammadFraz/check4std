@@ -1,0 +1,77 @@
+.home{
+    width: 100vw;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+}
+
+.home1{
+    background-color: var(--Neutral-Silver);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.text h1{
+    font-weight: bold;
+    margin-bottom: 5vh;
+}
+
+.text button{
+    margin-top: 5vh;
+}
+
+.width{
+    width: 30vw;
+}
+
+.home1 img{
+        filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.5));
+}
+
+.home2{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5vh 0;
+    background-color: white;
+    flex-direction: column;
+}
+
+.home2section1 {
+    max-width: 80vw; /* Ensures it doesn’t overflow */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box; /* Ensures padding doesn’t cause overflow */
+    gap: 10px;
+}
+
+.home2section1 img {
+    max-width: 100%; /* Prevents overflow */
+    height: auto; /* Maintains aspect ratio */
+    object-fit: contain; /* Ensures the image fits without cutting */
+}
+
+
+
+.home2 h1{
+    font-weight: bold;
+    margin-bottom: 5vh;
+    text-align: center;
+}
+
+.home2section2{
+    width: 80vw;
+}
+
+.home svg{
+    fill: var(--Neutral-Black) !important;
+}
+
+@media (max-width: 1200px) {
+    .home1 img{
+        display: none;
+    }
+  }

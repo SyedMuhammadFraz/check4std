@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import "./Diseases.css";
 import "./SideBar.css";
 import Chlamydia from "./Chlamydia/Chlamydia";
-import Gonorrhea from "./Gonorrhea";
+import Gonorrhea from "./Gonorrhea/Gonorrhea";
+import HepatitisA from "./Hepatitis A/Hepatitis A";
+import HepatitisB from "./Hepatitis B/Hepatitis B";
+import HepatitisC from "./Hepatitis C/Hepatitis C";
+import GenitalHerpes from "./Genital Herpes/Genital Herpes";
+import OralHerpes from "./Oral Herpes/Oral Herpes";
+import HIV from "./HIV/HIV";
+import Syphilis from "./Syphilis/Syphilis";
 
 function Diseases() {
   const headings = [
@@ -95,8 +102,15 @@ function Diseases() {
   ];
 
   const [openDropdown, setOpenDropdown] = useState(null);
-  const [Chlamydiaa, setChlamydia] = useState(false);
-  const [Gonorrheaa, setGonorrhea] = useState(false);
+  const [isChlamydiaActive, setIsChlamydiaActive] = useState(false);
+  const [isGonorrheaActive, setIsGonorrheaActive] = useState(false);
+  const [isHepatitisAActive, setIsHepatitisAActive] = useState(false);
+  const [isHIVActive, setIsHIVActive] = useState(false);
+  const [isHepatitisBActive, setIsHepatitisBActive] = useState(false);
+  const [isHepatitisCActive, setIsHepatitisCActive] = useState(false);
+  const [isGenitalHerpesActive, setIsGenitalHerpesActive] = useState(false);
+  const [isOralHerpesActive, setIsOralHerpesActive] = useState(false);
+  const [isSyphilisActive, setIsSyphilisActive] = useState(false);
 
   const toggleDropdown = (id) => {
     setOpenDropdown(openDropdown === id ? null : id);
@@ -104,11 +118,114 @@ function Diseases() {
 
   const handleSubHeadingClick = (heading) => {
     if (heading === "Chlamydia") {
-      setChlamydia(true);
-      setGonorrhea(false);
+      setIsChlamydiaActive(true);
+      setIsGonorrheaActive(false);
+      setIsHepatitisAActive(false);
+      setIsHepatitisBActive(false);
+      setIsHepatitisCActive(false);
+      setIsGenitalHerpesActive(false);
+      setIsOralHerpesActive(false);
+      setIsHIVActive(false);
+      setIsSyphilisActive(false);
+
     } else if (heading === "Gonorrhea") {
-      setGonorrhea(true);
-      setChlamydia(false);
+      setIsChlamydiaActive(false);
+      setIsGonorrheaActive(true);
+      setIsHepatitisAActive(false);
+      setIsHepatitisBActive(false);
+      setIsHepatitisCActive(false);
+      setIsGenitalHerpesActive(false);
+      setIsOralHerpesActive(false);
+      setIsHIVActive(false);
+      setIsSyphilisActive(false);
+    }
+    else if (heading === "Hepatitis A") {
+      setIsChlamydiaActive(false);
+      setIsGonorrheaActive(false);
+      setIsHepatitisAActive(true);
+      setIsHepatitisBActive(false);
+      setIsHepatitisCActive(false);
+      setIsGenitalHerpesActive(false);
+      setIsOralHerpesActive(false);
+      setIsHIVActive(false);
+      setIsSyphilisActive(false);
+    }
+    else if (heading === "Hepatitis B") {
+      setIsChlamydiaActive(false);
+      setIsGonorrheaActive(false);
+      setIsHepatitisAActive(false);
+      setIsHepatitisBActive(true);
+      setIsHepatitisCActive(false);
+      setIsGenitalHerpesActive(false);
+      setIsOralHerpesActive(false);
+      setIsHIVActive(false);
+      setIsSyphilisActive(false);
+    }
+    else if (heading === "Hepatitis B") {
+      setIsChlamydiaActive(false);
+      setIsGonorrheaActive(false);
+      setIsHepatitisAActive(false);
+      setIsHepatitisBActive(true);
+      setIsHepatitisCActive(false);
+      setIsGenitalHerpesActive(false);
+      setIsOralHerpesActive(false);
+      setIsHIVActive(false);
+      setIsSyphilisActive(false);
+    }
+    else if (heading === "Hepatitis C") {
+      setIsChlamydiaActive(false);
+      setIsGonorrheaActive(false);
+      setIsHepatitisAActive(false);
+      setIsHepatitisBActive(false);
+      setIsHepatitisCActive(true);
+      setIsGenitalHerpesActive(false);
+      setIsOralHerpesActive(false);
+      setIsHIVActive(false);
+      setIsSyphilisActive(false);
+    }
+    else if (heading === "Genital Herpes") {
+      setIsChlamydiaActive(false);
+      setIsGonorrheaActive(false);
+      setIsHepatitisAActive(false);
+      setIsHepatitisBActive(false);
+      setIsHepatitisCActive(false);
+      setIsGenitalHerpesActive(true);
+      setIsOralHerpesActive(false);
+      setIsHIVActive(false);
+      setIsSyphilisActive(false);
+    }
+    else if (heading === "Oral Herpes") {
+      setIsChlamydiaActive(false);
+      setIsGonorrheaActive(false);
+      setIsHepatitisAActive(false);
+      setIsHepatitisBActive(false);
+      setIsHepatitisCActive(false);
+      setIsGenitalHerpesActive(false);
+      setIsOralHerpesActive(true);
+      setIsHIVActive(false);
+      setIsSyphilisActive(false);
+    }
+    else if (heading === "HIV") {
+      setIsChlamydiaActive(false);
+      setIsGonorrheaActive(false);
+      setIsHepatitisAActive(false);
+      setIsHepatitisBActive(false);
+      setIsHepatitisCActive(false);
+      setIsGenitalHerpesActive(false);
+      setIsOralHerpesActive(false);
+      setIsHIVActive(true);
+      setIsSyphilisActive(false);
+    }
+    else if (heading === "Syphilis") {
+      setIsChlamydiaActive(false);
+      setIsGonorrheaActive(false);
+      setIsHepatitisAActive(false);
+      setIsHepatitisBActive(false);
+      setIsHepatitisCActive(false);
+      setIsGenitalHerpesActive(false);
+      setIsOralHerpesActive(true);
+      setIsHIVActive(false);
+      setIsSyphilisActive(true);
     }
   };
 
@@ -150,8 +267,15 @@ function Diseases() {
           </div>
         </div>
         <div className="Article">
-          {Chlamydiaa && <Chlamydia />}
-          {Gonorrheaa && <Gonorrhea />}
+          {isChlamydiaActive && <Chlamydia />}
+          {isGonorrheaActive && <Gonorrhea />}
+          {isHepatitisAActive && <HepatitisA />}
+          {isHepatitisBActive && <HepatitisB />}
+          {isHepatitisCActive && <HepatitisC />}
+          {isGenitalHerpesActive && <GenitalHerpes />}
+          {isOralHerpesActive && <OralHerpes />}
+          {isHIVActive && <HIV />}
+          {isSyphilisActive && <Syphilis />}
         </div>
       </div>
     </section>

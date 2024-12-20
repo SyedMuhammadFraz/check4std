@@ -12,11 +12,16 @@ function NavBar() {
     navigate("/price-packages");
   }
 
+  const onHomeClick = () =>
+  {
+    navigate("/");
+  }
+
   return (
     <nav>
       <div id="NavBar">
         <ul>
-          <li>
+          <li onClick={onHomeClick}>
             <img
               src="https://img.freepik.com/free-vector/flat-medical-symbol_23-2149496593.jpg"
               alt="404"
@@ -24,7 +29,7 @@ function NavBar() {
             <a>Check4std</a>
           </li>
           <li>
-            <a>Home</a>
+            <a onClick={onHomeClick}>Home</a>
             <a>Find a Lab</a>
             <a>How it works</a>
             <a onClick={onPriceClick}>Price and Packages</a>

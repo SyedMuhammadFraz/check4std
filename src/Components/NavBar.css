@@ -1,12 +1,14 @@
 nav{ 
-    position: relative;
+    position: fixed;
     top: 0;
     background-color: var(--Neutral-Silver);
     min-width: 100vw;
-    min-height: 10vh;
+    padding : 10px 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-bottom: 1px solid var(--Neutral-Black);
+    z-index: 999;
 }
 
 nav ul{
@@ -33,8 +35,8 @@ nav ul li img{
 nav ul li a{
     color: var( --Neutral-Black);
     text-decoration: none;
-    padding: 10px;
-    border-radius: 20px;
+    padding: 5px 15px;
+    border-radius: 15px;
     cursor: pointer;
 }
 nav ul li:nth-child(3) a:hover{

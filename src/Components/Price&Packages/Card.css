@@ -1,0 +1,121 @@
+.cards {
+  display: flex;
+  align-items: flex-start; /* Align cards at the top */
+  justify-content: space-between;
+  gap: 10px; /* Space between cards */
+}
+
+.card {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  justify-content: space-between; /* Space out children: top, middle, bottom */
+  align-items: center; /* Center align horizontally */
+  width: 48%; /* Adjust width for two cards per row with gap */
+  border: 2px solid #f9d71c;
+  background-color: var(--Neutral-Silver);
+  height: 250px; /* Set a fixed height for uniformity */
+  border-radius: 15px;
+  padding: 10px; /* Add some inner padding */
+  box-sizing: border-box; /* Include padding in the height/width */
+}
+
+.card-header {
+  border: none;
+  background-color: var(--Neutral-Silver);
+  font-weight: bolder;
+  font-size: 1.5rem; /* Relative unit */
+  text-align: center;
+}
+
+.italic {
+  font-style: italic;
+  font-size: 1rem;
+}
+
+.card-price {
+  color: #809c58;
+  font-weight: bold;
+  text-align: center;
+  margin: auto 0;
+  font-size: 1.2rem; /* Relative unit for responsiveness */
+}
+
+.card1{
+    width: 100%;
+    border-radius: 15px;
+    background-color: white;
+    margin-bottom:10px ;
+}
+
+.card1 .Dform{
+    width: 90%;
+}
+.card1-header{
+    border: none;
+    font-weight: bolder;
+    font-size: 1.5rem; /* Relative unit */
+    text-align: center;
+    padding: 10px 0;
+}
+
+.card1-content{
+    text-align: center;
+    padding: 10px;
+}
+
+.card1 label:hover{
+    background-color: var(--Neutral-Silver);
+
+}
+
+.card1-label{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}
+
+/* Media Queries for Smaller Screens */
+@media (max-width: 768px) {
+  .card-header {
+    font-size: 1.2rem; /* Slightly smaller for medium screens */
+  }
+
+  .card-price {
+    font-size: 1rem; /* Adjust size for medium screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .card-header {
+    font-size: 1rem; /* Smaller font for small screens */
+  }
+
+  .card-price {
+    font-size: 0.9rem; /* Adjust size for small screens */
+  }
+}
+
+.card-button {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.card-button button {
+  width: 80%;
+}
+
+@media (max-width: 768px) {
+  .cards {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  .card {
+    width: 80%;
+  }
+}

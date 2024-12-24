@@ -1,12 +1,13 @@
 import React from "react";
 import "./MainPage.css";
+import "./Card.css";
 
 function MainPage() {
   return (
     <section className="MainPage">
       <h1 className="center">STD Test Prices & Packages</h1>
       <hr />
-      <section className="section1">
+      <section className="MainPagesection1">
         <h1>Our Services</h1>
         <div className="services">
           <div className="row">
@@ -135,8 +136,8 @@ function MainPage() {
           </div>
         </div>
       </section>
-      <section className="section2">
-      <h1 className="center">10 Test Panel Pricing</h1>
+      <section className="MainPagesection2">
+        <h1 className="center">10 Test Panel Pricing</h1>
         <div className="align">
           <div className="text">
             <h4>Doctors recommend our full 10 Test Panel</h4>
@@ -156,8 +157,464 @@ function MainPage() {
               test is a 4th Generation HIV 1 & 2 Antibody/Antigen test that can
               detect HIV as early as 3 weeks after exposure.
             </p>
+            <div className="Testss">
+              <div className="tests">
+                <div className="test">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="50px"
+                      height="50px"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill="#36ef3c"
+                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
+                      />
+                    </svg>
+                  </span>
+                  <p>
+                    {" "}
+                    <strong>HIV Type 1</strong>
+                  </p>
+                </div>
+                <div className="test">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="50px"
+                      height="50px"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill="#36ef3c"
+                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
+                      />
+                    </svg>
+                  </span>
+                  <p>
+                    {" "}
+                    <strong>HIV Type 2</strong>
+                  </p>
+                </div>
+                <div className="test">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="50px"
+                      height="50px"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill="#36ef3c"
+                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
+                      />
+                    </svg>
+                  </span>
+                  <p>
+                    {" "}
+                    <strong>Herpes 1</strong>
+                  </p>
+                </div>
+                <div className="test">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="50px"
+                      height="50px"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill="#36ef3c"
+                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
+                      />
+                    </svg>
+                  </span>
+                  <p>
+                    {" "}
+                    <strong>Herpes 2</strong>
+                  </p>
+                </div>
+                <div className="test">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="50px"
+                      height="50px"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill="#36ef3c"
+                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
+                      />
+                    </svg>
+                  </span>
+                  <p>
+                    {" "}
+                    <strong> Hepatitis A</strong>
+                  </p>
+                </div>
+              </div>
+              <div className="tests">
+                <div className="test">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="50px"
+                      height="50px"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill="#36ef3c"
+                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
+                      />
+                    </svg>
+                  </span>
+                  <p>
+                    {" "}
+                    <strong> Hepatitis B</strong>
+                  </p>
+                </div>
+                <div className="test">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="50px"
+                      height="50px"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill="#36ef3c"
+                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
+                      />
+                    </svg>
+                  </span>
+                  <p>
+                    {" "}
+                    <strong>Hepatitis C</strong>
+                  </p>
+                </div>
+                <div className="test">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="50px"
+                      height="50px"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill="#36ef3c"
+                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
+                      />
+                    </svg>
+                  </span>
+                  <p>
+                    {" "}
+                    <strong>Chlamydia</strong>
+                  </p>
+                </div>
+                <div className="test">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="50px"
+                      height="50px"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill="#36ef3c"
+                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
+                      />
+                    </svg>
+                  </span>
+                  <p>
+                    {" "}
+                    <strong>Gonorrhea</strong>
+                  </p>
+                </div>
+                <div className="test">
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="50px"
+                      height="50px"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill="#36ef3c"
+                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
+                      />
+                    </svg>
+                  </span>
+                  <p>
+                    {" "}
+                    <strong>Syphilis</strong>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <h1>Choose Your Packages</h1>
+            <div className="cards">
+              <div className="card">
+                <div className="card-header">10 Test Panel</div>
+                <div className="card-price"> $139.00</div>
+                <div className="card-button">
+                  <button className="button3">Get Tested</button>
+                </div>
+              </div>
+              <div className="card">
+                <div className="card-header">10 Test Panel</div>
+                <div className="card-header italic">
+                  with HIV RNA Early Detection
+                </div>
+                <div className="card-price"> $139.00</div>
+                <div className="card-button">
+                  <button className="button3">Get Tested</button>
+                </div>
+              </div>
+            </div>
           </div>
           <img src="./Doctor.png" />
+        </div>
+      </section>
+      <section className="MainPagesection3">
+        <h1 className="center">Individual Test Pricing</h1>
+        <p>
+          We offer individual tests in case you are concerned about a single
+          infection, or if you are retesting to see if an existing infection has
+          been cleared after treatment.
+          <strong> Please select tests from the list below.</strong>
+        </p>
+        <div className="section3width">
+          <div className="check">
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>Chlamydia</p>
+              <div className="check-price">$59.00</div>
+            </label>
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>Hepatitis C</p>
+              <div className="check-price">$24.00</div>
+            </label>
+          </div>
+          <div className="check">
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>Chlamydia & Gonorrhea</p>
+              <div className="check-price">$99.00</div>
+            </label>
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>Herpes I</p>
+              <div className="check-price">$45.00</div>
+            </label>
+          </div>
+          <div className="check">
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>Gonorrhea</p>
+              <div className="check-price">$59.00</div>
+            </label>
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>Herpes II</p>
+              <div className="check-price">$45.00</div>
+            </label>
+          </div>
+          <div className="check">
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>Hepatitis A</p>
+              <div className="check-price">$24.00</div>
+            </label>
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>HIV 1 & 2 Antibody (4th Gen)</p>
+              <div className="check-price">$49.00</div>
+            </label>
+          </div>
+          <div className="check">
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>Hepatitis B</p>
+              <div className="check-price">$24.00</div>
+            </label>
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>Syphilis</p>
+              <div className="check-price">$49.00</div>
+            </label>
+          </div>
+          <div className="card1">
+            <div className="card1-header">HIV RNA Early Detection</div>
+            <div className="card1-content">
+              Our FDA-Approved HIV RNA test can be taken after 6 days of
+              exposure and detect an HIV infection as early as 9-11 days after
+              exposure.
+            </div>
+            <div className="card1-label">
+              <label className="Dform">
+                <input type="checkbox" />
+                <p>HIV RNA Early Detection</p>
+                <div className="check-price">$129.00</div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <button className="button2">Get Tested</button>
+      </section>
+      <section className="MainPagesection4">
+        <h1 className="center">Complete STD Testing at Unbeatable Prices</h1>
+        <p className="section4-header">
+          You may be concerned about the best time to test for STDs. If you have
+          had unprotected sexual contact, our doctors recommend testing 3 weeks
+          after initial exposure, and again 3 months after to confirm your
+          initial diagnosis. This is the best way to ensure you test at the
+          right time because different sexually transmitted infections become
+          detectable at different times. To know what test is right for you, use
+          our physician-approved Test Recommendation Tool or call our Care
+          Advisors at 1-800-456-2323.
+        </p>
+        <div className="section4text">
+          <section>
+            <h2>Why Choose Check4std.com?</h2>
+            <ul>
+              <li>100% Private and Confidential STD Testing Service</li>
+              <li>Exclusive FDA-approved HIV RNA Early Detection testing</li>
+              <li>Over 4,500 convenient testing locations nationwide</li>
+              <li>
+                Comprehensive 10-Test Panel that checks for all common STDs,
+                including hepatitis A and HIV-2
+              </li>
+              <li>
+                Fast results available in 1-2 days through your secure online
+                account
+              </li>
+              <li>
+                Doctor consultation and treatment options provided for positive
+                results
+              </li>
+              <li>
+                All tests are supervised and approved by qualified physicians
+              </li>
+            </ul>
+          </section>
+          <br />
+
+          <section>
+            <h3>HIV RNA Test vs. HIV 4th Generation Antibody Test</h3>
+            <p>
+              The HIV RNA test identifies HIV as early as 9-11 days after
+              exposure, detecting the virus's genetic material (RNA) in the
+              blood. In contrast, the HIV 4th Generation Antibody test detects
+              antibodies and antigens 3 weeks after exposure. Antibodies are
+              immune system proteins that fight foreign substances, while
+              antigens are the substances causing the response. Both tests offer
+              different detection timelines for early and accurate results.
+            </p>
+          </section>
+          <br />
+
+          <section>
+            <h3>Next Steps</h3>
+            <p>
+              Testing with STDcheck.com is fast and straightforward. Simply
+              select a testing location near you using your zip code. After
+              placing your order, you’ll receive a Lab Requisition Form or test
+              code in your secure online account. Bring this form or code to the
+              testing center, where a technician will collect your
+              samples—usually within 5 minutes. Your results will be available
+              in 1-2 days in your secure account.
+            </p>
+          </section>
+          <br />
+
+          <section>
+            <h3>Do I Need an Appointment?</h3>
+            <p>
+              No appointment is necessary. However, test centers do not accept
+              payments onsite, so you must complete your order and payment
+              online or via phone beforehand. Once your order is placed, you can
+              visit any of our 4,500 test centers during regular business hours,
+              with some open on Saturdays.
+            </p>
+          </section>
+          <br />
+
+          <section>
+            <h3>Will My Visit Be Discreet?</h3>
+            <p>
+              Yes, our lab centers offer complete discretion. Technicians are
+              unaware of the specific tests you're undergoing. The process is
+              quick and private—typically completed within 5 minutes with no
+              waiting area.
+            </p>
+          </section>
+          <br />
+
+          <section>
+            <h3>Is My Information Confidential?</h3>
+            <p>
+              Your privacy is our top priority. We do not share your results
+              with insurance companies or include them in your permanent medical
+              record. All information is handled under HIPAA regulations,
+              ensuring the highest level of confidentiality.
+            </p>
+          </section>
+          <br />
+
+          <section>
+            <h3>Doctor Consultation</h3>
+            <p>
+              If you test positive for an STD, our physicians will explain your
+              results and answer any questions. For an additional fee, treatment
+              options can be prescribed and sent to your local pharmacy.
+            </p>
+          </section>
+          <br />
+
+          <section>
+            <h3>Before and After the Test</h3>
+            <p>
+              For blood tests (e.g., HIV, syphilis, hepatitis, herpes), no
+              preparation is needed. For urine tests (e.g., chlamydia,
+              gonorrhea), avoid urination for at least one hour before testing.
+              After your test, results will be available in 1-2 days. If
+              positive, treatment options will be provided.
+            </p>
+          </section>
+          <br />
+
+          <section>
+            <h3>How Soon Can I Test?</h3>
+            <p>
+              You can test immediately after placing your order and receiving
+              your Lab Requisition Form or test code. Testing centers are open
+              during normal business hours, with some available on Saturdays.
+            </p>
+          </section>
+          <br />
+
+          <section>
+            <h3>How Long is the Lab Visit?</h3>
+            <p>
+              The lab visit takes approximately 5 minutes. Simply present your
+              Lab Requisition Form or test code to the technician, and the
+              required samples will be collected quickly and discreetly.
+            </p>
+          </section>
+          <br />
+
+          <section>
+            <h3>What Should I Bring?</h3>
+            <p>
+              Bring your Lab Requisition Form or test code to the test center.
+              Blood and/or urine samples will be collected as needed. Results
+              will be available within 1-2 days in your secure account.
+            </p>
+          </section>
+          <br />
         </div>
       </section>
     </section>

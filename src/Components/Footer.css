@@ -1,0 +1,95 @@
+/* Import Trip Sans font */
+@import url('https://fonts.googleapis.com/css2?family=Trip+Sans:wght@400;600;700&display=swap');
+
+/* General styles */
+body {
+  font-family: 'Trip Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Footer styles */
+.footer {
+  background-color: #2C3E50;
+  color: #FFFFFF;
+  padding: 40px 20px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.footer-section {
+  flex: 1;
+  min-width: 200px;
+}
+
+.footer-section h4 {
+  color: #FFFFFF;
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+  color: #FFA726;
+}
+
+.footer-section p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.footer-section a {
+  color: #FFA726;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 10px 0;
+  margin-top: 20px;
+  border-top: 1px solid #FFFFFF;
+  font-size: 14px;
+  color: #FFFFFF;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-section {
+    margin-bottom: 20px;
+  }
+
+  .footer-section h4 {
+    text-align: center;
+  }
+}

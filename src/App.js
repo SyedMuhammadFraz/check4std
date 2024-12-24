@@ -5,6 +5,7 @@ import Diseases from "./Components/Diseases/Diseases";
 import MainPage from "./Components/Price&Packages/MainPage";
 import Home from "./Components/Home/Home";
 
+
 function App() {
   return (
     <>

@@ -2,6 +2,7 @@ import React from "react";
 import NavBar from "./NavBar";
 import { Outlet } from "react-router-dom";
 import Ribbon from "./Ribbon";
+import Footer from "./Footer";
 
 function LandingPage() {
   return (
@@ -9,6 +10,7 @@ function LandingPage() {
       <NavBar />
       <Ribbon/>
       <Outlet />
+      <Footer/>
     </>
   );
 }

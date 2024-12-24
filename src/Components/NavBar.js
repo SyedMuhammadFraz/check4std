@@ -23,7 +23,7 @@ function NavBar() {
         <ul>
           <li onClick={onHomeClick}>
             <img
-              src="https://img.freepik.com/free-vector/flat-medical-symbol_23-2149496593.jpg"
+              src='client-new-logo.png'
               alt="404"
             />
             <a>Check4std</a>

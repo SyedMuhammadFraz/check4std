@@ -1,63 +1,207 @@
-.MainPage h1{
-    margin: 2vh 0;
+.MainPage h1 {
+  margin: 2vh 0;
 }
 
-.section1{
-    margin-top: -2vh;
-    width: 100vw;
-    background-color: var(--Neutral-Silver);
-    padding: 2vh 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+.MainPagesection1 {
+  margin-top: -2vh;
+  width: 100vw;
+  background-color: var(--Neutral-Silver);
+  padding: 2vh 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-
-.services{
-    margin-top: 2vh;
-    gap: 5vh;
-    width: 100vw;
+.services {
+  margin-top: 2vh;
+  gap: 5vh;
+  width: 100vw;
 }
 
-.service{
-    margin: 2vh 0;
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    gap: 2vw;
+.service {
+  margin: 2vh 0;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 2vw;
 }
 
-.service p{
+.service p {
+  font-weight: bold;
+}
+
+.service svg {
+  background-color: white;
+  padding: 5px;
+  border-radius: 50%;
+  width: 60px !important;
+  height: 60px !important;
+}
+
+.MainPagesection2 {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.align {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80vw;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+}
+
+.text h4 {
+  font-weight: bold;
+}
+
+span svg {
+  width: 30px;
+}
+
+.align h1 {
+  text-align: center;
+}
+
+.tests {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Allow items to wrap */
+  gap: 10px; /* Space between items */
+  width: 100%; /* Full container width */
+}
+
+.test {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.MainPagesection3 {
+  margin-top: 3vh;
+  background-color: var(--Neutral-Silver);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.MainPagesection3 p {
+  width: 80%;
+}
+.MainPagesection3 button {
+  width: 80%;
+  margin: 10px 0;
+}
+
+.section3width {
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.check {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+  width: 80vw;
+}
+
+.check-price {
+  color: #809c58;
+  font-weight: bold;
+  text-align: center;
+  margin: auto 0;
+  font-size: 1.2rem; /* Relative unit for responsiveness */
+}
+
+.Dform {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+  cursor: pointer;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.Dform p{
+    margin-bottom: 0;
+}
+
+.Dform input {
+    pointer-events: none; /* Prevents direct interaction with the checkbox */
+  }
+
+.Dform p{
     font-weight: bold;
+    font-size: 1.1rem; /* Relative unit */
 }
 
-.service svg{
-    background-color: white;
-    padding: 5px;
-    border-radius:50%;
-    width: 60px !important;
-    height: 60px !important;
+.Dform:hover {
+  background-color: white;
 }
-.section2{
+
+.MainPagesection4{
+    margin-top: 3vh;
     background-color: white;
+    width: 100vw;
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
 }
 
-.align{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.section4-header{
     width: 80vw;
 }
 
-.text{
-    display: flex;
-    flex-direction: column;
+.section4text{
+    margin: 3vh 0;
+    width: 80vw;
 }
 
-.text h4{
-    font-weight: bold;
+@media (max-width: 992px) {
+  .align {
+    flex-direction: column-reverse;
+    justify-content: center; /* Optional, depending on your layout needs */
+  }
+  .Testss {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .align img {
+    width: 80%;
+  }
+  .check {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  /* For very small screens */
+
+  .test svg {
+    width: 40px; /* Adjust icon size */
+    height: 40px;
+  }
+
+  .test p {
+    font-size: 14px; /* Reduce text size for smaller screens */
+  }
 }

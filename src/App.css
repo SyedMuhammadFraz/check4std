@@ -5,12 +5,16 @@
 *{
   margin: 0;
   padding: 0;
-  font-family:  "Trip Sans", sans-serif;
+  font-family:  "Work Sans", serif;
   overflow-x: hidden;
 }
 
 .body{
   overflow-x: hidden;
+}
+
+p{
+  margin-bottom: 0 !important;
 }
 
 :root {

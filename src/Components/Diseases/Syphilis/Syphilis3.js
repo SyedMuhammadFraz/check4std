@@ -1,249 +1,126 @@
 import React from "react";
 
-function Syphilis() {
+function SyphilisLabTesting() {
   return (
     <>
-      <h2>What is Gonorrhea?</h2>
+      <br />
+      <h2>Syphilis: A Common Bacterial STD</h2>
       <br />
       <p>
-        Gonorrhea is a bacterial infection classified as a sexually transmitted
-        disease (STD). It is highly prevalent but treatable with prescribed
-        antibiotics. This infection spreads through vaginal, anal, and oral
-        sexual contact. Every year, approximately 820,000 new cases of gonorrhea
-        are reported in the United States alone. Many people who contract
-        gonorrhea may not realize they have it due to the absence of symptoms or
-        the presence of mild symptoms.
+        Syphilis is a prevalent sexually transmitted disease (STD) caused by bacteria. In its early stages, syphilis can be treated effectively with antibiotics. However, if left untreated, it can lead to serious health complications.
+        Getting tested for syphilis is crucial for early detection. Fortunately, the process is quick, easy, and can help prevent the severe consequences of untreated syphilis, such as blindness and paralysis.
       </p>
+
+      <br />
+      <h2>How Do You Test for Syphilis?</h2>
       <br />
       <p>
-        Colloquially, gonorrhea is referred to as “the drip” or “the clap.” It
-        is particularly common among teenagers and young adults in their 20s.
-        The infection is caused by the bacterium <i>Neisseria gonorrhoeae</i>,
-        which targets the mucous membranes of the reproductive system. In women,
-        it can infect the cervix, fallopian tubes, and uterus, while in men, it
-        affects the urethra. Gonorrhea can also infect other parts of the body,
-        including the throat, anus, eyes, and (less frequently) joints. If left
-        untreated, gonorrhea can cause severe health complications, including
-        infertility, making routine testing essential for sexually active
-        individuals.
+        Testing for syphilis is simple, confidential, and available at nationwide testing centers. Our FDA-cleared Rapid Plasma Reagin (RPR) syphilis test is a blood test that can detect the presence of syphilis antibodies as soon as 3-6 weeks after exposure. If the test result is positive, a follow-up Treponemal Pallidum Assay (TPA) is conducted to confirm the presence of the syphilis-causing bacteria.
       </p>
-      <br />
-      
-      <h2>Symptoms of Gonorrhea</h2> <br />
       <p>
-        Gonorrhea symptoms often go unnoticed, especially in women, as most
-        women and some men show no signs of infection. However, when symptoms do
-        appear, they can vary depending on the infected area.
+        While the thought of testing may seem daunting, it is a painless and routine procedure. After ordering the test, you can visit a lab at your convenience—no appointment or ID required. The blood draw is simple and quick, and most results are available within 1-2 business days, which you can access by logging into your online account.
       </p>
+
       <br />
-      <h3>Symptoms in Men:</h3> <br />
+      <h2>Who Should Get Tested for Syphilis?</h2>
+      <br />
+      <p>
+        Anyone who is sexually active can contract syphilis through oral, vaginal, and anal sex, or through sexual contact with someone infected. Syphilis is transmitted through contact with sores, known as chancres, that can appear in, on, or around the genitals, and sometimes other parts of the body. These sores are often hard to detect, and sometimes only one chancre forms, making the infection easy to overlook.
+      </p>
+      <p>The Centers for Disease Control and Prevention (CDC) recommends syphilis testing for individuals who:</p>
       <ul>
-        <li>Pain or burning sensation during urination</li>
-        <li>White, yellow, or green discharge from the penis</li>
-        <li>Swollen or painful testicles</li>
-      </ul> <br />
+        <li>Exhibit symptoms of syphilis</li>
+        <li>Have had sex with someone diagnosed with syphilis</li>
+        <li>Are pregnant</li>
+        <li>Are men who have sex with men (MSM)</li>
+        <li>Are living with HIV</li>
+        <li>Are on PrEP (pre-exposure prophylaxis) for HIV prevention</li>
+      </ul>
+      <p>
+        Since syphilis often has mild or no symptoms, it's impossible to tell if you have it just by feeling. Whether or not you notice sores or other symptoms, getting tested is the best way to ensure you remain healthy and to get treatment as soon as possible. If left untreated, syphilis can cause severe health issues, including damage to the heart, blood vessels, bones, and brain.
+      </p>
 
-      <h3>Symptoms in Women:</h3> <br />
+      <br />
+      <h2>Diagnosis & Test Results</h2>
+      <br />
+      <p>
+        <strong>Negative result:</strong> No antibodies detected, meaning either you don’t have the infection or the test was taken too early (before antibodies have developed).
+      </p>
+      <p>
+        <strong>Positive result:</strong> Indicates a likely infection. A second test confirms the presence of syphilis bacteria.
+      </p>
+
+      <br />
+      <h2>What Should You Do If You Test Positive?</h2>
+      <br />
+      <p>
+        Testing positive for syphilis can be unsettling, but it’s important to stay calm. Syphilis is easily treated with antibiotics in the early stages. It’s also crucial to inform your sexual partner(s) so they can get tested and treated as well.
+      </p>
+      <p>
+        If you test positive for syphilis through our services, our doctors are available for consultation. While we don’t provide treatment directly, they will guide you on how to proceed and help you understand your results. A shot of antibiotics (typically penicillin) is the standard treatment. For your convenience, you can download or print your test results to share with a healthcare provider for treatment.
+      </p>
+      <p>
+        The CDC recommends that all individuals with primary and secondary syphilis be tested for HIV, as syphilis increases the risk of contracting HIV. We offer a 10% discount for returning customers to help you maintain your sexual health.
+      </p>
+
+      <br />
+      <h2>How Is Syphilis Treated?</h2>
+      <br />
+      <p>
+        Syphilis is easily treated with antibiotics, usually penicillin, unless you have an allergy or other contraindications. Early-stage syphilis (primary, secondary, or early latent) can be cured with a single shot of penicillin. For longer-term infections, multiple shots may be needed. Our doctors recommend follow-up testing to confirm that the infection has been fully cleared.
+      </p>
+      <p>
+        It’s essential to seek treatment as soon as possible. While antibiotics can eliminate the syphilis bacteria and prevent further harm, they cannot reverse any damage already done to the body.
+      </p>
+
+      <br />
+      <h2>What to Expect During Syphilis Treatment</h2>
+      <br />
+      <p>
+        After treatment, it’s common to experience mild side effects, particularly in the first 24 hours, especially for early-stage syphilis. These may include:
+      </p>
       <ul>
-        <li>Pain or burning sensation while urinating</li>
-        <li>Increased vaginal discharge</li>
-        <li>Vaginal bleeding between menstrual periods</li>
-      </ul> <br />
-
-      <h3>Symptoms in Rectal Infections (Both Genders):</h3> <br />
-      <ul>
-        <li>Anal discharge</li>
-        <li>Itching or soreness in the rectal area</li>
-        <li>Rectal bleeding</li>
-        <li>Painful bowel movements</li>
-      </ul> <br />
+        <li>Fever</li>
+        <li>Chills</li>
+        <li>Muscle aches</li>
+        <li>Joint pain</li>
+        <li>Headache</li>
+      </ul>
       <p>
-        Since many people remain asymptomatic, routine testing is crucial to
-        identify and treat the infection early.
-      </p> <br />
-        <h2>How Gonorrhea Affects Different Body Parts</h2> <br />
-        <h3>Joints:</h3> <br />
-        <p>
-          Gonorrhea can spread to the bloodstream, leading to a condition called
-          disseminated gonococcal infection (DGI). When this happens, the
-          bacteria can reach the joints, causing inflammation, joint pain,
-          swelling, and redness. If not treated, DGI can result in chronic joint
-          damage or arthritis.
-        </p> <br />
+        These symptoms are part of the Jarisch-Herxheimer reaction, a common response when large numbers of bacteria are killed off by antibiotics. Don’t be alarmed—these effects usually subside within a day or so. If symptoms persist, it’s recommended to consult a healthcare provider.
+      </p>
 
-        <h3>Rectum:</h3> <br />
-        <p>
-          Rectal gonorrhea is caused by exposure to <i>Neisseria gonorrhoeae</i>{" "}
-          through anal sexual contact with an infected partner. It may lead to
-          symptoms such as rectal pain, discharge, and bleeding. If untreated,
-          it increases the risk of other STDs, pelvic inflammatory disease
-          (PID), and infertility.
-        </p> <br />
-
-        <h3>Eyes:</h3> <br />
-        <p>
-          Gonorrhea can infect the eyes, causing a condition known as
-          conjunctivitis. This occurs when the bacteria enter the eye, either
-          through direct contact with infected genital secretions or during
-          childbirth when a baby passes through an infected birth canal.
-          Symptoms of gonococcal conjunctivitis include redness, discharge,
-          itching, and irritation of the eyes. In newborns, this infection is
-          known as ophthalmia neonatorum and can lead to severe complications,
-          including blindness, if not promptly treated.
-        </p> <br />
-      <h2>Transmission of Gonorrhea</h2> <br />
+      <br />
+      <h2>Can You Get Re-Infected?</h2>
+      <br />
       <p>
-        Gonorrhea is transmitted during vaginal, oral, or anal sexual activity
-        with an infected person. The bacteria spread through bodily fluids such
-        as semen, pre-ejaculate, and vaginal secretions. It’s important to note
-        that ejaculation is not required for transmission.
-      </p> <br />
+        Yes, once you’ve had syphilis, you’re not immune to future infections. Exposure to syphilis again could result in re-infection. Even if your partner shows no symptoms, they could still be carrying the bacteria. For this reason, using condoms during sex is crucial. However, syphilis sores can appear in areas not covered by condoms, meaning they’re not 100% protective.
+      </p>
       <p>
-        Additionally, gonorrhea can be transmitted from mother to child during
-        childbirth. If a baby contracts gonorrhea during birth, it can result in
-        serious health complications such as blindness, joint infections, or
-        life-threatening blood infections. To prevent transmission, the CDC
-        recommends that pregnant women undergo routine testing and treatment as
-        necessary.
-      </p> <br />
+        If you’ve been exposed to syphilis again, it’s recommended to get retested.
+      </p>
 
-      
-
-      <h2>Risk Factors</h2> <br />
+      <br />
+      <h2>When Can You Have Sex Again?</h2>
+      <br />
       <p>
-        Anyone who is sexually active is at risk of contracting gonorrhea.
-        However, certain groups are at a higher risk, including:
-      </p> <br />
-      <ul>
-        <li>
-          <b>Young Adults and Teenagers:</b> Higher rates are seen in
-          individuals in their teens and early 20s.
-        </li>
-        <li>
-          <b>People with Multiple Partners:</b> Engaging in sexual activity with
-          multiple partners increases the risk.
-        </li>
-        <li>
-          <b>Men Who Have Sex with Men (MSM):</b> The risk is higher among men
-          who have sexual contact with other men.
-        </li>
-      </ul> <br />
-      <p>The CDC recommends annual screening for the following groups:</p> <br />
-      <ul>
-        <li>Women under the age of 25</li>
-        <li>
-          Women over 25 with new or multiple sex partners or partners with STDs
-        </li>
-        <li>Men who have sex with men (MSM)</li>
-      </ul> <br />
+        It’s best to wait at least 7 days after completing your syphilis treatment before engaging in sexual activity. To avoid spreading syphilis during treatment, avoid sex altogether. While condoms offer some protection, syphilis can still be transmitted if sores are not covered. To prevent reinfection, ensure your partner(s) have completed treatment as well.
+      </p>
 
-      
-
-      <h2>Prevalence of Gonorrhea</h2> <br />
-      <p> <br />
-        Gonorrhea is one of the most common STDs worldwide. According to the
-        World Health Organization (WHO), around 78 million people globally are
-        infected with gonorrhea annually. Prevalence rates vary significantly by
-        region, with higher rates in some areas compared to others.
-      </p> <br />
+      <br />
+      <h2>Treating Syphilis During Pregnancy</h2>
+      <br />
       <p>
-        In the United States, gonorrhea is the second most commonly reported
-        bacterial STD, with an estimated 635,000 new cases reported annually.
-        This figure may be an underestimate since asymptomatic individuals often
-        go untested. Factors such as access to sexual health resources,
-        education, and public health efforts play a crucial role in determining
-        the prevalence of gonorrhea in a given community.
-      </p> <br />
-
-      
-
-      <h2>Prevention of Gonorrhea</h2> <br />
+        Pregnant women with syphilis should be treated with an injection of penicillin, just like non-pregnant individuals. The treatment regimen may vary depending on how long the woman has been infected and how far along she is in her pregnancy. The CDC recommends penicillin G, as it’s the only effective treatment to prevent syphilis transmission from mother to baby and to treat any fetal infection.
+      </p>
       <p>
-        While the only guaranteed way to prevent gonorrhea is abstaining from
-        sexual activity, there are several effective prevention methods for
-        sexually active individuals:
-      </p> <br />
-      <ul>
-        <li>
-          <b>Use Protection:</b> Consistent use of condoms or dental dams during
-          oral, vaginal, and anal sex significantly reduces the risk of
-          transmission.
-        </li>
-        <li>
-          <b>Mutual Monogamy:</b> Engaging in a monogamous relationship with a
-          partner who has tested negative for STDs reduces the risk.
-        </li>
-        <li>
-          <b>Routine Testing:</b> Regular testing ensures early detection and
-          treatment, preventing further transmission.
-        </li>
-        <li>
-          <b>Open Communication:</b> Discussing sexual health with partners and
-          knowing their STD status is an important step in prevention.
-        </li>
-      </ul> <br />
-
-      
-
-      <h2>What is Gonococcus?</h2> <br />
+        In some cases, a second injection may be necessary, especially for women with more advanced stages of syphilis. If you’re allergic to penicillin, your provider may recommend penicillin desensitization.
+      </p>
       <p>
-        The term “Gonococcus” refers to the bacterium{" "}
-        <i>Neisseria gonorrhoeae</i>, the microorganism responsible for causing
-        gonorrhea. This bacterium was first identified in 1879 by German
-        physician Albert Neisser, after whom the species is named. The term
-        comes from Greek roots, where “gonos” means seed or offspring, and
-        “kokkos” means berry, reflecting the bacterium’s round, berry-like
-        appearance under a microscope.
-      </p> <br />
-      <p>
-        Gonococcus can be transmitted through sexual contact or from mother to
-        child during childbirth. Once inside the body, the bacterium multiplies
-        and causes inflammation in the affected organs, such as the reproductive
-        system, rectum, throat, or eyes. Its ability to infect multiple parts of
-        the body underscores the importance of early diagnosis and treatment.
-      </p> <br />
-
-      <h2>Key Takeaways</h2> <br />
-      <ul>
-        <li>
-          Gonorrhea is a common and treatable STD caused by the bacterium{" "}
-          <i>Neisseria gonorrhoeae</i>.
-        </li>
-        <li>
-          It can affect the reproductive organs, throat, eyes, rectum, and
-          joints if untreated.
-        </li>
-        <li>
-          Many infected individuals show no symptoms, so routine testing is
-          essential for early detection.
-        </li>
-        <li>
-          Gonorrhea can be transmitted through vaginal, anal, or oral sex, as
-          well as from mother to child during childbirth.
-        </li>
-        <li>
-          Prevention methods include consistent condom use, monogamous
-          relationships, open communication with partners, and regular STD
-          screenings.
-        </li>
-      </ul> <br />
-
-      
-
-      <h2>Resources</h2> <br />
-      <ol>
-        <li>
-          “Gonorrhea - CDC Fact Sheet (Detailed Version).” Centers for Disease
-          Control and Prevention. <a href="#">Link</a>
-        </li>
-        <li>
-          “Screening Recommendations and Considerations Referenced in Treatment
-          Guidelines and Original Sources.” Centers for Disease Control and
-          Prevention. <a href="#">Link</a>
-        </li>
-      </ol>
+        Treatment is critical for pregnant women, as congenital syphilis can result in severe complications, including stillbirth, premature birth, and serious organ damage to the baby. Early screening is essential for all pregnant women, and those at higher risk should be screened again in the third trimester and at delivery.
+      </p>
     </>
   );
 }
 
-export default Syphilis;
+export default SyphilisLabTesting;

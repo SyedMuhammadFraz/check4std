@@ -1,111 +1,172 @@
 import React from "react";
 
-function HIV() {
+function HIVAIDSInfo() {
   return (
     <>
-      <h2>Overview of HIV</h2>
+      <br />
+      <h2>HIV & AIDS Symptoms</h2>
+      <br />
       <p>
-        HIV stands for Human Immunodeficiency Virus. It is the virus responsible for causing AIDS (Acquired Immunodeficiency Syndrome). HIV weakens the immune system by attacking CD4 cells (T cells), which are essential for fighting infections. Over time, HIV can damage the immune system to the point where the body cannot fight infections and diseases that would otherwise be manageable.
+        HIV (Human Immunodeficiency Virus) attacks the immune system, weakening its ability to fight infections and illnesses. It specifically targets CD4 cells, a type of white blood cell essential for immune defense. Over time, if untreated, HIV can lead to AIDS (Acquired Immunodeficiency Syndrome), which is a life-threatening condition. In the early stages of HIV, many individuals don't experience symptoms, making it crucial to get tested to know your HIV status.
+      </p>
+      <p>
+        As HIV progresses to AIDS, individuals may experience infections and diseases that a healthy immune system would usually be able to combat, or develop certain types of cancers. HIV-related issues can impact various parts of the body, including the brain, heart, lungs, digestive system, reproductive organs, and skin.
+      </p>
+      <p>
+        While there is no cure for HIV/AIDS, antiretroviral therapy (ART) can lower the viral load and slow the progression of HIV, allowing people to live healthier lives and reduce the risk of transmission.
       </p>
 
-      <h2>What is HIV?</h2>
+      <br />
+      <h2>HIV Symptoms</h2>
+      <br />
       <p>
-        HIV is the virus that leads to AIDS. It attacks the immune system, leaving individuals vulnerable to diseases. The virus is spread through body fluids such as blood, semen, vaginal fluids, and breast milk. 
+        HIV infection occurs in three stages, and symptoms can vary depending on the stage. After initial exposure to HIV, many individuals don’t experience symptoms immediately, but some may develop mild flu-like symptoms within a few weeks. These early signs can often be mistaken for other illnesses, and it may take several years for more severe symptoms to develop.
       </p>
 
-      <h2>How is HIV Transmitted?</h2>
+      <br />
+      <h3>Early HIV Symptoms (Acute or Primary Infection)</h3>
+      <br />
       <p>
-        HIV is transmitted through specific body fluids:
+        In the initial stage of HIV infection, some individuals may experience a short-lived illness within 2-4 weeks, known as HIV seroconversion. This is when the body first tries to fight off the virus. Symptoms may include:
       </p>
       <ul>
-        <li>Blood</li>
-        <li>Semen</li>
-        <li>Vaginal fluids</li>
-        <li>Anal fluids/mucus</li>
-        <li>Breast milk</li>
+        <li>Fever</li>
+        <li>Chills</li>
+        <li>Rash</li>
+        <li>Fatigue</li>
+        <li>Headaches</li>
+        <li>Muscle or joint aches</li>
+        <li>Swollen lymph nodes</li>
+        <li>Diarrhea</li>
+        <li>Sore throat</li>
+        <li>Night sweats</li>
       </ul>
       <p>
-        Key transmission methods include:
+        These symptoms typically last for a few weeks, and many people don't experience symptoms again for several years. However, it’s important to get tested if you suspect you've been exposed to HIV, as early detection can help you manage the condition more effectively.
+      </p>
+
+      <br />
+      <h3>Asymptomatic HIV (Chronic Infection)</h3>
+      <br />
+      <p>
+        In the second stage, known as chronic HIV infection or clinical latency, the virus continues to multiply at a slower rate, but the person may not experience any symptoms. Even though you may feel fine, HIV is still attacking the immune system. By getting tested and starting treatment early, you can stay in this stage for a longer period of time.
+      </p>
+
+      <br />
+      <h3>AIDS Symptoms</h3>
+      <br />
+      <p>
+        AIDS is the most severe stage of HIV, where the immune system is severely damaged, and the individual becomes vulnerable to opportunistic infections and cancers. Symptoms of AIDS include:
       </p>
       <ul>
-        <li>Unprotected sexual contact (vaginal or anal sex)</li>
-        <li>Shared needles or syringes (drug use)</li>
-        <li>Mother-to-child transmission during pregnancy, childbirth, or breastfeeding</li>
+        <li>Persistent, unexplained tiredness</li>
+        <li>Rapid weight loss</li>
+        <li>Recurring fever</li>
+        <li>Chills</li>
+        <li>Drenching night sweats</li>
+        <li>Persistent diarrhea</li>
+        <li>Swollen lymph nodes</li>
+        <li>Pneumonia (coughing, shortness of breath, fever)</li>
+        <li>Sores on the mouth, genitals, or anus</li>
+        <li>Skin issues such as blotches</li>
+        <li>Memory loss, depression, or other neurological issues</li>
       </ul>
+
+      <br />
+      <h2>HIV Complications</h2>
+      <br />
       <p>
-        HIV cannot be transmitted through saliva, tears, sweat, casual contact like hugging or shaking hands, mosquitoes or insects, or using shared toilets or utensils.
+        Without proper treatment, HIV can lead to AIDS, where the immune system is severely weakened. This results in increased vulnerability to infections and cancers. HIV can cause a variety of complications, including:
       </p>
 
-      <h2>How Common is HIV?</h2>
+      <br />
+      <h3>Opportunistic Infections</h3>
+      <br />
       <p>
-        Over 1.1 million people in the U.S. are living with HIV, with around 14% unaware of their infection. Although there is no cure for HIV, modern treatments like antiretroviral therapy (ART) allow people with HIV to live long, healthy lives and prevent further transmission of the virus.
-      </p>
-
-      <h2>Is HIV Serious?</h2>
-      <p>
-        HIV is a chronic condition that can lead to AIDS if untreated. AIDS represents the advanced stage of HIV infection, where the immune system is severely damaged. Without treatment, HIV typically progresses to AIDS in 8-10 years. However, with ART, people with HIV can live healthy lives and prevent the progression to AIDS.
-      </p>
-
-      <h2>Symptoms of HIV</h2>
-      <h3>Acute HIV Infection</h3>
-      <p>
-        Acute HIV infection can cause flu-like symptoms, which may appear 2-4 weeks after exposure. These symptoms include fever, fatigue, sore throat, swollen lymph nodes, and muscle aches.
-      </p>
-
-      <h3>Chronic HIV</h3>
-      <p>
-        Many individuals may remain symptom-free for years, during which the virus continues to replicate and damage the immune system. Symptoms may not appear until the virus has severely weakened the immune system.
-      </p>
-
-      <h2>Can You Get HIV More Than Once?</h2>
-      <p>
-        Once you are infected with HIV, the virus stays in your body for life. However, effective treatment can suppress the virus to undetectable levels, preventing further damage to your immune system.
-      </p>
-
-      <h2>How Is HIV Diagnosed?</h2>
-      <p>
-        HIV is diagnosed through blood tests that detect antibodies or antigens to the virus. Early detection is crucial to begin treatment and manage the virus effectively.
-      </p>
-
-      <h2>Who Is at Risk for HIV?</h2>
-      <p>
-        Certain groups are at higher risk for HIV, including:
+        When the immune system is compromised, infections caused by viruses, bacteria, fungi, and parasites can take advantage of the weakened defense. Common opportunistic infections include:
       </p>
       <ul>
-        <li>Men who have sex with men</li>
-        <li>Individuals with multiple sexual partners</li>
-        <li>People who inject drugs and share needles</li>
-        <li>Individuals with other sexually transmitted infections (STIs)</li>
+        <li>Candidiasis (Thrush): A fungal infection affecting the mouth, throat, lungs, or vagina.</li>
+        <li>Recurrent Pneumonia: A lung infection causing coughing, breathing difficulties, and fever.</li>
+        <li>Recurrent Salmonella: A bacterial infection that affects the gastrointestinal tract, leading to nausea, vomiting, and diarrhea.</li>
+        <li>Toxoplasmosis: A parasitic infection that can damage the brain, eyes, or other organs.</li>
       </ul>
 
-      <h2>Preventing HIV</h2>
+      <br />
+      <h3>HIV-Related Cancers</h3>
+      <br />
       <p>
-        Preventing HIV involves:
+        People with HIV/AIDS are at higher risk of developing certain cancers, including:
       </p>
       <ul>
-        <li>Using condoms during sexual activity</li>
-        <li>Taking pre-exposure prophylaxis (PrEP) for high-risk individuals</li>
-        <li>Getting tested regularly</li>
-        <li>Avoiding sharing needles or syringes</li>
-        <li>Communicating openly about HIV status with potential partners</li>
+        <li>Kaposi’s Sarcoma: A cancer that affects blood vessels and can appear as red or purple patches on the skin or inside the body.</li>
+        <li>Non-Hodgkin Lymphoma: A cancer affecting the lymphatic system.</li>
+        <li>Invasive Cervical Cancer: Cancer in the cervix, common among women with HIV.</li>
       </ul>
 
-      <h2>Is There a Vaccine for HIV?</h2>
+      <br />
+      <h3>Coinfections Due to HIV</h3>
+      <br />
       <p>
-        Currently, there is no vaccine available to prevent HIV. However, ongoing research is exploring potential vaccines, with mRNA-based HIV vaccines being tested for their effectiveness in prevention.
+        Coinfections are common when a person has both HIV and another infection. These infections can complicate treatment. Some common coinfections include:
+      </p>
+      <ul>
+        <li>Hepatitis B and C: Viruses that cause liver inflammation, spread through sexual contact or sharing needles.</li>
+        <li>Tuberculosis (TB): A bacterial disease affecting the lungs, often fatal in people with HIV.</li>
+      </ul>
+
+      <br />
+      <h3>AIDS Wasting Syndrome</h3>
+      <br />
+      <p>
+        Wasting syndrome is characterized by a significant loss of body weight and muscle mass, especially in individuals with untreated AIDS. It often accompanies other symptoms like weakness, fever, and diarrhea. Wasting syndrome can worsen illness and increase the risk of death, so proper treatment and nutrition are important.
       </p>
 
-      <h2>Is HIV Curable?</h2>
+      <br />
+      <h3>Neurological Complications of HIV</h3>
+      <br />
       <p>
-        As of now, HIV is not curable. However, treatments like antiretroviral therapy (ART) can manage the virus effectively, allowing individuals to live long, healthy lives. Some rare cases of "functional cure" have been achieved through complex procedures, but these are not applicable for everyone.
+        HIV can lead to neurological issues due to the virus itself or from secondary infections or cancers. Symptoms may include:
+      </p>
+      <ul>
+        <li>Dementia</li>
+        <li>Inflammation in the brain or spinal cord</li>
+        <li>Nerve damage causing pain or weakness</li>
+        <li>Difficulty walking</li>
+        <li>Depression or hallucinations</li>
+        <li>Loss of hearing or vision</li>
+      </ul>
+      <p>These complications typically occur in the later stages of HIV.</p>
+
+      <br />
+      <h3>Other HIV-Related Complications</h3>
+      <br />
+      <p>
+        Chronic inflammation caused by HIV increases the risk of cardiovascular disease, kidney disease, liver disease, and bone disease.
       </p>
 
-      <h2>Conclusion</h2>
+      <br />
+      <h3>HIV and Pregnancy</h3>
+      <br />
       <p>
-        HIV is a serious but manageable condition. With early detection and proper treatment, individuals with HIV can lead healthy lives and prevent the virus from progressing to AIDS. If you think you may have been exposed to HIV, it's important to consult with a healthcare provider for testing and treatment options.
+        Women with HIV can have children, but the virus can be passed to the baby during pregnancy, labor, delivery, or breastfeeding. However, with proper treatment, the risk of transmission can be reduced to less than 1%. To minimize the risk, HIV-positive women are advised to follow an effective medication regimen during pregnancy and delivery, and their baby may be given HIV medicine after birth.
+      </p>
+
+      <br />
+      <h3>Life Expectancy for People with HIV</h3>
+      <br />
+      <p>
+        With modern treatments, people with HIV can live long, healthy lives. Early diagnosis and the right treatment can help individuals with HIV live a near-normal lifespan. Factors like early treatment initiation, gender, and lifestyle choices affect life expectancy.
+      </p>
+
+      <br />
+      <h2>I’m Scared I Have HIV Symptoms</h2>
+      <br />
+      <p>
+        If you’re concerned you may have HIV symptoms, getting tested is the only way to confirm your status. Early detection can help you get the proper treatment to manage the virus, improving your overall health and life expectancy. HIV tests are quick, simple, and confidential. If you think you’ve been exposed, don’t wait—get tested and take charge of your health.
       </p>
     </>
   );
 }
 
-export default HIV;
+export default HIVAIDSInfo;

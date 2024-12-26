@@ -1,249 +1,101 @@
 import React from "react";
 
-function Syphilis() {
+function SyphilisInfo() {
   return (
     <>
-      <h2>What is Gonorrhea?</h2>
+      <br />
+      <h2>What is Syphilis?</h2>
       <br />
       <p>
-        Gonorrhea is a bacterial infection classified as a sexually transmitted
-        disease (STD). It is highly prevalent but treatable with prescribed
-        antibiotics. This infection spreads through vaginal, anal, and oral
-        sexual contact. Every year, approximately 820,000 new cases of gonorrhea
-        are reported in the United States alone. Many people who contract
-        gonorrhea may not realize they have it due to the absence of symptoms or
-        the presence of mild symptoms.
+        Syphilis is a sexually transmitted infection (STI) caused by the bacterium Treponema pallidum. It is primarily transmitted through sexual contact with an infected individual, including vaginal, anal, or oral sex. Although syphilis was once a significant public health threat, its impact has lessened with the discovery of effective treatments. If untreated, syphilis can progress through various stages and cause severe damage to organs, including the brain and heart.
       </p>
+
+      <br />
+      <h2>Is Syphilis Curable?</h2>
       <br />
       <p>
-        Colloquially, gonorrhea is referred to as “the drip” or “the clap.” It
-        is particularly common among teenagers and young adults in their 20s.
-        The infection is caused by the bacterium <i>Neisseria gonorrhoeae</i>,
-        which targets the mucous membranes of the reproductive system. In women,
-        it can infect the cervix, fallopian tubes, and uterus, while in men, it
-        affects the urethra. Gonorrhea can also infect other parts of the body,
-        including the throat, anus, eyes, and (less frequently) joints. If left
-        untreated, gonorrhea can cause severe health complications, including
-        infertility, making routine testing essential for sexually active
-        individuals.
+        Yes, syphilis is treatable and curable with antibiotics. The specific treatment depends on the stage of the disease, as well as how long a person has been infected. Syphilis progresses in three main stages: primary, secondary, and tertiary.
       </p>
-      <br />
-      
-      <h2>Symptoms of Gonorrhea</h2> <br />
+      <ul>
+        <li>
+          <strong>Primary Syphilis:</strong> A painless sore (chancre) appears at the site of infection, typically on the genitals, anus, or mouth. The chancre heals within 3-6 weeks, even without treatment, but the infection remains in the body.
+        </li>
+        <li>
+          <strong>Secondary Syphilis:</strong> This stage occurs after the chancre heals and can involve symptoms such as skin rashes, fever, swollen lymph nodes, sore throat, fatigue, and muscle aches. These symptoms may resolve on their own but can return later.
+        </li>
+        <li>
+          <strong>Tertiary Syphilis:</strong> In advanced syphilis, untreated infection can cause serious damage to organs, including the heart and brain, leading to complications like strokes, blindness, and even death.
+        </li>
+      </ul>
       <p>
-        Gonorrhea symptoms often go unnoticed, especially in women, as most
-        women and some men show no signs of infection. However, when symptoms do
-        appear, they can vary depending on the infected area.
+        Penicillin G benzathine is commonly used for primary and secondary syphilis, while more severe cases, especially those involving organ damage, may require hospitalization and intravenous antibiotics. However, it's important to note that while antibiotics can cure syphilis, they cannot reverse damage to organs caused by advanced infection. Early treatment is essential to prevent long-term health issues.
       </p>
+
       <br />
-      <h3>Symptoms in Men:</h3> <br />
-      <ul>
-        <li>Pain or burning sensation during urination</li>
-        <li>White, yellow, or green discharge from the penis</li>
-        <li>Swollen or painful testicles</li>
-      </ul> <br />
-
-      <h3>Symptoms in Women:</h3> <br />
-      <ul>
-        <li>Pain or burning sensation while urinating</li>
-        <li>Increased vaginal discharge</li>
-        <li>Vaginal bleeding between menstrual periods</li>
-      </ul> <br />
-
-      <h3>Symptoms in Rectal Infections (Both Genders):</h3> <br />
-      <ul>
-        <li>Anal discharge</li>
-        <li>Itching or soreness in the rectal area</li>
-        <li>Rectal bleeding</li>
-        <li>Painful bowel movements</li>
-      </ul> <br />
+      <h2>What Are Syphilis Symptoms?</h2>
+      <br />
       <p>
-        Since many people remain asymptomatic, routine testing is crucial to
-        identify and treat the infection early.
-      </p> <br />
-        <h2>How Gonorrhea Affects Different Body Parts</h2> <br />
-        <h3>Joints:</h3> <br />
-        <p>
-          Gonorrhea can spread to the bloodstream, leading to a condition called
-          disseminated gonococcal infection (DGI). When this happens, the
-          bacteria can reach the joints, causing inflammation, joint pain,
-          swelling, and redness. If not treated, DGI can result in chronic joint
-          damage or arthritis.
-        </p> <br />
-
-        <h3>Rectum:</h3> <br />
-        <p>
-          Rectal gonorrhea is caused by exposure to <i>Neisseria gonorrhoeae</i>{" "}
-          through anal sexual contact with an infected partner. It may lead to
-          symptoms such as rectal pain, discharge, and bleeding. If untreated,
-          it increases the risk of other STDs, pelvic inflammatory disease
-          (PID), and infertility.
-        </p> <br />
-
-        <h3>Eyes:</h3> <br />
-        <p>
-          Gonorrhea can infect the eyes, causing a condition known as
-          conjunctivitis. This occurs when the bacteria enter the eye, either
-          through direct contact with infected genital secretions or during
-          childbirth when a baby passes through an infected birth canal.
-          Symptoms of gonococcal conjunctivitis include redness, discharge,
-          itching, and irritation of the eyes. In newborns, this infection is
-          known as ophthalmia neonatorum and can lead to severe complications,
-          including blindness, if not promptly treated.
-        </p> <br />
-      <h2>Transmission of Gonorrhea</h2> <br />
-      <p>
-        Gonorrhea is transmitted during vaginal, oral, or anal sexual activity
-        with an infected person. The bacteria spread through bodily fluids such
-        as semen, pre-ejaculate, and vaginal secretions. It’s important to note
-        that ejaculation is not required for transmission.
-      </p> <br />
-      <p>
-        Additionally, gonorrhea can be transmitted from mother to child during
-        childbirth. If a baby contracts gonorrhea during birth, it can result in
-        serious health complications such as blindness, joint infections, or
-        life-threatening blood infections. To prevent transmission, the CDC
-        recommends that pregnant women undergo routine testing and treatment as
-        necessary.
-      </p> <br />
-
-      
-
-      <h2>Risk Factors</h2> <br />
-      <p>
-        Anyone who is sexually active is at risk of contracting gonorrhea.
-        However, certain groups are at a higher risk, including:
-      </p> <br />
+        Syphilis develops in stages, with each stage having different symptoms. However, it can often go unnoticed, especially in the early stages when sores or symptoms may be hidden.
+      </p>
       <ul>
         <li>
-          <b>Young Adults and Teenagers:</b> Higher rates are seen in
-          individuals in their teens and early 20s.
+          <strong>Primary Syphilis:</strong> A painless sore (chancre) appears at the site of infection, usually within 10 to 90 days after exposure. The sore may heal without treatment in 3-6 weeks, but the infection remains in the body.
         </li>
         <li>
-          <b>People with Multiple Partners:</b> Engaging in sexual activity with
-          multiple partners increases the risk.
+          <strong>Secondary Syphilis:</strong> Skin rashes (often not itchy), lesions, fever, swollen glands, weight loss, hair loss, sore throat, headaches, muscle aches, and fatigue. Symptoms may resolve on their own but can recur without treatment.
         </li>
         <li>
-          <b>Men Who Have Sex with Men (MSM):</b> The risk is higher among men
-          who have sexual contact with other men.
+          <strong>Latent Syphilis:</strong> No visible symptoms for years, although the infection remains in the body. The person is still contagious during the early latent stage, even if no symptoms are present.
         </li>
-      </ul> <br />
-      <p>The CDC recommends annual screening for the following groups:</p> <br />
+        <li>
+          <strong>Tertiary Syphilis:</strong> Large sores called gummata, affecting skin and organs. Serious health issues, such as strokes, numbness, heart problems, and vision loss.
+        </li>
+      </ul>
+
+      <br />
+      <h2>How Do You Get Syphilis?</h2>
+      <br />
+      <p>
+        Syphilis is most often transmitted through sexual contact with an infected person's syphilitic sore, or chancre, during vaginal, anal, or oral sex. It is contagious during the primary and secondary stages, and sometimes during the early latent period, even without visible symptoms. Syphilis can also be passed from a mother to her baby during pregnancy, resulting in congenital syphilis, which can lead to stillbirth or infant death.
+      </p>
+
+      <br />
+      <h2>Who Is At Risk?</h2>
+      <br />
+      <p>
+        Anyone who is sexually active can contract syphilis, but certain groups are at higher risk, including individuals who:
+      </p>
       <ul>
-        <li>Women under the age of 25</li>
-        <li>
-          Women over 25 with new or multiple sex partners or partners with STDs
-        </li>
-        <li>Men who have sex with men (MSM)</li>
-      </ul> <br />
-
-      
-
-      <h2>Prevalence of Gonorrhea</h2> <br />
-      <p> <br />
-        Gonorrhea is one of the most common STDs worldwide. According to the
-        World Health Organization (WHO), around 78 million people globally are
-        infected with gonorrhea annually. Prevalence rates vary significantly by
-        region, with higher rates in some areas compared to others.
-      </p> <br />
+        <li>Engage in unprotected sex.</li>
+        <li>Have multiple sexual partners.</li>
+        <li>Are men who have sex with men (MSM).</li>
+        <li>Have HIV.</li>
+      </ul>
       <p>
-        In the United States, gonorrhea is the second most commonly reported
-        bacterial STD, with an estimated 635,000 new cases reported annually.
-        This figure may be an underestimate since asymptomatic individuals often
-        go untested. Factors such as access to sexual health resources,
-        education, and public health efforts play a crucial role in determining
-        the prevalence of gonorrhea in a given community.
-      </p> <br />
+        The CDC recommends that all pregnant women get tested for syphilis during their first prenatal visit to prevent congenital syphilis.
+      </p>
 
-      
-
-      <h2>Prevention of Gonorrhea</h2> <br />
+      <br />
+      <h2>How Do You Prevent Syphilis?</h2>
+      <br />
       <p>
-        While the only guaranteed way to prevent gonorrhea is abstaining from
-        sexual activity, there are several effective prevention methods for
-        sexually active individuals:
-      </p> <br />
-      <ul>
-        <li>
-          <b>Use Protection:</b> Consistent use of condoms or dental dams during
-          oral, vaginal, and anal sex significantly reduces the risk of
-          transmission.
-        </li>
-        <li>
-          <b>Mutual Monogamy:</b> Engaging in a monogamous relationship with a
-          partner who has tested negative for STDs reduces the risk.
-        </li>
-        <li>
-          <b>Routine Testing:</b> Regular testing ensures early detection and
-          treatment, preventing further transmission.
-        </li>
-        <li>
-          <b>Open Communication:</b> Discussing sexual health with partners and
-          knowing their STD status is an important step in prevention.
-        </li>
-      </ul> <br />
-
-      
-
-      <h2>What is Gonococcus?</h2> <br />
+        The most effective way to prevent syphilis is through abstinence, but safer sex practices can significantly reduce risk. Using latex condoms or dental dams during sexual activities helps prevent exposure to sores. However, areas not covered by condoms may still transmit the infection if sores are present.
+      </p>
       <p>
-        The term “Gonococcus” refers to the bacterium{" "}
-        <i>Neisseria gonorrhoeae</i>, the microorganism responsible for causing
-        gonorrhea. This bacterium was first identified in 1879 by German
-        physician Albert Neisser, after whom the species is named. The term
-        comes from Greek roots, where “gonos” means seed or offspring, and
-        “kokkos” means berry, reflecting the bacterium’s round, berry-like
-        appearance under a microscope.
-      </p> <br />
+        Limiting sexual partners and maintaining a monogamous relationship with a tested, syphilis-free partner can reduce the risk. Regular STD testing is essential for early detection and treatment.
+      </p>
+
+      <br />
+      <h2>Syphilis in the U.S.</h2>
+      <br />
       <p>
-        Gonococcus can be transmitted through sexual contact or from mother to
-        child during childbirth. Once inside the body, the bacterium multiplies
-        and causes inflammation in the affected organs, such as the reproductive
-        system, rectum, throat, or eyes. Its ability to infect multiple parts of
-        the body underscores the importance of early diagnosis and treatment.
-      </p> <br />
-
-      <h2>Key Takeaways</h2> <br />
-      <ul>
-        <li>
-          Gonorrhea is a common and treatable STD caused by the bacterium{" "}
-          <i>Neisseria gonorrhoeae</i>.
-        </li>
-        <li>
-          It can affect the reproductive organs, throat, eyes, rectum, and
-          joints if untreated.
-        </li>
-        <li>
-          Many infected individuals show no symptoms, so routine testing is
-          essential for early detection.
-        </li>
-        <li>
-          Gonorrhea can be transmitted through vaginal, anal, or oral sex, as
-          well as from mother to child during childbirth.
-        </li>
-        <li>
-          Prevention methods include consistent condom use, monogamous
-          relationships, open communication with partners, and regular STD
-          screenings.
-        </li>
-      </ul> <br />
-
-      
-
-      <h2>Resources</h2> <br />
-      <ol>
-        <li>
-          “Gonorrhea - CDC Fact Sheet (Detailed Version).” Centers for Disease
-          Control and Prevention. <a href="#">Link</a>
-        </li>
-        <li>
-          “Screening Recommendations and Considerations Referenced in Treatment
-          Guidelines and Original Sources.” Centers for Disease Control and
-          Prevention. <a href="#">Link</a>
-        </li>
-      </ol>
+        Syphilis cases have been on the rise in the United States. In 2018, the CDC reported over 115,000 syphilis cases, a 14% increase from the previous year. The rise in cases is linked to several factors, such as changes in sexual behaviors, reduced condom use, and decreased access to healthcare.
+      </p>
+      <p>
+        To combat this, public health efforts must focus on improving access to testing and treatment, promoting safe sex, reducing stigma, and increasing public awareness about syphilis and other STDs.
+      </p>
     </>
   );
 }
 
-export default Syphilis;
+export default SyphilisInfo;

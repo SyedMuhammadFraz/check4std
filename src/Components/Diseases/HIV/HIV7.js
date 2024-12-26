@@ -1,111 +1,175 @@
 import React from "react";
 
-function HIV() {
+function HIVTesting() {
   return (
     <>
-      <h2>Overview of HIV</h2>
+      <br />
+      <h2>HIV Testing</h2>
+      <br />
       <p>
-        HIV stands for Human Immunodeficiency Virus. It is the virus responsible for causing AIDS (Acquired Immunodeficiency Syndrome). HIV weakens the immune system by attacking CD4 cells (T cells), which are essential for fighting infections. Over time, HIV can damage the immune system to the point where the body cannot fight infections and diseases that would otherwise be manageable.
+        The only definitive way to know if you have HIV is by getting tested. Many individuals do not experience symptoms for years after being infected, so it's impossible to tell if you have HIV just by how you feel. Testing is recommended for all adults, and it is quick, easy, and nearly painless.
       </p>
 
-      <h2>What is HIV?</h2>
+      <br />
+      <h2>How Soon Can HIV Be Detected by a Blood Test?</h2>
+      <br />
       <p>
-        HIV is the virus that leads to AIDS. It attacks the immune system, leaving individuals vulnerable to diseases. The virus is spread through body fluids such as blood, semen, vaginal fluids, and breast milk. 
+        The most common method of diagnosing HIV is through antibody testing of blood. However, it may take your body up to 3 months, or even longer, to produce enough antibodies for a test to detect. Faster tests can detect both antibodies and p24 antigens (a protein that forms most of the HIV viral core), or they can detect the virus’s genetic material directly. These tests can identify infection sooner, enabling early treatment and helping to prevent transmission.
       </p>
 
-      <h2>How is HIV Transmitted?</h2>
+      <br />
+      <h2>Why Is HIV Testing Important?</h2>
+      <br />
       <p>
-        HIV is transmitted through specific body fluids:
+        Knowing your HIV status is crucial for maintaining both your own health and the health of your partners. If left untreated, HIV can damage your immune system and lead to AIDS, making you more susceptible to severe and potentially life-threatening infections.
+      </p>
+
+      <br />
+      <h2>How to Test for HIV</h2>
+      <br />
+      <p>
+        Testing is essential for identifying HIV as early as possible, which can help prevent complications and the spread of the virus. According to the Centers for Disease Control and Prevention (CDC):
       </p>
       <ul>
-        <li>Blood</li>
-        <li>Semen</li>
-        <li>Vaginal fluids</li>
-        <li>Anal fluids/mucus</li>
-        <li>Breast milk</li>
+        <li>About 15% of the 1.1 million people living with HIV in the U.S. don’t know they are infected.</li>
+        <li>Nearly 40% of new HIV infections come from people unaware they are HIV-positive.</li>
+        <li>HIV is most often transmitted in its earliest stages of infection (acute infection).</li>
       </ul>
+
+      <br />
+      <h2>Can You Be HIV Positive and Test Negative?</h2>
+      <br />
       <p>
-        Key transmission methods include:
+        If you get tested too soon after exposure, there may not be enough detectable antigens or antibodies in your blood for the test to show that you are infected. This means you could have HIV but receive a negative test result. Therefore, it’s important to consult a healthcare professional about the right time to get tested.
+      </p>
+
+      <br />
+      <h2>What If You Test Negative for HIV?</h2>
+      <br />
+      <p>
+        A negative test result, when performed at the appropriate time, can offer peace of mind. You can continue to take preventive measures, such as using condoms during sex. If you are at higher risk, you might consider taking daily medication called pre-exposure prophylaxis (PrEP) to prevent HIV.
+      </p>
+
+      <br />
+      <h2>What If You Test Positive for HIV?</h2>
+      <br />
+      <p>
+        If you test positive for HIV, you can take steps to protect your health. Starting treatment as early as possible can help you live a longer and healthier life. Though there is currently no cure for HIV, ongoing treatment can keep the virus under control. If a test gives a false positive result, it may be due to the test reacting to antibodies from another infection. Proper testing at the right time can help avoid false positives.
+      </p>
+
+      <br />
+      <h2>Who Should Get Tested for HIV?</h2>
+      <br />
+      <p>
+        Anyone who thinks they may have been exposed to HIV should consider getting tested. HIV is most commonly spread through unprotected vaginal or anal sex or by sharing needles. The CDC recommends HIV testing for all individuals between the ages of 13 and 64 at least once. People with higher risks should get tested more frequently.
+      </p>
+
+      <p>HIV infection may present symptoms such as:</p>
+      <ul>
+        <li>Headache</li>
+        <li>Fatigue</li>
+        <li>Fever</li>
+        <li>Swollen lymph nodes</li>
+        <li>Rapid weight loss</li>
+        <li>Skin rashes or sores</li>
+        <li>Night sweats</li>
+        <li>Chronic diarrhea</li>
+      </ul>
+
+      <br />
+      <p>If any of the following risk factors apply to you, it’s recommended to get tested at least once a year:</p>
+      <ul>
+        <li>Being a sexually active gay or bisexual man, with some individuals needing more frequent testing (every 3 to 6 months).</li>
+        <li>Having sex with an HIV-positive partner.</li>
+        <li>Sharing needles, syringes, or other injection equipment.</li>
+        <li>Engaging in sex for drugs or money.</li>
+        <li>Having other sexually transmitted diseases, hepatitis, or tuberculosis.</li>
+      </ul>
+
+      <br />
+      <h2>Should Pregnant Women Get Tested for HIV?</h2>
+      <br />
+      <p>
+        Yes. The CDC recommends that all pregnant women get tested for HIV. If a pregnant woman is HIV-positive, starting HIV treatment can protect her health and significantly lower the risk of transmitting the virus to her baby.
+      </p>
+
+      <br />
+      <h2>How is HIV Tested?</h2>
+      <br />
+      <p>
+        HIV testing typically involves one of three main types of tests:
+      </p>
+      <h3>Antibody Tests</h3>
+      <p>
+        These tests detect antibodies your body produces in response to HIV. Since it takes about 3 months for your body to produce enough antibodies, these tests may not be effective immediately after exposure.
+      </p>
+      <p>
+        Antibody tests can be done using blood, oral fluid, or sometimes urine. Blood tests are the most accurate since blood contains the highest concentration of antibodies.
+      </p>
+
+      <h3>Antigen/Antibody Tests</h3>
+      <p>
+        These tests detect both HIV antibodies and antigens (proteins such as p24, which appear even before antibodies develop). This allows for earlier detection compared to antibody-only tests.
+      </p>
+
+      <h3>Nucleic Acid Tests (NATs)</h3>
+      <p>
+        These tests look for the actual HIV virus in the blood. Though they are more expensive, they can detect the virus sooner than other tests.
+      </p>
+
+      <br />
+      <h2>Where Can You Get Tested for HIV?</h2>
+      <br />
+      <p>
+        HIV tests are available at your doctor’s office, clinics, or certified lab centers. You can also order HIV tests online through reliable platforms like STDcheck.com and get tested at a certified lab without needing an appointment.
+      </p>
+
+      <br />
+      <h2>Which HIV Tests Do We Offer?</h2>
+      <br />
+      <p>
+        At STDcheck.com, we provide two types of HIV tests:
       </p>
       <ul>
-        <li>Unprotected sexual contact (vaginal or anal sex)</li>
-        <li>Shared needles or syringes (drug use)</li>
-        <li>Mother-to-child transmission during pregnancy, childbirth, or breastfeeding</li>
-      </ul>
-      <p>
-        HIV cannot be transmitted through saliva, tears, sweat, casual contact like hugging or shaking hands, mosquitoes or insects, or using shared toilets or utensils.
-      </p>
-
-      <h2>How Common is HIV?</h2>
-      <p>
-        Over 1.1 million people in the U.S. are living with HIV, with around 14% unaware of their infection. Although there is no cure for HIV, modern treatments like antiretroviral therapy (ART) allow people with HIV to live long, healthy lives and prevent further transmission of the virus.
-      </p>
-
-      <h2>Is HIV Serious?</h2>
-      <p>
-        HIV is a chronic condition that can lead to AIDS if untreated. AIDS represents the advanced stage of HIV infection, where the immune system is severely damaged. Without treatment, HIV typically progresses to AIDS in 8-10 years. However, with ART, people with HIV can live healthy lives and prevent the progression to AIDS.
-      </p>
-
-      <h2>Symptoms of HIV</h2>
-      <h3>Acute HIV Infection</h3>
-      <p>
-        Acute HIV infection can cause flu-like symptoms, which may appear 2-4 weeks after exposure. These symptoms include fever, fatigue, sore throat, swollen lymph nodes, and muscle aches.
-      </p>
-
-      <h3>Chronic HIV</h3>
-      <p>
-        Many individuals may remain symptom-free for years, during which the virus continues to replicate and damage the immune system. Symptoms may not appear until the virus has severely weakened the immune system.
-      </p>
-
-      <h2>Can You Get HIV More Than Once?</h2>
-      <p>
-        Once you are infected with HIV, the virus stays in your body for life. However, effective treatment can suppress the virus to undetectable levels, preventing further damage to your immune system.
-      </p>
-
-      <h2>How Is HIV Diagnosed?</h2>
-      <p>
-        HIV is diagnosed through blood tests that detect antibodies or antigens to the virus. Early detection is crucial to begin treatment and manage the virus effectively.
-      </p>
-
-      <h2>Who Is at Risk for HIV?</h2>
-      <p>
-        Certain groups are at higher risk for HIV, including:
-      </p>
-      <ul>
-        <li>Men who have sex with men</li>
-        <li>Individuals with multiple sexual partners</li>
-        <li>People who inject drugs and share needles</li>
-        <li>Individuals with other sexually transmitted infections (STIs)</li>
+        <li>Fourth-Generation HIV Test: This antigen/antibody test detects HIV antibodies (Type 1 and Type 2) and p24 antigens.</li>
+        <li>HIV RNA Test: A NAT test that detects HIV-1 genetic material, ideal for early detection or ruling out false positives from fourth-generation tests.</li>
       </ul>
 
-      <h2>Preventing HIV</h2>
+      <br />
+      <h2>How Soon Can You Get Tested for HIV?</h2>
+      <br />
       <p>
-        Preventing HIV involves:
+        No HIV test can detect the virus immediately after exposure. If you suspect you’ve been exposed to HIV in the last 72 hours, consult a doctor immediately about post-exposure prophylaxis (PEP) to prevent infection.
       </p>
-      <ul>
-        <li>Using condoms during sexual activity</li>
-        <li>Taking pre-exposure prophylaxis (PrEP) for high-risk individuals</li>
-        <li>Getting tested regularly</li>
-        <li>Avoiding sharing needles or syringes</li>
-        <li>Communicating openly about HIV status with potential partners</li>
-      </ul>
-
-      <h2>Is There a Vaccine for HIV?</h2>
       <p>
-        Currently, there is no vaccine available to prevent HIV. However, ongoing research is exploring potential vaccines, with mRNA-based HIV vaccines being tested for their effectiveness in prevention.
+        Typically, a doctor will suggest waiting 18 to 45 days post-exposure for an antigen/antibody blood test. Blood samples from a finger prick can be tested after 18 to 90 days.
       </p>
 
-      <h2>Is HIV Curable?</h2>
+      <br />
+      <h2>What Do HIV Test Results Mean?</h2>
+      <br />
       <p>
-        As of now, HIV is not curable. However, treatments like antiretroviral therapy (ART) can manage the virus effectively, allowing individuals to live long, healthy lives. Some rare cases of "functional cure" have been achieved through complex procedures, but these are not applicable for everyone.
+        <strong>Fourth-Generation HIV Test</strong>
+        <ul>
+          <li>Non-reactive/Not Detected: No HIV antibodies or p24 antigens found, indicating no HIV infection or testing was done too soon.</li>
+          <li>Reactive/Detected: HIV antibodies and/or p24 antigens were found, indicating possible HIV infection. Follow-up testing may be needed to confirm the result.</li>
+        </ul>
+
+        <strong>HIV RNA Test</strong>
+        <ul>
+          <li>Non-reactive/Negative: No genetic material from HIV found, indicating no infection or testing was too early.</li>
+          <li>Reactive/Positive: HIV genetic material detected, confirming infection with HIV type 1.</li>
+        </ul>
       </p>
 
-      <h2>Conclusion</h2>
+      <br />
+      <h2>What to Do if You Test Positive for HIV?</h2>
+      <br />
       <p>
-        HIV is a serious but manageable condition. With early detection and proper treatment, individuals with HIV can lead healthy lives and prevent the virus from progressing to AIDS. If you think you may have been exposed to HIV, it's important to consult with a healthcare provider for testing and treatment options.
+        If you test positive for HIV, it is essential to consult a doctor for follow-up care and treatment. HIV treatment, though not a cure, can help you live a longer and healthier life. The earlier treatment begins, the better the outcomes.
       </p>
     </>
   );
 }
 
-export default HIV;
+export default HIVTesting;

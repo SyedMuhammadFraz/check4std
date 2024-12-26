@@ -1,249 +1,97 @@
 import React from "react";
 
-function Syphilis() {
+function RPRTest() {
   return (
     <>
-      <h2>What is Gonorrhea?</h2>
+      <br />
+      <h2>RPR Test</h2>
       <br />
       <p>
-        Gonorrhea is a bacterial infection classified as a sexually transmitted
-        disease (STD). It is highly prevalent but treatable with prescribed
-        antibiotics. This infection spreads through vaginal, anal, and oral
-        sexual contact. Every year, approximately 820,000 new cases of gonorrhea
-        are reported in the United States alone. Many people who contract
-        gonorrhea may not realize they have it due to the absence of symptoms or
-        the presence of mild symptoms.
+        A Rapid Plasma Reagin (RPR) test is a straightforward blood test used to detect a syphilis infection. Syphilis is caused by the bacterium Treponema pallidum, which is primarily transmitted through sexual contact. The RPR test identifies antibodies produced by the body in response to a syphilis infection. Along with specific antibody testing, the RPR test helps confirm the presence of an active syphilis infection, so you can know for sure if you have it and seek treatment for a swift recovery.
       </p>
+
+      <br />
+      <h2>Reasons to Get Tested</h2>
       <br />
       <p>
-        Colloquially, gonorrhea is referred to as “the drip” or “the clap.” It
-        is particularly common among teenagers and young adults in their 20s.
-        The infection is caused by the bacterium <i>Neisseria gonorrhoeae</i>,
-        which targets the mucous membranes of the reproductive system. In women,
-        it can infect the cervix, fallopian tubes, and uterus, while in men, it
-        affects the urethra. Gonorrhea can also infect other parts of the body,
-        including the throat, anus, eyes, and (less frequently) joints. If left
-        untreated, gonorrhea can cause severe health complications, including
-        infertility, making routine testing essential for sexually active
-        individuals.
+        The RPR test is primarily used as a screening tool for syphilis. It may be recommended if you show symptoms such as a skin rash or sores. There are several other scenarios where an RPR test may be necessary:
       </p>
-      <br />
-      
-      <h2>Symptoms of Gonorrhea</h2> <br />
+      <ul>
+        <li>You are at risk of being exposed to syphilis.</li>
+        <li>You have another sexually transmitted disease (STD) or an HIV infection.</li>
+        <li>You have a sexual partner diagnosed with syphilis.</li>
+        <li>You are a man who has sex with men (MSM).</li>
+        <li>You’ve engaged in high-risk sexual activity.</li>
+        <li>You are pregnant, to ensure no active infection that could affect your baby.</li>
+        <li>You’ve been treated for syphilis, to confirm the infection has been fully cured.</li>
+      </ul>
       <p>
-        Gonorrhea symptoms often go unnoticed, especially in women, as most
-        women and some men show no signs of infection. However, when symptoms do
-        appear, they can vary depending on the infected area.
+        If left undetected and untreated, syphilis can lead to severe health complications. Over time, it can progress to late-stage syphilis, which can cause damage to internal organs, and lead to numbness, paralysis, blindness, or even death. Since syphilis may not present visible symptoms or may show up in hard-to-spot areas, it’s crucial to get tested regularly if you're sexually active. Testing is the only way to confirm the presence of syphilis.
       </p>
+
       <br />
-      <h3>Symptoms in Men:</h3> <br />
+      <h2>When to Get Tested</h2>
+      <br />
+      <p>
+        It’s recommended to wait at least 3-6 weeks after potential exposure to syphilis to take the test, as this allows your immune system enough time to produce detectable antibodies. Additionally, if you’ve been treated for syphilis, you should get re-tested three months later to confirm that the infection has been cured.
+      </p>
+
+      <br />
+      <h2>How the Test Is Done</h2>
+      <br />
+      <p>
+        The test requires a blood sample, which is taken from a vein in your arm using a small needle. The procedure is quick and is done in a private setting by a trained technician. The sample is then analyzed for antibodies, and no fasting or special preparation is required beforehand.
+      </p>
+
+      <br />
+      <h2>Risks of the RPR Test</h2>
+      <br />
+      <p>
+        The RPR test is minimally invasive and carries very few risks. However, since it involves drawing blood, some people may feel slight discomfort or a stinging sensation when the needle is inserted. The process of drawing blood can vary in difficulty depending on the size and condition of your veins. Afterward, some may experience bruising, soreness, or light-headedness.
+      </p>
+
+      <br />
+      <h2>What Do RPR Results Mean?</h2>
+      <br />
+      <p>
+        Our syphilis test is a qualitative RPR test, which provides a result indicating either negative (nonreactive) or positive (reactive) for syphilis infection.
+      </p>
+
+      <h3>Negative / Nonreactive Result</h3>
+      <br />
+      <p>
+        A negative result means that no antibodies typically produced during a syphilis infection have been detected. This suggests that you either don’t have syphilis or the test was conducted too early to detect antibodies. If you tested shortly after exposure, it’s possible the antibodies haven't had time to develop, which is known as a false-negative result. To get the most accurate results, it’s essential to wait for the recommended window period after exposure before getting tested.
+      </p>
+
+      <h3>Positive / Reactive Result</h3>
+      <br />
+      <p>
+        A positive result indicates that syphilis antibodies have been found, suggesting an active infection. However, to confirm the diagnosis, a positive result must be followed by a specific treponemal antibody test. This two-step process is necessary because the RPR test identifies antibodies that may also react to other conditions or infections. Therefore, additional tests are required to confirm syphilis.
+      </p>
+      <p>
+        Certain conditions may cause a false positive, including:
+      </p>
       <ul>
-        <li>Pain or burning sensation during urination</li>
-        <li>White, yellow, or green discharge from the penis</li>
-        <li>Swollen or painful testicles</li>
-      </ul> <br />
-
-      <h3>Symptoms in Women:</h3> <br />
-      <ul>
-        <li>Pain or burning sensation while urinating</li>
-        <li>Increased vaginal discharge</li>
-        <li>Vaginal bleeding between menstrual periods</li>
-      </ul> <br />
-
-      <h3>Symptoms in Rectal Infections (Both Genders):</h3> <br />
-      <ul>
-        <li>Anal discharge</li>
-        <li>Itching or soreness in the rectal area</li>
-        <li>Rectal bleeding</li>
-        <li>Painful bowel movements</li>
-      </ul> <br />
+        <li>IV drug use</li>
+        <li>Lyme disease</li>
+        <li>Pregnancy</li>
+        <li>Tuberculosis (TB)</li>
+      </ul>
       <p>
-        Since many people remain asymptomatic, routine testing is crucial to
-        identify and treat the infection early.
-      </p> <br />
-        <h2>How Gonorrhea Affects Different Body Parts</h2> <br />
-        <h3>Joints:</h3> <br />
-        <p>
-          Gonorrhea can spread to the bloodstream, leading to a condition called
-          disseminated gonococcal infection (DGI). When this happens, the
-          bacteria can reach the joints, causing inflammation, joint pain,
-          swelling, and redness. If not treated, DGI can result in chronic joint
-          damage or arthritis.
-        </p> <br />
+        To confirm a positive result, a quantitative RPR test (titer) is performed to measure the antibody levels. Additionally, a Treponema Pallidum Antibodies (TPA) confirmatory test may be conducted to definitively diagnose syphilis.
+      </p>
 
-        <h3>Rectum:</h3> <br />
-        <p>
-          Rectal gonorrhea is caused by exposure to <i>Neisseria gonorrhoeae</i>{" "}
-          through anal sexual contact with an infected partner. It may lead to
-          symptoms such as rectal pain, discharge, and bleeding. If untreated,
-          it increases the risk of other STDs, pelvic inflammatory disease
-          (PID), and infertility.
-        </p> <br />
-
-        <h3>Eyes:</h3> <br />
-        <p>
-          Gonorrhea can infect the eyes, causing a condition known as
-          conjunctivitis. This occurs when the bacteria enter the eye, either
-          through direct contact with infected genital secretions or during
-          childbirth when a baby passes through an infected birth canal.
-          Symptoms of gonococcal conjunctivitis include redness, discharge,
-          itching, and irritation of the eyes. In newborns, this infection is
-          known as ophthalmia neonatorum and can lead to severe complications,
-          including blindness, if not promptly treated.
-        </p> <br />
-      <h2>Transmission of Gonorrhea</h2> <br />
+      <br />
+      <h2>What Should You Do If You Test Positive for Syphilis?</h2>
+      <br />
       <p>
-        Gonorrhea is transmitted during vaginal, oral, or anal sexual activity
-        with an infected person. The bacteria spread through bodily fluids such
-        as semen, pre-ejaculate, and vaginal secretions. It’s important to note
-        that ejaculation is not required for transmission.
-      </p> <br />
+        If both the RPR test and confirmatory tests indicate that you have syphilis, you should seek treatment. It's essential that your sexual partners are also tested and treated. Syphilis can be easily treated in its early stages with antibiotics, typically penicillin, administered via an injection. Depending on how far the infection has progressed, more than one shot may be necessary. Although our service does not provide injections, you can download or print your results and take them to a healthcare provider for proper treatment and follow-up care.
+      </p>
       <p>
-        Additionally, gonorrhea can be transmitted from mother to child during
-        childbirth. If a baby contracts gonorrhea during birth, it can result in
-        serious health complications such as blindness, joint infections, or
-        life-threatening blood infections. To prevent transmission, the CDC
-        recommends that pregnant women undergo routine testing and treatment as
-        necessary.
-      </p> <br />
-
-      
-
-      <h2>Risk Factors</h2> <br />
-      <p>
-        Anyone who is sexually active is at risk of contracting gonorrhea.
-        However, certain groups are at a higher risk, including:
-      </p> <br />
-      <ul>
-        <li>
-          <b>Young Adults and Teenagers:</b> Higher rates are seen in
-          individuals in their teens and early 20s.
-        </li>
-        <li>
-          <b>People with Multiple Partners:</b> Engaging in sexual activity with
-          multiple partners increases the risk.
-        </li>
-        <li>
-          <b>Men Who Have Sex with Men (MSM):</b> The risk is higher among men
-          who have sexual contact with other men.
-        </li>
-      </ul> <br />
-      <p>The CDC recommends annual screening for the following groups:</p> <br />
-      <ul>
-        <li>Women under the age of 25</li>
-        <li>
-          Women over 25 with new or multiple sex partners or partners with STDs
-        </li>
-        <li>Men who have sex with men (MSM)</li>
-      </ul> <br />
-
-      
-
-      <h2>Prevalence of Gonorrhea</h2> <br />
-      <p> <br />
-        Gonorrhea is one of the most common STDs worldwide. According to the
-        World Health Organization (WHO), around 78 million people globally are
-        infected with gonorrhea annually. Prevalence rates vary significantly by
-        region, with higher rates in some areas compared to others.
-      </p> <br />
-      <p>
-        In the United States, gonorrhea is the second most commonly reported
-        bacterial STD, with an estimated 635,000 new cases reported annually.
-        This figure may be an underestimate since asymptomatic individuals often
-        go untested. Factors such as access to sexual health resources,
-        education, and public health efforts play a crucial role in determining
-        the prevalence of gonorrhea in a given community.
-      </p> <br />
-
-      
-
-      <h2>Prevention of Gonorrhea</h2> <br />
-      <p>
-        While the only guaranteed way to prevent gonorrhea is abstaining from
-        sexual activity, there are several effective prevention methods for
-        sexually active individuals:
-      </p> <br />
-      <ul>
-        <li>
-          <b>Use Protection:</b> Consistent use of condoms or dental dams during
-          oral, vaginal, and anal sex significantly reduces the risk of
-          transmission.
-        </li>
-        <li>
-          <b>Mutual Monogamy:</b> Engaging in a monogamous relationship with a
-          partner who has tested negative for STDs reduces the risk.
-        </li>
-        <li>
-          <b>Routine Testing:</b> Regular testing ensures early detection and
-          treatment, preventing further transmission.
-        </li>
-        <li>
-          <b>Open Communication:</b> Discussing sexual health with partners and
-          knowing their STD status is an important step in prevention.
-        </li>
-      </ul> <br />
-
-      
-
-      <h2>What is Gonococcus?</h2> <br />
-      <p>
-        The term “Gonococcus” refers to the bacterium{" "}
-        <i>Neisseria gonorrhoeae</i>, the microorganism responsible for causing
-        gonorrhea. This bacterium was first identified in 1879 by German
-        physician Albert Neisser, after whom the species is named. The term
-        comes from Greek roots, where “gonos” means seed or offspring, and
-        “kokkos” means berry, reflecting the bacterium’s round, berry-like
-        appearance under a microscope.
-      </p> <br />
-      <p>
-        Gonococcus can be transmitted through sexual contact or from mother to
-        child during childbirth. Once inside the body, the bacterium multiplies
-        and causes inflammation in the affected organs, such as the reproductive
-        system, rectum, throat, or eyes. Its ability to infect multiple parts of
-        the body underscores the importance of early diagnosis and treatment.
-      </p> <br />
-
-      <h2>Key Takeaways</h2> <br />
-      <ul>
-        <li>
-          Gonorrhea is a common and treatable STD caused by the bacterium{" "}
-          <i>Neisseria gonorrhoeae</i>.
-        </li>
-        <li>
-          It can affect the reproductive organs, throat, eyes, rectum, and
-          joints if untreated.
-        </li>
-        <li>
-          Many infected individuals show no symptoms, so routine testing is
-          essential for early detection.
-        </li>
-        <li>
-          Gonorrhea can be transmitted through vaginal, anal, or oral sex, as
-          well as from mother to child during childbirth.
-        </li>
-        <li>
-          Prevention methods include consistent condom use, monogamous
-          relationships, open communication with partners, and regular STD
-          screenings.
-        </li>
-      </ul> <br />
-
-      
-
-      <h2>Resources</h2> <br />
-      <ol>
-        <li>
-          “Gonorrhea - CDC Fact Sheet (Detailed Version).” Centers for Disease
-          Control and Prevention. <a href="#">Link</a>
-        </li>
-        <li>
-          “Screening Recommendations and Considerations Referenced in Treatment
-          Guidelines and Original Sources.” Centers for Disease Control and
-          Prevention. <a href="#">Link</a>
-        </li>
-      </ol>
+        The Centers for Disease Control and Prevention (CDC) advises that everyone diagnosed with primary, secondary, latent, or tertiary syphilis should also be tested for HIV, as having syphilis increases the risk of contracting or transmitting HIV.
+      </p>
     </>
   );
 }
 
-export default Syphilis;
+export default RPRTest;

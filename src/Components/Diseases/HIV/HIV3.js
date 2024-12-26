@@ -1,111 +1,101 @@
 import React from "react";
 
-function HIV() {
+function HIVSymptomsInMen() {
   return (
     <>
-      <h2>Overview of HIV</h2>
+      <br />
+      <h2>HIV Symptoms in Men</h2>
+      <br />
       <p>
-        HIV stands for Human Immunodeficiency Virus. It is the virus responsible for causing AIDS (Acquired Immunodeficiency Syndrome). HIV weakens the immune system by attacking CD4 cells (T cells), which are essential for fighting infections. Over time, HIV can damage the immune system to the point where the body cannot fight infections and diseases that would otherwise be manageable.
+        HIV is transmitted through contact with infected blood, semen, or vaginal fluid. Engaging in unprotected vaginal or anal sex (or oral sex if you have cuts or open sores in your mouth) with an infected partner significantly increases the risk of contracting HIV. HIV can also spread through unsterile drug use, including sharing needles, syringes, or drug paraphernalia.
       </p>
 
-      <h2>What is HIV?</h2>
+      <br />
+      <h2>Can HIV Be Transmitted if the Man Doesn’t Ejaculate?</h2>
+      <br />
       <p>
-        HIV is the virus that leads to AIDS. It attacks the immune system, leaving individuals vulnerable to diseases. The virus is spread through body fluids such as blood, semen, vaginal fluids, and breast milk. 
+        Yes, HIV can be transmitted even if ejaculation does not occur. Pre-seminal fluid, which can contain HIV, is released before ejaculation and can transmit the virus. If the infected individual has a high viral load, the chances of contracting HIV from pre-seminal fluid increase. However, if the viral load is undetectable, HIV cannot be passed through bodily fluids. Managing viral load effectively through treatment can significantly reduce the transmission risk.
       </p>
 
-      <h2>How is HIV Transmitted?</h2>
+      <br />
+      <h2>HIV and its Survival Outside the Body</h2>
+      <br />
       <p>
-        HIV is transmitted through specific body fluids:
+        HIV does not survive long outside the human body. If semen or blood is exposed to air for a period of time, the risk of transmission is very low.
+      </p>
+
+      <br />
+      <h2>Early HIV Symptoms in Men (Acute Stage)</h2>
+      <br />
+      <p>
+        In the first 2 to 4 weeks after infection, many men will experience flu-like symptoms, which are often mistaken for common illnesses. About 80% of individuals with an acute HIV infection will exhibit the following symptoms:
       </p>
       <ul>
-        <li>Blood</li>
-        <li>Semen</li>
-        <li>Vaginal fluids</li>
-        <li>Anal fluids/mucus</li>
-        <li>Breast milk</li>
+        <li>Body rash</li>
+        <li>Fever</li>
+        <li>Sore throat</li>
+        <li>Severe headaches</li>
       </ul>
       <p>
-        Key transmission methods include:
+        Less common symptoms in this stage may include:
       </p>
       <ul>
-        <li>Unprotected sexual contact (vaginal or anal sex)</li>
-        <li>Shared needles or syringes (drug use)</li>
-        <li>Mother-to-child transmission during pregnancy, childbirth, or breastfeeding</li>
+        <li>Swollen lymph nodes</li>
+        <li>Nausea</li>
+        <li>Fatigue</li>
+        <li>Mouth ulcers</li>
+        <li>Genital sores</li>
+        <li>Night sweats</li>
+        <li>Vomiting</li>
+        <li>Muscle aches and joint pain</li>
       </ul>
       <p>
-        HIV cannot be transmitted through saliva, tears, sweat, casual contact like hugging or shaking hands, mosquitoes or insects, or using shared toilets or utensils.
+        Symptoms in the acute stage typically last between one and two weeks.
       </p>
 
-      <h2>How Common is HIV?</h2>
+      <br />
+      <h2>Asymptomatic Stage of HIV in Men</h2>
+      <br />
       <p>
-        Over 1.1 million people in the U.S. are living with HIV, with around 14% unaware of their infection. Although there is no cure for HIV, modern treatments like antiretroviral therapy (ART) allow people with HIV to live long, healthy lives and prevent further transmission of the virus.
+        After the initial symptoms subside, the virus enters the asymptomatic stage, during which the individual may not show any signs of infection. This stage can last for months or even years. However, even though symptoms are not present, HIV remains active in the body, attacking vital immune cells. It is important to note that the virus is still transmissible during this period, and regular HIV testing is recommended, even if no symptoms are present.
       </p>
 
-      <h2>Is HIV Serious?</h2>
+      <br />
+      <h2>Advanced Stage of HIV: AIDS</h2>
+      <br />
       <p>
-        HIV is a chronic condition that can lead to AIDS if untreated. AIDS represents the advanced stage of HIV infection, where the immune system is severely damaged. Without treatment, HIV typically progresses to AIDS in 8-10 years. However, with ART, people with HIV can live healthy lives and prevent the progression to AIDS.
+        If untreated, HIV can progress to AIDS, a stage in which the immune system is severely weakened. This occurs when the virus has significantly damaged the body’s immune system, making the person more susceptible to other infections. Individuals with AIDS often experience repeated infections that a healthy immune system would usually be able to combat.
       </p>
 
-      <h2>Symptoms of HIV</h2>
-      <h3>Acute HIV Infection</h3>
-      <p>
-        Acute HIV infection can cause flu-like symptoms, which may appear 2-4 weeks after exposure. These symptoms include fever, fatigue, sore throat, swollen lymph nodes, and muscle aches.
-      </p>
-
-      <h3>Chronic HIV</h3>
-      <p>
-        Many individuals may remain symptom-free for years, during which the virus continues to replicate and damage the immune system. Symptoms may not appear until the virus has severely weakened the immune system.
-      </p>
-
-      <h2>Can You Get HIV More Than Once?</h2>
-      <p>
-        Once you are infected with HIV, the virus stays in your body for life. However, effective treatment can suppress the virus to undetectable levels, preventing further damage to your immune system.
-      </p>
-
-      <h2>How Is HIV Diagnosed?</h2>
-      <p>
-        HIV is diagnosed through blood tests that detect antibodies or antigens to the virus. Early detection is crucial to begin treatment and manage the virus effectively.
-      </p>
-
-      <h2>Who Is at Risk for HIV?</h2>
-      <p>
-        Certain groups are at higher risk for HIV, including:
-      </p>
+      <br />
+      <h3>Symptoms of AIDS in Men:</h3>
       <ul>
-        <li>Men who have sex with men</li>
-        <li>Individuals with multiple sexual partners</li>
-        <li>People who inject drugs and share needles</li>
-        <li>Individuals with other sexually transmitted infections (STIs)</li>
+        <li>Persistent diarrhea</li>
+        <li>Nausea and vomiting</li>
+        <li>Rapid weight loss</li>
+        <li>Chronic fatigue</li>
+        <li>Sores or ulcers in the mouth</li>
+        <li>Sores or ulcers on the genitals</li>
+        <li>Recurring fever</li>
+        <li>Recurring chills</li>
+        <li>Night sweats</li>
+        <li>Shortness of breath</li>
+        <li>Coughing</li>
+        <li>Prolonged lymph node swelling</li>
+        <li>Memory loss, confusion, or neurological disorders</li>
       </ul>
 
-      <h2>Preventing HIV</h2>
+      <br />
+      <h2>Prevention and Safe Practices</h2>
+      <br />
       <p>
-        Preventing HIV involves:
+        HIV can be prevented by using condoms correctly. Latex condoms are highly effective in preventing HIV transmission, though oil-based lubricants can weaken the condom material. Using water-based lubricants is a safe choice.
       </p>
-      <ul>
-        <li>Using condoms during sexual activity</li>
-        <li>Taking pre-exposure prophylaxis (PrEP) for high-risk individuals</li>
-        <li>Getting tested regularly</li>
-        <li>Avoiding sharing needles or syringes</li>
-        <li>Communicating openly about HIV status with potential partners</li>
-      </ul>
-
-      <h2>Is There a Vaccine for HIV?</h2>
       <p>
-        Currently, there is no vaccine available to prevent HIV. However, ongoing research is exploring potential vaccines, with mRNA-based HIV vaccines being tested for their effectiveness in prevention.
-      </p>
-
-      <h2>Is HIV Curable?</h2>
-      <p>
-        As of now, HIV is not curable. However, treatments like antiretroviral therapy (ART) can manage the virus effectively, allowing individuals to live long, healthy lives. Some rare cases of "functional cure" have been achieved through complex procedures, but these are not applicable for everyone.
-      </p>
-
-      <h2>Conclusion</h2>
-      <p>
-        HIV is a serious but manageable condition. With early detection and proper treatment, individuals with HIV can lead healthy lives and prevent the virus from progressing to AIDS. If you think you may have been exposed to HIV, it's important to consult with a healthcare provider for testing and treatment options.
+        Getting tested for HIV is the only definitive way to know if you have contracted the virus. The CDC recommends regular HIV testing at least once a year or whenever you engage in high-risk activities like unprotected sex or sharing needles. It is essential to know your HIV status to ensure early treatment and prevent the spread of the virus to others.
       </p>
     </>
   );
 }
 
-export default HIV;
+export default HIVSymptomsInMen;

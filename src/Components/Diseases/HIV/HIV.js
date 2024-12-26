@@ -1,19 +1,60 @@
 import React from "react";
 
-function HIV() {
+function HIVInformation() {
   return (
     <>
-      <h2>Overview of HIV</h2>
+      <br />
+      <h2>What is HIV?</h2>
+      <br />
       <p>
         HIV stands for Human Immunodeficiency Virus. It is the virus responsible for causing AIDS (Acquired Immunodeficiency Syndrome). HIV weakens the immune system by attacking CD4 cells (T cells), which are essential for fighting infections. Over time, HIV can damage the immune system to the point where the body cannot fight infections and diseases that would otherwise be manageable.
       </p>
 
-      <h2>What is HIV?</h2>
+      <br />
+      <h2>What is Human Immunodeficiency Syndrome (HIV)?</h2>
+      <br />
       <p>
-        HIV is the virus that leads to AIDS. It attacks the immune system, leaving individuals vulnerable to diseases. The virus is spread through body fluids such as blood, semen, vaginal fluids, and breast milk. 
+        HIV is the virus that leads to AIDS. It attacks the immune system, leaving individuals vulnerable to diseases. The virus is spread through body fluids (blood, semen, vaginal fluids, and breast milk). 1.1 million people in the U.S. are living with HIV, with around 14% unaware of their infection. While HIV has no cure, modern treatments like antiretroviral therapy (ART) allow people with HIV to live long, healthy lives, preventing further transmission of the virus.
       </p>
 
-      <h2>How is HIV Transmitted?</h2>
+      <br />
+      <h2>HIV Meaning</h2>
+      <br />
+      <p>
+        HIV stands for Human Immunodeficiency Virus. It attacks the immune system, specifically targeting CD4 cells (T cells). HIV-1 is the most common type, whereas HIV-2 is less common and found mainly in West Africa. HIV is a chronic condition, meaning it can stay in the body indefinitely. AIDS (Acquired Immunodeficiency Syndrome) represents the most advanced stage of HIV infection, with severe damage to the immune system.
+      </p>
+
+      <br />
+      <h2>Is HIV Curable?</h2>
+      <br />
+      <p>
+        HIV is not curable as of 2023. However, treatments like ART can significantly manage the virus and allow individuals to live long lives. Some rare cases of a "functional cure" have been achieved, particularly through complex procedures like stem cell transplants, but these are not applicable for everyone. Ongoing research is focused on finding a cure for HIV, but the virus’s ability to mutate and hide in the body makes it challenging to eliminate.
+      </p>
+
+      <br />
+      <h2>HIV Vaccine</h2>
+      <br />
+      <p>
+        In early 2022, mRNA-based HIV vaccines were introduced in trials. These vaccines are meant for prevention, aiming to stop new infections from spreading.
+      </p>
+
+      <br />
+      <h2>Difference Between HIV and AIDS</h2>
+      <br />
+      <p>
+        HIV is the virus, while AIDS is the advanced stage of HIV infection. AIDS occurs when the immune system is severely damaged, with CD4 cells dropping below 200 cells/mm. People with HIV do not automatically progress to AIDS, especially with early detection and proper treatment.
+      </p>
+
+      <br />
+      <h2>Signs and Symptoms of HIV</h2>
+      <br />
+      <p>
+        Acute HIV infection can cause flu-like symptoms, which may appear 2-4 weeks after exposure. Many individuals may remain symptom-free for years, during which the virus continues to replicate and damage the immune system. Symptoms may not appear until the virus has severely weakened the immune system.
+      </p>
+
+      <br />
+      <h2>How Is HIV Transmitted?</h2>
+      <br />
       <p>
         HIV is transmitted through specific body fluids:
       </p>
@@ -24,88 +65,71 @@ function HIV() {
         <li>Anal fluids/mucus</li>
         <li>Breast milk</li>
       </ul>
-      <p>
-        Key transmission methods include:
-      </p>
+      <p>Key transmission methods include:</p>
       <ul>
-        <li>Unprotected sexual contact (vaginal or anal sex)</li>
-        <li>Shared needles or syringes (drug use)</li>
-        <li>Mother-to-child transmission during pregnancy, childbirth, or breastfeeding</li>
+        <li>Unprotected sexual contact (vaginal or anal sex).</li>
+        <li>Shared needles or syringes (drug use).</li>
+        <li>Mother-to-child transmission during pregnancy, childbirth, or breastfeeding.</li>
       </ul>
       <p>
-        HIV cannot be transmitted through saliva, tears, sweat, casual contact like hugging or shaking hands, mosquitoes or insects, or using shared toilets or utensils.
-      </p>
-
-      <h2>How Common is HIV?</h2>
-      <p>
-        Over 1.1 million people in the U.S. are living with HIV, with around 14% unaware of their infection. Although there is no cure for HIV, modern treatments like antiretroviral therapy (ART) allow people with HIV to live long, healthy lives and prevent further transmission of the virus.
-      </p>
-
-      <h2>Is HIV Serious?</h2>
-      <p>
-        HIV is a chronic condition that can lead to AIDS if untreated. AIDS represents the advanced stage of HIV infection, where the immune system is severely damaged. Without treatment, HIV typically progresses to AIDS in 8-10 years. However, with ART, people with HIV can live healthy lives and prevent the progression to AIDS.
-      </p>
-
-      <h2>Symptoms of HIV</h2>
-      <h3>Acute HIV Infection</h3>
-      <p>
-        Acute HIV infection can cause flu-like symptoms, which may appear 2-4 weeks after exposure. These symptoms include fever, fatigue, sore throat, swollen lymph nodes, and muscle aches.
-      </p>
-
-      <h3>Chronic HIV</h3>
-      <p>
-        Many individuals may remain symptom-free for years, during which the virus continues to replicate and damage the immune system. Symptoms may not appear until the virus has severely weakened the immune system.
-      </p>
-
-      <h2>Can You Get HIV More Than Once?</h2>
-      <p>
-        Once you are infected with HIV, the virus stays in your body for life. However, effective treatment can suppress the virus to undetectable levels, preventing further damage to your immune system.
-      </p>
-
-      <h2>How Is HIV Diagnosed?</h2>
-      <p>
-        HIV is diagnosed through blood tests that detect antibodies or antigens to the virus. Early detection is crucial to begin treatment and manage the virus effectively.
-      </p>
-
-      <h2>Who Is at Risk for HIV?</h2>
-      <p>
-        Certain groups are at higher risk for HIV, including:
+        HIV cannot be transmitted through:
       </p>
       <ul>
-        <li>Men who have sex with men</li>
-        <li>Individuals with multiple sexual partners</li>
-        <li>People who inject drugs and share needles</li>
-        <li>Individuals with other sexually transmitted infections (STIs)</li>
+        <li>Saliva, tears, or sweat.</li>
+        <li>Casual contact like hugging or shaking hands.</li>
+        <li>Mosquitoes or insects.</li>
+        <li>Using shared toilets or utensils.</li>
       </ul>
 
-      <h2>Preventing HIV</h2>
+      <br />
+      <h2>Who Is At Risk for HIV?</h2>
+      <br />
       <p>
-        Preventing HIV involves:
+        While anyone can contract HIV, certain groups are at higher risk:
       </p>
       <ul>
-        <li>Using condoms during sexual activity</li>
-        <li>Taking pre-exposure prophylaxis (PrEP) for high-risk individuals</li>
-        <li>Getting tested regularly</li>
-        <li>Avoiding sharing needles or syringes</li>
-        <li>Communicating openly about HIV status with potential partners</li>
+        <li>Men who have sex with men.</li>
+        <li>Individuals with multiple sexual partners.</li>
+        <li>People who inject drugs and share needles.</li>
+        <li>Individuals with other sexually transmitted infections (STIs).</li>
       </ul>
 
-      <h2>Is There a Vaccine for HIV?</h2>
+      <br />
+      <h2>HIV vs AIDS</h2>
+      <br />
       <p>
-        Currently, there is no vaccine available to prevent HIV. However, ongoing research is exploring potential vaccines, with mRNA-based HIV vaccines being tested for their effectiveness in prevention.
+        HIV is the virus, and AIDS is the severe, life-threatening condition that may develop if HIV is untreated. AIDS is characterized by opportunistic infections or specific cancers due to a weakened immune system.
       </p>
 
-      <h2>Is HIV Curable?</h2>
+      <br />
+      <h2>How Long Does It Take for HIV to Develop into AIDS?</h2>
+      <br />
       <p>
-        As of now, HIV is not curable. However, treatments like antiretroviral therapy (ART) can manage the virus effectively, allowing individuals to live long, healthy lives. Some rare cases of "functional cure" have been achieved through complex procedures, but these are not applicable for everyone.
+        Without treatment, HIV typically develops into AIDS in 8-10 years. Antiretroviral therapy (ART) can slow down or prevent this progression, allowing many people with HIV to never develop AIDS.
       </p>
 
-      <h2>Conclusion</h2>
+      <br />
+      <h2>Is HIV Fatal?</h2>
+      <br />
       <p>
-        HIV is a serious but manageable condition. With early detection and proper treatment, individuals with HIV can lead healthy lives and prevent the virus from progressing to AIDS. If you think you may have been exposed to HIV, it's important to consult with a healthcare provider for testing and treatment options.
+        HIV itself is not fatal. However, untreated HIV can progress to AIDS, which severely weakens the immune system, making individuals vulnerable to fatal infections and cancers. With treatment, HIV-positive individuals can live healthy lives, and the virus can be suppressed to undetectable levels.
+      </p>
+
+      <br />
+      <h2>Types of HIV</h2>
+      <br />
+      <p>
+        HIV-1: The most common type globally, accounting for 95% of infections. HIV-2: Less common, mainly found in West Africa, and progresses more slowly than HIV-1.
+      </p>
+
+      <br />
+      <h2>Is There a Cure for HIV?</h2>
+      <br />
+      <p>
+        Currently, there is no cure for HIV, but treatment with ART can help manage the virus. Individuals who take ART consistently may achieve undetectable viral loads, meaning the virus is so low it cannot be detected by standard tests. Ongoing research aims to develop a cure that is safe, effective, and accessible.
       </p>
     </>
   );
 }
 
-export default HIV;
+export default HIVInformation;

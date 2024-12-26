@@ -1,111 +1,117 @@
 import React from "react";
 
-function HIV() {
+function HIVInformation() {
   return (
     <>
-      <h2>Overview of HIV</h2>
+      <br />
+      <h2>What is HIV and How is it Transmitted?</h2>
+      <br />
       <p>
-        HIV stands for Human Immunodeficiency Virus. It is the virus responsible for causing AIDS (Acquired Immunodeficiency Syndrome). HIV weakens the immune system by attacking CD4 cells (T cells), which are essential for fighting infections. Over time, HIV can damage the immune system to the point where the body cannot fight infections and diseases that would otherwise be manageable.
+        HIV (Human Immunodeficiency Virus) is transmitted through direct contact with infected blood, semen, vaginal fluids, or other bodily fluids. Engaging in unprotected vaginal or anal sex (or oral sex if there is an open wound in the mouth) with an infected partner significantly increases the likelihood of contracting HIV. The virus can also spread through the use of unsterile needles or syringes, such as those used in intravenous drug use. Although HIV is most commonly transmitted through vaginal sex in women, anal sex remains the highest-risk activity for both contracting and spreading the virus.
       </p>
 
-      <h2>What is HIV?</h2>
+      <br />
+      <h2>Can Women Get HIV?</h2>
+      <br />
       <p>
-        HIV is the virus that leads to AIDS. It attacks the immune system, leaving individuals vulnerable to diseases. The virus is spread through body fluids such as blood, semen, vaginal fluids, and breast milk. 
+        In 2014, women accounted for 19% of new HIV diagnoses in the United States. Most women contract HIV through sexual contact with an infected male partner. According to the CDC, 87% of these cases were linked to heterosexual sex, while 13% were associated with intravenous drug use.
       </p>
 
-      <h2>How is HIV Transmitted?</h2>
+      <br />
+      <h2>HIV in Women</h2>
+      <br />
       <p>
-        HIV is transmitted through specific body fluids:
+        The number of new HIV cases in women has decreased significantly from 2005 to 2014, dropping by 40%. Despite this progress, African American women continue to make up the majority of new HIV diagnoses in the U.S. In 2014, the racial breakdown of new HIV cases in women was as follows:
       </p>
       <ul>
-        <li>Blood</li>
-        <li>Semen</li>
-        <li>Vaginal fluids</li>
-        <li>Anal fluids/mucus</li>
-        <li>Breast milk</li>
+        <li>62% were African American (5,128 diagnoses)</li>
+        <li>18% were White (1,483 diagnoses)</li>
+        <li>16% were Hispanic (1,350 diagnoses)</li>
       </ul>
+
+      <br />
+      <h2>Women and AIDS</h2>
+      <br />
       <p>
-        Key transmission methods include:
+        Women represent about 25% of the estimated 20,792 AIDS diagnoses in 2014, and one-fifth of the total 1,210,835 AIDS diagnoses in the U.S. since the beginning of the epidemic. Unfortunately, there is currently no cure for HIV in women.
+      </p>
+
+      <br />
+      <h2>HIV Symptoms in Women</h2>
+      <br />
+      <p>
+        The symptoms of HIV vary from person to person, but there are common patterns associated with the infection. Early signs can often be mistaken for flu or cold symptoms. It may take 2-4 weeks after infection for symptoms to appear, and around 80% of individuals with an acute HIV infection experience flu-like symptoms. However, in some cases, it may take years before symptoms are noticeable, which is why regular testing is essential for early detection and treatment.
+      </p>
+
+      <br />
+      <h3>Early Signs of HIV in Women</h3>
+      <br />
+      <p>
+        The early symptoms of HIV in women can resemble those of a cold or flu. These may include:
       </p>
       <ul>
-        <li>Unprotected sexual contact (vaginal or anal sex)</li>
-        <li>Shared needles or syringes (drug use)</li>
-        <li>Mother-to-child transmission during pregnancy, childbirth, or breastfeeding</li>
+        <li>Body rash</li>
+        <li>Fever</li>
+        <li>Sore throat</li>
+        <li>Severe headaches</li>
+      </ul>
+      <p>Less common symptoms at this stage may include:</p>
+      <ul>
+        <li>Swollen lymph nodes</li>
+        <li>Nausea</li>
+        <li>Fatigue</li>
+        <li>Mouth ulcers</li>
+        <li>Vaginal infections (such as yeast infections or bacterial vaginosis)</li>
+        <li>Night sweats</li>
+        <li>Vomiting</li>
+        <li>Muscle aches and joint pain</li>
       </ul>
       <p>
-        HIV cannot be transmitted through saliva, tears, sweat, casual contact like hugging or shaking hands, mosquitoes or insects, or using shared toilets or utensils.
+        Symptoms during the acute HIV stage usually last from one to two weeks.
       </p>
 
-      <h2>How Common is HIV?</h2>
+      <br />
+      <h3>Asymptomatic Stage of HIV in Women</h3>
+      <br />
       <p>
-        Over 1.1 million people in the U.S. are living with HIV, with around 14% unaware of their infection. Although there is no cure for HIV, modern treatments like antiretroviral therapy (ART) allow people with HIV to live long, healthy lives and prevent further transmission of the virus.
+        After the acute HIV symptoms subside, the disease may enter an asymptomatic stage. During this period, an individual may not exhibit any signs or symptoms for months or even years. Despite the lack of symptoms, the virus continues to replicate and attack the immune system, weakening the body’s defenses. The virus remains active during this stage and can still be transmitted to others. Regular testing is crucial during this time, as individuals may not feel ill but can still spread the virus.
       </p>
 
-      <h2>Is HIV Serious?</h2>
+      <br />
+      <h3>Advanced Stage of HIV – AIDS Symptoms in Women</h3>
+      <br />
       <p>
-        HIV is a chronic condition that can lead to AIDS if untreated. AIDS represents the advanced stage of HIV infection, where the immune system is severely damaged. Without treatment, HIV typically progresses to AIDS in 8-10 years. However, with ART, people with HIV can live healthy lives and prevent the progression to AIDS.
-      </p>
-
-      <h2>Symptoms of HIV</h2>
-      <h3>Acute HIV Infection</h3>
-      <p>
-        Acute HIV infection can cause flu-like symptoms, which may appear 2-4 weeks after exposure. These symptoms include fever, fatigue, sore throat, swollen lymph nodes, and muscle aches.
-      </p>
-
-      <h3>Chronic HIV</h3>
-      <p>
-        Many individuals may remain symptom-free for years, during which the virus continues to replicate and damage the immune system. Symptoms may not appear until the virus has severely weakened the immune system.
-      </p>
-
-      <h2>Can You Get HIV More Than Once?</h2>
-      <p>
-        Once you are infected with HIV, the virus stays in your body for life. However, effective treatment can suppress the virus to undetectable levels, preventing further damage to your immune system.
-      </p>
-
-      <h2>How Is HIV Diagnosed?</h2>
-      <p>
-        HIV is diagnosed through blood tests that detect antibodies or antigens to the virus. Early detection is crucial to begin treatment and manage the virus effectively.
-      </p>
-
-      <h2>Who Is at Risk for HIV?</h2>
-      <p>
-        Certain groups are at higher risk for HIV, including:
+        If left untreated, HIV can progress to AIDS (Acquired Immunodeficiency Syndrome), a stage in which the immune system is severely compromised. This makes the body much more vulnerable to infections that would otherwise be manageable. People with AIDS frequently experience recurring infections, such as colds, the flu, and fungal infections. Symptoms of AIDS in women include:
       </p>
       <ul>
-        <li>Men who have sex with men</li>
-        <li>Individuals with multiple sexual partners</li>
-        <li>People who inject drugs and share needles</li>
-        <li>Individuals with other sexually transmitted infections (STIs)</li>
+        <li>Persistent diarrhea</li>
+        <li>Nausea and vomiting</li>
+        <li>Rapid weight loss</li>
+        <li>Fatigue</li>
+        <li>Sores or ulcers in the mouth</li>
+        <li>Vaginal infections, including yeast infections and bacterial vaginosis</li>
+        <li>Pelvic inflammatory disease (PID)</li>
+        <li>Recurring fever, chills, and night sweats</li>
+        <li>Shortness of breath and coughing</li>
+        <li>Persistent swelling of lymph nodes</li>
+        <li>Memory loss, confusion, or other neurological issues</li>
       </ul>
 
-      <h2>Preventing HIV</h2>
+      <br />
+      <h2>HIV and Pregnancy</h2>
+      <br />
       <p>
-        Preventing HIV involves:
-      </p>
-      <ul>
-        <li>Using condoms during sexual activity</li>
-        <li>Taking pre-exposure prophylaxis (PrEP) for high-risk individuals</li>
-        <li>Getting tested regularly</li>
-        <li>Avoiding sharing needles or syringes</li>
-        <li>Communicating openly about HIV status with potential partners</li>
-      </ul>
-
-      <h2>Is There a Vaccine for HIV?</h2>
-      <p>
-        Currently, there is no vaccine available to prevent HIV. However, ongoing research is exploring potential vaccines, with mRNA-based HIV vaccines being tested for their effectiveness in prevention.
+        HIV can be transmitted from an infected mother to her child during childbirth (a process known as perinatal HIV) or through breastfeeding. However, with proper care, the risk of transmission can be significantly reduced. Pregnant women should be tested for HIV as part of routine prenatal care, and antiretroviral treatments may be prescribed to prevent the transmission of HIV to the baby. In some cases, a cesarean section may be recommended, along with continued antiretroviral therapy for the child after birth.
       </p>
 
-      <h2>Is HIV Curable?</h2>
-      <p>
-        As of now, HIV is not curable. However, treatments like antiretroviral therapy (ART) can manage the virus effectively, allowing individuals to live long, healthy lives. Some rare cases of "functional cure" have been achieved through complex procedures, but these are not applicable for everyone.
-      </p>
-
+      <br />
       <h2>Conclusion</h2>
+      <br />
       <p>
-        HIV is a serious but manageable condition. With early detection and proper treatment, individuals with HIV can lead healthy lives and prevent the virus from progressing to AIDS. If you think you may have been exposed to HIV, it's important to consult with a healthcare provider for testing and treatment options.
+        HIV is a serious virus that can lead to AIDS if left untreated, but with early detection and effective treatment, individuals can manage the virus and prevent it from advancing. HIV testing is essential, even for those who do not exhibit symptoms, as early treatment helps reduce the risk of transmitting the virus to others and improves overall health outcomes.
       </p>
     </>
   );
 }
 
-export default HIV;
+export default HIVInformation;

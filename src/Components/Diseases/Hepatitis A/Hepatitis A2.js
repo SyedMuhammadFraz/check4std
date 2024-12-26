@@ -3,101 +3,81 @@ import React from "react";
 function HepatitisA() {
   return (
     <>
-      <h2>What is Hepatitis?</h2>
+      <br />
+      <h2>Hepatitis A: What You Need to Know</h2>
+      <br />
       <p>
-        Hepatitis refers to inflammation of the liver, which can hinder its normal functioning. This condition may arise from excessive alcohol consumption, exposure to harmful toxins, certain medications, and specific medical conditions, particularly viral infections such as hepatitis A, B, C, D, and E.
+        Hepatitis is a condition characterized by inflammation of the liver. While habits like heavy alcohol consumption can lead to hepatitis, it can also result from viral infections. Hepatitis viruses include types A, B, C, D, and E.
+      </p>
+      <p>
+        Hepatitis A virus (HAV) symptoms often remain undetected for several weeks after infection. In some cases, individuals infected with hepatitis A may never show symptoms. When symptoms do manifest, they tend to be mild and resolve within a few weeks.
       </p>
 
-      <h2>What is Hepatitis A?</h2>
-      <p>
-        Hepatitis A (HAV) is a highly contagious liver infection that typically manifests suddenly and severely. Unlike hepatitis B and C, hepatitis A does not lead to chronic liver disease. The infection, caused by the hepatitis A virus, can range from mild, lasting only a few weeks, to severe, persisting for several months. Most people recover from hepatitis A without medical treatment, requiring only rest and hydration.
-      </p>
-
-      <h2>Symptoms of Hepatitis A in Adults</h2>
+      <br />
+      <h2>Symptoms of Hepatitis A</h2>
+      <br />
+      <p>The symptoms of hepatitis A may include the following:</p>
       <ul>
         <li>Fatigue</li>
-        <li>Jaundice (yellowing of the skin and eyes)</li>
-        <li>Abdominal pain</li>
         <li>Nausea</li>
+        <li>Vomiting</li>
         <li>Loss of appetite</li>
+        <li>Low-grade fever</li>
+        <li>Joint pain</li>
+        <li>Dark urine</li>
+        <li>Clay-colored bowel movements</li>
+        <li>Abdominal discomfort or pain, particularly near the liver</li>
       </ul>
 
-      <h2>Prevalence of Hepatitis A</h2>
+      <br />
+      <h2>When Do Symptoms Appear?</h2>
+      <br />
       <p>
-        Hepatitis A is one of the most common types of hepatitis in the United States, along with hepatitis B and C. The introduction of the hepatitis A vaccine in 1995 led to a significant reduction in infection rates, with only about 4,000 cases reported in 2016. Hepatitis A is more prevalent in developing countries.
+        Hepatitis A symptoms can start appearing approximately four weeks after exposure to the virus. However, symptoms have been reported as early as two weeks and as late as seven weeks post-exposure.
       </p>
 
-      <h2>Severity of Hepatitis A</h2>
+      <br />
+      <h2>Duration of Symptoms</h2>
+      <br />
       <p>
-        Hepatitis A typically causes temporary illness, and most people recover fully without long-term liver damage. However, in rare cases, it can lead to liver failure or death, particularly in individuals over 50 or those with pre-existing liver conditions.
+        The length of time symptoms last varies between individuals. Generally, older individuals may experience longer-lasting symptoms. According to the CDC, about 10–15% of individuals with hepatitis A may suffer from severe illness for up to six months.
       </p>
 
-      <h2>Causes of Hepatitis A</h2>
+      <br />
+      <h2>Complications of Hepatitis A</h2>
+      <br />
+      <h3>Can It Be Fatal?</h3>
       <p>
-        Hepatitis A is found in the blood and stool of infected individuals. It is highly contagious and can be transmitted in the following ways:
+        Unlike other forms of hepatitis, hepatitis A does not lead to chronic liver disease. However, in extremely rare cases, it can progress to severe liver failure, which may be fatal if untreated.
+      </p>
+
+      <br />
+      <h2>When Should You See a Doctor?</h2>
+      <br />
+      <p>
+        If you believe you have been exposed to hepatitis A or have tested positive, it is important to consult a healthcare provider. Medical attention is especially critical under the following circumstances:
       </p>
       <ul>
-        <li>Consuming food or water contaminated with the virus during any stage of production (growth, harvesting, processing, or shipping).</li>
-        <li>Engaging in sexual activity involving oral-anal contact with an infected person.</li>
-        <li>Close personal contact with an infected person, especially if they have poor hygiene.</li>
-        <li>Sharing drug-injection equipment with an infected individual.</li>
+        <li>
+          <strong>Within Two Weeks of Exposure:</strong> If you suspect exposure to the hepatitis A virus, you may still benefit from a hepatitis A vaccine or an immunoglobulin injection (antibody), which can prevent infection.
+        </li>
+        <li>
+          <strong>Presence of Symptoms:</strong> If you are experiencing symptoms, consult a doctor for evaluation and treatment options.
+        </li>
+        <li>
+          <strong>Recent Risk Factors:</strong>
+          <ul>
+            <li>Travel to regions with poor sanitation</li>
+            <li>Dining at a restaurant linked to a hepatitis A outbreak</li>
+            <li>Close contact with someone diagnosed with hepatitis A</li>
+            <li>Use of intravenous drugs</li>
+            <li>Consumption of raw shellfish</li>
+          </ul>
+        </li>
       </ul>
 
-      <h2>Transmission of Hepatitis A</h2>
       <p>
-        Hepatitis A spreads primarily through the ingestion of food or drinks contaminated with fecal matter containing the virus, even in microscopic amounts. It can also be transmitted through sexual activities, particularly those involving oral-anal contact.
-      </p>
-
-      <h2>Contagious Period of Hepatitis A</h2>
-      <p>
-        A person infected with hepatitis A becomes most contagious shortly after contracting the virus, even before symptoms appear. They remain contagious for about two weeks after symptoms begin. People with compromised immune systems may remain contagious for up to six months.
-      </p>
-
-      <h2>Risk Factors for Hepatitis A</h2>
-      <p>Certain groups of people are more susceptible to hepatitis A, including those who:</p>
-      <ul>
-        <li>Live in areas with limited access to clean water.</li>
-        <li>Reside with an infected person.</li>
-        <li>Have poor sanitation or hygiene.</li>
-        <li>Engage in sexual activity without vaccination.</li>
-        <li>Participate in oral-anal sexual activity.</li>
-        <li>Travel to countries with high rates of hepatitis A.</li>
-        <li>Work with non-human primates.</li>
-      </ul>
-
-      <h2>Prevention of Hepatitis A</h2>
-      <h3>Vaccination</h3>
-      <p>
-        The most effective way to prevent hepatitis A is through vaccination. The CDC recommends hepatitis A vaccination for:
-      </p>
-      <ul>
-        <li>Children starting at one year old.</li>
-        <li>Travelers to regions where hepatitis A is widespread.</li>
-        <li>Family members or caregivers of adoptees from high-risk countries.</li>
-        <li>Individuals engaging in anal sex.</li>
-        <li>People who use recreational drugs, injected or not.</li>
-        <li>Those living in unsanitary conditions or experiencing homelessness.</li>
-        <li>People with chronic liver disease, including hepatitis B or C.</li>
-        <li>People with blood clotting disorders.</li>
-        <li>Individuals in close contact with infected persons.</li>
-        <li>Anyone seeking protection from hepatitis A.</li>
-      </ul>
-
-      <h3>Post-Exposure Prophylaxis (PEP)</h3>
-      <p>
-        If a person is exposed to hepatitis A, they can receive post-exposure prophylaxis (PEP) to prevent infection. PEP involves receiving an injection of the hepatitis A vaccine or immune globulin (Ig) within two weeks of exposure to reduce the risk of infection.
-      </p>
-
-      <h3>Other Preventive Measures</h3>
-      <ul>
-        <li>Wash hands thoroughly with soap and warm water after using the bathroom or changing diapers.</li>
-        <li>Ensure food is prepared in sanitary conditions.</li>
-        <li>Avoid consumption of contaminated food and water, especially in areas where hepatitis A is prevalent.</li>
-      </ul>
-
-      <h2>Can You Get Hepatitis A More Than Once?</h2>
-      <p>
-        No, once a person contracts and recovers from hepatitis A, they develop antibodies that provide lifelong immunity against the virus.
+        By staying informed and proactive, you can protect yourself and others from hepatitis A and its potential complications.
       </p>
     </>
   );

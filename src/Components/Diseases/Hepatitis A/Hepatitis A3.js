@@ -1,106 +1,161 @@
 import React from "react";
 
-function HepatitisA() {
+function HepatitisALabTesting() {
   return (
     <>
-      <h2>What is Hepatitis?</h2>
+      <br />
+      <h2>Hepatitis A Lab Testing</h2>
+      <br />
       <p>
-        Hepatitis refers to inflammation of the liver, which can hinder its normal functioning. This condition may arise from excessive alcohol consumption, exposure to harmful toxins, certain medications, and specific medical conditions, particularly viral infections such as hepatitis A, B, C, D, and E.
+        To diagnose hepatitis A virus (HAV), lab tests are essential, as doctors can only infer the possible cause based on symptoms and medical history. With five distinct hepatitis viruses, blood tests are necessary to identify which one is present. If blood tests confirm infection, additional tests like imaging or a liver biopsy may be performed by a healthcare provider to evaluate liver damage.
       </p>
 
-      <h2>What is Hepatitis A?</h2>
+      <br />
+      <h2>Types of Testing</h2>
+      <br />
       <p>
-        Hepatitis A (HAV) is a highly contagious liver infection that typically manifests suddenly and severely. Unlike hepatitis B and C, hepatitis A does not lead to chronic liver disease. The infection, caused by the hepatitis A virus, can range from mild, lasting only a few weeks, to severe, persisting for several months. Most people recover from hepatitis A without medical treatment, requiring only rest and hydration.
+        If you are exhibiting symptoms like fatigue, nausea, and jaundice, a doctor may suspect hepatitis A and recommend specific tests to confirm the diagnosis.
       </p>
 
-      <h2>Symptoms of Hepatitis A in Adults</h2>
+      <br />
+      <h3>Antibody Tests</h3>
+      <br />
+      <p>
+        Antibody blood tests are used to detect specific antibodies in your blood, which the immune system produces in response to a viral infection. For hepatitis A, two key antibodies are tested: immunoglobulin M (IgM) and immunoglobulin G (IgG). These tests involve taking a small blood sample for analysis.
+      </p>
+      <p>
+        With STDcheck.com, you can order the tests, receive results, and determine whether you are infected, all without a doctor’s visit.
+      </p>
+
+      <br />
+      <h3>Imaging Tests</h3>
+      <br />
+      <p>
+        Imaging procedures, like ultrasonography or CT scans, can reveal abnormalities in the liver, such as inflammation, changes in size, or tumors. While these findings might indicate a hepatitis infection, imaging tests alone cannot pinpoint the cause or identify the specific type of liver disease.
+      </p>
+
+      <br />
+      <h3>Biopsy</h3>
+      <br />
+      <p>
+        A liver biopsy involves removing a small tissue sample from the liver through a needle inserted into your abdomen. This tissue is then examined under a microscope to identify disease characteristics. Biopsies generally don't require an overnight hospital stay, although local anesthesia is used. Biopsies are commonly recommended for chronic hepatitis B or C cases.
+      </p>
+
+      <br />
+      <h2>Our Hepatitis A Antibody Test</h2>
+      <br />
+      <p>
+        When the immune system detects the hepatitis A virus, it first produces IgM antibodies. Our FDA-cleared hepatitis A test looks for these antibodies to identify whether you have a current or recent infection. These antibodies usually appear within 2 to 3 weeks after infection, often before symptoms show up.
+      </p>
+      <p>
+        With STDcheck.com, you can easily choose a lab, purchase the tests, and provide your blood sample without needing an appointment. Test results are typically available within 2 business days.
+      </p>
+
+      <br />
+      <h2>Who Should Get Tested for Hepatitis A?</h2>
+      <br />
+      <p>
+        If you suspect you’ve been exposed to the hepatitis A virus, testing is crucial. Hepatitis A is typically transmitted through the ingestion of contaminated food, water, or objects containing infected fecal matter.
+      </p>
+      <p>The CDC outlines several risk factors for acquiring the virus:</p>
       <ul>
-        <li>Fatigue</li>
-        <li>Jaundice (yellowing of the skin and eyes)</li>
-        <li>Abdominal pain</li>
-        <li>Nausea</li>
-        <li>Loss of appetite</li>
+        <li>Direct contact with someone diagnosed with hepatitis A</li>
+        <li>Travel to regions where hepatitis A is common</li>
+        <li>Engaging in anal sex or oral-anal contact</li>
+        <li>Use of both injected and non-injected drugs</li>
+        <li>Clotting factor disorders</li>
+        <li>Work involving nonhuman primates</li>
       </ul>
 
-      <h2>Prevalence of Hepatitis A</h2>
+      <br />
+      <h2>When to Get Tested</h2>
+      <br />
       <p>
-        Hepatitis A is one of the most common types of hepatitis in the United States, along with hepatitis B and C. The introduction of the hepatitis A vaccine in 1995 led to a significant reduction in infection rates, with only about 4,000 cases reported in 2016. Hepatitis A is more prevalent in developing countries.
+        It’s essential to wait for your body to develop detectable antibodies. The hepatitis A virus has an incubation period of about 28 days, but it can range from 15 to 50 days. After the incubation period, you can be accurately tested for hepatitis A.
       </p>
 
-      <h2>Severity of Hepatitis A</h2>
+      <br />
+      <h2>Diagnosis</h2>
+      <br />
       <p>
-        Hepatitis A typically causes temporary illness, and most people recover fully without long-term liver damage. However, in rare cases, it can lead to liver failure or death, particularly in individuals over 50 or those with pre-existing liver conditions.
+        Doctors typically begin by asking about your symptoms, potential risk factors, and travel history. After conducting the appropriate blood tests, a diagnosis can be confirmed.
       </p>
 
-      <h2>Causes of Hepatitis A</h2>
+      <br />
+      <h2>What Your Results Mean</h2>
+      <br />
       <p>
-        Hepatitis A is found in the blood and stool of infected individuals. It is highly contagious and can be transmitted in the following ways:
-      </p>
-      <ul>
-        <li>Consuming food or water contaminated with the virus during any stage of production (growth, harvesting, processing, or shipping).</li>
-        <li>Engaging in sexual activity involving oral-anal contact with an infected person.</li>
-        <li>Close personal contact with an infected person, especially if they have poor hygiene.</li>
-        <li>Sharing drug-injection equipment with an infected individual.</li>
-      </ul>
-
-      <h2>Transmission of Hepatitis A</h2>
-      <p>
-        Hepatitis A spreads primarily through the ingestion of food or drinks contaminated with fecal matter containing the virus, even in microscopic amounts. It can also be transmitted through sexual activities, particularly those involving oral-anal contact.
-      </p>
-
-      <h2>Contagious Period of Hepatitis A</h2>
-      <p>
-        A person infected with hepatitis A becomes most contagious shortly after contracting the virus, even before symptoms appear. They remain contagious for about two weeks after symptoms begin. People with compromised immune systems may remain contagious for up to six months.
-      </p>
-
-      <h2>Risk Factors for Hepatitis A</h2>
-      <p>Certain groups of people are more susceptible to hepatitis A, including those who:</p>
-      <ul>
-        <li>Live in areas with limited access to clean water.</li>
-        <li>Reside with an infected person.</li>
-        <li>Have poor sanitation or hygiene.</li>
-        <li>Engage in sexual activity without vaccination.</li>
-        <li>Participate in oral-anal sexual activity.</li>
-        <li>Travel to countries with high rates of hepatitis A.</li>
-        <li>Work with non-human primates.</li>
-      </ul>
-
-      <h2>Prevention of Hepatitis A</h2>
-      <h3>Vaccination</h3>
-      <p>
-        The most effective way to prevent hepatitis A is through vaccination. The CDC recommends hepatitis A vaccination for:
+        The antibody test results can come back as follows:
       </p>
       <ul>
-        <li>Children starting at one year old.</li>
-        <li>Travelers to regions where hepatitis A is widespread.</li>
-        <li>Family members or caregivers of adoptees from high-risk countries.</li>
-        <li>Individuals engaging in anal sex.</li>
-        <li>People who use recreational drugs, injected or not.</li>
-        <li>Those living in unsanitary conditions or experiencing homelessness.</li>
-        <li>People with chronic liver disease, including hepatitis B or C.</li>
-        <li>People with blood clotting disorders.</li>
-        <li>Individuals in close contact with infected persons.</li>
-        <li>Anyone seeking protection from hepatitis A.</li>
+        <li>
+          <strong>Positive IgM Results:</strong> The antibodies are present in your blood, indicating that you may have a recent or active hepatitis A infection.
+        </li>
+        <li>
+          <strong>Negative IgM Results:</strong> The antibodies were not detected in your blood, meaning there is no active infection.
+        </li>
       </ul>
 
-      <h3>Post-Exposure Prophylaxis (PEP)</h3>
+      <br />
+      <h2>Treatment</h2>
+      <br />
       <p>
-        If a person is exposed to hepatitis A, they can receive post-exposure prophylaxis (PEP) to prevent infection. PEP involves receiving an injection of the hepatitis A vaccine or immune globulin (Ig) within two weeks of exposure to reduce the risk of infection.
+        Hepatitis A usually resolves on its own without requiring medical treatment. Over-the-counter medications can help manage symptoms, but rest and hydration are essential for recovery. With proper care, most individuals recover fully without lasting liver damage.
+      </p>
+      <p>
+        It’s advised to avoid alcohol during recovery, as it can worsen liver inflammation and hinder healing. If you’re taking any medications that strain the liver, consult your doctor to ensure it’s safe to continue while recovering from hepatitis A.
       </p>
 
-      <h3>Other Preventive Measures</h3>
+      <br />
+      <h2>Can You Get Re-Infected?</h2>
+      <br />
+      <p>
+        Once you’ve had hepatitis A, you cannot be re-infected. The immune system produces IgG antibodies that remain in your body, protecting you from future infections. These antibodies are also produced when you receive the hepatitis A vaccine.
+      </p>
+
+      <br />
+      <h2>Vaccine</h2>
+      <br />
+      <p>
+        The hepatitis A vaccine is inactivated, meaning it contains a killed version of the virus. This type of vaccine cannot cause illness in vaccinated individuals, making it safe even for those with weakened immune systems (e.g., people with HIV or diabetes).
+      </p>
+      <p>
+        The vaccine requires two doses, typically administered six months apart, to ensure long-term immunity.
+      </p>
+
+      <br />
+      <h2>Who Should Get Vaccinated for Hepatitis A?</h2>
+      <br />
+      <p>
+        Anyone who hasn’t been vaccinated or who hasn’t had a previous infection should consider getting the vaccine. According to the CDC, vaccination is especially recommended for:
+      </p>
       <ul>
-        <li>Wash hands thoroughly with soap and warm water after using the bathroom or changing diapers.</li>
-        <li>Ensure food is prepared in sanitary conditions.</li>
-        <li>Avoid consumption of contaminated food and water, especially in areas where hepatitis A is prevalent.</li>
+        <li>Children at 1 year of age</li>
+        <li>Individuals with unstable housing or experiencing homelessness</li>
+        <li>People at higher risk of contracting the virus</li>
+        <li>People at greater risk of complications from hepatitis A</li>
+        <li>Anyone who wants to ensure immunity against the virus</li>
       </ul>
 
-      <h2>Can You Get Hepatitis A More Than Once?</h2>
+      <br />
+      <h2>What is Postexposure Prophylaxis (PEP)?</h2>
+      <br />
       <p>
-        No, once a person contracts and recovers from hepatitis A, they develop antibodies that provide lifelong immunity against the virus.
+        If you’ve been exposed to hepatitis A and haven’t been vaccinated, postexposure prophylaxis (PEP) should be sought within 2 weeks after exposure. PEP can prevent infection if administered in time.
+      </p>
+      <p>
+        The CDC recommends PEP for those in close contact with someone diagnosed with hepatitis A, including:
+      </p>
+      <ul>
+        <li>Household members and sexual partners</li>
+        <li>People who have shared injection drugs with someone infected</li>
+        <li>Caregivers who have not used proper personal protective equipment</li>
+      </ul>
+      <p>
+        By staying informed and proactive about testing and vaccination, you can help protect yourself and others from hepatitis A and its potential risks.
       </p>
     </>
   );
 }
 
-export default HepatitisA;
+export default HepatitisALabTesting;

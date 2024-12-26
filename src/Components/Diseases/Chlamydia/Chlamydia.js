@@ -3,8 +3,8 @@ import React from "react";
 function Chlamydia() {
   return (
     <>
-      <h1 style={{ textAlign: "center" }}>Chlamydia</h1>
-      <h1>What is Chlamydia?</h1>
+      <h2 style={{ textAlign: "center" }}>Chlamydia</h2>
+      <h2>What is Chlamydia?</h2>
       <br />
       <p>
         Chlamydia is a widespread bacterial sexually transmitted infection (STI)
@@ -15,7 +15,7 @@ function Chlamydia() {
         reproductive health issues, including infertility.
       </p>
       <br />
-      <h1>Symptoms</h1>
+      <h2>Symptoms</h2>
       <br />
       <p>
         Chlamydia is a widespread bacterial sexually transmitted infection (STI)
@@ -58,7 +58,7 @@ function Chlamydia() {
         <li>● Pain or swelling in one or both testicles</li>
       </ol>
       <br />
-      <h1>How is Chlamydia Transmitted?</h1>
+      <h2>How is Chlamydia Transmitted?</h2>
       <br />
       <p>
         Chlamydia is primarily spread through sexual contact, including vaginal,
@@ -76,7 +76,7 @@ function Chlamydia() {
         prevent complications.
       </p>
       <br />
-      <h1>Can You Get Chlamydia From Kissing or Toilet Seats? </h1>
+      <h2>Can You Get Chlamydia From Kissing or Toilet Seats? </h2>
       <br />
       <p>
         No, chlamydia is not transmitted through kissing, hugging, or using
@@ -84,7 +84,7 @@ function Chlamydia() {
         infection.
       </p>
       <br />
-      <h1>Who is at Risk?</h1>
+      <h2>Who is at Risk?</h2>
       <br />
       <p>
         Anyone who is sexually active can contract chlamydia, but some groups
@@ -106,7 +106,7 @@ function Chlamydia() {
         </li>
       </ul>
       <br />
-      <h1>How Often Should You Test for Chlamydia?</h1>
+      <h2>How Often Should You Test for Chlamydia?</h2>
       <br />
       <p>
         The Centers for Disease Control and Prevention (CDC) recommends regular
@@ -129,7 +129,7 @@ function Chlamydia() {
       </ul>
       <br />
 
-      <h1>How to Prevent Chlamydia</h1>
+      <h2>How to Prevent Chlamydia</h2>
       <br />
       <p>
         While abstinence is the only sure way to avoid chlamydia, there are
@@ -157,7 +157,7 @@ function Chlamydia() {
       </ul>
       <br />
 
-      <h1>What to Do If You’re Exposed</h1>
+      <h2>What to Do If You’re Exposed</h2>
       <br />
       <p>
         If you or your partner(s) show symptoms or think you’ve been exposed,
@@ -169,7 +169,7 @@ function Chlamydia() {
       </p>
       <br />
 
-      <h1>Is Chlamydia Curable?</h1>
+      <h2>Is Chlamydia Curable?</h2>
       <br />
       <p>
         Yes, chlamydia is curable with antibiotics. Common treatments include{" "}

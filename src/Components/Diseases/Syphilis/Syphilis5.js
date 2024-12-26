@@ -1,249 +1,93 @@
 import React from "react";
 
-function Syphilis() {
+function SyphilisRash() {
   return (
     <>
-      <h2>What is Gonorrhea?</h2>
+      <br />
+      <h2>What is a Syphilis Rash?</h2>
       <br />
       <p>
-        Gonorrhea is a bacterial infection classified as a sexually transmitted
-        disease (STD). It is highly prevalent but treatable with prescribed
-        antibiotics. This infection spreads through vaginal, anal, and oral
-        sexual contact. Every year, approximately 820,000 new cases of gonorrhea
-        are reported in the United States alone. Many people who contract
-        gonorrhea may not realize they have it due to the absence of symptoms or
-        the presence of mild symptoms.
+        A syphilis rash is a common symptom of the sexually transmitted infection (STI) syphilis. It indicates that the infection has progressed beyond the primary stage and is now entering its secondary stage. The rash can appear anywhere on the body and signifies that syphilis is affecting the body in a more widespread manner.
       </p>
+
+      <br />
+      <h2>When Does the Rash Appear?</h2>
       <br />
       <p>
-        Colloquially, gonorrhea is referred to as “the drip” or “the clap.” It
-        is particularly common among teenagers and young adults in their 20s.
-        The infection is caused by the bacterium <i>Neisseria gonorrhoeae</i>,
-        which targets the mucous membranes of the reproductive system. In women,
-        it can infect the cervix, fallopian tubes, and uterus, while in men, it
-        affects the urethra. Gonorrhea can also infect other parts of the body,
-        including the throat, anus, eyes, and (less frequently) joints. If left
-        untreated, gonorrhea can cause severe health complications, including
-        infertility, making routine testing essential for sexually active
-        individuals.
+        The syphilis rash typically appears between 2 and 8 weeks after the initial syphilis infection. At the beginning of the infection, a painless round bump called a chancre forms, which is often the first sign of syphilis. The rash can appear while the chancre is still visible or after it has disappeared.
       </p>
+
       <br />
-      
-      <h2>Symptoms of Gonorrhea</h2> <br />
+      <h2>How Long Does the Rash Last?</h2>
+      <br />
       <p>
-        Gonorrhea symptoms often go unnoticed, especially in women, as most
-        women and some men show no signs of infection. However, when symptoms do
-        appear, they can vary depending on the infected area.
+        While the rash will eventually fade on its own, it may last for 2 to 6 weeks. In some cases, the rash may reappear over the course of up to 2 years, coming and going intermittently.
       </p>
+
       <br />
-      <h3>Symptoms in Men:</h3> <br />
+      <h2>Why is it Called Secondary Syphilis Rash?</h2>
+      <br />
+      <p>
+        The term “secondary syphilis rash” refers to the fact that the rash signals the progression of syphilis into its secondary stage. During this stage, syphilis becomes systemic, meaning it affects various organs and systems throughout the body. This is why the rash can appear in many different areas on the body.
+      </p>
+
+      <br />
+      <h2>What Does the Rash Look and Feel Like?</h2>
+      <br />
+      <p>
+        The syphilis rash consists of small, red or reddish-brown bumps, which can sometimes feel rough but may also be smooth to the touch. Unlike many other types of rashes, a syphilis rash is not typically itchy. It can be faint and subtle, which makes it harder to recognize or even notice.
+      </p>
+
+      <br />
+      <h2>Where Does the Rash Appear?</h2>
+      <br />
+      <p>
+        The rash can occur anywhere on the body, but it is most commonly found on the palms of the hands and the soles of the feet. While this is a typical location, the rash may appear elsewhere on the body or in multiple areas at once. Additionally, the rash can reappear in different places over time and may come and go for up to 2 years.
+      </p>
+
+      <br />
+      <h2>Is the Syphilis Rash Contagious?</h2>
+      <br />
+      <p>
+        Yes, the syphilis rash is highly contagious. In fact, it is one of the main ways that syphilis is transmitted to others. Since the rash can appear on the palms of the hands, syphilis can be passed on through casual contact, such as a handshake.
+      </p>
+
+      <br />
+      <h2>Can Other Symptoms Occur Alongside the Rash?</h2>
+      <br />
+      <p>
+        Yes, the syphilis rash is often accompanied by other symptoms, including:
+      </p>
       <ul>
-        <li>Pain or burning sensation during urination</li>
-        <li>White, yellow, or green discharge from the penis</li>
-        <li>Swollen or painful testicles</li>
-      </ul> <br />
-
-      <h3>Symptoms in Women:</h3> <br />
-      <ul>
-        <li>Pain or burning sensation while urinating</li>
-        <li>Increased vaginal discharge</li>
-        <li>Vaginal bleeding between menstrual periods</li>
-      </ul> <br />
-
-      <h3>Symptoms in Rectal Infections (Both Genders):</h3> <br />
-      <ul>
-        <li>Anal discharge</li>
-        <li>Itching or soreness in the rectal area</li>
-        <li>Rectal bleeding</li>
-        <li>Painful bowel movements</li>
-      </ul> <br />
+        <li>Headache</li>
+        <li>Fever</li>
+        <li>Patchy hair loss</li>
+        <li>Sore throat</li>
+        <li>Swollen lymph nodes</li>
+        <li>Lesions in the mouth, throat, nostrils, vagina, anus, or other mucous membranes</li>
+      </ul>
       <p>
-        Since many people remain asymptomatic, routine testing is crucial to
-        identify and treat the infection early.
-      </p> <br />
-        <h2>How Gonorrhea Affects Different Body Parts</h2> <br />
-        <h3>Joints:</h3> <br />
-        <p>
-          Gonorrhea can spread to the bloodstream, leading to a condition called
-          disseminated gonococcal infection (DGI). When this happens, the
-          bacteria can reach the joints, causing inflammation, joint pain,
-          swelling, and redness. If not treated, DGI can result in chronic joint
-          damage or arthritis.
-        </p> <br />
+        These symptoms occur because syphilis is in its secondary stage, where the infection begins to affect multiple areas of the body.
+      </p>
 
-        <h3>Rectum:</h3> <br />
-        <p>
-          Rectal gonorrhea is caused by exposure to <i>Neisseria gonorrhoeae</i>{" "}
-          through anal sexual contact with an infected partner. It may lead to
-          symptoms such as rectal pain, discharge, and bleeding. If untreated,
-          it increases the risk of other STDs, pelvic inflammatory disease
-          (PID), and infertility.
-        </p> <br />
-
-        <h3>Eyes:</h3> <br />
-        <p>
-          Gonorrhea can infect the eyes, causing a condition known as
-          conjunctivitis. This occurs when the bacteria enter the eye, either
-          through direct contact with infected genital secretions or during
-          childbirth when a baby passes through an infected birth canal.
-          Symptoms of gonococcal conjunctivitis include redness, discharge,
-          itching, and irritation of the eyes. In newborns, this infection is
-          known as ophthalmia neonatorum and can lead to severe complications,
-          including blindness, if not promptly treated.
-        </p> <br />
-      <h2>Transmission of Gonorrhea</h2> <br />
+      <br />
+      <h2>How Can the Rash Be Treated?</h2>
+      <br />
       <p>
-        Gonorrhea is transmitted during vaginal, oral, or anal sexual activity
-        with an infected person. The bacteria spread through bodily fluids such
-        as semen, pre-ejaculate, and vaginal secretions. It’s important to note
-        that ejaculation is not required for transmission.
-      </p> <br />
+        While the rash itself may go away on its own, it is important to treat the underlying syphilis infection. The rash will resolve without treatment, but the syphilis infection will not. Antibiotics, typically penicillin, are required to cure syphilis and prevent it from progressing to more severe stages.
+      </p>
+
+      <br />
+      <h2>What to Do If You Have a Syphilis Rash</h2>
+      <br />
       <p>
-        Additionally, gonorrhea can be transmitted from mother to child during
-        childbirth. If a baby contracts gonorrhea during birth, it can result in
-        serious health complications such as blindness, joint infections, or
-        life-threatening blood infections. To prevent transmission, the CDC
-        recommends that pregnant women undergo routine testing and treatment as
-        necessary.
-      </p> <br />
-
-      
-
-      <h2>Risk Factors</h2> <br />
+        If you suspect you have a syphilis rash, it's important to get tested immediately. Early detection and treatment are crucial. If left untreated, syphilis can enter its latent stage, where the infection can remain dormant for years or even decades, potentially causing long-term damage.
+      </p>
       <p>
-        Anyone who is sexually active is at risk of contracting gonorrhea.
-        However, certain groups are at a higher risk, including:
-      </p> <br />
-      <ul>
-        <li>
-          <b>Young Adults and Teenagers:</b> Higher rates are seen in
-          individuals in their teens and early 20s.
-        </li>
-        <li>
-          <b>People with Multiple Partners:</b> Engaging in sexual activity with
-          multiple partners increases the risk.
-        </li>
-        <li>
-          <b>Men Who Have Sex with Men (MSM):</b> The risk is higher among men
-          who have sexual contact with other men.
-        </li>
-      </ul> <br />
-      <p>The CDC recommends annual screening for the following groups:</p> <br />
-      <ul>
-        <li>Women under the age of 25</li>
-        <li>
-          Women over 25 with new or multiple sex partners or partners with STDs
-        </li>
-        <li>Men who have sex with men (MSM)</li>
-      </ul> <br />
-
-      
-
-      <h2>Prevalence of Gonorrhea</h2> <br />
-      <p> <br />
-        Gonorrhea is one of the most common STDs worldwide. According to the
-        World Health Organization (WHO), around 78 million people globally are
-        infected with gonorrhea annually. Prevalence rates vary significantly by
-        region, with higher rates in some areas compared to others.
-      </p> <br />
-      <p>
-        In the United States, gonorrhea is the second most commonly reported
-        bacterial STD, with an estimated 635,000 new cases reported annually.
-        This figure may be an underestimate since asymptomatic individuals often
-        go untested. Factors such as access to sexual health resources,
-        education, and public health efforts play a crucial role in determining
-        the prevalence of gonorrhea in a given community.
-      </p> <br />
-
-      
-
-      <h2>Prevention of Gonorrhea</h2> <br />
-      <p>
-        While the only guaranteed way to prevent gonorrhea is abstaining from
-        sexual activity, there are several effective prevention methods for
-        sexually active individuals:
-      </p> <br />
-      <ul>
-        <li>
-          <b>Use Protection:</b> Consistent use of condoms or dental dams during
-          oral, vaginal, and anal sex significantly reduces the risk of
-          transmission.
-        </li>
-        <li>
-          <b>Mutual Monogamy:</b> Engaging in a monogamous relationship with a
-          partner who has tested negative for STDs reduces the risk.
-        </li>
-        <li>
-          <b>Routine Testing:</b> Regular testing ensures early detection and
-          treatment, preventing further transmission.
-        </li>
-        <li>
-          <b>Open Communication:</b> Discussing sexual health with partners and
-          knowing their STD status is an important step in prevention.
-        </li>
-      </ul> <br />
-
-      
-
-      <h2>What is Gonococcus?</h2> <br />
-      <p>
-        The term “Gonococcus” refers to the bacterium{" "}
-        <i>Neisseria gonorrhoeae</i>, the microorganism responsible for causing
-        gonorrhea. This bacterium was first identified in 1879 by German
-        physician Albert Neisser, after whom the species is named. The term
-        comes from Greek roots, where “gonos” means seed or offspring, and
-        “kokkos” means berry, reflecting the bacterium’s round, berry-like
-        appearance under a microscope.
-      </p> <br />
-      <p>
-        Gonococcus can be transmitted through sexual contact or from mother to
-        child during childbirth. Once inside the body, the bacterium multiplies
-        and causes inflammation in the affected organs, such as the reproductive
-        system, rectum, throat, or eyes. Its ability to infect multiple parts of
-        the body underscores the importance of early diagnosis and treatment.
-      </p> <br />
-
-      <h2>Key Takeaways</h2> <br />
-      <ul>
-        <li>
-          Gonorrhea is a common and treatable STD caused by the bacterium{" "}
-          <i>Neisseria gonorrhoeae</i>.
-        </li>
-        <li>
-          It can affect the reproductive organs, throat, eyes, rectum, and
-          joints if untreated.
-        </li>
-        <li>
-          Many infected individuals show no symptoms, so routine testing is
-          essential for early detection.
-        </li>
-        <li>
-          Gonorrhea can be transmitted through vaginal, anal, or oral sex, as
-          well as from mother to child during childbirth.
-        </li>
-        <li>
-          Prevention methods include consistent condom use, monogamous
-          relationships, open communication with partners, and regular STD
-          screenings.
-        </li>
-      </ul> <br />
-
-      
-
-      <h2>Resources</h2> <br />
-      <ol>
-        <li>
-          “Gonorrhea - CDC Fact Sheet (Detailed Version).” Centers for Disease
-          Control and Prevention. <a href="#">Link</a>
-        </li>
-        <li>
-          “Screening Recommendations and Considerations Referenced in Treatment
-          Guidelines and Original Sources.” Centers for Disease Control and
-          Prevention. <a href="#">Link</a>
-        </li>
-      </ol>
+        The secondary stage of syphilis is the last opportunity to address the infection before it starts to cause irreversible harm to organs, including the brain. Getting tested and treated early is the key to preventing serious complications and ensuring that syphilis is completely cured.
+      </p>
     </>
   );
 }
 
-export default Syphilis;
+export default SyphilisRash;

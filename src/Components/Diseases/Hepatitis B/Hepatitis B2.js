@@ -1,95 +1,148 @@
 import React from "react";
 
-function HepatitisB() {
-    return (
-      <>
-        <h2>What is Hepatitis?</h2>
-        <p>
-          Hepatitis refers to inflammation of the liver, which can hinder its normal functioning. This condition may arise from excessive alcohol consumption, exposure to harmful toxins, certain medications, and specific medical conditions, particularly viral infections such as hepatitis A, B, C, D, and E.
-        </p>
-  
-        <h2>What is Hepatitis B?</h2>
-        <p>
-          Hepatitis B (HBV) is a highly contagious viral infection that affects the liver. It can lead to severe health issues like liver scarring (cirrhosis), liver failure, and liver cancer. The virus spreads through direct contact with bodily fluids such as blood, semen, and vaginal fluids, often during unprotected sexual activity. According to the Hepatitis B Foundation, approximately 80,000 people in the United States contract hepatitis B annually.
-        </p>
-        <p>
-          Although hepatitis B can be life-threatening, most healthy adults overcome the infection during its acute (short-term) phase and fully recover. However, if the virus remains in the body for an extended period, it may develop into a chronic (long-term) infection, significantly increasing the risk of liver disease. About 1 in 20 infected individuals become chronic carriers of hepatitis B, and nearly 20% of them face life-threatening complications.
-        </p>
-  
-        <h2>Acute Hepatitis B Infection</h2>
-        <p>
-          An acute hepatitis B infection occurs within six months of exposure to the virus. It is usually a short-term illness that may either have mild symptoms or be entirely asymptomatic. In rare cases, it can cause severe symptoms that may require hospitalization.
-        </p>
-  
-        <h2>Chronic Hepatitis B Infection</h2>
-        <p>
-          If the hepatitis B infection lasts longer than six months, it is classified as chronic. A chronic infection occurs when the immune system is unable to eliminate the virus from the body. This increases the risk of liver damage, cirrhosis, liver cancer, and other serious liver-related health issues.
-        </p>
-        <p>
-          People with chronic hepatitis B should seek regular medical care to monitor their liver health and consider treatment options. Over time, unmanaged chronic infections can cause severe liver complications, some of which may be fatal.
-        </p>
-        <p>
-          The likelihood of an acute infection becoming chronic depends on the person’s age. For example, newborns and young children have a higher risk of developing chronic hepatitis B than adults.
-        </p>
-  
-        <h2>How Is Hepatitis B Transmitted?</h2>
-        <p>
-          Hepatitis B spreads when bodily fluids such as blood, semen, or vaginal fluids from an infected person enter the body of an uninfected person. This can happen during unprotected sexual activity, childbirth, or through the sharing of needles or other personal items contaminated with infected fluids.
-        </p>
-  
-        <h2>Risk Factors</h2>
-        <p>Anyone who is not immune to hepatitis B is at risk of infection, but certain factors increase this risk, including:</p>
-        <ul>
-          <li>Having unprotected sex with multiple partners or with an HBV-infected partner</li>
-          <li>Engaging in anal sex or oral-anal contact</li>
-          <li>Living with someone who has chronic hepatitis B</li>
-          <li>Being an infant born to a mother infected with HBV</li>
-          <li>Working in healthcare or jobs with exposure to human blood</li>
-          <li>Traveling to areas with high hepatitis B infection rates</li>
-          <li>Sharing personal hygiene items like toothbrushes, razors, or glucose monitors</li>
-          <li>Direct contact with the blood or open sores of an infected person</li>
-          <li>Sharing needles or experiencing accidental needle sticks</li>
-        </ul>
-        <p>
-          Newborns are particularly vulnerable. If a pregnant woman is infected with hepatitis B, she can unknowingly pass the virus to her baby during childbirth. This increases the baby's risk of developing a chronic infection.
-        </p>
-        <p>According to the Hepatitis B Foundation:</p>
-        <ul>
-          <li>More than 90% of infants exposed to hepatitis B at birth will develop a chronic infection.</li>
-          <li>50% of children exposed between ages 1 and 5 will develop a chronic infection.</li>
-        </ul>
-        <p>
-          If you believe you may have been exposed to hepatitis B or are experiencing symptoms, it is important to get tested and seek medical advice.
-        </p>
-  
-        <h2>Can Hepatitis B Spread Through Sexual Contact?</h2>
-        <p>
-          Yes, sexual transmission is one of the most common ways hepatitis B spreads in the United States. It accounts for nearly two-thirds of all acute hepatitis B cases. The virus is 50 to 100 times more infectious than HIV, and it spreads through the exchange of bodily fluids, such as semen, vaginal fluids, and blood.
-        </p>
-  
-        <h2>Prevention</h2>
-        <h3>Vaccination</h3>
-        <p>
-          The most effective way to prevent hepatitis B is to get vaccinated before being exposed to the virus. The hepatitis B vaccine is safe and effective in preventing infection.
-        </p>
-        
-        <h3>Additional Preventive Measures</h3>
-        <ul>
-          <li>Practicing safe sex by consistently using condoms or dental dams</li>
-          <li>Avoiding the sharing of needles and other drug paraphernalia</li>
-          <li>Engaging in monogamous sexual relationships with partners who are not infected</li>
-          <li>Discussing sexually transmitted diseases (STDs) with a partner before becoming sexually active</li>
-        </ul>
-        
-        <h3>Other Safety Tips</h3>
-        <ul>
-          <li>Avoid using illegal drugs</li>
-          <li>Be cautious when getting body piercings or tattoos by ensuring the equipment is sterile</li>
-          <li>Ask about the hepatitis B vaccine before traveling to regions with high HBV infection rates</li>
-        </ul>
-      </>
-    );
-  }
-  
-  export default HepatitisB;
-  
+function HepatitisBUnderstanding() {
+  return (
+    <>
+      <br />
+      <h2>Hepatitis B: Understanding the Liver Infection</h2>
+      <br />
+      <p>
+        Hepatitis B is a liver infection caused by the hepatitis B virus (HBV). It
+        spreads through blood and bodily fluids, including sexual contact, sharing
+        needles, childbirth, and close household contact. Many people with hepatitis
+        B are unaware of their infection because it often does not present noticeable
+        symptoms, and the infection tends to resolve on its own. However, in some
+        cases, hepatitis B can develop into a chronic condition, potentially leading
+        to serious liver complications such as cirrhosis, liver cancer, or even death.
+      </p>
+
+      <br />
+      <h2>Symptoms of Hepatitis B</h2>
+      <br />
+      <p>
+        For most individuals, hepatitis B does not show any symptoms, and they remain
+        unaware of their infection. This is why the virus can spread unknowingly.
+      </p>
+      <p>
+        If symptoms do develop, they typically surface between 8 weeks and 5 months
+        after exposure to the virus, with the average being around 90 days (3 months).
+        Symptoms may last for several weeks, though some individuals may feel ill for
+        up to 6 months. In cases of chronic hepatitis B, symptoms may be intermittent,
+        with many individuals showing no signs until the condition progresses to
+        cirrhosis or severe liver disease.
+      </p>
+      <p>The common symptoms include:</p>
+      <ul>
+        <li>Fever</li>
+        <li>Fatigue</li>
+        <li>Loss of appetite</li>
+        <li>Light or clay-colored stools</li>
+        <li>Dark urine</li>
+        <li>Jaundice (yellowing of the skin and eyes)</li>
+        <li>Abdominal pain</li>
+        <li>Muscle or joint pain</li>
+        <li>Nausea and vomiting (ranging from mild to severe)</li>
+        <li>Abdominal bloating</li>
+      </ul>
+
+      <br />
+      <h2>Complications of Hepatitis B</h2>
+      <br />
+      <p>
+        Hepatitis B can present as either a short-term acute illness or a long-term
+        chronic infection. The severity varies, and the infection can cause different
+        health outcomes depending on its progression:
+      </p>
+      <h3>Acute Hepatitis B:</h3>
+      <p>
+        This phase occurs within the first 6 months of infection. Symptoms may vary in
+        intensity, with many individuals showing few or no symptoms. In some cases,
+        the infection requires hospitalization, but most adults are able to clear the
+        virus from their system without treatment and develop immunity.
+      </p>
+      <h3>Chronic Hepatitis B:</h3>
+      <p>
+        A persistent infection lasting 6 months or longer. In some individuals, the
+        immune system cannot fight off the virus, leading to lifelong infection.
+        Chronic hepatitis B increases the risk of serious liver complications,
+        including:
+      </p>
+      <ul>
+        <li>
+          <strong>Cirrhosis:</strong> Liver cells are replaced by scar tissue,
+          impairing the liver’s ability to function.
+        </li>
+        <li>
+          <strong>Liver Failure:</strong> Over time, cirrhosis can cause the liver to
+          stop working, which can be life-threatening.
+        </li>
+        <li>
+          <strong>Liver Cancer:</strong> Individuals with cirrhosis are at a higher
+          risk of developing liver cancer and require frequent monitoring.
+        </li>
+      </ul>
+      <p>
+        In rare cases, approximately 1% of people with hepatitis B can develop
+        fulminant hepatitis, which leads to rapid liver failure, coma, and can be
+        fatal. This condition requires immediate medical attention.
+      </p>
+
+      <br />
+      <h2>Risk of Acute Hepatitis B Becoming Chronic</h2>
+      <br />
+      <p>
+        The likelihood of acute hepatitis B progressing to chronic infection depends
+        largely on the person's age at the time of infection. Infants and young
+        children are more likely to develop chronic hepatitis B, whereas the risk
+        decreases with age. According to the Centers for Disease Control and
+        Prevention (CDC), about 95% of adults with hepatitis B recover fully and do
+        not develop a chronic infection. In contrast, around 90% of infected infants
+        and 25-50% of children aged 1-5 years old may develop chronic hepatitis B.
+      </p>
+      <p>
+        For most healthy adults, hepatitis B is short-term and resolves on its own,
+        without causing lasting damage. However, chronic hepatitis B, along with
+        hepatitis C, is a leading cause of liver cancer. According to the CDC, about
+        25% of people who contract hepatitis B in childhood and 15% of those infected
+        in adulthood will eventually die from cirrhosis or liver cancer. Approximately
+        3,000 people in the United States die from hepatitis B-related liver disease
+        each year.
+      </p>
+
+      <br />
+      <h2>Hepatitis B and Pregnancy</h2>
+      <br />
+      <p>
+        Pregnant women with hepatitis B can pass the virus to their newborns. Without
+        proper intervention, babies born to mothers with hepatitis B have a greater
+        than 90% chance of developing chronic hepatitis B. Early testing for hepatitis
+        B during pregnancy is essential to protect both the mother and baby from
+        long-term complications.
+      </p>
+      <p>
+        If you are pregnant and test positive for hepatitis B, it’s crucial to inform
+        your healthcare provider so steps can be taken to prevent transmission to your
+        baby. The CDC recommends the following:
+      </p>
+      <ul>
+        <li>Administer the first dose of the hepatitis B vaccine to the newborn.</li>
+        <li>
+          Provide a dose of hepatitis B immunoglobulin (HBIG), an antibody that helps
+          prevent infection.
+        </li>
+      </ul>
+
+      <br />
+      <h2>Testing and Prevention</h2>
+      <br />
+      <p>
+        Vaccination is the most effective way to prevent hepatitis B infection. The
+        hepatitis B vaccine is safe and effective, providing immunity to the virus.
+        The CDC recommends that all newborns receive the vaccine as part of their
+        regular immunization schedule. Adults at risk should also be vaccinated.
+      </p>
+    </>
+  );
+}
+
+export default HepatitisBUnderstanding;

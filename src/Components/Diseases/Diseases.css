@@ -1,62 +1,52 @@
-#Main{
+#Main {
   width: 100vw;
-  background-color: var(--Neutral-White);
+  background-color: var(--Neutral-Silver);
 }
 
 .Grid {
-display: grid;
-grid-template-columns: [sidebar] 20% [article] 80%;
-width: 80vw; /* Set the width to 80% of the viewport width */
-margin: 0 auto; /* Center the grid horizontally */
+  display: grid;
+  grid-template-columns: [sidebar] 20% [article] 80%;
+  width: 90vw; /* Set the width to 80% of the viewport width */
+  margin: 0 auto; /* Center the grid horizontally */
 }
 
 .SideBar {
-grid-column: sidebar;
-margin-right: 5px;
-overflow-y: auto;
-height: 100vh;
+  grid-column: sidebar;
+  margin-right: 5px;
+  overflow-x: hidden;
+  /* height: 100vh; */
 }
 
 .Article {
-grid-column: article;
-border: 2px solid black;
-border-radius: 15px;
-padding: 20px;
+  grid-column: article;
+  border: 2px solid black;
+  background-color: white;
+  border-radius: 15px;
+  padding: 20px;
 }
 
 
-.heading {
-margin: 10px 0;
-cursor: pointer;
-padding: 10px;
-background-color: #444;
-border: none;
-text-align: left;
-color: white;
-font-size: 16px;
-border-radius: 5px;
-}
 
 .heading:hover {
-background-color: #555;
+  background-color: #555;
 }
 
 .subheadings {
-list-style: none;
-padding: 0;
-margin: 5px 0 10px 15px;
+  list-style: none;
+  padding: 0;
+  margin: 5px 0 10px 15px;
 }
 
 .subheadings li {
-padding: 5px 0;
-font-size: 14px;
+  padding: 5px 0;
+  font-size: 14px;
 }
 
 .subheadings li a {
-text-decoration: none;
-color: white;
+  text-decoration: none;
+  color: white;
 }
 
 .subheadings li a:hover {
-color: #00bcd4;
+  color: #00bcd4;
 }

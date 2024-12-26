@@ -1,26 +1,25 @@
 /* Main Sidebar Styles */
 .sidebar {
-  width: 250px;
-  color: #333;
+  width: 100%;
+  color: var(--Accent-Color);
   background-color: #fdfdfd; /* Light cream background */
   padding: 20px 15px;
   border-radius: 15px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08); /* Soft shadow for modern look */
   overflow-y: auto;
-  font-family: 'Poppins', sans-serif; 
   transition: all 0.3s ease; 
 }
 
 .sidebar:hover {
-  transform: scale(1.02); 
+  /* transform: scale(1.02);  */
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12); 
 }
 
 /* Sidebar Header */
 .sidebar-header {
-  font-size: 18px;
+  font-size: 1em;
   font-weight: bold;
-  background: linear-gradient(135deg, #4C7972, #357266); /* Gradient header */
+  background: var(--Accent-Color); /* Gradient header */
   color: #fff;
   padding: 15px 10px;
   margin-bottom: 15px;
@@ -28,21 +27,22 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); 
   transition: all 0.3s ease; 
+  cursor: pointer;
 }
 
 .sidebar-header:hover {
-  background: linear-gradient(135deg, #357266, #2d5a50); 
-  transform: translateY(-3px);
+  color: var(--Neutral-Black);
+  /* transform: translateY(-3px); */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12); 
 }
 
 /* Sidebar Headings */
 .heading {
+  font-size: 1em;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px 15px;
-  font-size: 15px;
   font-weight: 600;
   color: #fff7f7; /* Main text color */
   cursor: pointer;
@@ -50,10 +50,22 @@
   transition: background-color 0.3s ease, transform 0.2s ease; 
 }
 
+.heading {
+  margin: 10px 0;
+  cursor: pointer;
+  padding: 10px;
+  background-color: var(--Neutral-Grey-blue);
+  border: none;
+  text-align: left;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
 .heading:hover {
   background-color: #E8F0F8; 
   color: #007bce;
-  transform: translateX(5px);
+  /* transform: translateX(5px); */
 }
 
 .arrow {
@@ -85,7 +97,7 @@
 .subheadings li:hover {
   color: #357266; 
   cursor: pointer;
-  transform: translateX(5px);
+  /* transform: translateX(5px); */
 }
 
 .subheadings li::before {

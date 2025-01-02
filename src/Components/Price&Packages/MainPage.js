@@ -420,22 +420,70 @@ const MainPage = () =>{
             been cleared after treatment.
             <strong> Please select tests from the list below.</strong>
           </p>
+          
           <div className="section3width">
-      {items.map((item, index) => (
-        <div className="check" key={index}>
-          <label className="Dform">
-            <input
-              type="checkbox"
-              onChange={(e) => handleCheckboxChange(e, item)}
-            />
-            <p>{item.name}</p>
-            <div className="check-price">${item.price.toFixed(2)}</div>
-          </label>
-        </div>
-      ))}
-      <button onClick={handleOrder}>Proceed to Order</button>
+          <div className="check">
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>Chlamydia</p>
+              <div className="check-price">$59.00</div>
+            </label>
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>Hepatitis C</p>
+              <div className="check-price">$24.00</div>
+            </label>
+          </div>
+          <div className="check">
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>Chlamydia & Gonorrhea</p>
+              <div className="check-price">$99.00</div>
+            </label>
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>Herpes I</p>
+              <div className="check-price">$45.00</div>
+            </label>
+          </div>
+          <div className="check">
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>Gonorrhea</p>
+              <div className="check-price">$59.00</div>
+            </label>
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>Herpes II</p>
+              <div className="check-price">$45.00</div>
+            </label>
+          </div>
+          <div className="check">
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>Hepatitis A</p>
+              <div className="check-price">$24.00</div>
+            </label>
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>HIV 1 & 2 Antibody (4th Gen)</p>
+              <div className="check-price">$49.00</div>
+            </label>
+          </div>
+          <div className="check">
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>Hepatitis B</p>
+              <div className="check-price">$24.00</div>
+            </label>
+            <label className="Dform">
+              <input type="checkbox" />
+              <p>Syphilis</p>
+              <div className="check-price">$49.00</div>
+            </label>
+          </div>
     </div>
-          <button className="button2" onClick={goToOrderPage}>Get Tested</button>
+          <button className="button2" onClick={handleOrder}>Get Tested</button>
         </section>
         <section className="MainPagesection4">
           <h1 className="center">Complete STD Testing at Unbeatable Prices</h1>

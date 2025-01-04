@@ -39,6 +39,14 @@ import SyphilisSymptoms from "./Syphilis/Syphilis2";
 import SyphilisTreatment from "./Syphilis/Syphilis3";
 import RPRTesting from "./Syphilis/Syphilis4";
 import SyphilisRash from "./Syphilis/Syphilis5";
+import UnderstandingSTDs from "./Symptoms/STD Symptoms";
+import Overview from "./Symptoms in Men/Overview";
+import JockItch from "./Symptoms in Men/JockItch";
+import PainfulUrination from "./Symptoms in Men/Painful Urination";
+import Penis_Bumps from "./Symptoms in Men/Penis Bumps";
+import Penile_Discharge from "./Symptoms in Men/Penile Discharge";
+import Penis_Rash from "./Symptoms in Men/Penis Rash";
+import PenisSpots from "./Symptoms in Men/Spots on Penis";
 
 
 
@@ -144,12 +152,64 @@ function Diseases() {
 
   ];
 
-  const [openDropdown, setOpenDropdown] = useState(null);
+
+  const SymptomsHeadings = [
+    {
+      id: 1,
+      title: "STD Symptoms",
+      subheadings: [
+        { title: "Symptoms", component: <UnderstandingSTDs /> },
+      ],
+    },
+    {
+      id: 2,
+      title: "Symptoms in Men",
+      subheadings: [
+        { title: "Overview", component: <Overview /> },
+        { title: "Jock Itch STD", component: <JockItch /> },
+        { title: "Painful Urination", component: <PainfulUrination /> },
+        { title: "Penis Bumps", component: <Penis_Bumps /> },
+        { title: "Penile Discharge", component: <Penile_Discharge /> },
+        { title: "Penis Rash", component: <Penis_Rash /> },
+        { title: "Spots on Penis", component: <PenisSpots /> },
+        { title: "Pimple on Penis", component: <ChlamydiaTreatment /> },
+        { title: "Lump on Testicles", component: <ChlamydiaTreatment /> },
+        { title: "Testicle Pain", component: <ChlamydiaTreatment /> },
+        { title: "Testicle Swelling", component: <ChlamydiaTreatment /> },
+      ],
+    },
+    {
+      id: 3,
+      title: "Symptoms in Women",
+      subheadings: [
+        { title: "Overview", component: <Gonorrhea /> },
+        { title: "Vaginal Bumps", component: <GonorrheaSymptoms /> },
+        { title: "Vaginal Burning", component: <GonorrheaTreatment /> },
+        { title: "Vaginal Discharge", component: <GonorrheaTreatment /> },
+        { title: "Vaginal Itching", component: <GonorrheaTreatment /> },
+        { title: "Vaginal Odor", component: <GonorrheaTreatment /> },
+      ],
+    },
+    
+
+  ];
+
+
+  const [openDropdown1, setOpenDropdown1] = useState(null);
   const [activeContent, setActiveContent] = useState(null);
 
-  const toggleDropdown = (id) => {
-    setOpenDropdown(openDropdown === id ? null : id);
+  const [openDropdown2, setOpenDropdown2] = useState(null);
+  
+
+  const toggleDropdown1 = (id) => {
+    setOpenDropdown1(openDropdown1 === id ? null : id);
   };
+
+  const toggleDropdown2 = (id) => {
+    setOpenDropdown2(openDropdown2 === id ? null : id);
+  };
+
+ 
 
   const handleSubHeadingClick = (component) => {
     setActiveContent(component);
@@ -158,38 +218,77 @@ function Diseases() {
   return (
     <section id="Main">
       <div className="Grid">
-        <div className="SideBar">
+        
+        {/* Sidebar 1 */}
+       <div className="both-sidebars">
+       <div className="SideBar">
           <div className="sidebar">
             <div className="sidebar-header">STDs & Symptoms</div>
             {headings.map((heading) => (
               <div key={heading.id} className="dropdown">
                 <div
-                  className={`heading ${openDropdown === heading.id ? "active" : ""}`}
-                  onClick={() => toggleDropdown(heading.id)}
+                  className={`heading ${openDropdown1 === heading.id ? "active" : ""}`}
+                  onClick={() => toggleDropdown1(heading.id)}
                 >
                   {heading.title}
                   <span className="arrow">
-                    {heading.subheadings.length > 0 && (openDropdown === heading.id ? "▼" : "▶")}
+                    {heading.subheadings.length > 0 && (openDropdown1 === heading.id ? "▼" : "▶")}
                   </span>
                 </div>
-                {openDropdown === heading.id &&
-                  heading.subheadings.length > 0 && (
-                    <ul className="subheadings">
-                      {heading.subheadings.map((subheading, index) => (
-                        <li
-                          key={index}
-                          onClick={() => handleSubHeadingClick(subheading.component)}
-                        >
-                          {subheading.title}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                {openDropdown1 === heading.id && heading.subheadings.length > 0 && (
+                  <ul className="subheadings">
+                    {heading.subheadings.map((subheading, index) => (
+                      <li
+                        key={index}
+                        onClick={() => handleSubHeadingClick(subheading.component)}
+                      >
+                        {subheading.title}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             ))}
           </div>
         </div>
-        <div className="Article">{activeContent}</div>
+
+        {/* Sidebar 2 */}
+        <div className="SideBar">
+          <div className="sidebar">
+            <div className="sidebar-header">STD Symptoms</div>
+            {SymptomsHeadings.map((heading) => (
+              <div key={heading.id} className="dropdown">
+                <div
+                  className={`heading ${openDropdown2 === heading.id ? "active" : ""}`}
+                  onClick={() => toggleDropdown2(heading.id)}
+                >
+                  {heading.title}
+                 <span className="arrow">
+                    {heading.subheadings.length > 0 && (openDropdown2 === heading.id ? "▼" : "▶")}
+                  </span>
+                </div>
+                {openDropdown2 === heading.id && heading.subheadings.length > 0 && (
+                  <ul className="subheadings">
+                    {heading.subheadings.map((subheading, index) => (
+                      <li
+                        key={index}
+                        onClick={() => handleSubHeadingClick(subheading.component)}
+                      >
+                        {subheading.title}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+        </div>
+
+        {/* Content Display */}
+        <div className="Article">
+  {activeContent && <div className="content1">{activeContent}</div>}
+        </div>
       </div>
     </section>
   );

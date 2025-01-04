@@ -113,3 +113,8 @@
   color: #357266;
 }
 
+
+.both-sidebars{
+  display: flex;
+  flex-direction: column;
+}

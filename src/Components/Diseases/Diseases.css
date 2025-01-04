@@ -5,29 +5,41 @@
 
 .Grid {
   display: grid;
-  grid-template-columns: [sidebar] 20% [article] 80%;
-  width: 90vw; /* Set the width to 80% of the viewport width */
-  margin: 0 auto; /* Center the grid horizontally */
+  grid-template-columns: 20% 1fr; /* Sidebar 1 on the left, Article on the right */
+  grid-template-rows: auto;
+  gap: 10px; /* Add space between columns */
+  width: 90vw; /* Adjust width of the whole container */
+  margin: 0 auto;
 }
 
 .SideBar {
-  grid-column: sidebar;
-  margin-right: 5px;
   overflow-x: hidden;
-  /* height: 100vh; */
+  height: auto; /* Make sidebar height flexible */
 }
 
+.SideBar:first-of-type {
+  grid-column: 1; /* Sidebar 1 in the first column */
+  grid-row: 1; /* Sidebar 1 in the first row */
+  margin-right: 10px;
+}
+
+.SideBar:last-of-type {
+  grid-column: 1; /* Sidebar 2 in the first column */
+  grid-row: 1; /* Sidebar 2 in the first row */
+  position: sticky; /* Make Sidebar 2 sticky */
+  top: 0; /* Stick Sidebar 2 to the top of the screen */ /* Sidebar 2 spans full viewport height */
+  overflow-y: auto; /* Allow vertical scrolling if sidebar content exceeds height */
+}
 .Article {
-  grid-column: article;
+  grid-column: 2; /* Place the article in the second column */
+  grid-row: 1; /* Place the article in the first row */
   border: 2px solid black;
   background-color: white;
   border-radius: 15px;
   padding: 20px;
-list-style-type: bullet;
+  list-style-type: bullet;
+  margin-top: 8px;
 }
-
-
-
 .heading:hover {
   background-color: #555;
 }
@@ -50,4 +62,12 @@ list-style-type: bullet;
 
 .subheadings li a:hover {
   color: #00bcd4;
+}
+
+
+.content {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #f9f9f9;
 }

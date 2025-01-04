@@ -190,7 +190,7 @@ function Diseases() {
         { title: "Vaginal Odor", component: <GonorrheaTreatment /> },
       ],
     },
-    
+
 
   ];
 
@@ -199,7 +199,7 @@ function Diseases() {
   const [activeContent, setActiveContent] = useState(null);
 
   const [openDropdown2, setOpenDropdown2] = useState(null);
-  
+
 
   const toggleDropdown1 = (id) => {
     setOpenDropdown1(openDropdown1 === id ? null : id);
@@ -209,7 +209,7 @@ function Diseases() {
     setOpenDropdown2(openDropdown2 === id ? null : id);
   };
 
- 
+
 
   const handleSubHeadingClick = (component) => {
     setActiveContent(component);
@@ -218,76 +218,76 @@ function Diseases() {
   return (
     <section id="Main">
       <div className="Grid">
-        
-        {/* Sidebar 1 */}
-       <div className="both-sidebars">
-       <div className="SideBar">
-          <div className="sidebar">
-            <div className="sidebar-header">STDs & Symptoms</div>
-            {headings.map((heading) => (
-              <div key={heading.id} className="dropdown">
-                <div
-                  className={`heading ${openDropdown1 === heading.id ? "active" : ""}`}
-                  onClick={() => toggleDropdown1(heading.id)}
-                >
-                  {heading.title}
-                  <span className="arrow">
-                    {heading.subheadings.length > 0 && (openDropdown1 === heading.id ? "▼" : "▶")}
-                  </span>
-                </div>
-                {openDropdown1 === heading.id && heading.subheadings.length > 0 && (
-                  <ul className="subheadings">
-                    {heading.subheadings.map((subheading, index) => (
-                      <li
-                        key={index}
-                        onClick={() => handleSubHeadingClick(subheading.component)}
-                      >
-                        {subheading.title}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Sidebar 2 */}
-        <div className="SideBar">
-          <div className="sidebar">
-            <div className="sidebar-header">STD Symptoms</div>
-            {SymptomsHeadings.map((heading) => (
-              <div key={heading.id} className="dropdown">
-                <div
-                  className={`heading ${openDropdown2 === heading.id ? "active" : ""}`}
-                  onClick={() => toggleDropdown2(heading.id)}
-                >
-                  {heading.title}
-                 <span className="arrow">
-                    {heading.subheadings.length > 0 && (openDropdown2 === heading.id ? "▼" : "▶")}
-                  </span>
+        {/* Sidebar 1 */}
+        <div className="both-sidebars">
+          <div className="SideBar">
+            <div className="sidebar">
+              <div className="sidebar-header">STDs & Symptoms</div>
+              {headings.map((heading) => (
+                <div key={heading.id} className="Dropdown">
+                  <div
+                    className={`heading ${openDropdown1 === heading.id ? "active" : ""}`}
+                    onClick={() => toggleDropdown1(heading.id)}
+                  >
+                    {heading.title}
+                    <span className="arrow">
+                      {heading.subheadings.length > 0 && (openDropdown1 === heading.id ? "▼" : "▶")}
+                    </span>
+                  </div>
+                  {openDropdown1 === heading.id && heading.subheadings.length > 0 && (
+                    <ul className="subheadings">
+                      {heading.subheadings.map((subheading, index) => (
+                        <li
+                          key={index}
+                          onClick={() => handleSubHeadingClick(subheading.component)}
+                        >
+                          {subheading.title}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
-                {openDropdown2 === heading.id && heading.subheadings.length > 0 && (
-                  <ul className="subheadings">
-                    {heading.subheadings.map((subheading, index) => (
-                      <li
-                        key={index}
-                        onClick={() => handleSubHeadingClick(subheading.component)}
-                      >
-                        {subheading.title}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+
+          {/* Sidebar 2 */}
+          <div className="SideBar">
+            <div className="sidebar">
+              <div className="sidebar-header">STD Symptoms</div>
+              {SymptomsHeadings.map((heading) => (
+                <div key={heading.id} className="Dropdown">
+                  <div
+                    className={`heading ${openDropdown2 === heading.id ? "active" : ""}`}
+                    onClick={() => toggleDropdown2(heading.id)}
+                  >
+                    {heading.title}
+                    <span className="arrow">
+                      {heading.subheadings.length > 0 && (openDropdown2 === heading.id ? "▼" : "▶")}
+                    </span>
+                  </div>
+                  {openDropdown2 === heading.id && heading.subheadings.length > 0 && (
+                    <ul className="subheadings">
+                      {heading.subheadings.map((subheading, index) => (
+                        <li
+                          key={index}
+                          onClick={() => handleSubHeadingClick(subheading.component)}
+                        >
+                          {subheading.title}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Content Display */}
         <div className="Article">
-  {activeContent && <div className="content1">{activeContent}</div>}
+          {activeContent && <div className="content1">{activeContent}</div>}
         </div>
       </div>
     </section>

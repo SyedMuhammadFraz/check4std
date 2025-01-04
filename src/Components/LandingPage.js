@@ -8,8 +8,8 @@ import Nav from "./Nav";
 function LandingPage() {
   return (
     <>
-      <NavBar />
-      {/* <Nav/> */}
+      {/* <NavBar /> */}
+      <Nav/>
       <Ribbon/>
       <Outlet />
       <Footer/>

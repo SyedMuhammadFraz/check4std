@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Diseases.css";
 import "./SideBar.css";
+import STDs from "./STD Overview/overview";
 import Chlamydia from "./Chlamydia/Chlamydia";
 import ChlamydiaSymptoms from "./Chlamydia/Chlamydia2";
 import ChlamydiaTreatment from "./Chlamydia/Chlamydia3";
@@ -47,6 +48,16 @@ import Penis_Bumps from "./Symptoms in Men/Penis Bumps";
 import Penile_Discharge from "./Symptoms in Men/Penile Discharge";
 import Penis_Rash from "./Symptoms in Men/Penis Rash";
 import PenisSpots from "./Symptoms in Men/Spots on Penis";
+import Penis_Pimples from "./Symptoms in Men/Pimple on Penis";
+import BumpsOnTesticles from "./Symptoms in Men/Lump on Testicle";     
+import TesticlePain from "./Symptoms in Men/Testicle Pain";
+import TesticleSwelling from "./Symptoms in Men/Testicle Swelling";
+import FemaleSTD from "./Symptoms in Women/Overview";
+import VaginalBumps from "./Symptoms in Women/Vaginal Bumps";
+import VaginalBurningAndPainfulUrination from "./Symptoms in Women/Vaginal Burning";
+import VaginalDischarge from "./Symptoms in Women/Vaginal Discharge";
+import VaginalItching from "./Symptoms in Women/Vanginal Itching";
+import VaginalOdor from "./Symptoms in Women/Vaginal Odor";
 
 
 
@@ -55,7 +66,9 @@ function Diseases() {
     {
       id: 1,
       title: "STD Overview",
-      subheadings: [],
+      subheadings: [
+        { title: "Overview", component: <STDs /> },
+      ],
     },
     {
       id: 2,
@@ -172,22 +185,22 @@ function Diseases() {
         { title: "Penile Discharge", component: <Penile_Discharge /> },
         { title: "Penis Rash", component: <Penis_Rash /> },
         { title: "Spots on Penis", component: <PenisSpots /> },
-        { title: "Pimple on Penis", component: <ChlamydiaTreatment /> },
-        { title: "Lump on Testicles", component: <ChlamydiaTreatment /> },
-        { title: "Testicle Pain", component: <ChlamydiaTreatment /> },
-        { title: "Testicle Swelling", component: <ChlamydiaTreatment /> },
+        { title: "Pimple on Penis", component: <Penis_Pimples /> },
+        { title: "Lump on Testicles", component: <BumpsOnTesticles /> },
+        { title: "Testicle Pain", component: <TesticlePain /> },
+        { title: "Testicle Swelling", component: <TesticleSwelling /> },
       ],
     },
     {
       id: 3,
       title: "Symptoms in Women",
       subheadings: [
-        { title: "Overview", component: <Gonorrhea /> },
-        { title: "Vaginal Bumps", component: <GonorrheaSymptoms /> },
-        { title: "Vaginal Burning", component: <GonorrheaTreatment /> },
-        { title: "Vaginal Discharge", component: <GonorrheaTreatment /> },
-        { title: "Vaginal Itching", component: <GonorrheaTreatment /> },
-        { title: "Vaginal Odor", component: <GonorrheaTreatment /> },
+        { title: "Overview", component: <FemaleSTD /> },
+        { title: "Vaginal Bumps", component: <VaginalBumps /> },
+        { title: "Vaginal Burning", component: <VaginalBurningAndPainfulUrination /> },
+        { title: "Vaginal Discharge", component: <VaginalDischarge /> },
+        { title: "Vaginal Itching", component: <VaginalItching /> },
+        { title: "Vaginal Odor", component: <VaginalOdor /> },
       ],
     },
     

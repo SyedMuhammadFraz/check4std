@@ -1,4 +1,4 @@
-nav{ 
+/* nav{ 
     position: fixed;
     top: 0;
     background-color: var(--Neutral-Silver);
@@ -56,4 +56,4 @@ nav ul li:nth-child(3) a:hover{
 nav ul li:nth-child(1) {
     font-weight: 600;
     gap: 5px;
-}
+} */

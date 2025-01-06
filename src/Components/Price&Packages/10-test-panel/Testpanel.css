@@ -1,0 +1,158 @@
+.TestPanelSection1 {
+  width: 80vw;
+  padding: 20px 0;
+}
+
+.Testpanel {
+  min-width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.list {
+  list-style: inside;
+}
+
+.test-card {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  justify-content: space-between; /* Space out children: top, middle, bottom */
+  align-items: center; /* Center align horizontally */
+  border: 2px solid #f9d71c;
+  width: 80vw !important;
+  width: max-content;
+  background-color: var(--Neutral-Silver);
+  height: 250px; /* Set a fixed height for uniformity */
+  border-radius: 15px;
+  padding: 10px; /* Add some inner padding */
+  box-sizing: border-box; /* Include padding in the height/width */
+  word-wrap: break-word;
+}
+
+.test-cards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  width: 15px; /* Set a fixed width */
+  height: 15px; /* Set a fixed height */
+  flex-shrink: 0; /* Prevent the checkbox from shrinking */
+  margin: 0 5px; /* Optional: Adjust spacing */
+}
+
+@media (max-width: 600px) {
+  input[type="checkbox"] {
+    width: 15px; /* Maintain size for small screens */
+    height: 15px;
+  }
+}
+
+/* General card styling */
+.test-process-card {
+  display: flex;
+  flex-wrap: wrap; /* Allows wrapping of boxes on small screens */
+  background-color: var(--Neutral-Silver);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  gap: 10px; /* Space between boxes */
+  margin: 20px auto;
+  max-width: 80vw; /* Adjust based on your design */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Box styling */
+.test-process-box {
+  flex: 1; /* Makes all boxes equally sized */
+  padding: 15px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Styling for heading box */
+.test-process-heading-box {
+  background-color: var(
+    --Accent-Color
+  ); /* Different background color for heading */
+  color: white; /* White text */
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Responsive design: Stacks the boxes vertically on small screens */
+@media (max-width: 600px) {
+  .test-process-card {
+    flex-direction: column;
+  }
+
+  .test-process-box {
+    width: 100%; /* Boxes take full width */
+  }
+}
+
+.TestPanelSection2 {
+  width: 100vw;
+  background-color: var(--Neutral-Silver);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.accordion {
+  width: 80%;
+  margin: 20px 0;
+  border-radius: 15px;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #f8f9fa; /* default color */
+    border-color: #ddd;
+    color: initial;
+}
+
+.accordion-body h2{
+    padding: 10px 0;
+    font-weight: bold;
+}
+
+.TestPanelSection3{
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.test-services{
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.test-service-text{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+}
+
+.test-services svg {
+    width: 60px !important;
+    height: 60px !important;
+    object-fit: contain; /* Ensures that the SVG fits within the container while maintaining its aspect ratio */
+    display: block; /* Removes any extra spacing around SVGs */
+}

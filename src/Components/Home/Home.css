@@ -48,6 +48,10 @@
     gap: 10px;
 }
 
+.home2section1{
+    margin: 20px 0;
+}
+
 .home2section1 img {
     max-width: 100%; /* Prevents overflow */
     height: auto; /* Maintains aspect ratio */

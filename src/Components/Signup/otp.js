@@ -41,10 +41,11 @@ const OTPPage = () => {
   };
 
   return (
-    <div className="otp-container">
-      <h2>Enter OTP</h2>
+    <div className="otp-page__container">
+      <h2 className="otp-page__title">Enter OTP</h2>
+      
       {isOtpSent ? (
-        <div className="otp-timer">
+        <div className="otp-page__timer">
           {timer > 0 ? (
             <p>Time Remaining: {Math.floor(timer / 60)}:{timer % 60}</p>
           ) : (
@@ -52,31 +53,32 @@ const OTPPage = () => {
           )}
         </div>
       ) : (
-        <button onClick={handleSendOtp} className="otp-button">
+        <button onClick={handleSendOtp} className="otp-page__button--send">
           Send OTP
         </button>
       )}
 
       {isOtpSent && !isOtpVerified && (
-        <form onSubmit={handleVerifyOtp} className="otp-form">
-          <div className="form-group">
-            <label>Enter OTP</label>
+        <form onSubmit={handleVerifyOtp} className="otp-page__form">
+          <div className="otp-page__form-group">
+            <label className="otp-page__form-label">Enter OTP</label>
             <input
               type="text"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
               maxLength="6"
               required
+              className="otp-page__form-input"
             />
           </div>
 
-          <button type="submit" className="otp-verify-button">
+          <button type="submit" className="otp-page__button--verify">
             Verify OTP
           </button>
         </form>
       )}
 
-      {isOtpVerified && <p>OTP Verified Successfully!</p>}
+      {isOtpVerified && <p className="otp-page__message">OTP Verified Successfully!</p>}
     </div>
   );
 };

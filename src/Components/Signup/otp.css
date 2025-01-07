@@ -5,7 +5,7 @@
   border: 1px solid #ccc;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background: #fff;
+  background: #f7f8fa;
   text-align: center;
 }
 
@@ -59,13 +59,13 @@
 .otp-page__form-input {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #868282;
   border-radius: 5px;
-  background-color: #f0f0f0;
+  background-color: #ffffff;
 }
 
 .otp-page__form-input:focus {
-  background-color: #e6e6e6;
+  background-color: #edeeee;
 }
 
 .otp-page__form-verify-button {

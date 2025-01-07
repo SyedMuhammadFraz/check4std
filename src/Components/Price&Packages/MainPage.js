@@ -3,10 +3,18 @@ import "./MainPage.css";
 import "./Card.css";
 import {useNavigate}  from "react-router-dom";
 import { useState } from "react";
+import { isLoggedIn } from "../../utils/auth";
 
 const MainPage = () =>{
   const navigate = useNavigate();
-  const goToOrderPage = () => navigate("/order");
+  const goToOrderPage = () => {
+    if (!isLoggedIn()) {
+      alert("You must be logged in to perform this action.");
+      navigate("/login"); 
+      return;
+    }
+    navigate("/order");
+  }
 
 
 

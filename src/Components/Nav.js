@@ -3,9 +3,20 @@ import "./Nav.css";
 import { NavLink } from "react-router-dom";
 import { IoClose, IoMenu } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { isLoggedIn, logout } from "../utils/auth";
 
 function Nav() {
+  const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
+
+
+
+  const handleLogout = () => {
+    logout(); 
+    setLoggedIn(false); 
+    navigate("/");
+  };
 
   const onDiseasesClick = () => {
     closeMenuOnMobile();
@@ -21,6 +32,10 @@ function Nav() {
     closeMenuOnMobile();
     navigate("/price-packages");
   };
+
+  useEffect(() => {
+    setLoggedIn(isLoggedIn());
+  }, []);
 
   const onHomeClick = () => {
     closeMenuOnMobile();
@@ -197,12 +212,25 @@ function Nav() {
               </ul>
             </li>
             <li className="nav__buttons">
-              <NavLink to="/login" className="button1">
-                Sign In
-              </NavLink>
-              <NavLink to="/signup" className="button1 mx-3">
-                Sign Up
-              </NavLink>
+              {!loggedIn ? (
+                <>
+                  <NavLink to="/login" className="button1">
+                    Sign In
+                  </NavLink>
+                  <NavLink to="/signup" className="button1 mx-3">
+                    Sign Up
+                  </NavLink>
+                </>
+              ) : (
+                <>
+                  <NavLink to="/profile" className="button1">
+                    Profile
+                  </NavLink>
+                  <button onClick={handleLogout} className="button1 mx-3">
+                    Logout
+                  </button>
+                </>
+              )}
             </li>
           </ul>
           <div className="nav__close" id="nav-close" onClick={toggleMenu}>

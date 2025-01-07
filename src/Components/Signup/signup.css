@@ -1,7 +1,3 @@
-body{
-    background-color: #f4f4f4;
-}
-
 .signup-auth-container {
     max-width: 700px;
     margin: 50px auto;
@@ -9,7 +5,7 @@ body{
     border: 1px solid #ccc;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background: #fff;
+    background:#f7f8fa;
   }
   
   .signup-auth-container h2 {
@@ -36,7 +32,7 @@ body{
   .form-group input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #868282;
     border-radius: 5px;
   }
 
@@ -48,7 +44,7 @@ body{
     width: 100%;
     margin-top: 20px;
     padding: 10px;
-    background: #007bff;
+    background: #ff9900;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -56,7 +52,7 @@ body{
   }
   
   .auth-button:hover {
-    background: #0056b3;
+    background: #e68a00;
   }
   
   .signup-auth-container p {

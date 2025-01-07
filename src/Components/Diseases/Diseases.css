@@ -71,3 +71,8 @@
   border-radius: 8px;
   background-color: #f9f9f9;
 }
+
+.both-sidebars{
+  display: flex;
+  flex-direction: column;
+}

@@ -5,6 +5,9 @@ import Diseases from "./Components/Diseases/Diseases";
 import MainPage from "./Components/Price&Packages/MainPage";
 import Home from "./Components/Home/Home";
 import OrderPage from "./Components/Orders/order";
+import SignUp from "./Components/Signup/signup";
+import SignIn from "./Components/Signin/signin";
+import OTPPage from "./Components/Signup/otp";
 
 
 function App() {
@@ -16,6 +19,9 @@ function App() {
             <Route index path="diseases" element={<Diseases />} />
             <Route index path="price-packages" element={<MainPage />} />
             <Route index path="order" element={<OrderPage />} />
+            <Route index path="signup" element={<SignUp />} />
+            <Route index path="login" element={<SignIn />} />
+            <Route index path="get-otp" element={<OTPPage />} />
             <Route index path="/" element={<Home />} />
           </Route>
         </Routes>

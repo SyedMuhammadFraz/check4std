@@ -114,7 +114,7 @@ function Nav() {
               </ul>
             </li>
             <li className="nav__buttons">
-              <NavLink to="/signin" className="button1">
+              <NavLink to="/login" className="button1">
                 Sign In
               </NavLink>
               <NavLink to="/signup" className="button1 mx-3">

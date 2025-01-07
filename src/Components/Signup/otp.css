@@ -1,0 +1,81 @@
+/* OTP Page Styling */
+.otp-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    text-align: center;
+  }
+  
+  .otp-container h2 {
+    font-size: 30px;
+    font-weight: bold;
+    background-color: #355a73;
+    color: white; 
+    padding: 15px; 
+    text-align: center; 
+    margin-top: 0;
+    margin-bottom: 30px;
+    border-radius: 5px;
+  }
+  
+  .otp-button,
+  .otp-verify-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .otp-button:hover,
+  .otp-verify-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .otp-timer {
+    margin-top: 10px;
+    font-size: 1.2em;
+    color: #333;
+  }
+  
+  .otp-form {
+    margin-top: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+  }
+  
+  .form-group input:focus {
+    background-color: #e6e6e6;
+  }
+  
+  .otp-verify-button {
+    margin-top: 15px;
+  }
+  
+  p {
+    font-size: 1.1em;
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  

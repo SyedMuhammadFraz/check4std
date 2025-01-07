@@ -17,6 +17,14 @@ function NavBar() {
     navigate("/");
   }
 
+  const onSigninClick=()=>{
+    navigate("/login");
+  }
+
+  const onSignupClick=()=>{
+    navigate("/signup");
+  }
+
   return (
     <nav>
       <div id="NavBar">
@@ -36,7 +44,7 @@ function NavBar() {
             <a onClick={onDiseasesClick}>STDs & Symptoms</a>
           </li>
           <li>
-            <a>Sign In</a>
+            <a onClick={onSigninClick}>Sign In</a>
             <button className="button1">Sign Up</button>
           </li>
         </ul>

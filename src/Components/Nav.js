@@ -18,6 +18,11 @@ function Nav() {
     navigate("/");
   };
 
+  const onChlamydiaGonorrheeaClick = ()=>{
+    closeMenuOnMobile();
+    navigate("/chlamydia-gonorrhea-test");
+  }
+
   const onDiseasesClick = () => {
     closeMenuOnMobile();
     navigate("/diseases");
@@ -133,7 +138,7 @@ function Nav() {
                   <a onClick={onTenTestPanelClick}>10 test Panel</a>
                 </li>
                 <li>
-                  <a href="#">Chlamydia & Gonorrhea Panel</a>
+                  <a onClick={onChlamydiaGonorrheeaClick}>Chlamydia & Gonorrhea Panel</a>
                 </li>
                 <li>
                   <a href="#">Herpes I & II Test</a>

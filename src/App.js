@@ -9,6 +9,7 @@ import SignUp from "./Components/Signup/signup";
 import SignIn from "./Components/Signin/signin";
 import OTPPage from "./Components/Signup/otp";
 import Testpanel from "./Components/Price&Packages/10-test-panel/Testpanel";
+import Chlamydia_Gonorrhea from "./Components/Price&Packages/Chlamydia-Gonorrhea/Chlamydia_Gonorrhea";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <Route index path="diseases" element={<Diseases />} />
             <Route index path="price-packages" element={<MainPage />} />
             <Route index path="ten-test-panel" element={<Testpanel />} />
+            <Route index path="chlamydia-gonorrhea-test" element={<Chlamydia_Gonorrhea />} />
             <Route index path="order" element={<OrderPage />} />
             <Route index path="signup" element={<SignUp />} />
             <Route index path="login" element={<SignIn />} />

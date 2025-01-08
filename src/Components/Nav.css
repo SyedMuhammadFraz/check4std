@@ -3,7 +3,7 @@
   width: 100vw;
   background-color: var(--Neutral-Silver);
   z-index: 10;
-  height: 10vh;
+  height: 7vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,7 +118,7 @@ nav ul li a {
 .dropdown {
   position: fixed;
   display: none;
-  top: 6vh;
+  /* top: 6vh; */
   background-color: var(--Neutral-Silver);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 4px;

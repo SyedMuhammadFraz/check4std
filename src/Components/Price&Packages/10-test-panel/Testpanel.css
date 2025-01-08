@@ -17,17 +17,23 @@
 
 .test-card {
   display: flex;
-  flex-direction: column; /* Stack children vertically */
-  justify-content: space-between; /* Space out children: top, middle, bottom */
-  align-items: center; /* Center align horizontally */
+  flex-direction: column;
+  /* Stack children vertically */
+  justify-content: space-between;
+  /* Space out children: top, middle, bottom */
+  align-items: center;
+  /* Center align horizontally */
   border: 2px solid #f9d71c;
   width: 80vw !important;
   width: max-content;
   background-color: var(--Neutral-Silver);
-  height: 250px; /* Set a fixed height for uniformity */
+  height: 250px;
+  /* Set a fixed height for uniformity */
   border-radius: 15px;
-  padding: 10px; /* Add some inner padding */
-  box-sizing: border-box; /* Include padding in the height/width */
+  padding: 10px;
+  /* Add some inner padding */
+  box-sizing: border-box;
+  /* Include padding in the height/width */
   word-wrap: break-word;
 }
 
@@ -38,15 +44,20 @@
 }
 
 input[type="checkbox"] {
-  width: 15px; /* Set a fixed width */
-  height: 15px; /* Set a fixed height */
-  flex-shrink: 0; /* Prevent the checkbox from shrinking */
-  margin: 0 5px; /* Optional: Adjust spacing */
+  width: 15px;
+  /* Set a fixed width */
+  height: 15px;
+  /* Set a fixed height */
+  flex-shrink: 0;
+  /* Prevent the checkbox from shrinking */
+  margin: 0 5px;
+  /* Optional: Adjust spacing */
 }
 
 @media (max-width: 600px) {
   input[type="checkbox"] {
-    width: 15px; /* Maintain size for small screens */
+    width: 15px;
+    /* Maintain size for small screens */
     height: 15px;
   }
 }
@@ -54,20 +65,24 @@ input[type="checkbox"] {
 /* General card styling */
 .test-process-card {
   display: flex;
-  flex-wrap: wrap; /* Allows wrapping of boxes on small screens */
+  flex-wrap: wrap;
+  /* Allows wrapping of boxes on small screens */
   background-color: var(--Neutral-Silver);
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px;
-  gap: 10px; /* Space between boxes */
+  gap: 10px;
+  /* Space between boxes */
   margin: 20px auto;
-  max-width: 80vw; /* Adjust based on your design */
+  max-width: 80vw;
+  /* Adjust based on your design */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Box styling */
 .test-process-box {
-  flex: 1; /* Makes all boxes equally sized */
+  flex: 1;
+  /* Makes all boxes equally sized */
   padding: 15px;
   text-align: center;
   border: 1px solid #ddd;
@@ -83,10 +98,10 @@ input[type="checkbox"] {
 
 /* Styling for heading box */
 .test-process-heading-box {
-  background-color: var(
-    --Accent-Color
-  ); /* Different background color for heading */
-  color: white; /* White text */
+  background-color: var(--Accent-Color);
+  /* Different background color for heading */
+  color: white;
+  /* White text */
   font-weight: bold;
   font-size: 1.2rem;
 }
@@ -98,7 +113,8 @@ input[type="checkbox"] {
   }
 
   .test-process-box {
-    width: 100%; /* Boxes take full width */
+    width: 100%;
+    /* Boxes take full width */
   }
 }
 
@@ -118,41 +134,146 @@ input[type="checkbox"] {
 }
 
 .accordion-button:not(.collapsed) {
-    background-color: #f8f9fa; /* default color */
-    border-color: #ddd;
-    color: initial;
+  background-color: #f8f9fa;
+  /* default color */
+  border-color: #ddd;
+  color: initial;
 }
 
-.accordion-body h2{
-    padding: 10px 0;
-    font-weight: bold;
+.accordion-body h2 {
+  padding: 10px 0;
+  font-weight: bold;
 }
 
-.TestPanelSection3{
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+.TestPanelSection3 {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.test-services{
-    width: 80vw;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.test-services {
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.test-service-text{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
+.test-service-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
 }
 
 .test-services svg {
-    width: 60px !important;
-    height: 60px !important;
-    object-fit: contain; /* Ensures that the SVG fits within the container while maintaining its aspect ratio */
-    display: block; /* Removes any extra spacing around SVGs */
+  width: 60px !important;
+  height: 60px !important;
+  object-fit: contain;
+  display: block;
+}
+
+
+.test-services-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  width: 80vw;
+  gap: 20px;
+}
+
+.test-services-flex-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.test-services-flex-text h4,
+h6 {
+  font-weight: bold;
+}
+
+.TestPanelSection4 {
+  background-color: var(--Neutral-Silver);
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding:2vh 0;
+}
+
+.Test-Panel-Transaction-Card {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  /* Allows wrapping of boxes on small screens */
+  background-color: var(--Neutral-Silver);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  gap: 10px;
+  /* Space between boxes */
+  margin: 20px auto;
+  min-width: 80vw;
+  /* Adjust based on your design */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Test-Panel-Transaction-Card-Text {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding: 0 10px;
+
+}
+
+.Test-Panel-Transaction-Card-header {
+  border: none;
+  background-color: var(--Accent-Color);
+  font-weight: bolder;
+  font-size: 1.5rem;
+  text-align: center;
+  width: 100%;
+  padding: 10px 0;
+}
+
+.test-card-1 {
+  display: flex;
+  flex-direction: column;
+  /* Stack children vertically */
+  justify-content: space-between;
+  /* Space out children: top, middle, bottom */
+  align-items: center;
+  /* Center align horizontally */
+  border: 2px solid #f9d71c;
+  width: 80% !important;
+  width: max-content;
+  background-color: var(--Neutral-Silver);
+  height: 250px;
+  /* Set a fixed height for uniformity */
+  border-radius: 15px;
+  padding: 10px;
+  /* Add some inner padding */
+  box-sizing: border-box;
+  /* Include padding in the height/width */
+  word-wrap: break-word;
+}
+
+.test-card-1-container{
+  width: 100% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+@media (max-width: 768px) {
+  .test-services-flex {
+    flex-direction: column;
+  }
+  .test-services-flex img{
+    width: 80vw;
+    margin: 10px 0;
+  }
 }

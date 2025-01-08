@@ -18,6 +18,11 @@ function Nav() {
     navigate("/");
   };
 
+  const onHerpes1_2Click = ()=>{
+    closeMenuOnMobile();
+    navigate("/herpes-i-ii-test");
+  }
+
   const onChlamydiaGonorrheeaClick = ()=>{
     closeMenuOnMobile();
     navigate("/chlamydia-gonorrhea-test");
@@ -141,7 +146,7 @@ function Nav() {
                   <a onClick={onChlamydiaGonorrheeaClick}>Chlamydia & Gonorrhea Panel</a>
                 </li>
                 <li>
-                  <a href="#">Herpes I & II Test</a>
+                  <a onClick={onHerpes1_2Click}>Herpes I & II Test</a>
                 </li>
                 <li className="dropdown-heading">Individual Tests</li>
                 <li>

@@ -16,7 +16,7 @@ function GenericSection() {
     };
     return (
         <section><section className="TestPanelSection3">
-            <h1 className="center my-3">Our Service Includes:</h1>
+            <h1 className="center my-3" style={{padding: "10px 0"}}>Our Service Includes:</h1>
             <div className="test-services">
                 <div className="row">
                     <div className="col-md-6">

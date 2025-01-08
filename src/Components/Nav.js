@@ -13,19 +13,42 @@ function Nav() {
 
 
   const handleLogout = () => {
-    logout(); 
-    setLoggedIn(false); 
+    logout();
+    setLoggedIn(false);
     navigate("/");
   };
 
-  const onHerpes1_2Click = ()=>{
+  const onHerpes1_2Click = () => {
     closeMenuOnMobile();
     navigate("/herpes-i-ii-test");
   }
 
-  const onChlamydiaGonorrheeaClick = ()=>{
+  const onChlamydiaGonorrheeaClick = () => {
     closeMenuOnMobile();
     navigate("/chlamydia-gonorrhea-test");
+  }
+
+  const onChlamydiaTestClick = () => {
+    closeMenuOnMobile();
+    navigate("/chlamydia-test");
+  }
+
+  const onGonorrheaTestClick = () => {
+    closeMenuOnMobile();
+    navigate("/gonorrhea-test");
+  }
+
+  const onHepATestClick = () => {
+    closeMenuOnMobile();
+    navigate("/hep-a-test");
+  }
+  const onHepBTestClick = () => {
+    closeMenuOnMobile();
+    navigate("/hep-b-test");
+  }
+  const onHepCTestClick = () => {
+    closeMenuOnMobile();
+    navigate("/hep-c-test");
   }
 
   const onDiseasesClick = () => {
@@ -150,19 +173,19 @@ function Nav() {
                 </li>
                 <li className="dropdown-heading">Individual Tests</li>
                 <li>
-                  <a href="#">Chlamydia Test</a>
+                  <a onClick={onChlamydiaTestClick}>Chlamydia Test</a>
                 </li>
                 <li>
-                  <a href="#">Gonorrhea Test</a>
+                  <a onClick={onGonorrheaTestClick}>Gonorrhea Test</a>
                 </li>
                 <li>
-                  <a href="#">Hepatitis A Test</a>
+                  <a onClick={onHepATestClick}>Hepatitis A Test</a>
                 </li>
                 <li>
-                  <a href="#">Hepatitis B Test</a>
+                  <a onClick={onHepBTestClick}>Hepatitis B Test</a>
                 </li>
                 <li>
-                  <a href="#">Hepatitis C Test</a>
+                  <a onClick={onHepCTestClick}>Hepatitis C Test</a>
                 </li>
                 <li>
                   <a href="#">Oral Herpes Test</a>

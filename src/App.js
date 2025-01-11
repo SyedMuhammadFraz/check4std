@@ -16,6 +16,22 @@ import Gonorrhea_Test from "./Components/Price&Packages/Gonorrhea-Test/Gonorrhea
 import HepA_Test from "./Components/Price&Packages/HepA-Test/HepA_Test";
 import HepB_Test from "./Components/Price&Packages/HepB-Test/HepB_Test";
 import HepC_Test from "./Components/Price&Packages/HepC-Test/HepC_Test";
+import Oral_Herpes_Test from "./Components/Price&Packages/Oral-herpes-Test/Oral_Herpes_Test";
+import Genital_Herpes_Test from "./Components/Price&Packages/Genital-Herpes-Test/Genital_Herpes_Test";
+import HIV1_2_FourthGen_Test from "./Components/Price&Packages/HIV1-2-Antibody-4thGen-Test/HIV1_2_FourthGen_Test";
+import HIV_RNA_Test from "./Components/Price&Packages/HIV-RNA-Early-Detection-Test/HIV_RNA_Test";
+import Syphilis_Test from "./Components/Price&Packages/Syphilis-Test/Syphilis_Test";
+import STDs from "./Components/Diseases/STD Overview/overview";
+import Chlamydia from "./Components/Diseases/Chlamydia/Chlamydia";
+import Gonorrhea from "./Components/Diseases/Gonorrhea/Gonorrhea";
+import HIV from "./Components/Diseases/HIV/HIV";
+import OralHerpes from "./Components/Diseases/Oral Herpes/Oral Herpes2";
+import UnderstandingSTDs from "./Components/Diseases/Symptoms/STD Symptoms";
+import SyphilisInfo from "./Components/Diseases/Syphilis/Syphilis";
+import HepatitisAInfo from "./Components/Diseases/Hepatitis A/Hepatitis A";
+import HepatitisBInfo from "./Components/Diseases/Hepatitis B/Hepatitis B";
+import HepatitisCInfo from "./Components/Diseases/Hepatitis C/Hepatitis C";
+import GenitalHerpesInfo from "./Components/Diseases/Genital Herpes/Genital Herpes";
 
 function App() {
   return (
@@ -23,7 +39,20 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<LandingPage />}>
-            <Route index path="diseases" element={<Diseases />} />
+            {/* <Route index path="diseases" element={<Diseases />} /> */}
+            <Route  path="/diseases"  element={<Diseases />}>
+              <Route index path="/diseases/overview" element={<STDs />} />
+              <Route index path="/diseases/chlamydia" element={<Chlamydia />} />
+              <Route index path="/diseases/gonorrhea" element={<Gonorrhea />} />
+              <Route index path="/diseases/hiv" element={<HIV />} />
+              <Route index path="/diseases/oral-herpes" element={<OralHerpes />} />
+              <Route index path="/diseases/symptoms" element={<UnderstandingSTDs />} />
+              <Route index path="/diseases/syphilis" element={<SyphilisInfo />} />
+              <Route index path="/diseases/hep-a" element={<HepatitisAInfo />} />
+              <Route index path="/diseases/hep-b" element={<HepatitisBInfo />} />
+              <Route index path="/diseases/hep-c" element={<HepatitisCInfo />} />
+              <Route index path="/diseases/genital-herpes" element={<GenitalHerpesInfo />} />
+            </Route>
             <Route index path="price-packages" element={<MainPage />} />
             <Route index path="ten-test-panel" element={<Testpanel />} />
             <Route index path="chlamydia-gonorrhea-test" element={<Chlamydia_Gonorrhea />} />
@@ -33,6 +62,11 @@ function App() {
             <Route index path="hep-b-test" element={<HepB_Test />} />
             <Route index path="hep-c-test" element={<HepC_Test />} />
             <Route index path="herpes-i-ii-test" element={<Herpes1_2 />} />
+            <Route index path="oral-herpes-test" element={<Oral_Herpes_Test />} />
+            <Route index path="genital-herpes-test" element={<Genital_Herpes_Test />} />
+            <Route index path="hiv-test" element={<HIV1_2_FourthGen_Test />} />
+            <Route index path="hiv-rna-test" element={<HIV_RNA_Test />} />
+            <Route index path="syphilis-test" element={<Syphilis_Test />} />
             <Route index path="order" element={<OrderPage />} />
             <Route index path="signup" element={<SignUp />} />
             <Route index path="login" element={<SignIn />} />

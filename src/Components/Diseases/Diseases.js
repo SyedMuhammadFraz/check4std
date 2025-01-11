@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import "./Diseases.css";
 import "./SideBar.css";
 import STDs from "./STD Overview/overview";
@@ -49,7 +50,7 @@ import Penile_Discharge from "./Symptoms in Men/Penile Discharge";
 import Penis_Rash from "./Symptoms in Men/Penis Rash";
 import PenisSpots from "./Symptoms in Men/Spots on Penis";
 import Penis_Pimples from "./Symptoms in Men/Pimple on Penis";
-import BumpsOnTesticles from "./Symptoms in Men/Lump on Testicle";     
+import BumpsOnTesticles from "./Symptoms in Men/Lump on Testicle";
 import TesticlePain from "./Symptoms in Men/Testicle Pain";
 import TesticleSwelling from "./Symptoms in Men/Testicle Swelling";
 import FemaleSTD from "./Symptoms in Women/Overview";
@@ -58,8 +59,8 @@ import VaginalBurningAndPainfulUrination from "./Symptoms in Women/Vaginal Burni
 import VaginalDischarge from "./Symptoms in Women/Vaginal Discharge";
 import VaginalItching from "./Symptoms in Women/Vanginal Itching";
 import VaginalOdor from "./Symptoms in Women/Vaginal Odor";
-
-
+import { useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 function Diseases() {
   const headings = [
@@ -210,7 +211,6 @@ function Diseases() {
 
   const [openDropdown1, setOpenDropdown1] = useState(null);
   const [activeContent, setActiveContent] = useState(null);
-
   const [openDropdown2, setOpenDropdown2] = useState(null);
 
 
@@ -228,10 +228,83 @@ function Diseases() {
     setActiveContent(component);
   };
 
+  const location = useLocation();
+  // useEffect(() => {
+  //   if (location.state?.component) {
+  //     const componentName = location.state.component;
+
+  //     const componentsMap = {
+  //       STDs,
+  //       Chlamydia,
+  //       ChlamydiaSymptoms,
+  //       ChlamydiaTreatment,
+  //       Gonorrhea,
+  //       GonorrheaSymptoms,
+  //       GonorrheaTreatment,
+  //       HepatitisA,
+  //       HepatitisASymptoms,
+  //       HepatitisATreatment,
+  //       HepatitisB,
+  //       HepatitisBSymptoms,
+  //       HepatitisBTreatment,
+  //       HepatitisC,
+  //       HepatitisCSymptoms,
+  //       HepatitisCTreatment,
+  //       GenitalHerpes,
+  //       GenitalHerpesSymptoms,
+  //       HerpesSymptomsMen,
+  //       HerpesSymptomsWomen,
+  //       GenitalHerpesTreatment,
+  //       HSV2Symptoms,
+  //       OralHerpes,
+  //       OralHerpesSymptoms,
+  //       OralHerpesTreatment,
+  //       HSV1Symptoms,
+  //       ColdSoresSymptoms,
+  //       HIV,
+  //       HIVSymptoms,
+  //       HIVSymptomsMen,
+  //       HIVSymptomsWomen,
+  //       AIDSSymptoms,
+  //       HIVRash,
+  //       HIVTreatment,
+  //       Syphilis,
+  //       SyphilisSymptoms,
+  //       SyphilisTreatment,
+  //       RPRTesting,
+  //       SyphilisRash,
+  //       UnderstandingSTDs,
+  //       Overview,
+  //       JockItch,
+  //       PainfulUrination,
+  //       Penis_Bumps,
+  //       Penile_Discharge,
+  //       Penis_Rash,
+  //       PenisSpots,
+  //       Penis_Pimples,
+  //       BumpsOnTesticles,
+  //       TesticlePain,
+  //       TesticleSwelling,
+  //       FemaleSTD,
+  //       VaginalBumps,
+  //       VaginalBurningAndPainfulUrination,
+  //       VaginalDischarge,
+  //       VaginalItching,
+  //       VaginalOdor,
+  //     };
+
+  //     const newComponent = componentsMap[componentName] || null;
+
+  //     // Prevent redundant updates
+  //     setActiveContent((prev) => (prev !== newComponent ? newComponent : prev));
+  //   }
+  // }, [location.state]);
+
+
+
   return (
     <section id="Main">
       <div className="Grid">
-
         {/* Sidebar 1 */}
         <div className="both-sidebars">
           <div className="SideBar">
@@ -301,6 +374,7 @@ function Diseases() {
         {/* Content Display */}
         <div className="Article">
           {activeContent && <div className="content1">{activeContent}</div>}
+          <Outlet />
         </div>
       </div>
     </section>

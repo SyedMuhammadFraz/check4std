@@ -16,6 +16,8 @@ function ConfirmationModal({ showModal, onClose, onConfirm }) {
     };
   }, [showModal]);
 
+  if (!showModal) return null;
+
   return (
     <div className="modal-overlay">
       <div className="modal-content">

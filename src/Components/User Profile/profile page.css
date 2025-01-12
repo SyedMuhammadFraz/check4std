@@ -9,7 +9,7 @@
     background: #f7f8fa;
 }
 
-.profile-container h2 {
+.profile-container .profile-heading {
     font-size: 30px;
     font-weight: bold;
     background-color: #355a73;

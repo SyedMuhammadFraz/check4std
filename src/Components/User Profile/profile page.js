@@ -48,7 +48,7 @@ const ProfilePage = () => {
 
   return (
     <div className="profile-container">
-      <h2>User Profile</h2>
+      <h2 className="profile-heading">User Profile</h2>
 
       <div className="profile-details">
         <div className="detail">

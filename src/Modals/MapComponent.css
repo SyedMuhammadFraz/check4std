@@ -1,6 +1,5 @@
 .map-container {
     position: relative;
-    z-index: 100; /* Ensure it's on top of other elements */
     height: 500px; /* Ensure the height is set correctly */
     width: 80%; /* Adjust as needed */
   }

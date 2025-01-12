@@ -19,7 +19,7 @@ function ConfirmationModal({ showModal, onClose, onConfirm }) {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Logout Confirmation</h2>
+        <h2 className="modal-heading">Logout Confirmation</h2>
         <p>Are you sure you want to logout?</p>
         <div className="modal-buttons">
           <button onClick={onConfirm} className="button2">

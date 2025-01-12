@@ -23,7 +23,7 @@
     color: #333333; 
   }
   
-  .modal-content h2 {
+  .modal-content .modal-heading {
     margin: 0 0 15px;
     font-size: 1.5em; 
     color: #2c3e50;

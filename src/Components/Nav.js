@@ -3,25 +3,21 @@ import "./Nav.css";
 import { NavLink } from "react-router-dom";
 import { IoClose, IoMenu } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { isLoggedIn, logout } from "../utils/auth";
 import { useLocation } from "react-router-dom";
 import { useEffect, useContext } from "react";
-import { isLoggedIn } from "../utils/auth";
 import ConfirmationModal from "../Modals/confirmation-modal";
 import { AuthContext } from "../utils/AuthContext";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 function Nav() {
   const { authToken, logout } = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
 
 
   const handleLogout = () => {
     logout();
-    setLoggedIn(false);
     navigate("/");
     setShowModal(true); 
   };

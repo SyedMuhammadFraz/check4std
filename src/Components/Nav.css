@@ -314,3 +314,12 @@ nav ul li a {
     column-gap: 2.5rem;
   }
 }
+
+
+.logout-button{
+    background-color: #ff0000;
+}
+
+.logout-button:hover{
+  background-color: #db4545;
+}

@@ -3,24 +3,40 @@ import "./Nav.css";
 import { NavLink } from "react-router-dom";
 import { IoClose, IoMenu } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { isLoggedIn, logout } from "../utils/auth";
+import { useEffect, useContext } from "react";
+import { isLoggedIn } from "../utils/auth";
+import ConfirmationModal from "../Modals/confirmation-modal";
+import { AuthContext } from "../utils/AuthContext";
+import { ToastContainer, toast } from 'react-toastify';
 
 function Nav() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const { authToken, logout } = useContext(AuthContext);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
-
-
   const handleLogout = () => {
+    setShowModal(true); 
+  };
+
+  const confirmLogout = () => {
     logout(); 
-    setLoggedIn(false); 
-    navigate("/");
+    setShowModal(false); 
+    navigate("/"); 
+    toast.success("Successfully logged out");
+  };
+
+  const cancelLogout = () => {
+    setShowModal(false);
   };
 
   const onDiseasesClick = () => {
     closeMenuOnMobile();
     navigate("/diseases");
+  };
+
+  const onFindAlabClick = () => {
+    closeMenuOnMobile();
+    navigate("/test-centers");
   };
 
   const onTenTestPanelClick = () => {
@@ -33,9 +49,7 @@ function Nav() {
     navigate("/price-packages");
   };
 
-  useEffect(() => {
-    setLoggedIn(isLoggedIn());
-  }, []);
+  
 
   const onHomeClick = () => {
     closeMenuOnMobile();
@@ -69,7 +83,7 @@ function Nav() {
               <a onClick={onHomeClick}>Home</a>
             </li>
             <li className="nav__item">
-              <a>Find a Lab</a>
+              <a onClick={onFindAlabClick}>Find a Lab</a>
               <ul className="dropdown">
                 <div class="dropdown-container">
                   <label for="zip-code">Zip Code:</label>
@@ -212,7 +226,7 @@ function Nav() {
               </ul>
             </li>
             <li className="nav__buttons">
-              {!loggedIn ? (
+              {!authToken ? (
                 <>
                   <NavLink to="/login" className="button1">
                     Sign In
@@ -223,10 +237,10 @@ function Nav() {
                 </>
               ) : (
                 <>
-                  <NavLink to="/profile" className="button1">
+                  <NavLink to="/user-profile" className="button1">
                     Profile
                   </NavLink>
-                  <button onClick={handleLogout} className="button1 mx-3">
+                  <button onClick={handleLogout} className="button1 mx-3 logout-button">
                     Logout
                   </button>
                 </>
@@ -242,6 +256,14 @@ function Nav() {
           <IoMenu />
         </div>
       </nav>
+
+      <ConfirmationModal
+        showModal={showModal}
+        onClose={cancelLogout}
+        onConfirm={confirmLogout}
+      />
+
+
     </header>
   );
 }

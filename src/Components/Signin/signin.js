@@ -1,56 +1,46 @@
-import React, { useState, useEffect } from "react";
-import Cookies from "js-cookie";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../utils/auth";
+import { AuthContext } from "../../utils/AuthContext";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./signin.css";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
+  const { authToken, login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if the user is already logged in when the page loads
-    const authToken = Cookies.get("authToken");
+    // Redirect to the profile page if already logged in
     if (authToken) {
-      setLoggedIn(true);
+      navigate("/user-profile");
     }
-  }, []);
+  }, [authToken, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
+    toast.dismiss();
 
     // Mock authentication
     if (email === "test@example.com" && password === "password") {
-      // Store the authentication token in cookies
-      Cookies.set("authToken", "mock-auth-token");
-      
-      // Set the logged-in state to true
-      setLoggedIn(true);
-
-      // Redirect to home page after successful login
-      navigate("/");
+      // Simulate successful login
+      login("mock-auth-token"); 
+      navigate("/user-profile");
+      toast.success('Successfully signed in!');
     } else {
       setError("Invalid email or password");
+      toast.error('Please enter valid credentials.');
     }
-  };
-
-  const handleLogout = () => {
-    // Remove the token from cookies
-    Cookies.remove("authToken");
-    setLoggedIn(false);
-    navigate("/"); // Redirect to home page
   };
 
   return (
     <div className="signin-auth-container">
-      <h2>{loggedIn ? "Welcome Back!" : "Account Login"}</h2>
+      <h2>{authToken ? "Welcome Back!" : "Account Login"}</h2>
       
-      {/* Show login form only if user is not logged in */}
-      {!loggedIn ? (
+      {!authToken ? (
         <form onSubmit={handleSubmit}>
           {error && <p className="error-message">{error}</p>}
           <div className="form-group">
@@ -78,17 +68,19 @@ const SignIn = () => {
       ) : (
         <div className="profile-logout-container">
           <p>You are logged in. Welcome!</p>
-          <button className="signin-auth-button" onClick={() => navigate("/profile")}>
+          <button
+            className="signin-auth-button"
+            onClick={() => navigate("/user-profile")}
+          >
             Go to Profile
           </button>
-          <button className="signin-auth-button" onClick={handleLogout}>
+          <button className="signin-auth-button" onClick={logout}>
             Logout
           </button>
         </div>
       )}
 
-      {/* Show Sign Up link if user is not logged in */}
-      {!loggedIn && (
+      {!authToken && (
         <p>
           Don't have an account? <a href="/signup">Sign Up</a>
         </p>

@@ -1,21 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./confirmation-modal.css";
 
 function ConfirmationModal({ showModal, onClose, onConfirm }) {
-  if (!showModal) return null;
-
-  // Disable body scroll when the modal is open
-  React.useEffect(() => {
+  // Ensure `useEffect` is always called
+  useEffect(() => {
     if (showModal) {
       document.body.classList.add("modal-open");
     } else {
       document.body.classList.remove("modal-open");
     }
+
     return () => {
       document.body.classList.remove("modal-open");
     };
   }, [showModal]);
 
+  // Return null if `showModal` is false
   if (!showModal) return null;
 
   return (

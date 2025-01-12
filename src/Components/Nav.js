@@ -3,6 +3,9 @@ import "./Nav.css";
 import { NavLink } from "react-router-dom";
 import { IoClose, IoMenu } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { isLoggedIn, logout } from "../utils/auth";
+import { useLocation } from "react-router-dom";
 import { useEffect, useContext } from "react";
 import { isLoggedIn } from "../utils/auth";
 import ConfirmationModal from "../Modals/confirmation-modal";
@@ -13,8 +16,13 @@ function Nav() {
   const { authToken, logout } = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
 
   const handleLogout = () => {
+    logout();
+    setLoggedIn(false);
+    navigate("/");
     setShowModal(true); 
   };
 
@@ -28,6 +36,64 @@ function Nav() {
   const cancelLogout = () => {
     setShowModal(false);
   };
+
+  const onHerpes1_2Click = () => {
+    closeMenuOnMobile();
+    navigate("/herpes-i-ii-test");
+  }
+
+  const onHIV4thGenClick = () => {
+    closeMenuOnMobile();
+    navigate("/hiv-test");
+  }
+
+  const onHIVRNSClick = () => {
+    closeMenuOnMobile();
+    navigate("/hiv-rna-test");
+  }
+
+  const onSyphilisClick = () => {
+    closeMenuOnMobile();
+    navigate("/syphilis-test");
+  }
+
+  const onOralHerpesClick = () => {
+    closeMenuOnMobile();
+    navigate("/oral-herpes-test");
+  }
+
+  const onGenitalHerpesClick = () => {
+    closeMenuOnMobile();
+    navigate("/genital-herpes-test");
+  }
+
+  const onChlamydiaGonorrheeaClick = () => {
+    closeMenuOnMobile();
+    navigate("/chlamydia-gonorrhea-test");
+  }
+
+  const onChlamydiaTestClick = () => {
+    closeMenuOnMobile();
+    navigate("/chlamydia-test");
+  }
+
+  const onGonorrheaTestClick = () => {
+    closeMenuOnMobile();
+    navigate("/gonorrhea-test");
+  }
+
+  const onHepATestClick = () => {
+    closeMenuOnMobile();
+    navigate("/hep-a-test");
+  }
+  const onHepBTestClick = () => {
+    closeMenuOnMobile();
+    navigate("/hep-b-test");
+  }
+  const onHepCTestClick = () => {
+    closeMenuOnMobile();
+    navigate("/hep-c-test");
+  }
 
   const onDiseasesClick = () => {
     closeMenuOnMobile();
@@ -66,6 +132,18 @@ function Nav() {
       setShowMenu(false);
     }
   };
+
+  const goToDiseases = (component) => {
+    // closeMenuOnMobile();
+    
+    // // Check if the current route is already '/diseases' and if the component is the same
+    // if (location.pathname !== '/diseases' || location.state?.component !== component) {
+    //   navigate("/diseases", { state: { component } });
+    // } else {
+    //   console.log("Already on the diseases page with the same component.");
+    // }
+  };
+  
   return (
     <header className="header">
       <nav className="nav container">
@@ -147,81 +225,81 @@ function Nav() {
                   <a onClick={onTenTestPanelClick}>10 test Panel</a>
                 </li>
                 <li>
-                  <a href="#">Chlamydia & Gonorrhea Panel</a>
+                  <a onClick={onChlamydiaGonorrheeaClick}>Chlamydia & Gonorrhea Panel</a>
                 </li>
                 <li>
-                  <a href="#">Herpes I & II Test</a>
+                  <a onClick={onHerpes1_2Click}>Herpes I & II Test</a>
                 </li>
                 <li className="dropdown-heading">Individual Tests</li>
                 <li>
-                  <a href="#">Chlamydia Test</a>
+                  <a onClick={onChlamydiaTestClick}>Chlamydia Test</a>
                 </li>
                 <li>
-                  <a href="#">Gonorrhea Test</a>
+                  <a onClick={onGonorrheaTestClick}>Gonorrhea Test</a>
                 </li>
                 <li>
-                  <a href="#">Hepatitis A Test</a>
+                  <a onClick={onHepATestClick}>Hepatitis A Test</a>
                 </li>
                 <li>
-                  <a href="#">Hepatitis B Test</a>
+                  <a onClick={onHepBTestClick}>Hepatitis B Test</a>
                 </li>
                 <li>
-                  <a href="#">Hepatitis C Test</a>
+                  <a onClick={onHepCTestClick}>Hepatitis C Test</a>
                 </li>
                 <li>
-                  <a href="#">Oral Herpes Test</a>
+                  <a onClick={onOralHerpesClick}>Oral Herpes Test</a>
                 </li>
                 <li>
-                  <a href="#">Genital Herpes Test</a>
+                  <a onClick={onGenitalHerpesClick}>Genital Herpes Test</a>
                 </li>
                 <li>
-                  <a href="#">HIV 1 & 2 Antibody (4th Gen) Test</a>
+                  <a onClick={onHIV4thGenClick}>HIV 1 & 2 Antibody (4th Gen) Test</a>
                 </li>
                 <li>
-                  <a href="#">HIV RNA Early Detection Test</a>
+                  <a onClick={onHIVRNSClick}>HIV RNA Early Detection Test</a>
                 </li>
                 <li>
-                  <a href="#">Syphilis Test</a>
+                  <a onClick={onSyphilisClick}>Syphilis Test</a>
                 </li>
               </ul>
             </li>
             <li className="nav__item">
-              <a onClick={onDiseasesClick}>STDs & Symptoms</a>
+              <a onClick={()=>{navigate("/diseases/overview")}}>STDs & Symptoms</a>
               <ul className="dropdown">
                 <li className="dropdown-heading">STD Information & Symptoms</li>
                 <li>
-                  <a href="#">Chlamydia</a>
+                  <a onClick={()=>{navigate("/diseases/chlamydia")}}>Chlamydia</a>
                 </li>
                 <li>
-                  <a href="#">Gonorrhea</a>
+                  <a onClick={()=>{navigate("/diseases/gonorrhea")}}>Gonorrhea</a>
                 </li>
                 <li>
-                  <a href="#">Hepatitis A</a>
+                  <a onClick={()=>{navigate("/diseases/hep-a")}}>Hepatitis A</a>
                 </li>
                 <li>
-                  <a href="#">Hepatitis B</a>
+                  <a onClick={()=>{navigate("/diseases/hep-b")}}>Hepatitis B</a>
                 </li>
                 <li>
-                  <a href="#">Hepatitis C</a>
+                  <a onClick={()=>{navigate("/diseases/hep-c")}}>Hepatitis C</a>
                 </li>
                 <li>
-                  <a href="#">Genital Herpes</a>
+                  <a onClick={()=>{navigate("/diseases/genital-herpes")}}>Genital Herpes</a>
                 </li>
                 <li>
-                  <a href="#">Oral Herpes</a>
+                  <a onClick={()=>{navigate("/diseases/oral-herpes")}}>Oral Herpes</a>
                 </li>
                 <li>
-                  <a href="#">HIV</a>
+                  <a onClick={()=>{navigate("/diseases/hiv")}}>HIV</a>
                 </li>
                 <li>
-                  <a href="#">Syphilis</a>
+                  <a onClick={()=>{navigate("/diseases/syphilis")}}>Syphilis</a>
                 </li>
                 <li>
-                  <a href="#">STD Symptoms</a>
+                  <a onClick={()=>{navigate("/diseases/symptoms")}}>STD Symptoms</a>
                 </li>
                 <li className="dropdown-heading">STD Current Events</li>
                 <li>
-                  <a href="#">STD Blog</a>
+                  <a >STD Blog</a>
                 </li>
               </ul>
             </li>

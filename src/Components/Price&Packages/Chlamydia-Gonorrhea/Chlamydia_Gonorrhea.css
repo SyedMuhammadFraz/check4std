@@ -1,0 +1,31 @@
+.Chlamydia_Gonorrhea-section1 {
+    width: 100vw;
+    padding: 2vh 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.Chlamydia_Gonorrhea-section1-text {
+    width: 80vw;
+}
+
+.Chlamydia_Gonorrhea-section2 {
+    width: 100vw;
+    padding: 2vh 0;
+    background-color: var(--Neutral-Silver);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.Chlamydia_Gonorrhea-section2-text{
+    width: 80vw;
+}
+.Chlamydia_Gonorrhea-section2-text h2{
+    font-weight: bold;
+}

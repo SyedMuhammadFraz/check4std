@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import '../Herpes1_2/herpes1_2.css'
 import GenericSection from '../GenericSection'
+import { useNavigate } from 'react-router-dom';
+
 function HepB_Test() {
+    const navigate = useNavigate();
     const [checked1, setChecked1] = useState(false);
     const [checked2, setChecked2] = useState(false);
     const [checked3, setChecked3] = useState(false);
@@ -12,16 +15,14 @@ function HepB_Test() {
         if (!checked1) {
             setChecked2(false);
             setChecked3(false);
-            setChecked4(false);
-        } // Uncheck Checkbox 2
+        } 
     };
 
     const handleCheckbox2 = () => {
         setChecked2(!checked2);
         if (!checked2) {
-            setChecked1(false); // Uncheck Checkbox 1
+            setChecked1(false); 
             setChecked3(false);
-            setChecked4(false);
         }
     };
 
@@ -29,17 +30,25 @@ function HepB_Test() {
         setChecked3(!checked3);
         if (!checked3) {
             setChecked1(false); // Uncheck Checkbox 1
-            setChecked2(false)
-            setChecked4(false)
+            setChecked2(false);
         }
     };
-    const handleCheckbox4 = () => {
-        setChecked4(!checked4);
-        if (!checked4) {
-            setChecked1(false); // Uncheck Checkbox 1
-            setChecked2(false)
-            setChecked3(false)
+
+    const handleGetTested = () => {
+        let selectedTest = null;
+        if (checked1) {
+          selectedTest = { name: "Hepatitis B", price: 24 };
+        } else if (checked2) {
+          selectedTest = { name: "10 Test Panel", price: 139 };
         }
+        else if (checked3) {
+          selectedTest = { name: "10 Test Panel with HIV RNA Early Detection", price: 259 };
+        }
+      if (selectedTest) {
+        navigate("/order", { state: { selectedTests: [selectedTest] } });
+      } else {
+        alert("Please select a test before proceeding.");
+      }
     };
     return (
         <section>
@@ -77,29 +86,29 @@ function HepB_Test() {
                         <div className="card-price"> $24.00</div>
                     </div>
                     <div className="card-radio">
-                        <div className="card-checkbox" onClick={handleCheckbox3}>
+                        <div className="card-checkbox" onClick={handleCheckbox2}>
                             <input
                                 type="checkbox"
-                                checked={checked3}
-                                onChange={handleCheckbox3}
+                                checked={checked2}
+                                onChange={handleCheckbox2}
                             />
                             10 Test Panel
                         </div>
                         <div className="card-price"> $139.00</div>
                     </div>
-                    <div className="card-radio" onClick={handleCheckbox4}>
+                    <div className="card-radio" onClick={handleCheckbox3}>
                         <div className="card-checkbox">
                             <input
                                 type="checkbox"
-                                checked={checked4}
-                                onChange={handleCheckbox4}
+                                checked={checked3}
+                                onChange={handleCheckbox3}
                             />
                             10 Test Panel with HIV RNA Early Detection
                         </div>
                         <div className="card-price"> $259.00</div>
                     </div>
                     <div className="card-button">
-                        <button className="button3">Get Tested</button>
+                        <button className="button3" onClick={handleGetTested}>Get Tested</button>
                     </div>
                 </div>
                 <div className="test-process my-3">

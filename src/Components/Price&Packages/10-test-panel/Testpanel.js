@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import "./Testpanel.css";
 import '../MainPage.css'
 import GenericSection from "../GenericSection";
+import { useNavigate } from "react-router-dom";
 
 function Testpanel() {
+  const navigate = useNavigate();
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
 
@@ -16,6 +18,20 @@ function Testpanel() {
     setChecked2(!checked2);
     if (!checked2) setChecked1(false); // Uncheck Checkbox 1
   };
+
+  const handleGetTested = () => {
+    let selectedTest = null;
+    if (checked1) {
+      selectedTest = { name: "10 Test Panel", price: 139 };
+    } else if (checked2) {
+      selectedTest = { name: "10 Test Panel with HIV RNA Early Detection", price: 259 };
+    }
+  if (selectedTest) {
+    navigate("/order", { state: { selectedTests: [selectedTest] } });
+  } else {
+    alert("Please select a test before proceeding.");
+  }
+};
 
   function toggleContent(id) {
     const content = document.getElementById(`content-${id}`);
@@ -92,7 +108,7 @@ function Testpanel() {
               <div className="card-price"> $259.00</div>
             </div>
             <div className="card-button">
-              <button className="button3">Get Tested</button>
+              <button className="button3" onClick={handleGetTested}>Get Tested</button>
             </div>
           </div>
         </div>

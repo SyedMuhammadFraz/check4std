@@ -4,48 +4,33 @@ import "./Card.css";
 import {useNavigate}  from "react-router-dom";
 import { useState } from "react";
 import { isLoggedIn } from "../../utils/auth";
+import useGotoOrderPage from "./order-handle";
 
 const MainPage = () =>{
   const navigate = useNavigate();
-  const goToOrderPage = () => {
-    if (!isLoggedIn()) {
-      alert("You must be logged in to perform this action.");
-      navigate("/login"); 
-      return;
-    }
-    navigate("/order");
-  }
+  const gotoOrderPage = useGotoOrderPage();
+  const [selectedTests, setSelectedTests] = useState([]);
 
 
-
-  const [selectedItems, setSelectedItems] = useState([]);
-
-  const handleCheckboxChange = (event, item) => {
-    if (event.target.checked) {
-      setSelectedItems((prev) => [...prev, item]);
-    } else {
-      setSelectedItems((prev) => prev.filter((i) => i.name !== item.name));
-    }
+  const handleCheckboxChange = (testName, price) => {
+    setSelectedTests((prev) => {
+      const exists = prev.find((test) => test.name === testName);
+      if (exists) {
+        return prev.filter((test) => test.name !== testName);
+      } else {
+        return [...prev, { name: testName, price }];
+      }
+    });
   };
 
   const handleOrder = () => {
-    navigate("/order", { state: { selectedItems } });
+    if (selectedTests.length > 0) {
+      navigate("/order", { state: { selectedTests } });
+    } else {
+      alert("Please select at least one test before proceeding.");
+    }
   };
 
-  const items = [
-    { name: "Chlamydia", price: 59.0 },
-    { name: "Hepatitis C", price: 24.0 },
-    { name: "Chlamydia & Gonorrhea", price: 99.0 },
-    { name: "Herpes I", price: 45.0 },
-    { name: "Gonorrhea", price: 59.0 },
-    { name: "Herpes II", price: 45.0 },
-    { name: "Hepatitis A", price: 24.0 },
-    { name: "HIV 1 & 2 Antibody (4th Gen)", price: 49.0 },
-    { name: "Hepatitis B", price: 24.0 },
-    { name: "Syphilis", price: 49.0 },
-    { name: "HIV RNA Early Detection", price: 129.0 },
-  ];
-  
     return (
       <section className="MainPage">
         <h1 className="center">STD Test Prices & Packages</h1>
@@ -402,7 +387,7 @@ const MainPage = () =>{
                   <div className="card-header">10 Test Panel</div>
                   <div className="card-price"> $139.00</div>
                   <div className="card-button">
-                    <button className="button3" onClick={goToOrderPage}>Get Tested</button>
+                    <button className="button3" onClick={() => gotoOrderPage([{ name: "10 Test Panel", price: 139 }])}>Get Tested</button>
                   </div>
                 </div>
                 <div className="card">
@@ -412,7 +397,7 @@ const MainPage = () =>{
                   </div>
                   <div className="card-price"> $139.00</div>
                   <div className="card-button">
-                    <button className="button3" onClick={goToOrderPage}>Get Tested</button>
+                    <button className="button3" onClick={() => gotoOrderPage([{ name: "10 Test Panel with HIV RNA Early Detection", price: 139 }])}>Get Tested</button>
                   </div>
                 </div>
               </div>
@@ -432,60 +417,60 @@ const MainPage = () =>{
           <div className="section3width">
           <div className="check">
             <label className="Dform">
-              <input type="checkbox" />
+              <input type="checkbox" onChange={() => handleCheckboxChange("Chlamydia", 59.0)}/>
               <p>Chlamydia</p>
               <div className="check-price">$59.00</div>
             </label>
             <label className="Dform">
-              <input type="checkbox" />
+              <input type="checkbox" onChange={() => handleCheckboxChange("Hepatitis C", 24.0)}/>
               <p>Hepatitis C</p>
               <div className="check-price">$24.00</div>
             </label>
           </div>
           <div className="check">
             <label className="Dform">
-              <input type="checkbox" />
+              <input type="checkbox" onChange={() => handleCheckboxChange("Chlamydia & Gonorrhea", 99.0)}/>
               <p>Chlamydia & Gonorrhea</p>
               <div className="check-price">$99.00</div>
             </label>
             <label className="Dform">
-              <input type="checkbox" />
+              <input type="checkbox" onChange={() => handleCheckboxChange("Herpes I", 45.0)}/>
               <p>Herpes I</p>
               <div className="check-price">$45.00</div>
             </label>
           </div>
           <div className="check">
             <label className="Dform">
-              <input type="checkbox" />
+              <input type="checkbox" onChange={() => handleCheckboxChange("Gonorrhea", 59.0)}/>
               <p>Gonorrhea</p>
               <div className="check-price">$59.00</div>
             </label>
             <label className="Dform">
-              <input type="checkbox" />
+              <input type="checkbox" onChange={() => handleCheckboxChange("Herpes II", 45.0)}/>
               <p>Herpes II</p>
               <div className="check-price">$45.00</div>
             </label>
           </div>
           <div className="check">
             <label className="Dform">
-              <input type="checkbox" />
+              <input type="checkbox" onChange={() => handleCheckboxChange("Hepatitis A", 24.0)}/>
               <p>Hepatitis A</p>
               <div className="check-price">$24.00</div>
             </label>
             <label className="Dform">
-              <input type="checkbox" />
+              <input type="checkbox" onChange={() => handleCheckboxChange("HIV 1 & 2 Antibody (4th Gen)", 49.0)}/>
               <p>HIV 1 & 2 Antibody (4th Gen)</p>
               <div className="check-price">$49.00</div>
             </label>
           </div>
           <div className="check">
             <label className="Dform">
-              <input type="checkbox" />
+              <input type="checkbox" onChange={() => handleCheckboxChange("Hepatitis B", 24.0)}/>
               <p>Hepatitis B</p>
               <div className="check-price">$24.00</div>
             </label>
             <label className="Dform">
-              <input type="checkbox" />
+              <input type="checkbox" onChange={() => handleCheckboxChange("Syphilis", 45.0)}/>
               <p>Syphilis</p>
               <div className="check-price">$49.00</div>
             </label>

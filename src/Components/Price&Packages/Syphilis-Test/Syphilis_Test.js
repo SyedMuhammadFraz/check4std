@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 import '../Herpes1_2/herpes1_2.css'
 import GenericSection from '../GenericSection'
+import { useNavigate } from 'react-router-dom';
 
 function Syphilis_Test() {
+    const navigate = useNavigate();
     const [checked1, setChecked1] = useState(false);
     const [checked2, setChecked2] = useState(false);
     const [checked3, setChecked3] = useState(false);
-    const [checked4, setChecked4] = useState(false);
 
     const handleCheckbox1 = () => {
         setChecked1(!checked1);
         if (!checked1) {
             setChecked2(false);
             setChecked3(false);
-            setChecked4(false);
         } // Uncheck Checkbox 2
     };
 
@@ -22,7 +22,6 @@ function Syphilis_Test() {
         if (!checked2) {
             setChecked1(false); // Uncheck Checkbox 1
             setChecked3(false);
-            setChecked4(false);
         }
     };
 
@@ -30,17 +29,25 @@ function Syphilis_Test() {
         setChecked3(!checked3);
         if (!checked3) {
             setChecked1(false); // Uncheck Checkbox 1
-            setChecked2(false)
-            setChecked4(false)
+            setChecked2(false);
         }
     };
-    const handleCheckbox4 = () => {
-        setChecked4(!checked4);
-        if (!checked4) {
-            setChecked1(false); // Uncheck Checkbox 1
-            setChecked2(false)
-            setChecked3(false)
+   
+    const handleGetTested = () => {
+        let selectedTest = null;
+        if (checked1) {
+          selectedTest = { name: "Syphilis", price: 59 };
+        } else if (checked2) {
+          selectedTest = { name: "10 Test Panel", price: 139 };
         }
+        else if (checked3) {
+          selectedTest = { name: "10 Test Panel with HIV RNA Early Detection", price: 259 };
+        }
+      if (selectedTest) {
+        navigate("/order", { state: { selectedTests: [selectedTest] } });
+      } else {
+        alert("Please select a test before proceeding.");
+      }
     };
     return (
         <section>
@@ -107,7 +114,7 @@ function Syphilis_Test() {
                         <div className="card-price"> $259.00</div>
                     </div>
                     <div className="card-button">
-                        <button className="button3">Get Tested</button>
+                        <button className="button3" onClick={handleGetTested}>Get Tested</button>
                     </div>
                 </div>
                 <div className="test-process my-3">

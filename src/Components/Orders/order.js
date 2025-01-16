@@ -1,7 +1,12 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import './order.css';
 
 const OrderPage = () => {
+  
+  const location = useLocation();
+  const { selectedTests = [] } = location.state || {};
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -19,28 +24,25 @@ const OrderPage = () => {
     billingZipCode: "",
   });
 
-  const [selectedTests, setSelectedTests] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const totalCost = selectedTests.reduce((sum, test) => sum + test.price, 0);
+  console.log(selectedTests);
+  console.log(totalCost);
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    if (type === "checkbox") {
-      setSelectedTests((prev) =>
-        checked ? [...prev, value] : prev.filter((test) => test !== value)
-      );
-    } else {
+    
       setFormData({
         ...formData,
         [name]: type === "checkbox" ? checked : value,
       });
     }
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
-    setIsModalOpen(true); // Open the modal after form submission
+    // Open the modal after form submission
   };
 
   const months = [
@@ -69,6 +71,21 @@ const OrderPage = () => {
 
   return (
     <div className="order-page">
+      
+      <div className="order-card">
+          <div className="order-card-content">
+            <h2>Order Summary</h2>
+            <ul>
+            {(selectedTests || []).map((test, index) => (
+                <li key={index}>
+                  {test.name} - ${test.price.toFixed(2)}
+                </li>
+              ))}
+            </ul>
+            <h3>Total: ${totalCost.toFixed(2)}</h3>
+            <button onClick={() => setIsModalOpen(false)}>Add/Edit Tests</button>
+          </div>
+        </div>
       <div className="container">
         <h1>Quick & Confidential STD Testing</h1>
 
@@ -209,10 +226,9 @@ const OrderPage = () => {
 
           <button type="submit">Place Your Order</button>
         </form>
-      </div>
 
-     
     </div>
+      </div>
   );
 };
 

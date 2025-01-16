@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import '../Herpes1_2/herpes1_2.css'
 import GenericSection from '../GenericSection'
+import { useNavigate } from 'react-router-dom';
 
 function Oral_Herpes_Test() {
+    const navigate = useNavigate();
     const [checked1, setChecked1] = useState(false);
     const [checked2, setChecked2] = useState(false);
     const [checked3, setChecked3] = useState(false);
@@ -41,6 +43,26 @@ function Oral_Herpes_Test() {
             setChecked2(false)
             setChecked3(false)
         }
+    };
+
+    const handleGetTested = () => {
+        let selectedTest = null;
+        if (checked1) {
+          selectedTest = { name: "Oral Herpes (HSV-1)", price: 45 };
+        } else if (checked2) {
+            selectedTest = { name: "Herpes I & II", price: 79 };
+        }
+        else if (checked3) {
+            selectedTest = { name: "10 Test Panel", price: 139 };
+          }
+        else if (checked4) {
+          selectedTest = { name: "10 Test Panel with HIV RNA Early Detection", price: 259 };
+        }
+      if (selectedTest) {
+        navigate("/order", { state: { selectedTests: [selectedTest] } });
+      } else {
+        alert("Please select a test before proceeding.");
+      }
     };
     return (
         <section>
@@ -112,7 +134,7 @@ function Oral_Herpes_Test() {
                         <div className="card-price"> $259.00</div>
                     </div>
                     <div className="card-button">
-                        <button className="button3">Get Tested</button>
+                        <button className="button3" onClick={handleGetTested}>Get Tested</button>
                     </div>
                 </div>
                 <div className="test-process my-3">

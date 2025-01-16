@@ -3,8 +3,10 @@ import GenericSection from '../GenericSection'
 import './Chlamydia_Gonorrhea.css'
 import '../Card.css'
 import '../10-test-panel/Testpanel.css'
+import { useNavigate } from 'react-router-dom'
 
 function Chlamydia_Gonorrhea() {
+  const navigate=useNavigate();
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
@@ -32,6 +34,23 @@ function Chlamydia_Gonorrhea() {
       setChecked2(false)
     }
   };
+
+  const handleGetTested = () => {
+    let selectedTest = null;
+    if (checked1) {
+      selectedTest = { name: "Chlamydia & Gonorrhea", price: 99 };
+    } else if (checked2) {
+      selectedTest = { name: "10 Test Panel", price: 139 };
+    }
+    else if (checked3) {
+      selectedTest = { name: "10 Test Panel with HIV RNA Early Detection", price: 259 };
+    }
+  if (selectedTest) {
+    navigate("/order", { state: { selectedTests: [selectedTest] } });
+  } else {
+    alert("Please select a test before proceeding.");
+  }
+};
 
   function toggleContent(id) {
     const content = document.getElementById(`content-${id}`);
@@ -98,7 +117,7 @@ function Chlamydia_Gonorrhea() {
             <div className="card-price"> $259.00</div>
           </div>
           <div className="card-button">
-            <button className="button3">Get Tested</button>
+            <button className="button3" onClick={handleGetTested}>Get Tested</button>
           </div>
         </div>
         <div className="test-process my-3">

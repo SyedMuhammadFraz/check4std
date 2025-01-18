@@ -5,18 +5,14 @@ import "./order.css";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../utils/AuthContext";
 import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
 
 
 const OrderPage = () => {
  
   const { authToken } = useContext(AuthContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (authToken===null) {
-      navigate("/login");
-    }
-  }, [authToken, navigate]);
+  const [loading, setLoading]=useState(true);
 
   const location = useLocation();
   const { selectedTests = [] } = location.state || {};
@@ -177,6 +173,27 @@ const OrderPage = () => {
       return newErrors;
     });
   }, [formData.dobMonth, formData.dobDay, formData.dobYear]);
+
+
+  useEffect(() => {
+    // Simulate auth check delay
+    const timer = setTimeout(() => {
+      if (authToken === null) {
+        navigate("/login");
+      }
+      setLoading(false);
+    }, 1000); // Adjust delay as needed
+
+    return () => clearTimeout(timer); // Cleanup timeout
+  }, [authToken, navigate]);
+
+  if (loading) {
+    return (
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <ClipLoader size={50} color={"#36d7b7"} loading={loading} />
+      </div>
+    );
+  }
 
   return (
     <div className="order-page">

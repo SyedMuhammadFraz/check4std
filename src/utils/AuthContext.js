@@ -5,11 +5,12 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [authToken, setAuthToken] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Load auth token from cookies when the app starts
     const token = Cookies.get("authToken");
     setAuthToken(token || null);
+    setLoading(false);
   }, []);
 
   const login = (token) => {
@@ -23,7 +24,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ authToken, login, logout }}>
+    <AuthContext.Provider value={{ loading, authToken, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

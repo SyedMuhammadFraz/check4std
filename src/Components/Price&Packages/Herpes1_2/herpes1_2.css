@@ -1,37 +1,36 @@
-.Herper1-2-section1{
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 2vh 0;
+.Herper1-2-section1 {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2vh 0;
 }
 
-.Herper1-2-section1-text{
-    width: 80vw;
-    padding: 20px 0;
+.Herper1-2-section1-text {
+  width: 80vw;
+  padding: 20px 0;
 }
 
-.Herper1-2-section1-text h2{
-   font-weight: bold;
+.Herper1-2-section1-text h2 {
+  font-weight: bold;
 }
 
-.Herper1-2-section2{
-    width: 100vw;
-    display: flex;
-    background-color: var(--Neutral-Silver);
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 2vh 0;
+.Herper1-2-section2 {
+  width: 100vw;
+  display: flex;
+  background-color: var(--Neutral-Silver);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 2vh 0;
 }
 
-.Herper1-2-section2-text{
-    width: 80vw;
-    padding: 20px 0;
+.Herper1-2-section2-text {
+  width: 80vw;
+  padding: 20px 0;
 }
 
-.Herper1-2-section2-text h2{
-   font-weight: bold;
+.Herper1-2-section2-text h2 {
+  font-weight: bold;
 }
-

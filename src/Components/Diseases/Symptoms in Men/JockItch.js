@@ -85,7 +85,7 @@ function JockItch() {
       <br />
       <p>
         Jock itch can be treated with over-the-counter antifungal creams, powders, or
-        lotions. It typically takes 2 to 4 weeks for the infection to clear. It's important
+        lotions. It typically takes 2 to 4 weeks for the iFnfection to clear. It's important
         to sanitize athletic gear such as towels, jock straps, and cups. In severe cases,
         a doctor may prescribe oral antifungal medications.
       </p>

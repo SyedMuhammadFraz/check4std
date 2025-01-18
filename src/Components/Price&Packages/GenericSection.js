@@ -1,19 +1,40 @@
 import React, { useState } from 'react'
 import './10-test-panel/Testpanel.css'
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function GenericSection() {
+    const navigate = useNavigate();
     const [checked1, setChecked1] = useState(false);
     const [checked2, setChecked2] = useState(false);
 
     const handleCheckbox1 = () => {
         setChecked1(!checked1);
         if (!checked1) setChecked2(false); // Uncheck Checkbox 2
-    };
-
-    const handleCheckbox2 = () => {
+      };
+    
+      const handleCheckbox2 = () => {
         setChecked2(!checked2);
         if (!checked2) setChecked1(false); // Uncheck Checkbox 1
+      };
+    
+      const handleGetTested = () => {
+        let selectedTest = null;
+        if (checked1) {
+          selectedTest = { name: "10 Test Panel", price: 139 };
+        } else if (checked2) {
+          selectedTest = { name: "10 Test Panel with HIV RNA Early Detection", price: 259 };
+        }
+      if (selectedTest) {
+        navigate("/order", { state: { selectedTests: [selectedTest] } });
+      } else {
+        toast.error("Please select a test before proceeding.");
+      }
     };
+
+    const onSubmitClick = () => {
+        navigate('/order');
+    }
     return (
         <section><section className="TestPanelSection3">
             <h1 className="center my-3" style={{padding: "10px 0"}}>Our Service Includes:</h1>
@@ -390,7 +411,7 @@ function GenericSection() {
                                 <div className="card-price"> $259.00</div>
                             </div>
                             <div className="card-button">
-                                <button className="button3">Get Tested</button>
+                                <button className="button3" onClick={handleGetTested}>Get Tested</button>
                             </div>
                         </div>
                     </div>

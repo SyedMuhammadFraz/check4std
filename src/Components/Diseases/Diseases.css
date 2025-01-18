@@ -25,7 +25,6 @@
   grid-column: 1;
   /* Sidebar in the first column */
   grid-row: 1;
-  margin-right: 10px;
 }
 
 .SideBar:last-of-type {

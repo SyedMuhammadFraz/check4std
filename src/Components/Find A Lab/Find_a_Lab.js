@@ -1,6 +1,5 @@
 import MapComponent from '../../Modals/MapComponent';
 import React from "react";
-import LeafletMap from '../../Modals/LeafletMap';
 
 function MapPlaceholder() {
   return (

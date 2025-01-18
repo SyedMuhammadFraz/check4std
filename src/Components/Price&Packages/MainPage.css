@@ -184,7 +184,7 @@ span svg {
     align-items: center;
   }
 
-  .align img {
+  .align .doctor-image {
     width: 80%;
   }
   .check {

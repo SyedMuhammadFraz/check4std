@@ -419,7 +419,7 @@ const MainPage = () => {
               </div>
             </div>
           </div>
-          <img src="./Doctor.png" />
+          <img className="doctor-image" src="./Doctor.png" />
         </div>
       </section>
       <section className="MainPagesection3">

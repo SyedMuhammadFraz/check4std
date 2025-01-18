@@ -2,6 +2,7 @@
   position: relative;
   height: 60vh;
   /* Ensure the height is set correctly */
+  z-index: 1;
   width: 80%;
   /* Adjust as needed */
   margin: 2vh 0 ;

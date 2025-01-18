@@ -1,4 +1,4 @@
-.ribbon{
+.ribbon {
     margin-top: 71px;
     width: 100vw;
     background-color: #ffea71;
@@ -7,4 +7,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+@media screen and (max-width: 1373px) {
+    .ribbon{
+        margin-top: 7vh !important;
+    }
 }

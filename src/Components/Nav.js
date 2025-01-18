@@ -388,7 +388,7 @@ function Nav() {
                   <NavLink to="/login" className="button1" onClick={closeMenuOnMobile}>
                     Sign In
                   </NavLink>
-                  <NavLink to="/signup" className="button1 mx-3">
+                  <NavLink to="/signup" className="button1 mx-3" onClick={closeMenuOnMobile}>
                     Sign Up
                   </NavLink>
                 </>

@@ -53,6 +53,10 @@
   width: 80vw;
 }
 
+.align img{
+  width: 36%;
+}
+
 .text {
   display: flex;
   flex-direction: column;

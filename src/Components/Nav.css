@@ -113,6 +113,7 @@ nav ul li a {
 /* General Dropdown Styling */
 .nav__item {
   position: relative;
+  list-style: none;
 }
 
 .dropdown {
@@ -277,6 +278,7 @@ nav ul li a {
     height: 100%;
     padding: 6rem 3rem 0;
     transition: right 0.4s;
+    overflow-y: scroll;
   }
 
   .nav__item {
@@ -316,10 +318,10 @@ nav ul li a {
 }
 
 
-.logout-button{
-    background-color: #ff0000;
+.logout-button {
+  background-color: #ff0000;
 }
 
-.logout-button:hover{
+.logout-button:hover {
   background-color: #db4545;
 }

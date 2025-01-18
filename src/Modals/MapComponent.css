@@ -1,5 +1,8 @@
 .map-container {
-    position: relative;
-    height: 500px; /* Ensure the height is set correctly */
-    width: 80%; /* Adjust as needed */
-  }
+  position: relative;
+  height: 60vh;
+  /* Ensure the height is set correctly */
+  width: 80%;
+  /* Adjust as needed */
+  margin: 2vh 0 ;
+}

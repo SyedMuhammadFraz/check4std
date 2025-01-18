@@ -1,38 +1,46 @@
 #Main {
   width: 100vw;
   background-color: var(--Neutral-Silver);
+  padding: 2vh 0;
 }
 
+/* Main Grid Layout */
 .Grid {
   display: grid;
-  grid-template-columns: 20% 1fr; /* Sidebar 1 on the left, Article on the right */
+  grid-template-columns: 20% 1fr;
+  /* Sidebar and Article side by side for larger screens */
   grid-template-rows: auto;
-  gap: 10px; /* Add space between columns */
-  width: 90vw; /* Adjust width of the whole container */
+  gap: 10px;
+  width: 90vw;
   margin: 0 auto;
 }
 
+/* Sidebar styles */
 .SideBar {
   overflow-x: hidden;
-  height: auto; /* Make sidebar height flexible */
+  height: auto;
 }
 
 .SideBar:first-of-type {
-  grid-column: 1; /* Sidebar 1 in the first column */
-  grid-row: 1; /* Sidebar 1 in the first row */
+  grid-column: 1;
+  /* Sidebar in the first column */
+  grid-row: 1;
   margin-right: 10px;
 }
 
 .SideBar:last-of-type {
-  grid-column: 1; /* Sidebar 2 in the first column */
-  grid-row: 1; /* Sidebar 2 in the first row */
-  position: sticky; /* Make Sidebar 2 sticky */
-  top: 0; /* Stick Sidebar 2 to the top of the screen */ /* Sidebar 2 spans full viewport height */
-  overflow-y: auto; /* Allow vertical scrolling if sidebar content exceeds height */
+  grid-column: 1;
+  /* Sidebar in the first column */
+  grid-row: 1;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
 }
+
 .Article {
-  grid-column: 2; /* Place the article in the second column */
-  grid-row: 1; /* Place the article in the first row */
+  grid-column: 2;
+  /* Article in the second column */
+  grid-row: 1;
   border: 2px solid black;
   background-color: white;
   border-radius: 15px;
@@ -40,6 +48,32 @@
   list-style-type: bullet;
   margin-top: 8px;
 }
+
+/* Responsive Layout for Small Screens */
+@media (max-width: 913px) {
+  .Grid {
+    grid-template-columns: 1fr;
+    /* Single-column layout */
+    grid-template-rows: auto auto;
+    /* Stack rows */
+  }
+
+  .SideBar:first-of-type,
+  .SideBar:last-of-type {
+    grid-column: 1;
+    /* Place sidebars in the first column */
+    grid-row: auto;
+    /* Stack below the article */
+  }
+
+  .Article {
+    grid-column: 1;
+    /* Article spans full width */
+    grid-row: 1;
+    /* Article stays at the top */
+  }
+}
+
 .heading:hover {
   background-color: #555;
 }
@@ -72,7 +106,7 @@
   background-color: #f9f9f9;
 }
 
-.both-sidebars{
+.both-sidebars {
   display: flex;
   flex-direction: column;
 }

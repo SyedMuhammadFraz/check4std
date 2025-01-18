@@ -12,6 +12,10 @@
     justify-content: center;
 }
 
+.text{
+    padding: 0 2vw;
+}
+
 .text h1 {
     font-weight: bold;
     margin-bottom: 5vh;

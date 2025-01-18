@@ -18,6 +18,7 @@ function Nav() {
     logout();
     navigate("/");
     setShowModal(true);
+    closeMenuOnMobile();
   };
 
   const confirmLogout = () => {
@@ -384,7 +385,7 @@ function Nav() {
             <li className="nav__buttons">
               {!authToken ? (
                 <>
-                  <NavLink to="/login" className="button1">
+                  <NavLink to="/login" className="button1" onClick={closeMenuOnMobile}>
                     Sign In
                   </NavLink>
                   <NavLink to="/signup" className="button1 mx-3">
@@ -393,7 +394,7 @@ function Nav() {
                 </>
               ) : (
                 <>
-                  <NavLink to="/user-profile" className="button1">
+                  <NavLink to="/user-profile" className="button1" onClick={closeMenuOnMobile}>
                     Profile
                   </NavLink>
                   <button

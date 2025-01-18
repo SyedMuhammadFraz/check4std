@@ -3,29 +3,27 @@ import "./Nav.css";
 import { NavLink } from "react-router-dom";
 import { IoClose, IoMenu } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import { isLoggedIn, logout } from "../utils/auth";
 import { useLocation } from "react-router-dom";
 import { useEffect, useContext } from "react";
 import ConfirmationModal from "../Modals/confirmation-modal";
 import { AuthContext } from "../utils/AuthContext";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 function Nav() {
   const { authToken, logout } = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
-
   const handleLogout = () => {
     logout();
     navigate("/");
-    setShowModal(true); 
+    setShowModal(true);
   };
 
   const confirmLogout = () => {
-    logout(); 
-    setShowModal(false); 
-    navigate("/"); 
+    logout();
+    setShowModal(false);
+    navigate("/");
     toast.success("Successfully logged out");
   };
 
@@ -36,60 +34,60 @@ function Nav() {
   const onHerpes1_2Click = () => {
     closeMenuOnMobile();
     navigate("/herpes-i-ii-test");
-  }
+  };
 
   const onHIV4thGenClick = () => {
     closeMenuOnMobile();
     navigate("/hiv-test");
-  }
+  };
 
   const onHIVRNSClick = () => {
     closeMenuOnMobile();
     navigate("/hiv-rna-test");
-  }
+  };
 
   const onSyphilisClick = () => {
     closeMenuOnMobile();
     navigate("/syphilis-test");
-  }
+  };
 
   const onOralHerpesClick = () => {
     closeMenuOnMobile();
     navigate("/oral-herpes-test");
-  }
+  };
 
   const onGenitalHerpesClick = () => {
     closeMenuOnMobile();
     navigate("/genital-herpes-test");
-  }
+  };
 
   const onChlamydiaGonorrheeaClick = () => {
     closeMenuOnMobile();
     navigate("/chlamydia-gonorrhea-test");
-  }
+  };
 
   const onChlamydiaTestClick = () => {
     closeMenuOnMobile();
     navigate("/chlamydia-test");
-  }
+  };
 
   const onGonorrheaTestClick = () => {
     closeMenuOnMobile();
     navigate("/gonorrhea-test");
-  }
+  };
 
   const onHepATestClick = () => {
     closeMenuOnMobile();
     navigate("/hep-a-test");
-  }
+  };
   const onHepBTestClick = () => {
     closeMenuOnMobile();
     navigate("/hep-b-test");
-  }
+  };
   const onHepCTestClick = () => {
     closeMenuOnMobile();
     navigate("/hep-c-test");
-  }
+  };
 
   const onDiseasesClick = () => {
     closeMenuOnMobile();
@@ -111,8 +109,6 @@ function Nav() {
     navigate("/price-packages");
   };
 
-  
-
   const onHomeClick = () => {
     closeMenuOnMobile();
     navigate("/");
@@ -131,7 +127,6 @@ function Nav() {
 
   const goToDiseases = (component) => {
     // closeMenuOnMobile();
-    
     // // Check if the current route is already '/diseases' and if the component is the same
     // if (location.pathname !== '/diseases' || location.state?.component !== component) {
     //   navigate("/diseases", { state: { component } });
@@ -139,7 +134,7 @@ function Nav() {
     //   console.log("Already on the diseases page with the same component.");
     // }
   };
-  
+
   return (
     <header className="header">
       <nav className="nav container">
@@ -154,10 +149,14 @@ function Nav() {
         >
           <ul className="nav__list">
             <li className="nav__item">
-              <a onClick={onHomeClick}>Home</a>
+              <a onClick={onHomeClick} className="navbar-main-heading">
+                Home
+              </a>
             </li>
             <li className="nav__item">
-              <a onClick={onFindAlabClick}>Find a Lab</a>
+              <a onClick={onFindAlabClick} className="navbar-main-heading">
+                Find a Lab
+              </a>
               <ul className="dropdown">
                 <div class="dropdown-container">
                   <label for="zip-code">Zip Code:</label>
@@ -185,7 +184,7 @@ function Nav() {
               </ul>
             </li>
             <li className="nav__item">
-              <a>How it Works</a>
+              <a className="navbar-main-heading">How it Works</a>
               <ul className="dropdown">
                 <li>
                   <a href="#">Our Privacy Promise</a>
@@ -214,14 +213,18 @@ function Nav() {
               </ul>
             </li>
             <li className="nav__item">
-              <a onClick={onPriceClick}>Price and Packages</a>
+              <a onClick={onPriceClick} className="navbar-main-heading">
+                Price and Packages
+              </a>
               <ul className="dropdown">
                 <li className="dropdown-heading">Popular Test Panels</li>
                 <li>
                   <a onClick={onTenTestPanelClick}>10 test Panel</a>
                 </li>
                 <li>
-                  <a onClick={onChlamydiaGonorrheeaClick}>Chlamydia & Gonorrhea Panel</a>
+                  <a onClick={onChlamydiaGonorrheeaClick}>
+                    Chlamydia & Gonorrhea Panel
+                  </a>
                 </li>
                 <li>
                   <a onClick={onHerpes1_2Click}>Herpes I & II Test</a>
@@ -249,7 +252,9 @@ function Nav() {
                   <a onClick={onGenitalHerpesClick}>Genital Herpes Test</a>
                 </li>
                 <li>
-                  <a onClick={onHIV4thGenClick}>HIV 1 & 2 Antibody (4th Gen) Test</a>
+                  <a onClick={onHIV4thGenClick}>
+                    HIV 1 & 2 Antibody (4th Gen) Test
+                  </a>
                 </li>
                 <li>
                   <a onClick={onHIVRNSClick}>HIV RNA Early Detection Test</a>
@@ -260,42 +265,119 @@ function Nav() {
               </ul>
             </li>
             <li className="nav__item">
-              <a onClick={()=>{navigate("/diseases/overview")}}>STDs & Symptoms</a>
+              <a
+                onClick={() => {
+                  navigate("/diseases/overview");
+                }}
+                className="navbar-main-heading"
+              >
+                STDs & Symptoms
+              </a>
               <ul className="dropdown">
                 <li className="dropdown-heading">STD Information & Symptoms</li>
                 <li>
-                  <a onClick={()=>{navigate("/diseases/chlamydia")}}>Chlamydia</a>
+                  <a
+                    onClick={() => {
+                      closeMenuOnMobile();
+                      navigate("/diseases/chlamydia");
+                    }}
+                  >
+                    Chlamydia
+                  </a>
                 </li>
                 <li>
-                  <a onClick={()=>{navigate("/diseases/gonorrhea")}}>Gonorrhea</a>
+                  <a
+                    onClick={() => {
+                      closeMenuOnMobile();
+                      navigate("/diseases/gonorrhea");
+                    }}
+                  >
+                    Gonorrhea
+                  </a>
                 </li>
                 <li>
-                  <a onClick={()=>{navigate("/diseases/hep-a")}}>Hepatitis A</a>
+                  <a
+                    onClick={() => {
+                      closeMenuOnMobile();
+                      navigate("/diseases/hep-a");
+                    }}
+                  >
+                    Hepatitis A
+                  </a>
                 </li>
                 <li>
-                  <a onClick={()=>{navigate("/diseases/hep-b")}}>Hepatitis B</a>
+                  <a
+                    onClick={() => {
+                      closeMenuOnMobile();
+                      navigate("/diseases/hep-b");
+                    }}
+                  >
+                    Hepatitis B
+                  </a>
                 </li>
                 <li>
-                  <a onClick={()=>{navigate("/diseases/hep-c")}}>Hepatitis C</a>
+                  <a
+                    onClick={() => {
+                      closeMenuOnMobile();
+                      navigate("/diseases/hep-c");
+                    }}
+                  >
+                    Hepatitis C
+                  </a>
                 </li>
                 <li>
-                  <a onClick={()=>{navigate("/diseases/genital-herpes")}}>Genital Herpes</a>
+                  <a
+                    onClick={() => {
+                      closeMenuOnMobile();
+                      navigate("/diseases/genital-herpes");
+                    }}
+                  >
+                    Genital Herpes
+                  </a>
                 </li>
                 <li>
-                  <a onClick={()=>{navigate("/diseases/oral-herpes")}}>Oral Herpes</a>
+                  <a
+                    onClick={() => {
+                      closeMenuOnMobile();
+                      navigate("/diseases/oral-herpes");
+                    }}
+                  >
+                    Oral Herpes
+                  </a>
                 </li>
                 <li>
-                  <a onClick={()=>{navigate("/diseases/hiv")}}>HIV</a>
+                  <a
+                    onClick={() => {
+                      closeMenuOnMobile();
+                      navigate("/diseases/hiv");
+                    }}
+                  >
+                    HIV
+                  </a>
                 </li>
                 <li>
-                  <a onClick={()=>{navigate("/diseases/syphilis")}}>Syphilis</a>
+                  <a
+                    onClick={() => {
+                      closeMenuOnMobile();
+                      navigate("/diseases/syphilis");
+                    }}
+                  >
+                    Syphilis
+                  </a>
                 </li>
                 <li>
-                  <a onClick={()=>{navigate("/diseases/symptoms")}}>STD Symptoms</a>
+                  <a
+                    onClick={() => {
+                      closeMenuOnMobile();
+                      navigate("/diseases/symptoms");
+                    }}
+                  >
+                    STD Symptoms
+                  </a>
                 </li>
                 <li className="dropdown-heading">STD Current Events</li>
                 <li>
-                  <a >STD Blog</a>
+                  <a>STD Blog</a>
                 </li>
               </ul>
             </li>
@@ -314,7 +396,10 @@ function Nav() {
                   <NavLink to="/user-profile" className="button1">
                     Profile
                   </NavLink>
-                  <button onClick={handleLogout} className="button1 mx-3 logout-button">
+                  <button
+                    onClick={handleLogout}
+                    className="button1 mx-3 logout-button"
+                  >
                     Logout
                   </button>
                 </>
@@ -336,8 +421,6 @@ function Nav() {
         onClose={cancelLogout}
         onConfirm={confirmLogout}
       />
-
-
     </header>
   );
 }

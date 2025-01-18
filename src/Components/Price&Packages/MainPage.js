@@ -3,7 +3,6 @@ import "./MainPage.css";
 import "./Card.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { isLoggedIn } from "../../utils/auth";
 import useGotoOrderPage from "./order-handle";
 
 const MainPage = () => {

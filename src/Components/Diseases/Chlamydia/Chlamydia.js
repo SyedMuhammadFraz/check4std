@@ -3,7 +3,6 @@ import React from "react";
 function Chlamydia() {
   return (
     <>
-      <h2 style={{ textAlign: "center" }}>Chlamydia</h2>
       <h2>What is Chlamydia?</h2>
       <br />
       <p>

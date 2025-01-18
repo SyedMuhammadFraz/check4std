@@ -1,9 +1,4 @@
-/* Import Trip Sans font */
-@import url('https://fonts.googleapis.com/css2?family=Trip+Sans:wght@400;600;700&display=swap');
-
-/* General styles */
-body {
-  font-family: 'Trip Sans', sans-serif;
+/* General styles */body {
   margin: 0;
   padding: 0;
 }
@@ -78,18 +73,71 @@ body {
   color: #FFFFFF;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
+  .footer-container {
+    justify-content: center;
+  }
+
+  .footer-section {
+    flex: 1 1 calc(50% - 40px); /* Two columns */
+    margin-bottom: 20px;
+  }
+
+  .footer-section ul li a {
+    font-size: 13px;
+  }
+
+  .footer-section h4 {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 500px) {
   .footer-container {
     flex-direction: column;
     align-items: center;
   }
 
   .footer-section {
-    margin-bottom: 20px;
+    flex: 1 1 100%; /* Full-width */
+    text-align: center;
+  }
+
+  .footer-section ul li {
+    text-align: center;
   }
 
   .footer-section h4 {
-    text-align: center;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+
+  .footer-section ul li a {
+    font-size: 13px;
+  }
+
+  .footer-bottom {
+    font-size: 13px;
   }
 }
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 20px 10px;
+  }
+
+  .footer-section h4 {
+    font-size: 14px;
+  }
+
+  .footer-section ul li a {
+    font-size: 12px;
+  }
+
+  .footer-bottom {
+    font-size: 12px;
+    padding: 8px 0;
+  }
+}
+
+

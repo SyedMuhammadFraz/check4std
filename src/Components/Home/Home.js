@@ -1,7 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./Home.css";
 
 function Home() {
+  const navigate=useNavigate();
+
+  const onSeeTestsClick=()=>{
+    navigate("/price-packages")
+  }
+  const onFindAlabClick=()=>{
+    navigate("/test-centers")
+  }
   return (
     <section className="home">
       <section className="home1">
@@ -109,8 +118,8 @@ function Home() {
             &nbsp;<strong>Over 4,500 testing centers </strong>&nbsp; Nationwide
           </div>
           <div className="d-flex my-3">
-            <button className="button3 ">See Tests & Prices</button>
-            <button className="button2 mx-3">Check Symptoms</button>
+            <button className="button3" onClick={onSeeTestsClick}>See Tests & Prices</button>
+            <button className="button2 mx-3" onClick={onFindAlabClick}>Find A Lab</button>
           </div>
         </div>
         <img className="width" src="Female-Doctor.png" />

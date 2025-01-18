@@ -120,6 +120,7 @@ const OrderPage = () => {
   
     // Proceed if no errors
     toast.success("Order submitted successfully!");
+    navigate("/#");
   };
   
 
@@ -176,7 +177,6 @@ const OrderPage = () => {
 
 
   useEffect(() => {
-    // Simulate auth check delay
     const timer = setTimeout(() => {
       if (authToken === null) {
         navigate("/login");
@@ -184,7 +184,7 @@ const OrderPage = () => {
       setLoading(false);
     }, 1000); // Adjust delay as needed
 
-    return () => clearTimeout(timer); // Cleanup timeout
+    return () => clearTimeout(timer);
   }, [authToken, navigate]);
 
   if (loading) {

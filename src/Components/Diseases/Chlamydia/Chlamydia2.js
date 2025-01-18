@@ -3,7 +3,6 @@ import React from "react";
 function Chlamydia2() {
   return (
     <>
-      <h1 style={{ textAlign: "center" }}>Chlamydia</h1>
       <h2>Overview</h2>
       <p>
         Chlamydia is a widespread bacterial sexually transmitted infection

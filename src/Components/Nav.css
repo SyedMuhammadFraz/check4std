@@ -255,9 +255,13 @@ nav ul li a {
   }
 
   .nav__list {
-    margin-top: 220vh;
+    margin-top: 200vh;
   }
 
+  .navbar-main-heading{
+    font-size: 20px;
+    font-weight: bold;
+  }
   .nav__item:hover .dropdown,
   .dropdown:hover {
     display: flex;

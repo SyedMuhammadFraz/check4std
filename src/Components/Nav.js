@@ -138,7 +138,7 @@ function Nav() {
   return (
     <header className="header">
       <nav className="nav container">
-        <div className="nav__logo">
+        <div className="nav__logo" onClick={onHomeClick}>
           <img className="nav-logo-img" src="client-new-logo.png" alt="404" />
           <a>Check4std</a>
         </div>

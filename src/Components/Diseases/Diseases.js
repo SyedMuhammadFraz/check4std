@@ -226,7 +226,11 @@ function Diseases() {
 
   const handleSubHeadingClick = (component) => {
     setActiveContent(component);
+    if (window.innerWidth < 1373) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
+  
 
   const location = useLocation();
 

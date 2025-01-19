@@ -18,7 +18,7 @@ function Nav() {
   const handleLogout = () => {
     logout();
     navigate("/");
-    setShowModal(true); 
+    setShowModal(true);
   };
 
   const confirmLogout = () => {
@@ -142,7 +142,7 @@ function Nav() {
   return (
     <header className="header">
       <nav className="nav container">
-        <div className="nav__logo">
+        <div className="nav__logo" onClick={onHomeClick}>
           <img className="nav-logo-img" src="client-new-logo.png" alt="404" />
           <a>Check4std</a>
         </div>
@@ -301,16 +301,16 @@ function Nav() {
             <li className="nav__buttons">
               {!authToken ? (
                 <>
-                  <NavLink to="/login" className="button1">
+                  <NavLink to="/login" className="button1" onClick={closeMenuOnMobile}>
                     Sign In
                   </NavLink>
-                  <NavLink to="/signup" className="button1 mx-3">
+                  <NavLink to="/signup" className="button1 mx-3" onClick={closeMenuOnMobile}>
                     Sign Up
                   </NavLink>
                 </>
               ) : (
                 <>
-                  <NavLink to="/user-profile" className="button1">
+                  <NavLink to="/user-profile" className="button1" onClick={closeMenuOnMobile}>
                     Profile
                   </NavLink>
                   <button onClick={handleLogout} className="button1 mx-3 logout-button">

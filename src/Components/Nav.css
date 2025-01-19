@@ -257,6 +257,7 @@ nav ul li a {
 
   .nav__list {
     margin-top: 200vh;
+    margin-bottom: 5vh;
   }
 
   .navbar-main-heading{

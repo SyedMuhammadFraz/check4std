@@ -28,33 +28,33 @@ function Chlamydia() {
       <h3>Symptoms in Women:</h3>
       <br />
       <ol>
-        <li>● Unusual vaginal discharge</li>
-        <li>● Painful or burning sensation while urinating</li>
+        <li>Unusual vaginal discharge</li>
+        <li>Painful or burning sensation while urinating</li>
         <li>
-          ● Abdominal or pelvic pain (if infection spreads to the reproductive
+          Abdominal or pelvic pain (if infection spreads to the reproductive
           organs)
         </li>
-        <li>● Bleeding between menstrual periods</li>
-        <li>● Pain during sexual intercourse</li>
-        <li>● Nausea and fever (in advanced cases)</li>
+        <li>Bleeding between menstrual periods</li>
+        <li>  Pain during sexual intercourse</li>
+        <li>  Nausea and fever (in advanced cases)</li>
       </ol>
       <br />
       <h3>Symptoms in Men:</h3>
       <br />
       <ol>
-        <li>● Painful or burning sensation while urinating</li>
-        <li>● Unusual discharge from the penis (watery or white)</li>
-        <li>● Pain or swelling in one or both testicles</li>
+        <li>  Painful or burning sensation while urinating</li>
+        <li>  Unusual discharge from the penis (watery or white)</li>
+        <li>  Pain or swelling in one or both testicles</li>
       </ol>
       <br />
       <h3>Symptoms in All Genders:</h3>
       <br />
       <ol>
         <li>
-          ● Rectal pain, discharge, or bleeding (if infected through anal sex)
+            Rectal pain, discharge, or bleeding (if infected through anal sex)
         </li>
-        <li>● Unusual discharge from the penis (watery or white)</li>
-        <li>● Pain or swelling in one or both testicles</li>
+        <li>  Unusual discharge from the penis (watery or white)</li>
+        <li>  Pain or swelling in one or both testicles</li>
       </ol>
       <br />
       <h2>How is Chlamydia Transmitted?</h2>

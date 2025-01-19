@@ -180,6 +180,7 @@ const OrderPage = () => {
     const timer = setTimeout(() => {
       if (authToken === null) {
         navigate("/login");
+        toast.error("Login to place an order!")
       }
       setLoading(false);
     }, 1000); // Adjust delay as needed

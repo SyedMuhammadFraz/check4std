@@ -16,6 +16,12 @@
     padding: 0 2vw;
 }
 
+.text svg{
+    stroke: var(--Accent-Color);
+    color: var(--Accent-Color);
+}
+
+
 .text h1 {
     font-weight: bold;
     margin-bottom: 5vh;

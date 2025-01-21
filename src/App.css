@@ -20,7 +20,8 @@ p{
 
 :root {
   --Neutral-Black: #333333;
-  --Accent-Color: #F9D71C;
+  --Neutral-Logo-Blue: #2776bb;
+  --Accent-Color: #f57a00;
   --Neutral-D_Grey: #4d4d4d;
   --Neutral-Grey: #717171;
   --Neutral-L_Grey: #89939e;
@@ -65,7 +66,7 @@ p{
 }
 
 .button2{
-  background-color: var(--Neutral-Black);
+  background-color: var(--Neutral-Logo-Blue);
   color: var(--Neutral-White);
   display: flex;
   align-items: center;
@@ -91,7 +92,7 @@ p{
 }
 
 .button3:hover{
-  background-color: #f9c21c;
+  background-color: #f99736;
 }
 
 .button1:hover{
@@ -99,7 +100,7 @@ p{
 }
 
 .button2:hover{
-  background-color:#33424a;
+  background-color:#4a9ae0;
 }
 
 .center{

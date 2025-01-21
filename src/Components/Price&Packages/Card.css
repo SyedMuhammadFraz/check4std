@@ -11,7 +11,7 @@
   justify-content: space-between; /* Space out children: top, middle, bottom */
   align-items: center; /* Center align horizontally */
   width: 48%; /* Adjust width for two cards per row with gap */
-  border: 2px solid #f9d71c;
+  border: 2px solid #f57a00;
   background-color: var(--Neutral-Silver);
   height: 250px; /* Set a fixed height for uniformity */
   border-radius: 15px;

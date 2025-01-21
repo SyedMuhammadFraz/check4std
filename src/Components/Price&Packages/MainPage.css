@@ -179,6 +179,10 @@ span svg {
     width: 80vw;
 }
 
+.Test-Panel-Transaction-Card-header{
+  color:#ffffff;
+}
+
 @media (max-width: 992px) {
   .align {
     flex-direction: column-reverse;

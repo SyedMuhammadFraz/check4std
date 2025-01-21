@@ -23,7 +23,7 @@
   /* Space out children: top, middle, bottom */
   align-items: center;
   /* Center align horizontally */
-  border: 2px solid #f9d71c;
+  border: 2px solid #f57a00;
   width: 80vw !important;
   width: max-content;
   background-color: var(--Neutral-Silver);
@@ -246,7 +246,7 @@ h6 {
   /* Space out children: top, middle, bottom */
   align-items: center;
   /* Center align horizontally */
-  border: 2px solid #f9d71c;
+  border: 2px solid #f57a00;
   width: 80% !important;
   width: max-content;
   background-color: var(--Neutral-Silver);

@@ -25,7 +25,7 @@ function Home() {
             >
               <g
                 fill="none"
-                stroke="#F9D71C"
+                stroke="#f57a00"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="4"
@@ -45,7 +45,7 @@ function Home() {
             >
               <g
                 fill="none"
-                stroke="#F9D71C"
+                stroke="#f57a00"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="4"
@@ -66,7 +66,7 @@ function Home() {
             >
               <g
                 fill="none"
-                stroke="#F9D71C"
+                stroke="#f57a00"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="4"
@@ -86,7 +86,7 @@ function Home() {
             >
               <g
                 fill="none"
-                stroke="#F9D71C"
+                stroke="#f57a00"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="4"
@@ -106,7 +106,7 @@ function Home() {
             >
               <g
                 fill="none"
-                stroke="#F9D71C"
+                stroke="#f57a00"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="4"

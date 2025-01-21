@@ -270,7 +270,7 @@ nav ul li a {
   }
 }
 
-@media screen and (max-width: 1373px) {
+@media screen and (max-width: 1473px) {
   .nav__menu {
     position: fixed;
     top: 0;
@@ -306,7 +306,7 @@ nav ul li a {
   }
 }
 
-@media screen and (min-width: 1373px) {
+@media screen and (min-width: 1473px) {
   .nav {
     height: calc(var(--header-height) + 1rem);
   }

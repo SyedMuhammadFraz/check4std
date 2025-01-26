@@ -1,0 +1,30 @@
+.Lab-Grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-template-rows: auto;
+}
+
+.Lab-Sidebar {
+  margin: 2vh 0;
+  padding: 20px;
+}
+
+.Lab-Map {
+  background-color: #eaeaea;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .Lab-Grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto; /* Sidebar will come below the map */
+  }
+
+  .Lab-Sidebar {
+    order: 2; /* Moves the sidebar below the map */
+  }
+
+  .Lab-Map {
+    order: 1; /* Ensures map stays on top */
+  }
+}

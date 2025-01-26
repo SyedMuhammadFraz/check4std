@@ -108,3 +108,13 @@ p{
   font-weight: 700;
   font-size:28pt;
 }
+
+.map-container {
+  position: relative;
+  height: 60vh;
+  /* Ensure the height is set correctly */
+  z-index: 1;
+  width: 90%;
+  /* Adjust as needed */
+  margin: 2vh ;
+}

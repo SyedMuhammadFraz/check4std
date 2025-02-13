@@ -39,6 +39,7 @@ import HepatitisAInfo from "./Components/Diseases/Hepatitis A/Hepatitis A";
 import HepatitisBInfo from "./Components/Diseases/Hepatitis B/Hepatitis B";
 import HepatitisCInfo from "./Components/Diseases/Hepatitis C/Hepatitis C";
 import GenitalHerpesInfo from "./Components/Diseases/Genital Herpes/Genital Herpes";
+import ForgotPassword from "./Components/Signin/ForgotPassword";
 
 function App() {
   return (
@@ -82,6 +83,7 @@ function App() {
             <Route index path="get-otp" element={<OTPPage />} />
             <Route index path="test-centers" element={<MapPage />} />
             <Route index path="user-profile" element={<ProfilePage />} />
+            <Route index path="forgot-password" element={<ForgotPassword />} />
             <Route index path="/" element={<Home />} />
           </Route>
         </Routes>

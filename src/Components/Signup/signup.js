@@ -5,76 +5,59 @@ import { toast } from 'react-toastify';
 import './signup.css';
 
 const SignUp = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [dob, setDob] = useState('');
-  const [error, setError] = useState('');
-  const [passwordMatch, setPasswordMatch] = useState(false);
-  const [passwordStrength, setPasswordStrength] = useState('');
-  const [isEmailValid, setIsEmailValid] = useState(true);
-  const { authToken, login, logout } = useContext(AuthContext);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    dob: ''
+  });
 
+  const { authToken, login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (authToken) {
-      navigate("/user-profile");
-    }
+    if (authToken) navigate("/user-profile");
   }, [authToken, navigate]);
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const passwordRegex =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-  const handlePasswordChange = (e) => {
-    const value = e.target.value;
-    setPassword(value);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-    if (!passwordRegex.test(value)) {
-      setPasswordStrength('Password is weak');
-    } else {
-      setPasswordStrength('Password is strong');
+  const validateForm = () => {
+    if (!formData.name.trim()) {
+      toast.error('Name is required');
+      return false;
     }
-
-    setPasswordMatch(value === confirmPassword);
-  };
-
-  const handleConfirmPasswordChange = (e) => {
-    const value = e.target.value;
-    setConfirmPassword(value);
-    setPasswordMatch(password === value);
-  };
-
-  const handleEmailChange = (e) => {
-    const value = e.target.value;
-    setEmail(value);
-    setIsEmailValid(emailRegex.test(value));
+    if (!emailRegex.test(formData.email)) {
+      toast.error('Enter a valid email');
+      return false;
+    }
+    if (!formData.dob) {
+      toast.error('Date of Birth is required');
+      return false;
+    }
+    if (formData.password !== formData.confirmPassword) {
+      toast.error('Passwords do not match');
+      return false;
+    }
+    if (!passwordRegex.test(formData.password)) {
+      toast.error('Password must be at least 8 characters long with an uppercase letter, lowercase letter, number, and special character.');
+      return false;
+    }
+   
+    return true;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!passwordMatch) {
-      setError('Passwords do not match');
-      return;
-    }
-    if (!passwordRegex.test(password)) {
-      setError('Password must meet strength requirements');
-      return;
-    }
-    if (!isEmailValid) {
-      setError('Enter a valid email');
-      return;
-    }
-    setError('');
+    if (!validateForm()) return;
 
-    // Mock registration
-    login("mock-auth-token");
-
-    // Redirect to profile page
-    toast.success('Successfully created your Account!');
-    navigate("/user-profile");
+    
+    navigate("/get-otp");
   };
 
   const handleLogout = () => {
@@ -89,7 +72,7 @@ const SignUp = () => {
 
       {authToken ? (
         <div className="profile-logout-container">
-          <p>You are logged in as <strong>{name || "User"}</strong>.</p>
+          <p>You are logged in as <strong>{formData.name || "User"}</strong>.</p>
           <button className="signup-auth-button" onClick={() => navigate("/user-profile")}>
             Go to Profile
           </button>
@@ -101,74 +84,25 @@ const SignUp = () => {
         <form onSubmit={handleSubmit} className="form-grid">
           <div className="form-group">
             <label>Name</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
+            <input type="text" name="name" value={formData.name} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={handleEmailChange}
-              required
-            />
-            {!isEmailValid && (
-              <p className="validation-error">Enter a valid email address</p>
-            )}
+            <input type="email" name="email" value={formData.email} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Date of Birth</label>
-            <input
-              type="date"
-              value={dob}
-              onChange={(e) => setDob(e.target.value)}
-              required
-            />
+            <input type="date" name="dob" value={formData.dob} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={handlePasswordChange}
-              required
-            />
-            {password && (
-              <p
-                className={`password-strength ${
-                  passwordStrength === 'Password is strong' ? 'strong' : 'weak'
-                }`}
-              >
-                {passwordStrength}
-              </p>
-            )}
+            <input type="password" name="password" value={formData.password} onChange={handleChange} required />
           </div>
           <div className="form-group">
             <label>Confirm Password</label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={handleConfirmPasswordChange}
-              required
-            />
-            {password && confirmPassword && (
-              <p
-                className={`password-match ${
-                  passwordMatch ? 'match' : 'no-match'
-                }`}
-              >
-                {passwordMatch ? 'Passwords match' : 'Passwords do not match'}
-              </p>
-            )}
+            <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required />
           </div>
-          {error && <p className="error-message">{error}</p>}
-          <button type="submit" className="signup-auth-button">
-            Sign Up
-          </button>
+          <button type="submit" className="signup-auth-button">Sign Up</button>
         </form>
       )}
 

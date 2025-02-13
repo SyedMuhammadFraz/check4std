@@ -47,6 +47,8 @@
 .profile-actions button {
     width: 100%;
     padding: 10px;
+    font-size: 16px;
+    font-weight: 600;
     background: #ff9900;
     color: #fff;
     border: none;

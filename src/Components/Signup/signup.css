@@ -42,6 +42,8 @@
   
   .signup-auth-button {
     width: 100%;
+    font-size: 16px;
+    font-weight: 600;
     margin-top: 20px;
     padding: 10px;
     background: #ff9900;
@@ -70,18 +72,6 @@
   }
   
 
-  .password-match {
-    font-size: 0.9em;
-    margin-top: 5px;
-  }
-  
-  .password-match.match {
-    color: green;
-  }
-  
-  .password-match.no-match {
-    color: red;
-  }
 
 
 

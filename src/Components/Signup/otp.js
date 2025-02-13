@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import './otp.css';
 
 const OTPPage = () => {
@@ -6,6 +8,7 @@ const OTPPage = () => {
   const [timer, setTimer] = useState(120); // 2 minutes in seconds
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [isOtpVerified, setIsOtpVerified] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let countdown;
@@ -34,9 +37,10 @@ const OTPPage = () => {
     // Simulate OTP verification (You'd compare the entered OTP with the one sent to the user)
     if (otp === '123456') {
       setIsOtpVerified(true);
-      console.log('OTP verified');
+      navigate("/");
+      toast.success("OTP verified successfully!");
     } else {
-      alert('Incorrect OTP');
+      toast.error('Incorrect OTP');
     }
   };
 

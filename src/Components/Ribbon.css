@@ -1,16 +1,114 @@
+/* Ribbon Container */
 .ribbon {
-    margin-top: 71px;
-    width: 100vw;
-    background-color: #eebb88;
-    text-align: center;
-    padding: 5px 0px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  margin-top: 7vh !important;
+  background: linear-gradient(90deg, #ff9900, #ff6600);
+  color: white;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  height: 45px;
+  width: 100%;
+  overflow: hidden; /* Ensures text doesn't overflow */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* Active Ribbon (When Location is Selected) */
+.ribbon-active {
+  background: linear-gradient(90deg, #00b09b, #96c93d);
+}
+
+/* Hover Effect */
+.ribbon:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* SVG Icon */
+.ribbon-icon {
+  display: flex;
+  align-items: center;
+}
+
+.lightning-icon {
+  width: 32px;
+  height: 32px;
+  fill: white;
+  animation: pulse 1.5s infinite alternate;
+}
+
+/* Text Styling */
+.ribbon-text {
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  color: white;
+  white-space: nowrap;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 0.9;
+  }
 }
 
 @media screen and (max-width: 1373px) {
-    .ribbon{
-        margin-top: 7vh !important;
-    }
+  .ribbon {
+    margin-top: 7vh !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .ribbon {
+    margin-top: 7vh !important;
+    font-size: 0.85rem;
+    padding: 8px;
+    flex-wrap: wrap;
+    gap: 5px;
+    text-align: center;
+    min-height: 50px;
+  }
+
+  .lightning-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .ribbon-text {
+    font-size: 0.85rem;
+    max-width: 90%;
+    text-align: center;
+    white-space: normal; /* Allows text to wrap properly */
+  }
+}
+
+@media (max-width: 480px) {
+  .ribbon {
+    margin-top: 7vh !important;
+    font-size: 0.8rem;
+    gap: 5px;
+    padding: 6px;
+    min-height: auto;
+    flex-direction: column;
+  }
+
+  .lightning-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .ribbon-text {
+    font-size: 0.75rem;
+    max-width: 85%;
+    line-height: 1.1;
+  }
 }

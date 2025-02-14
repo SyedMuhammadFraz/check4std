@@ -39,12 +39,6 @@
   padding: 1rem;
 }
 
-@media (min-width: 1024px) {
-  .test-centers-container {
-    flex-direction: row;
-  }
-}
-
 /* Sidebar styles */
 .sidebar {
   background: white;
@@ -143,3 +137,25 @@
   overflow: hidden;
 }
 
+
+@media (min-width: 1024px) {
+  .test-centers-container {
+    flex-direction: row;
+  }
+  @media (min-width: 1024px) {
+    .leaflet-container {
+      width: 100% !important; /* Ensures responsiveness */
+      height: 500px !important; /* Adjust as needed */
+      margin: auto;
+      margin-right: 20px; /* Adds right margin */
+    }
+  }
+  
+}
+
+@media (max-width: 1024px) {
+  .leaflet-container {
+    width: 95% !important;
+    height: 500 !important; /* Adjust based on your layout */
+  }
+}

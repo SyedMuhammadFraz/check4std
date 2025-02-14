@@ -154,7 +154,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { FaSearchLocation } from "react-icons/fa";
 import { Switch } from "@mui/material";
-import "./Find_a_Lab.css"; // Import the custom CSS
+import "./Find_a_lab.css"; // Import the custom CSS
 
 const testCenters = [
   { id: 1, name: "Clinical Pathology Labs", lat: 30.625, lng: -96.334, distance: "17.3mi" },

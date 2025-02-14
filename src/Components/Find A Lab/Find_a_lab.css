@@ -97,6 +97,26 @@
   margin-top: 1rem;
 }
 
+.test-center-list {
+  max-height: 500px; /* Adjust height as needed */
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+/* Hide scrollbar for better aesthetics */
+.test-center-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.test-center-list::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 6px;
+}
+
+.test-center-list::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
 /* Test center list styles */
 .test-center {
   border-top: 1px solid #ddd;

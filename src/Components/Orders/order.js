@@ -130,9 +130,6 @@ const OrderPage = () => {
       newErrors.dob = "Date of birth is required.";
     }
 
-    if (formData.notificationMethod === "Text Me (SMS)" && !formData.voicemail)
-      newErrors.voicemail = "Select a method to notify you when your results are available.";
-
     setErrors(newErrors);
     console.log(errors);
     // Prevent submission if there are errors
@@ -394,14 +391,14 @@ const OrderPage = () => {
               </div>
             )}
 
-            {formData.notificationMethod === "Text Me (SMS)" && (
+            {/* {formData.notificationMethod === "Text Me (SMS)" && (
               <div>
                 <label className="order-labels">
                   May we leave a voicemail?
                 </label>
               </div>
-            )}
-
+            )} */}
+{/* 
             {formData.notificationMethod === "Text Me (SMS)" && (
               <div>
                 <div>
@@ -432,7 +429,7 @@ const OrderPage = () => {
                   <span className="error">{errors.voicemail}</span>
                 )}
               </div>
-            )}
+            )} */}
 
             {errors.notificationMethod && (
               <span className="error">{errors.notificationMethod}</span>

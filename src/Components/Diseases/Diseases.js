@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
 import "./Diseases.css";
 import "./SideBar.css";
 import STDs from "./STD Overview/overview";

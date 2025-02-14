@@ -6,13 +6,18 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "../../utils/AuthContext";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
 
 
 const OrderPage = () => {
- 
+  const stripe = useStripe();
+  const elements = useElements();
   const { authToken } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [loading, setLoading]=useState(true);
+  const [loading, setLoading] = useState(true);
 
   const location = useLocation();
   const { selectedTests = [] } = location.state || {};
@@ -78,12 +83,30 @@ const OrderPage = () => {
       return newErrors;
     });
   };
+  const handleStripeSubmit = async (event) => {
+    event.preventDefault();
+    if (!stripe || !elements) return;
+
+    const cardElement = elements.getElement(CardElement);
+
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: cardElement,
+    });
+
+    if (error) {
+      console.error("Payment error:", error.message);
+    } else {
+      console.log("Payment method created:", paymentMethod);
+      alert("Payment Method Created Successfully");
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     const newErrors = {};
-  
+
     // Validate each field
     if (!formData.firstName) newErrors.firstName = "First name is required.";
     if (!formData.lastName) newErrors.lastName = "Last name is required.";
@@ -107,9 +130,9 @@ const OrderPage = () => {
       newErrors.dob = "Date of birth is required.";
     }
 
-    if (formData.notificationMethod==="Text Me (SMS)" && !formData.voicemail)
-      newErrors.voicemail ="Select a method to notify you when your results are available.";
-  
+    if (formData.notificationMethod === "Text Me (SMS)" && !formData.voicemail)
+      newErrors.voicemail = "Select a method to notify you when your results are available.";
+
     setErrors(newErrors);
     console.log(errors);
     // Prevent submission if there are errors
@@ -117,12 +140,12 @@ const OrderPage = () => {
       toast.error("Please fix the errors before submitting.");
       return;
     }
-  
+
     // Proceed if no errors
     toast.success("Order submitted successfully!");
     navigate("/#");
   };
-  
+
 
   const months = [
     "January",
@@ -430,40 +453,53 @@ const OrderPage = () => {
                 <option value="PayPal">PayPal</option>
               </select>
             </div>
+            {formData.paymentMethod === "Credit Card" ? (
+              <form onSubmit={handleStripeSubmit}>
+                <CardElement options={{ hidePostalCode: true }} />
+                <button
+                  type="submit"
+                  disabled={!stripe}
+                  className="bg-blue-500 text-white p-2 rounded mt-4"
+                >
+                  Pay with Stripe
+                </button>
+              </form>
+            ) : (
+              <div>
+                <input
+                  type="text"
+                  name="creditCardNumber"
+                  placeholder="Credit Card Number"
+                  value={formData.creditCardNumber}
+                  onChange={handleChange}
+                />
+                <select
+                  name="cardExpirationMonth"
+                  value={formData.cardExpirationMonth}
+                  onChange={handleChange}
+                >
+                  <option value="">Month</option>
+                  {months.map((month, index) => (
+                    <option key={index} value={month}>
+                      {month}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  name="cardExpirationYear"
+                  value={formData.cardExpirationYear}
+                  onChange={handleChange}
+                >
+                  <option value="">Year</option>
+                  {years.map((year) => (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
 
-            <div>
-              <input
-                type="text"
-                name="creditCardNumber"
-                placeholder="Credit Card Number"
-                value={formData.creditCardNumber}
-                onChange={handleChange}
-              />
-              <select
-                name="cardExpirationMonth"
-                value={formData.cardExpirationMonth}
-                onChange={handleChange}
-              >
-                <option value="">Month</option>
-                {months.map((month, index) => (
-                  <option key={index} value={month}>
-                    {month}
-                  </option>
-                ))}
-              </select>
-              <select
-                name="cardExpirationYear"
-                value={formData.cardExpirationYear}
-                onChange={handleChange}
-              >
-                <option value="">Year</option>
-                {years.map((year) => (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </select>
-            </div>
           </section>
 
           <button type="submit">Place Your Order</button>

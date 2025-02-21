@@ -62,6 +62,12 @@ input[type="checkbox"] {
   }
 }
 
+@media (max-width: 330px) {
+  .test-card{
+    height: max-content;
+  }
+}
+
 /* General card styling */
 .test-process-card {
   display: flex;

@@ -1,0 +1,34 @@
+.AdminDashboard {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 10vh;
+    padding: 0 2vw;
+}
+
+.Dashboard-Charts {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap; /* Ensures responsiveness */
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px; /* Adds spacing between charts */
+}
+
+.Dashboard-Charts div {
+    flex: 1 1  calc(50% - 20px); /* Two charts per row by default */
+    max-width: 100%; /* Prevents overflow */
+    min-width: 500px; /* Ensures charts don't shrink too much */
+}
+
+/* Mobile View: Stacks charts in a column */
+@media (max-width: 768px) {
+    .Dashboard-Charts {
+        flex-direction: column;
+    }
+    .Dashboard-Charts div {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}

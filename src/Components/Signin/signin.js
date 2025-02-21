@@ -2,13 +2,15 @@ import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../utils/AuthContext";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "react-toastify/dist/ReactToastify.css";
 import "./signin.css";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const { authToken, login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -22,20 +24,24 @@ const SignIn = () => {
     e.preventDefault();
     toast.dismiss();
 
-    if (!email || !password) {
-      toast.error("Please enter both email and password.");
-      return;
-    }
-
-    if (email === "test@example.com" && password === "Password@123") {
+    // Mock authentication
+    if (email === "test@example.com" && password === "password") {
+      // Simulate successful login
       login("mock-auth-token");
-      toast.success("Successfully signed in!");
       navigate("/user-profile");
-    } else {
-      toast.error("Invalid email or password.");
+      toast.success('Successfully signed in!');
     }
-  };
+    else if (email === "admin@admin.com" && password === "admin") {
+      // login("mock-auth-token");
+      navigate("/admin-panel/");
+      toast.success('Successfully signed in!');
+    }
+    else {
+      setError("Invalid email or password");
+      toast.error('Please enter valid credentials.');
+    }
 
+  };
   const handleLogout = () => {
     logout();
     toast.success("Successfully logged out!");
@@ -57,15 +63,21 @@ const SignIn = () => {
               required
             />
           </div>
-          <div className="form-group">
-            <label>Password</label>
+          <div className="form-group password-container">
+          <label>Password</label>
+          <div className="password-wrapper">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
+              name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <span className="toggle-icon" onClick={() => setShowPassword(!showPassword)}>
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
+        </div>
           <button type="submit" className="signin-auth-button">
             Sign In
           </button>
@@ -73,9 +85,7 @@ const SignIn = () => {
             <a
               href="#"
               onClick={(e) => {
-                e.preventDefault(); // Prevent default link behavior
-
-                // Delay navigation to ensure localStorage update
+                e.preventDefault();
                 setTimeout(() => {
                   navigate("/forgot-password");
                 }, 100);

@@ -9,10 +9,11 @@ import { ClipLoader } from "react-spinners";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-
+import { LocationContext } from "../../utils/LocationContext";
 
 
 const OrderPage = () => {
+  const { selectedLocation } = useContext(LocationContext); 
   const stripe = useStripe();
   const elements = useElements();
   const { authToken } = useContext(AuthContext);
@@ -21,6 +22,10 @@ const OrderPage = () => {
 
   const location = useLocation();
   const { selectedTests = [] } = location.state || {};
+
+  const onChangeLocation = () => {
+    navigate("/test-centers");
+  }
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -241,9 +246,9 @@ const OrderPage = () => {
             <h2 className="blue-background">1. Find a Test Center</h2>
             <div>
               <label className="order-labels">Your Selected Lab:</label>
-              <p>Labcorp at Walgreens</p>
+              <p>{selectedLocation}</p>
               <p>4651 W Kennedy Blvd, Tampa, FL 33609</p>
-              <button type="button">Change Location</button>
+              <button type="button" onClick={onChangeLocation}>Change Location</button>
             </div>
           </section>
 

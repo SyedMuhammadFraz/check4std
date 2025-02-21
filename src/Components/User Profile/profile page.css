@@ -1,85 +1,133 @@
 /* ProfilePage.css */
 .profile-container {
-    max-width: 700px;
-    margin: 50px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    background: #f7f8fa;
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: #f7f8fa;
 }
 
 .profile-container .profile-heading {
-    font-size: 30px;
-    font-weight: bold;
-    background-color: #355a73;
-    color: white;
-    padding: 15px;
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 30px;
-    border-radius: 5px;
+  font-size: 30px;
+  font-weight: bold;
+  background-color: #355a73;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 30px;
+  border-radius: 5px;
 }
 
 .profile-details {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .profile-details .detail {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    border: 1px solid #868282;
-    border-radius: 5px;
-    background: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px solid #868282;
+  border-radius: 5px;
+  background: #ffffff;
 }
 
 .profile-details .detail span {
-    font-weight: bold;
+  font-weight: bold;
+  flex: 1;
+}
+
+.profile-details .detail .edit-input {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+  background: #fff;
+  outline: none;
+  flex: 2;
 }
 
 .profile-actions {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .profile-actions button {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    font-weight: 600;
-    background: #ff9900;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  background: #ff9900;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
 .profile-actions .logout-button {
-    margin-top: 10px;
-    background-color: #ff4d4d;
+  margin-top: 10px;
+  background-color: #ff4d4d;
 }
 
 .profile-actions button:hover {
-    background: #e68a00;
+  background: #e68a00;
 }
 
 .profile-actions .logout-button:hover {
-    background-color: #cc0000;
+  background-color: #cc0000;
 }
 
 .profile-container p {
-    text-align: center;
-    margin-top: 10px;
+  text-align: center;
+  margin-top: 10px;
 }
 
 .profile-container a {
-    color: #007bff;
-    text-decoration: none;
+  color: #007bff;
+  text-decoration: none;
 }
 
 .profile-container a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
+
+.edit-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.detail-labels {
+  flex: 1;
+  font-weight: bold;
+  text-align: left;
+  color: #333;
+}
+
+.detail-values {
+  flex: 2;
+  text-align: right;
+}
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex:2;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    color: #555;
+  }
+  
+  .toggle-password:hover {
+    color: #007bff;
+  }

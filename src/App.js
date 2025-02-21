@@ -16,6 +16,9 @@ import ProfilePage from "./Components/User Profile/profile page";
 import MapPage from "./Components/Find A Lab/Find_a_Lab";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AdminDashboard from "./Components/AdminPanel/AdminDashboard";
+import Admin_User_Table from "./Components/AdminPanel/Admin_User_Table";
+import AdminMain from "./Components/AdminPanel/AdminMain";
 
 import Chlamydia_Gonorrhea from "./Components/Price&Packages/Chlamydia-Gonorrhea/Chlamydia_Gonorrhea";
 import Herpes1_2 from "./Components/Price&Packages/Herpes1_2/Herpes1_2";
@@ -165,6 +168,10 @@ function App() {
                     element={<ForgotPassword />}
                   />
                   <Route index path="/" element={<Home />} />
+                </Route>
+                <Route path="/admin-panel" element={<AdminMain />}>
+                  <Route index path="/admin-panel/" element={<AdminDashboard />} />
+                  <Route index path="/admin-panel/order-table" element={<Admin_User_Table />} />
                 </Route>
               </Routes>
             </BrowserRouter>

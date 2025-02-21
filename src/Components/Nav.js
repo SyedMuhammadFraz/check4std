@@ -15,10 +15,7 @@ function Nav() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
-    navigate("/");
     setShowModal(true);
-    closeMenuOnMobile();
   };
 
   const confirmLogout = () => {

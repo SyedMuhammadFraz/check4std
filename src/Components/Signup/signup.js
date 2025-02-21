@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../utils/AuthContext";
 import { toast } from 'react-toastify';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import './signup.css';
 
 const SignUp = () => {
@@ -15,6 +16,9 @@ const SignUp = () => {
 
   const { authToken, login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     if (authToken) navigate("/user-profile");
@@ -55,9 +59,8 @@ const SignUp = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validateForm()) return;
-
-    
     navigate("/get-otp");
+    toast.success('Click on "Send OTP" to verify your email');
   };
 
   const handleLogout = () => {
@@ -94,14 +97,37 @@ const SignUp = () => {
             <label>Date of Birth</label>
             <input type="date" name="dob" value={formData.dob} onChange={handleChange} required />
           </div>
-          <div className="form-group">
-            <label>Password</label>
-            <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+          <div className="form-group password-container">
+          <label>Password</label>
+          <div className="password-wrapper">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+            <span className="toggle-icon" onClick={() => setShowPassword(!showPassword)}>
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
-          <div className="form-group">
-            <label>Confirm Password</label>
-            <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required />
+        </div>
+
+        <div className="form-group password-container">
+          <label>Confirm Password</label>
+          <div className="password-wrapper">
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+            />
+            <span className="toggle-icon" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
+        </div>
           <button type="submit" className="signup-auth-button">Sign Up</button>
         </form>
       )}

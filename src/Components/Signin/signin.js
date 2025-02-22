@@ -37,7 +37,6 @@ const SignIn = () => {
       toast.success('Successfully signed in!');
     }
     else {
-      setError("Invalid email or password");
       toast.error('Please enter valid credentials.');
     }
 

@@ -81,22 +81,7 @@ const ProfilePage = () => {
             <span className="detail-values">{user.name}</span>
           )}
         </div>
-
-        <div className="detail">
-          <span className="detail-labels">Email:</span>
-          {isEditing ? (
-            <input
-              type="email"
-              name="email"
-              value={user.email}
-              onChange={handleInputChange}
-              className="edit-input"
-            />
-          ) : (
-            <span className="detail-values">{user.email}</span>
-          )}
-        </div>
-
+        
         <div className="detail">
           <span className="detail-labels">Phone:</span>
           {isEditing ? (

@@ -70,15 +70,13 @@ const SignIn = () => {
         console.log(role1);
 
         if (role1 === "user") {
-          localStorage.setItem("authToken", token);
-          toast.success("Successfully signed in!");
           login(token);
+          toast.success("Successfully signed in!");
           navigate("/user-profile");
         } else if (role1 === "admin") {
-          localStorage.setItem("authToken", token); // Store token
+          login(token);
           console.log("Auth Token:", token);
           toast.success("Successfully signed in!");
-          login(token);
           navigate("/admin-panel/");
         } else {
           toast.error("Wrong password or Usename");

@@ -52,10 +52,11 @@ const OTPPage = () => {
         try {
           const response = await userRegister(); // Wait for user registration
           console.log(response);
-          if (response?.status === 200) {
+          if (response.success === true) {
             // Check if registration was successful
             setIsOtpVerified(true);
             toast.success("OTP verified successfully!");
+            toast.success("User Registered successfully!");
             navigate("/"); // Navigate only if successful
           } else {
             toast.error("Registration failed. Please try again.");

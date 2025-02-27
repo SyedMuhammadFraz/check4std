@@ -1,7 +1,8 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import Cookies from "js-cookie";
-import { webApiInstance, authServerInstance } from "../AxiosInstance";
+import { webApiInstance, authServerInstance, connectTokenInstance } from "../AxiosInstance";
 import { toast } from "react-toastify";
+import { decodeJWT } from "./JWTDecoder";
 
 export const AuthContext = createContext();
 
@@ -11,11 +12,6 @@ export const AuthProvider = ({ children }) => {
   const [pendingUser, setPendingUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   const token = Cookies.get("authToken");
-  //   setAuthToken(token || null);
-  //   setLoading(false);
-  // }, []);
   useEffect(() => {
     const storedToken = localStorage.getItem("authToken");
   
@@ -29,18 +25,6 @@ export const AuthProvider = ({ children }) => {
       setAuthToken(storedToken);
     }
   }, [authToken]); // Runs only if `authToken` changes
-  
-
-  const decodeJWT = (token) => {
-    try {
-      const base64Url = token.split(".")[1]; // Extract the payload part
-      const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-      return JSON.parse(atob(base64));
-    } catch (error) {
-      console.error("Invalid token:", error);
-      return null;
-    }
-  };
 
   const login = (token) => {
     Cookies.set("authToken", token);
@@ -75,26 +59,19 @@ export const AuthProvider = ({ children }) => {
   const userRegister = async () => {
     if (!pendingUser) {
       toast.error("No user data found. Please sign up again.");
-      return;
+      return { success: false, message: "No user data found." };
     }
-
+  
     setLoading(true);
     try {
       const roleId = await fetchRoleId();
       if (!roleId) {
         toast.error("Failed to fetch role ID. Please try again.");
-        return;
+        return { success: false, message: "Failed to fetch role ID." };
       }
-
-      // console.log("Registering user with data:", {
-      //   email: pendingUser.email,
-      //   password: pendingUser.password,
-      //   name: pendingUser.name,
-      //   roleId: roleId,
-      //   phoneNumber: pendingUser.phoneNumber,
-      // });
-
-      const response = await authServerInstance.post(
+  
+      // Register User
+      const registrationResponse = await authServerInstance.post(
         "/UserRegistration",
         {
           email: pendingUser.email,
@@ -105,43 +82,47 @@ export const AuthProvider = ({ children }) => {
         },
         { withCredentials: true }
       );
+  
+      if (registrationResponse.status !== 200) {
+        toast.error("Registration failed. Please try again.");
+        return { success: false, message: "Registration failed." };
+      }
+  
+      // Prepare login data
       const formData = new URLSearchParams();
       formData.append("grant_type", "password");
       formData.append("username", pendingUser.email);
       formData.append("password", pendingUser.password);
-
+  
+      // Get access token
       try {
-        const response = await connectTokenInstance.post(
+        const tokenResponse = await connectTokenInstance.post(
           "/connect/token",
-          formData, // Pass form data here
-          {
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-          }
+          formData,
+          { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
         );
-
-        localStorage.setItem("authToken", token);
-        toast.success("Successfully signed in!");
-        
-      } catch {
-         toast.error("Something went wrong!");
-      }
-
-      try{
-        login(token);
-        toast.success(response.data.message || "Registration successful!");
-      }
-      catch{
-        toast.error("Something went wrong");
+  
+        if (tokenResponse.data.access_token) {
+          const token = tokenResponse.data.access_token;
+          login(token);
+          return { success: true, message: "Registration and login successful!", token };
+        } else {
+          toast.error("Sign in to continue.");
+          return { success: false, message: "Sign in failed. No token received." };
+        }
+      } catch (error) {
+        toast.error("Something went wrong while signing in.");
+        return { success: false, message: "Token request failed.", error };
       }
     } catch (error) {
       console.error("Error registering user:", error);
       toast.error(error.response?.data?.message || "Registration failed.");
+      return { success: false, message: error.response?.data?.message || "Registration failed.", error };
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <AuthContext.Provider

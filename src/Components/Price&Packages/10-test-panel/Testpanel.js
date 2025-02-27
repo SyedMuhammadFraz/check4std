@@ -1,5 +1,5 @@
 import React, { useState , useEffect } from "react";
-import { axiosInstance } from "../../../AxiosInstance";
+import { webApiInstance } from "../../../AxiosInstance";
 import "./Testpanel.css";
 import '../MainPage.css'
 import GenericSection from "../GenericSection";
@@ -48,7 +48,7 @@ function Testpanel() {
   
     const getData = async (name, setter) => {
       try {
-        const response = await axiosInstance.get(`/Disease/get-by-name/${encodeURIComponent(name)}`);
+        const response = await webApiInstance.get(`/Disease/get-by-name/${encodeURIComponent(name)}`);
         setter(response.data.result);
       } catch (error) {
         console.error(`Error fetching data for ${name}:`, error);

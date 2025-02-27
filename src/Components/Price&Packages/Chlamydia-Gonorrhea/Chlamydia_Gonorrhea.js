@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { axiosInstance } from "../../../AxiosInstance";
+import { webApiInstance } from "../../../AxiosInstance";
 import GenericSection from "../GenericSection";
 import "./Chlamydia_Gonorrhea.css";
 import "../Card.css";
@@ -18,7 +18,7 @@ function Chlamydia_Gonorrhea() {
 
   const getData = async (name, setter) => {
     try {
-      const response = await axiosInstance.get(
+      const response = await webApiInstance.get(
         `/Disease/get-by-name/${encodeURIComponent(name)}`
       );
       setter(response.data.result);

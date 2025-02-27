@@ -46,6 +46,7 @@ import GenitalHerpesInfo from "./Components/Diseases/Genital Herpes/Genital Herp
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import ForgotPassword from "./Components/Signin/ForgotPassword";
+import ProtectedRoute from "./utils/ProtectedRoute";
 
 function App() {
   const stripePromise = loadStripe(
@@ -169,9 +170,14 @@ function App() {
                   />
                   <Route index path="/" element={<Home />} />
                 </Route>
-                <Route path="/admin-panel" element={<AdminMain />}>
-                  <Route index path="/admin-panel/" element={<AdminDashboard />} />
-                  <Route index path="/admin-panel/order-table" element={<Admin_User_Table />} />
+                {/* Protected Admin Routes */}
+                <Route
+                  path="/admin-panel"
+                  element={<ProtectedRoute allowedRoles={["admin"]} />}
+                >
+                  <Route index element={<AdminDashboard  />} />
+                  <Route path="dashboard" element={<AdminDashboard />} />
+                  <Route path="order-table" element={<Admin_User_Table />} />
                 </Route>
               </Routes>
             </BrowserRouter>

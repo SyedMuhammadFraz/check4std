@@ -39,7 +39,7 @@ function AdminNavBar() {
         navigate('/admin-panel/order-table');
     };
     const handleDashboardClick = () => {
-        navigate('/admin-panel/');
+        navigate('/admin-panel/dashboard');
     };
     return (
         <header className="header">

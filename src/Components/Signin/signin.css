@@ -67,6 +67,14 @@
     color: #007bff;
     text-decoration: none;
   }
+
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px; /* Adjust height as needed */
+  }
+  
   
   a:hover {
     text-decoration: underline;

@@ -224,7 +224,7 @@ nav ul li a {
 }
 
 /* Responsive Dropdown Behavior for Mobile */
-@media screen and (max-width: 1373px) {
+@media screen and (max-width: 1472px) {
   .dropdown-container {
     display: none;
   }

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect } from 'react'
+import { axiosInstance } from "../../../AxiosInstance";
 import '../Herpes1_2/herpes1_2.css'
 import GenericSection from '../GenericSection'
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +8,26 @@ function HIV1_2_FourthGen_Test() {
     const navigate = useNavigate();
     const [checked1, setChecked1] = useState(false);
     const [checked2, setChecked2] = useState(false);
+
+    const [TenTestPanel, setTenTestPanel] = useState(null);
+    const [HIV1_2_FourthGen, setHIV1_2_FourthGen] = useState(null);
+  
+    const getData = async (name, setter) => {
+      try {
+        const response = await axiosInstance.get(`/Disease/get-by-name/${encodeURIComponent(name)}`);
+        setter(response.data.result);
+      } catch (error) {
+        console.error(`Error fetching data for ${name}:`, error);
+      }
+    };
+  
+    useEffect(() => {
+      getData(
+        "HIV 1 & 2 Antibody (4th Gen)",
+        setHIV1_2_FourthGen
+      );
+      getData("10 Test Panel", setTenTestPanel);
+    }, []);
 
     const handleCheckbox1 = () => {
         setChecked1(!checked1);
@@ -25,9 +46,9 @@ function HIV1_2_FourthGen_Test() {
     const handleGetTested = () => {
         let selectedTest = null;
         if (checked1) {
-          selectedTest = { name: "HIV 1 & 2 Antibody (4th Gen)", price: 49 };
+          selectedTest = { name: HIV1_2_FourthGen.name, price: HIV1_2_FourthGen.price };
         } else if (checked2) {
-            selectedTest = { name: "10 Test Panel", price: 139 };
+            selectedTest = { name: TenTestPanel.name, price: TenTestPanel.price };
         }
       if (selectedTest) {
         navigate("/order", { state: { selectedTests: [selectedTest] } });
@@ -72,7 +93,7 @@ function HIV1_2_FourthGen_Test() {
                             />
                             HIV 1 & 2 Antibody (4th Gen)
                         </div>
-                        <div className="card-price"> $49.00</div>
+                        <div className="card-price"> ${HIV1_2_FourthGen !== null ? HIV1_2_FourthGen.price : ""}</div>
                     </div>
                     <div className="card-radio">
                         <div className="card-checkbox" onClick={handleCheckbox2}>
@@ -83,7 +104,7 @@ function HIV1_2_FourthGen_Test() {
                             />
                             10 Test Panel
                         </div>
-                        <div className="card-price"> $139.00</div>
+                        <div className="card-price"> ${TenTestPanel !== null ? TenTestPanel.price : ""}</div>
                     </div>
                     <div className="card-button">
                         <button className="button3" onClick={handleGetTested}>Get Tested</button>

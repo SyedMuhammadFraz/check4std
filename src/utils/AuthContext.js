@@ -16,15 +16,20 @@ export const AuthProvider = ({ children }) => {
   //   setAuthToken(token || null);
   //   setLoading(false);
   // }, []);
-
   useEffect(() => {
     const storedToken = localStorage.getItem("authToken");
-    const decodedSavedToken = decodeJWT(storedToken);
-    console.log(decodedSavedToken.role);
+  
     if (storedToken) {
+      const decodedSavedToken = decodeJWT(storedToken);
+  
+      if (decodedSavedToken && decodedSavedToken.role) {
+        console.log(decodedSavedToken.role);
+      }
+  
       setAuthToken(storedToken);
     }
-  }, []);
+  }, [authToken]); // Runs only if `authToken` changes
+  
 
   const decodeJWT = (token) => {
     try {

@@ -51,7 +51,7 @@ const OTPPage = () => {
       if (otp === "123456") {
         try {
           const response = await userRegister(); // Wait for user registration
-          console.log(response.status);
+          console.log(response);
           if (response?.status === 200) {
             // Check if registration was successful
             setIsOtpVerified(true);

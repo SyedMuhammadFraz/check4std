@@ -81,13 +81,13 @@ const SignIn = () => {
           login(token);
           navigate("/admin-panel/");
         } else {
-          toast.error("Invalid credentials.");
+          toast.error("Wrong password or Usename");
         }
       } else {
         toast.error("Invalid credentials.");
       }
     } catch (error) {
-      toast.error("Something went wrong!");
+      toast.error("Username or password is incorrect");
     } finally {
       setLoading(false); // Hide loader after authentication
     }

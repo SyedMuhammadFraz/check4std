@@ -118,7 +118,7 @@ function Nav() {
   };
 
   const closeMenuOnMobile = () => {
-    if (window.innerWidth <= 1150) {
+    if (window.innerWidth <= 1472) {
       setShowMenu(false);
     }
   };

@@ -2,6 +2,6 @@ import axios from 'axios';
 
 // Create an instance of Axios
 export const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8080/api/v1',
+  baseURL: 'https://localhost:7246/api',
   withCredentials: true // Important for sending cookies
 });

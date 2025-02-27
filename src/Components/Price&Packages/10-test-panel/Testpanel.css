@@ -190,6 +190,10 @@ input[type="checkbox"] {
   gap: 20px;
 }
 
+.test-services-flex img{
+  width: 60%;
+}
+
 .test-services-flex-text {
   display: flex;
   flex-direction: column;

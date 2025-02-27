@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
+import { axiosInstance } from "../../../AxiosInstance";
 import "./Testpanel.css";
 import '../MainPage.css'
 import GenericSection from "../GenericSection";
@@ -22,9 +23,9 @@ function Testpanel() {
   const handleGetTested = () => {
     let selectedTest = null;
     if (checked1) {
-      selectedTest = { name: "10 Test Panel", price: 139 };
+      selectedTest = { name: TenTestPanel.name, price: TenTestPanel.price };
     } else if (checked2) {
-      selectedTest = { name: "10 Test Panel with HIV RNA Early Detection", price: 259 };
+      selectedTest = { name: TenTestPanelEarlyRNA.name, price: TenTestPanelEarlyRNA.price };
     }
   if (selectedTest) {
     navigate("/order", { state: { selectedTests: [selectedTest] } });
@@ -40,7 +41,27 @@ function Testpanel() {
       .querySelectorAll(".content")
       .forEach((el) => (el.style.display = "none")); // Hide all contents
     content.style.display = isVisible ? "none" : "block"; // Toggle the clicked one
-  }
+  };
+
+    const [TenTestPanel, setTenTestPanel] = useState(null);
+    const [TenTestPanelEarlyRNA, setTenTestPanelEarlyRNA] = useState(null);
+  
+    const getData = async (name, setter) => {
+      try {
+        const response = await axiosInstance.get(`/Disease/get-by-name/${encodeURIComponent(name)}`);
+        setter(response.data.result);
+      } catch (error) {
+        console.error(`Error fetching data for ${name}:`, error);
+      }
+    };
+  
+    useEffect(() => {
+      getData(
+        "10 Test Panel with HIV RNA Early Detection",
+        setTenTestPanelEarlyRNA
+      );
+      getData("10 Test Panel", setTenTestPanel);
+    }, []);
 
   return (
     <section className="Testpanel">
@@ -94,7 +115,7 @@ function Testpanel() {
                 />
                 10 Test Panel
               </div>
-              <div className="card-price"> $139.00</div>
+              <div className="card-price"> ${TenTestPanel !== null ? TenTestPanel.price : ""}</div>
             </div>
             <div className="card-radio" onClick={handleCheckbox2}>
               <div className="card-checkbox">
@@ -105,7 +126,7 @@ function Testpanel() {
                 />
                 10 Test Panel with HIV RNA Early Detection
               </div>
-              <div className="card-price"> $259.00</div>
+              <div className="card-price"> ${TenTestPanelEarlyRNA !== null ? TenTestPanelEarlyRNA.price : ""}</div>
             </div>
             <div className="card-button">
               <button className="button3" onClick={handleGetTested}>Get Tested</button>

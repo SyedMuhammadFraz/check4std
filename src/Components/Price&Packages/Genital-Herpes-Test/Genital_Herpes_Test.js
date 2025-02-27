@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { axiosInstance } from "../../../AxiosInstance";
 import "../Herpes1_2/herpes1_2.css";
 import GenericSection from "../GenericSection";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +10,52 @@ function Genital_Herpes_Test() {
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
   const [checked4, setChecked4] = useState(false);
+  const [TenTestPanel, setTenTestPanel] = useState(null);
+  const [TenTestPanelEarlyRNA, setTenTestPanelEarlyRNA] = useState(null);
+  const [Genital_Herpes, setGenital_Herpes] = useState(null);
+  const [Herpes1_2, setHerpes1_2] = useState(null);
+
+  const getData = async (name, setter) => {
+    try {
+      const response = await axiosInstance.get(
+        `/Disease/get-by-name/${encodeURIComponent(name)}`
+      );
+      setter(response.data.result);
+    } catch (error) {
+      console.error(`Error fetching data for ${name}:`, error);
+    }
+  };
+
+  useEffect(() => {
+    getData(
+      "10 Test Panel with HIV RNA Early Detection",
+      setTenTestPanelEarlyRNA
+    );
+    getData("10 Test Panel", setTenTestPanel);
+    getData("Genital Herpes (HSV-2)", setGenital_Herpes);
+    getData("Herpes I & II", setHerpes1_2);
+  }, []);
+
+  const handleGetTested = () => {
+    let selectedTest = null;
+    if (checked1) {
+      selectedTest = { name: Genital_Herpes.name, price: Genital_Herpes.price };
+    } else if (checked2) {
+      selectedTest = { name: Herpes1_2.name, price: Herpes1_2.price };
+    } else if (checked3) {
+      selectedTest = { name: TenTestPanel.name, price: TenTestPanel.price };
+    } else if (checked4) {
+      selectedTest = {
+        name: TenTestPanelEarlyRNA.name,
+        price: TenTestPanelEarlyRNA.price,
+      };
+    }
+    if (selectedTest) {
+      navigate("/order", { state: { selectedTests: [selectedTest] } });
+    } else {
+      alert("Please select a test before proceeding.");
+    }
+  };
 
   const handleCheckbox1 = () => {
     setChecked1(!checked1);
@@ -42,27 +89,6 @@ function Genital_Herpes_Test() {
       setChecked1(false); // Uncheck Checkbox 1
       setChecked2(false);
       setChecked3(false);
-    }
-  };
-
-  const handleGetTested = () => {
-    let selectedTest = null;
-    if (checked1) {
-      selectedTest = { name: "Genital Herpes (HSV-2)", price: 45 };
-    } else if (checked2) {
-      selectedTest = { name: "Herpes I & II", price: 79 };
-    } else if (checked3) {
-      selectedTest = { name: "10 Test Panel", price: 139 };
-    } else if (checked4) {
-      selectedTest = {
-        name: "10 Test Panel with HIV RNA Early Detection",
-        price: 259,
-      };
-    }
-    if (selectedTest) {
-      navigate("/order", { state: { selectedTests: [selectedTest] } });
-    } else {
-      alert("Please select a test before proceeding.");
     }
   };
 
@@ -104,7 +130,7 @@ function Genital_Herpes_Test() {
               />
               Genital Herpes (HSV-2)
             </div>
-            <div className="card-price"> $45.00</div>
+            <div className="card-price"> ${Genital_Herpes !== null ? Genital_Herpes.price : ""}</div>
           </div>
           <div className="card-radio">
             <div className="card-checkbox" onClick={handleCheckbox2}>
@@ -115,7 +141,7 @@ function Genital_Herpes_Test() {
               />
               Herpes I & II
             </div>
-            <div className="card-price"> $79.00</div>
+            <div className="card-price"> ${Herpes1_2 !== null ? Herpes1_2.price : ""}</div>
           </div>
           <div className="card-radio">
             <div className="card-checkbox" onClick={handleCheckbox3}>
@@ -126,7 +152,7 @@ function Genital_Herpes_Test() {
               />
               10 Test Panel
             </div>
-            <div className="card-price"> $139.00</div>
+            <div className="card-price"> ${TenTestPanel !== null ? TenTestPanel.price : ""}</div>
           </div>
           <div className="card-radio" onClick={handleCheckbox4}>
             <div className="card-checkbox">
@@ -137,7 +163,7 @@ function Genital_Herpes_Test() {
               />
               10 Test Panel with HIV RNA Early Detection
             </div>
-            <div className="card-price"> $259.00</div>
+            <div className="card-price"> ${TenTestPanelEarlyRNA !== null ? TenTestPanelEarlyRNA.price : ""}</div>
           </div>
           <div className="card-button">
             <button className="button3" onClick={handleGetTested}>

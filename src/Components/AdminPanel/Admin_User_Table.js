@@ -1,60 +1,141 @@
 import React, { useState, useEffect } from "react";
 import "./Admin_User_Table.css";
 import AdminNavBar from "./AdminNavBar";
+import { webApiInstance } from "../../AxiosInstance";
 
 function Admin_User_Table() {
-  const [orders, setOrders] = useState([
-    {
-      OrderID: "ORD-001",
-      User_Name: "John Doe",
-      Order_Status: "Pending",
-      Date: "2024-02-18",
-    },
-    {
-      OrderID: "ORD-002",
-      User_Name: "Jane Smith",
-      Order_Status: "Processed",
-      Date: "2024-02-17",
-    },
-    {
-      OrderID: "ORD-003",
-      User_Name: "Michael Johnson",
-      Order_Status: "Completed",
-      Date: "2024-02-16",
-    },
-    {
-      OrderID: "ORD-004",
-      User_Name: "Emily Davis",
-      Order_Status: "Pending",
-      Date: "2024-02-15",
-    },
-    // Generate 96 more entries
-    ...Array.from({ length: 96 }, (_, i) => ({
-      OrderID: `ORD-${i + 5}`,
-      User_Name: `User-${i + 5}`,
-      Order_Status: ["Pending", "Processed", "Completed"][
-        Math.floor(Math.random() * 3)
-      ], // Randomly assign a status
-      Date: new Date(2024, 1, Math.floor(Math.random() * 28) + 1)
-        .toISOString()
-        .split("T")[0], // Random date in Feb 2024
-    })),
-  ]);
+  const [orders, setOrders] = useState([]);
+  const [filteredOrders, setFilteredOrders] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState("All");
+  const [dateFilter, setDateFilter] = useState({ from: "", to: "" });
+  const [sortField, setSortField] = useState(null);
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [selectedOrders, setSelectedOrders] = useState([]);
+  const [newStatus, setNewStatus] = useState("Pending");
   const [currentPage, setCurrentPage] = useState(1);
+
   const recordsPerPage = 20;
 
-  // Calculate indexes for current page records
+  useEffect(() => {
+    getData();
+  }, []);
+
+  useEffect(() => {
+    filterOrders();
+  }, [searchQuery, statusFilter, dateFilter, orders]);
+
+  const getData = async () => {
+    try {
+      const response = await webApiInstance.get(`/Order/get-all`);
+      const data = response.data.result;
+      setOrders(data);
+      setFilteredOrders(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const handleSelectOrder = (orderID) => {
+    setSelectedOrders((prevSelected) =>
+      prevSelected.includes(orderID)
+        ? prevSelected.filter((id) => id !== orderID)
+        : [...prevSelected, orderID]
+    );
+  };
+
+  const updateOrderStatus = async () => {
+    try {
+      // Map newStatus to corresponding numbers
+      const statusMapping = {
+        Pending: 1,
+        Processed: 2,
+        Completed: 3,
+        Cancelled: 4,
+      };
+
+      const statusValue = statusMapping[newStatus] || 0; // Default to 0 if status is invalid
+
+      // Use Promise.all to send multiple requests in parallel
+      await Promise.all(
+        selectedOrders.map(async (orderId) => {
+          await webApiInstance.put(`/Order/update-status/${orderId}`, {
+            status: statusValue,
+          });
+        })
+      );
+
+      console.log("Order statuses updated successfully.");
+    } catch (error) {
+      console.error("Error updating order statuses:", error);
+    }
+
+    setSelectedOrders([]); // Clear selected orders after update
+    getData();
+  };
+
+  const filterOrders = () => {
+    let filtered = [...orders];
+
+    if (statusFilter !== "All") {
+      filtered = filtered.filter((order) => order.orderStatus === statusFilter);
+    }
+
+    if (dateFilter.from && dateFilter.to) {
+      filtered = filtered.filter(
+        (order) =>
+          new Date(order.orderDate) >= new Date(dateFilter.from) &&
+          new Date(order.orderDate) <= new Date(dateFilter.to)
+      );
+    }
+
+    if (searchQuery) {
+      filtered = filtered.filter((order) => {
+        const name = order.userName ? order.userName.toLowerCase() : "";
+        const email = order.userEmail ? order.userEmail.toLowerCase() : "";
+
+        return (
+          name.includes(searchQuery.toLowerCase()) ||
+          email.includes(searchQuery.toLowerCase())
+        );
+      });
+    }
+
+    setFilteredOrders(filtered);
+  };
+
+  const handleSort = (field) => {
+    const order = sortField === field && sortOrder === "asc" ? "desc" : "asc";
+    const sortedOrders = [...filteredOrders].sort((a, b) => {
+      if (field === "Date") {
+        return order === "asc"
+          ? new Date(a.Date) - new Date(b.Date)
+          : new Date(b.Date) - new Date(a.Date);
+      }
+      if (typeof a[field] === "number") {
+        return order === "asc" ? a[field] - b[field] : b[field] - a[field];
+      }
+      return order === "asc"
+        ? String(a[field]).localeCompare(String(b[field]))
+        : String(b[field]).localeCompare(String(a[field]));
+    });
+
+    setSortField(field);
+    setSortOrder(order);
+    setFilteredOrders(sortedOrders);
+  };
+
   const indexOfLastRecord = currentPage * recordsPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-  const currentRecords = orders.slice(indexOfFirstRecord, indexOfLastRecord);
+  const currentRecords = filteredOrders.slice(
+    indexOfFirstRecord,
+    indexOfLastRecord
+  );
+  const totalPages = Math.ceil(filteredOrders.length / recordsPerPage);
 
-  // Total pages calculation
-  const totalPages = Math.ceil(orders.length / recordsPerPage);
-
-  // Pagination function to render page numbers with ellipsis
   const getPageNumbers = () => {
     const pageNumbers = [];
-    const maxPagesToShow = 5; // How many page numbers to show at a time
+    const maxPagesToShow = 5;
     const halfWay = Math.floor(maxPagesToShow / 2);
 
     if (totalPages <= maxPagesToShow) {
@@ -84,7 +165,6 @@ function Admin_User_Table() {
         pageNumbers.push(totalPages);
       }
     }
-
     return pageNumbers;
   };
 
@@ -92,66 +172,9 @@ function Admin_User_Table() {
     if (page === "...") return;
     setCurrentPage(page);
   };
-  const [filteredOrders, setFilteredOrders] = useState(orders);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState("All");
-  const [dateFilter, setDateFilter] = useState({ from: "", to: "" });
-  const [sortField, setSortField] = useState(null);
-  const [sortOrder, setSortOrder] = useState("asc");
 
-  useEffect(() => {
-    filterOrders();
-  }, [searchQuery, statusFilter, dateFilter, orders]);
-
-  const filterOrders = () => {
-    let filtered = [...orders];
-
-    // Apply status filter
-    if (statusFilter !== "All") {
-      filtered = filtered.filter(
-        (order) => order.Order_Status === statusFilter
-      );
-    }
-
-    // Apply date filter
-    if (dateFilter.from && dateFilter.to) {
-      filtered = filtered.filter(
-        (order) =>
-          new Date(order.Date) >= new Date(dateFilter.from) &&
-          new Date(order.Date) <= new Date(dateFilter.to)
-      );
-    }
-
-    // Apply search filter
-    if (searchQuery) {
-      filtered = filtered.filter(
-        (order) =>
-          order.OrderID.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          order.User_Name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-
-    setFilteredOrders(filtered);
-  };
-
-  // Sorting function
-  const handleSort = (field) => {
-    const order = sortField === field && sortOrder === "asc" ? "desc" : "asc";
-    const sortedOrders = [...filteredOrders].sort((a, b) => {
-      if (field === "Date") {
-        return order === "asc"
-          ? new Date(a.Date) - new Date(b.Date)
-          : new Date(b.Date) - new Date(a.Date);
-      }
-      return order === "asc"
-        ? a[field].localeCompare(b[field])
-        : b[field].localeCompare(a[field]);
-    });
-
-    setSortField(field);
-    setSortOrder(order);
-    setFilteredOrders(sortedOrders);
-  };
+  // Function to check if an order is selected
+  const isOrderSelected = (orderID) => selectedOrders.includes(orderID);
 
   return (
     <div>
@@ -208,7 +231,7 @@ function Admin_User_Table() {
           <div className="filters">
             <input
               type="text"
-              placeholder="Search by Order ID or User Name..."
+              placeholder="Search by User Name..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -235,45 +258,88 @@ function Admin_User_Table() {
                 setDateFilter({ ...dateFilter, to: e.target.value })
               }
             />
+            <div className="status-change">
+              <select
+                value={newStatus}
+                onChange={(e) => setNewStatus(e.target.value)}
+              >
+                <option value="Pending">Pending</option>
+                <option value="Processed">Processed</option>
+                <option value="Completed">Completed</option>
+              </select>
+              <button className="button1" onClick={updateOrderStatus}>
+                Update Status
+              </button>
+            </div>
           </div>
           <table>
             <thead>
-              <th>Sr No.</th>
-              <th>Order ID</th>
-              <th>User Name</th>
-              <th>Status</th>
-              <th>Date</th>
-              <th>Actions</th>
+              <tr>
+                <th>
+                  <input
+                    type="checkbox"
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setSelectedOrders((prevSelected) => [
+                          ...prevSelected,
+                          ...currentRecords.map((order) => order.id),
+                        ]);
+                      } else {
+                        setSelectedOrders((prevSelected) =>
+                          prevSelected.filter(
+                            (id) =>
+                              !currentRecords.some((order) => order.id === id)
+                          )
+                        );
+                      }
+                    }}
+                    checked={currentRecords.every((order) =>
+                      selectedOrders.includes(order.id)
+                    )}
+                  />
+                </th>
+                <th>Sr No.</th>
+                <th>Order ID</th>
+                <th>User Name</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Last Updated</th>
+              </tr>
             </thead>
             <tbody>
-              {filteredOrders.map((record, index) => (
+              {currentRecords.map((record, index) => (
                 <tr key={index} className="user-table-row">
-                  <td className="user-table-cell first-cell">
-                    {(currentPage - 1) * recordsPerPage + index + 1}
+                  <td>
+                    <input
+                      type="checkbox"
+                      checked={selectedOrders.includes(record.id)}
+                      onChange={() => handleSelectOrder(record.id)}
+                    />
                   </td>
-                  <td className="user-table-cell">{record.OrderID}</td>
-                  <td className="user-table-cell">{record.User_Name}</td>
-                  <td className="user-table-cell">
-                    {record.Order_Status === "Pending" ? (
-                      <button className="status-btn Pending">Pending</button>
-                    ) : record.Order_Status === "Processed" ? (
-                      <button className="status-btn Processed">
-                        Processed
-                      </button>
-                    ) : record.Order_Status === "Completed" ? (
-                      <button className="status-btn Completed">
-                        Completed
-                      </button>
-                    ) : (
-                      <button className="status-btn unknown">Unknown</button> // Just in case an unknown status appears
-                    )}
+                  <td>{(currentPage - 1) * recordsPerPage + index + 1}</td>
+                  <td>{record.userEmail}</td>
+                  <td>{record.userName}</td>
+                  <td>
+                    <button
+                      className={`status-btn ${record.orderStatus}`}
+                      onClick={() => {
+                        setSelectedOrders([record.OrderID]); // Select only this order
+                      }}
+                    >
+                      {record.orderStatus}
+                    </button>
                   </td>
-
-                  <td className="user-table-cell">{record.Date}</td>
+                  <td>
+                    {new Date(record.orderDate).toLocaleDateString("en-US")}
+                  </td>
+                  <td>
+                    {new Date(record.lastUpdated).toLocaleDateString("en-US")}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+
           <div className="pagination-controls">
             {getPageNumbers().map((page, index) => (
               <button

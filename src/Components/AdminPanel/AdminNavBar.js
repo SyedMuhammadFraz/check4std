@@ -38,6 +38,9 @@ function AdminNavBar() {
     const handleOrdersClick = () => {
         navigate('/admin-panel/order-table');
     };
+    const handleTestsClick = () => {
+        navigate('/admin-panel/test-table');
+    };
     const handleDashboardClick = () => {
         navigate('/admin-panel/dashboard');
     };
@@ -62,6 +65,11 @@ function AdminNavBar() {
                         <li className="nav__item">
                             <a className="navbar-main-heading" onClick={handleOrdersClick}>
                                 Orders
+                            </a>
+                        </li>
+                        <li className="nav__item">
+                            <a className="navbar-main-heading" onClick={handleTestsClick}>
+                                Tests
                             </a>
                         </li>
                         <li className="nav__buttons">

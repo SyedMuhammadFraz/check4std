@@ -19,6 +19,7 @@ import "react-toastify/dist/ReactToastify.css";
 import AdminDashboard from "./Components/AdminPanel/AdminDashboard";
 import Admin_User_Table from "./Components/AdminPanel/Admin_User_Table";
 import AdminMain from "./Components/AdminPanel/AdminMain";
+import Admin_Disease_Table from "./Components/AdminPanel/Admin_Disease_Table";
 
 import Chlamydia_Gonorrhea from "./Components/Price&Packages/Chlamydia-Gonorrhea/Chlamydia_Gonorrhea";
 import Herpes1_2 from "./Components/Price&Packages/Herpes1_2/Herpes1_2";
@@ -178,6 +179,7 @@ function App() {
                   <Route index element={<AdminDashboard  />} />
                   <Route path="dashboard" element={<AdminDashboard />} />
                   <Route path="order-table" element={<Admin_User_Table />} />
+                  <Route path="test-table" element={<Admin_Disease_Table />} />
                 </Route>
               </Routes>
             </BrowserRouter>

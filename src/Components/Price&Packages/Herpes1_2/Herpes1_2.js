@@ -31,7 +31,7 @@ function Herpes1_2() {
       setTenTestPanelEarlyRNA
     );
     getData("10 Test Panel", setTenTestPanel);
-    getData("Chlamydia & Gonorrhea", setHerpes1_2);
+    getData("Herpes I & II", setHerpes1_2);
   }, []);
 
   const handleCheckbox1 = () => {

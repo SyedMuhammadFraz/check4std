@@ -13,21 +13,27 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("authToken");
+    let storedToken = Cookies.get("authToken");
+  
+    if (!storedToken) {
+      storedToken = localStorage.getItem("authToken");
+    }
   
     if (storedToken) {
-      const decodedSavedToken = decodeJWT(storedToken);
-  
-      if (decodedSavedToken && decodedSavedToken.role) {
-        console.log(decodedSavedToken.role);
-      }
-  
       setAuthToken(storedToken);
+      try {
+        const decodedData = decodeJWT(storedToken);
+        setUserRole(decodedData.role);
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
     }
-  }, [authToken]); // Runs only if `authToken` changes
+  }, []);
+  
 
   const login = (token) => {
-    Cookies.set("authToken", token);
+    Cookies.set("authToken", token, { expires: 2});
+    localStorage.setItem("authToken", token);
     setAuthToken(token);
 
     try {
@@ -41,7 +47,9 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     Cookies.remove("authToken");
+    localStorage.removeItem("authToken");
     setAuthToken(null);
+    setUserRole(null);
   };
 
   const fetchRoleId = async () => {
@@ -79,6 +87,7 @@ export const AuthProvider = ({ children }) => {
           name: pendingUser.name,
           roleId: roleId,
           phoneNumber: pendingUser.phoneNumber,
+          dob: pendingUser.dob,
         },
         { withCredentials: true }
       );

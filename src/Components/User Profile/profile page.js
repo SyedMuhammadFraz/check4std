@@ -12,7 +12,8 @@ import { webApiInstance } from "../../AxiosInstance";
 const ProfilePage = () => {
   const [user, setUser] = useState({
     name: "",
-    phone: "",
+    phoneNumber: "",
+    dob: "",
   });
   const [decodedData, setDecodedData] = useState(null);
   const { authToken, logout } = useContext(AuthContext);
@@ -24,13 +25,8 @@ const ProfilePage = () => {
   // Update User API function
 
   const updateUser = async (id, userData) => {
-    return await webApiInstance.put(`/api/user/update/${id}`, userData, {
-      headers: {
-        Authorization: `Bearer ${authToken}`, // Ensure authToken is accessible
-      },
-    });
+    return await webApiInstance.put(`/User/update/${id}`, userData);
   };
-  
 
   useEffect(() => {
     if (!authToken) {
@@ -51,7 +47,7 @@ const ProfilePage = () => {
     setLoading(true);
     const userData = {
       name: decodedData.name,
-      phone: decodedData.phonenumber,
+      phoneNumber: decodedData.phonenumber,
       dob: decodedData.dob,
     };
     setUser(userData);
@@ -60,43 +56,48 @@ const ProfilePage = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-  
-    setUser((prevUser) => ({
+        setUser((prevUser) => ({
       ...prevUser,
       [name]: value, // Update only the changed field
     }));
   };
-  
 
   const handleEditSave = async () => {
     if (!isEditing) {
       setIsEditing(true); // Enable editing mode
       return;
     }
-  
+
     if (!decodedData?.publicId) {
       toast.error("User ID not found. Please try again.");
       return;
     }
-  
+
     try {
+      console.log("Updating user data:", user);
       const response = await updateUser(decodedData.publicId, user); // Pass ID and updated user data
-      console.log(response);
-  
-      if (response?.data?.success) { // Use success flag instead of status code
+      console.log("Response", response);
+
+      if (response?.status===200) {
+        // Use success flag instead of status code
         toast.success(response.data.message || "Profile updated successfully!");
         setIsEditing(false); // Disable editing mode after successful update
-        setUser(response.data.updatedUser || user); // Update state with new data
+        setUser(response.data.user || user); // Update state with new data
       } else {
-        toast.error(response?.data?.message || "Failed to update profile. Please try again.");
+        toast.error(
+          response?.data?.message ||
+            "Failed to update profile. Please try again."
+        );
       }
     } catch (error) {
       console.error("Error updating profile:", error);
-      toast.error(error.response?.data?.message || "An error occurred while updating the profile.");
+      toast.error(
+        error.response?.data?.message ||
+          "An error occurred while updating the profile."
+      );
     }
   };
-  
-  
+
   const handleLogout = () => {
     setShowModal(true);
   };
@@ -142,13 +143,13 @@ const ProfilePage = () => {
           {isEditing ? (
             <input
               type="text"
-              name="phone"
-              value={user.phone}
+              name="phoneNumber"
+              value={user.phoneNumber}
               onChange={handleInputChange}
               className="edit-input"
             />
           ) : (
-            <span className="detail-values">{user.phone}</span>
+            <span className="detail-values">{user.phoneNumber}</span>
           )}
         </div>
 

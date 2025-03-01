@@ -30,6 +30,7 @@ const SignIn = () => {
     return () => clearTimeout(timer); // Cleanup function
   }, [authToken]);
 
+
   const decodeJWT = (token) => {
     try {
       const base64Url = token.split(".")[1]; // Extract the payload part
@@ -89,7 +90,6 @@ const SignIn = () => {
     } finally {
       setLoading(false); // Hide loader after authentication
     }
-
     // Mock authentication
     // if (email === "test@example.com" && password === "password") {
     //   // Simulate successful login

@@ -12,6 +12,14 @@ export const AuthProvider = ({ children }) => {
   const [pendingUser, setPendingUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+
+  useEffect(() => {
+    if (authToken) {
+      localStorage.setItem("authToken", authToken);
+    } else {
+      localStorage.removeItem("authToken");
+    }
+  }, [authToken]);
   useEffect(() => {
     let storedToken = Cookies.get("authToken");
   
@@ -69,7 +77,8 @@ export const AuthProvider = ({ children }) => {
       toast.error("No user data found. Please sign up again.");
       return { success: false, message: "No user data found." };
     }
-  
+     
+
     setLoading(true);
     try {
       const roleId = await fetchRoleId();
@@ -151,3 +160,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 export const useAuth = () => useContext(AuthContext);
+

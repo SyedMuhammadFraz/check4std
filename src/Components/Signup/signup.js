@@ -72,14 +72,49 @@ const SignUp = () => {
     return true;
   };
   
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-    setPendingUser(formData);
-    navigate("/get-otp");
-    toast.success('Click on "Send OTP" to verify your email');
-  };
-
+  const userExistenceCheck = async (email) => {
+      try {
+        const userResponse = await webApiInstance.get(`/User/get-by-email`, {
+          params: { email }, // Automatically encodes query parameters
+        });
+        if(userResponse.email) {
+          toast.error("User with this email already exists. Please login.");
+          return false;
+        }
+        
+        return userResponse.data.result || null;
+      } catch (error) {
+        console.error("Error checking user existence:", error);
+        return null;
+      }
+    };
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      
+      if (!validateForm()) return;
+    
+      try {
+        const userResponse = await webApiInstance.get(`/User/get-by-email`, {
+          params: { email: formData.email }, 
+        });
+    
+        if (userResponse) {  // If user exists, show an error toast
+          toast.error("User with this email already exists. Please login.");
+          return; // Stop further execution
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          // User doesn't exist, proceed to OTP page
+          setPendingUser(formData);
+          navigate("/get-otp");
+          toast.success('Click on "Send OTP" to verify your email');
+        } else {
+          console.error("Error checking user existence:", error);
+          toast.error("An error occurred. Please try again later.");
+        }
+      }
+    };
+    
   const handleLogout = () => {
     logout();
     toast.success("Successfully logged out!");

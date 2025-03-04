@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }) => {
         console.error("Error decoding token:", error);
       }
     }
+    setLoading(false);
   }, []);
   
 

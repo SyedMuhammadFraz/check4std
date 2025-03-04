@@ -72,10 +72,13 @@ const SignUp = () => {
     return true;
   };
   
-  const userExistenceCheck = async (email) => {
+  const userExistenceCheck = async (email, phoneNumber) => {
       try {
-        const userResponse = await webApiInstance.get(`/User/get-by-email`, {
-          params: { email }, // Automatically encodes query parameters
+        const emailValidityResponse = await webApiInstance.get(`/User/get-by-email`, {
+          params: { email },
+        });
+        const phoneNumberValidityResponse = await webApiInstance.get(`/User/get-by-phone-number`, {
+          params: { email },
         });
         if(userResponse.email) {
           toast.error("User with this email already exists. Please login.");
@@ -92,27 +95,37 @@ const SignUp = () => {
       e.preventDefault();
       
       if (!validateForm()) return;
-    
       try {
-        const userResponse = await webApiInstance.get(`/User/get-by-email`, {
-          params: { email: formData.email }, 
-        });
-    
-        if (userResponse) {  // If user exists, show an error toast
+        const [emailValidityResponse, phoneNumberValidityResponse] = await Promise.allSettled([
+          webApiInstance.get(`/User/get-by-email`, { params: { email: formData.email } }),
+          webApiInstance.get(`/User/get-by-phone-number`, { params: { phoneNumber: formData.phoneNumber } }),
+        ]);
+      
+        let userExists = false;
+      
+        if (emailValidityResponse.status === "fulfilled" && emailValidityResponse.value.status === 200) {
           toast.error("User with this email already exists. Please login.");
-          return; // Stop further execution
+          userExists = true;
         }
+      
+        if (phoneNumberValidityResponse.status === "fulfilled" && phoneNumberValidityResponse.value.status === 200) {
+          toast.error("User with this phone number already exists. Use a different number.");
+          userExists = true;
+        }
+      
+        if (userExists) return;
+      
+        // If neither exists, proceed to OTP verification
+        setPendingUser(formData);
+        navigate("/get-otp");
+        toast.success('Click on "Send OTP" to verify your email or phone number');
+      
       } catch (error) {
-        if (error.response && error.response.status === 404) {
-          // User doesn't exist, proceed to OTP page
-          setPendingUser(formData);
-          navigate("/get-otp");
-          toast.success('Click on "Send OTP" to verify your email');
-        } else {
-          console.error("Error checking user existence:", error);
-          toast.error("An error occurred. Please try again later.");
-        }
+        console.error("Error checking user existence:", error);
+        toast.error("An error occurred. Please try again later.");
       }
+      
+      
     };
     
   const handleLogout = () => {

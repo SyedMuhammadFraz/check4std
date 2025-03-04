@@ -4,9 +4,11 @@ import "./Testpanel.css";
 import '../MainPage.css'
 import GenericSection from "../GenericSection";
 import { useNavigate } from "react-router-dom";
+import { useLoader } from "../../../utils/LoaderContext";
 
 function Testpanel() {
   const navigate = useNavigate();
+  const { setLoading } = useLoader();
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
 
@@ -56,12 +58,18 @@ function Testpanel() {
     };
   
     useEffect(() => {
+      setLoading(true);
       getData(
         "10 Test Panel with HIV RNA Early Detection",
         setTenTestPanelEarlyRNA
       );
       getData("10 Test Panel", setTenTestPanel);
+      setLoading(false);
     }, []);
+
+    useEffect(() => {
+      setLoading(false);
+    }, [TenTestPanel]);
 
   return (
     <section className="Testpanel">

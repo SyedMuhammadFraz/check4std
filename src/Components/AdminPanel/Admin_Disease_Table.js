@@ -1,16 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import AdminNavBar from "./AdminNavBar";
 import "./Admin_User_Table.css";
 import { webApiInstance } from "../../AxiosInstance";
+import { AuthContext } from "../../utils/AuthContext";
 
 function Admin_Disease_Table() {
+  const { authToken } = useContext(AuthContext);
   const [Diseases, setDiseases] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [newPrice, setNewPrice] = useState("");
+  const { AuthToken } = useContext(AuthContext);
+
+  // const getData = async () => {
+  //   try {
+  //     const response = await webApiInstance.get(`/Disease`);
+  //     if (response.data.statusCode === 200) {
+  //       setDiseases(response.data.result);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
 
   const getData = async () => {
     try {
-      const response = await webApiInstance.get(`/Disease`);
+      const response = await webApiInstance.get(`/Disease`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`, // Replace with actual token
+        },
+      });
+
       if (response.data.statusCode === 200) {
         setDiseases(response.data.result);
       }
@@ -41,9 +60,16 @@ function Admin_Disease_Table() {
         createdAt: disease.createdAt, // Keep original createdAt
         updatedAt: new Date().toISOString(), // Set updatedAt to now
       };
-      const response = await webApiInstance.put(`/Disease/${disease.id}`, updatedDisease);
-      if(response.status === 204)
-      {
+      const response = await webApiInstance.put(
+        `/Disease/${disease.id}`,
+        updatedDisease,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`, // Replace with actual token
+          },
+        }
+      );
+      if (response.status === 204) {
         getData();
       }
       setEditingId(null); // Exit edit mode
@@ -76,8 +102,12 @@ function Admin_Disease_Table() {
               <tr key={disease.id} className="user-table-row">
                 <td>{index + 1}</td>
                 <td>{disease.name}</td>
-                <td>{new Date(disease.createdAt).toLocaleDateString("en-US")}</td>
-                <td>{new Date(disease.updatedAt).toLocaleDateString("en-US")}</td>
+                <td>
+                  {new Date(disease.createdAt).toLocaleDateString("en-US")}
+                </td>
+                <td>
+                  {new Date(disease.updatedAt).toLocaleDateString("en-US")}
+                </td>
                 <td>
                   {editingId === disease.id ? (
                     <input

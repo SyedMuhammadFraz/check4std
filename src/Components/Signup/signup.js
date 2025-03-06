@@ -71,63 +71,53 @@ const SignUp = () => {
 
     return true;
   };
-  
-  const userExistenceCheck = async (email, phoneNumber) => {
-      try {
-        const emailValidityResponse = await webApiInstance.get(`/User/get-by-email`, {
-          params: { email },
-        });
-        const phoneNumberValidityResponse = await webApiInstance.get(`/User/get-by-phone-number`, {
-          params: { email },
-        });
-        if(userResponse.email) {
-          toast.error("User with this email already exists. Please login.");
-          return false;
-        }
-        
-        return userResponse.data.result || null;
-      } catch (error) {
-        console.error("Error checking user existence:", error);
-        return null;
-      }
-    };
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      
-      if (!validateForm()) return;
-      try {
-        const [emailValidityResponse, phoneNumberValidityResponse] = await Promise.allSettled([
-          webApiInstance.get(`/User/get-by-email`, { params: { email: formData.email } }),
-          webApiInstance.get(`/User/get-by-phone-number`, { params: { phoneNumber: formData.phoneNumber } }),
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+    try {
+      const [emailValidityResponse, phoneNumberValidityResponse] =
+        await Promise.allSettled([
+          webApiInstance.get(`/User/get-by-email`, {
+            params: { email: formData.email },
+          }),
+          webApiInstance.get(`/User/get-by-phone-number`, {
+            params: { phoneNumber: formData.phoneNumber },
+          }),
         ]);
-      
-        let userExists = false;
-      
-        if (emailValidityResponse.status === "fulfilled" && emailValidityResponse.value.status === 200) {
-          toast.error("User with this email already exists. Please login.");
-          userExists = true;
-        }
-      
-        if (phoneNumberValidityResponse.status === "fulfilled" && phoneNumberValidityResponse.value.status === 200) {
-          toast.error("User with this phone number already exists. Use a different number.");
-          userExists = true;
-        }
-      
-        if (userExists) return;
-      
-        // If neither exists, proceed to OTP verification
-        setPendingUser(formData);
-        navigate("/get-otp");
-        toast.success('Click on "Send OTP" to verify your email or phone number');
-      
-      } catch (error) {
-        console.error("Error checking user existence:", error);
-        toast.error("An error occurred. Please try again later.");
+        con
+      let userExists = false;
+
+      if (
+        emailValidityResponse.status === "fulfilled" &&
+        emailValidityResponse.value.status === 200
+      ) {
+        toast.error("User with this email already exists. Please login.");
+        userExists = true;
       }
-      
-      
-    };
-    
+
+      if (
+        phoneNumberValidityResponse.status === "fulfilled" &&
+        phoneNumberValidityResponse.value.status === 200
+      ) {
+        toast.error(
+          "User with this phone number already exists. Use a different number."
+        );
+        userExists = true;
+      }
+
+      if (userExists) return;
+
+      // If neither exists, proceed to OTP verification
+      setPendingUser(formData);
+      navigate("/get-otp");
+      toast.success('Click on "Send OTP" to verify your email or phone number');
+    } catch (error) {
+      console.error("Error checking user existence:", error);
+      toast.error("An error occurred. Please try again later.");
+    }
+  };
+
   const handleLogout = () => {
     logout();
     toast.success("Successfully logged out!");
@@ -236,6 +226,14 @@ const SignUp = () => {
               </span>
             </div>
           </div>
+          <h4 className="password-guidelines-heading">Password Guidelines</h4>
+          <ul className="password-guidelines">
+            <li>At least 8 characters</li>
+            <li>One uppercase letter (A-Z)</li>
+            <li>One lowercase letter (a-z)</li>
+            <li>One number (0-9)</li>
+            <li>One special character (!@#$%^&*)</li>
+          </ul>
           <button type="submit" className="signup-auth-button">
             Sign Up
           </button>

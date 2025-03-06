@@ -72,20 +72,44 @@
   }
   
   .password-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  
-  .password-wrapper input {
-    width: 100%;
-    padding-right: 40px; /* Space for the icon */
-  }
-  
-  .toggle-icon {
-    position: absolute;
-    right: 10px;
-    cursor: pointer;
-    font-size: 1.2rem;
-    color: #555;
-  }
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding: 10px;
+  padding-right: 50px; /* Ensures text does not overlap with the icon */
+  box-sizing: border-box;
+}
+
+.password-wrapper input::placeholder {
+  margin-right: 50px;
+}
+
+.toggle-icon {
+  position: absolute;
+  right: 15px; /* Ensures icon is not too close to the input edge */
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #555;
+}
+.password-guidelines-heading {
+  margin-top: 15px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.password-guidelines {
+  margin-top: 5px;
+  padding-left: 20px;
+  font-size: 0.9rem;
+  color: red;
+}
+
+.password-guidelines li {
+  margin-bottom: 5px;
+}
+

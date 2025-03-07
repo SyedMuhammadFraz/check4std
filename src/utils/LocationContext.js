@@ -10,7 +10,7 @@ export const LocationProvider = ({ children }) => {
   // Reset location on logout
   const resetLocation = () => {
     console.log("resetLocation called");
-    setLocation(null);
+    setSelectedLocation(null);
   };
 
   return (

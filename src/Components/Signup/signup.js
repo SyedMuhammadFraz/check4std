@@ -110,9 +110,7 @@ const SignUp = () => {
             params: { phoneNumber: formData.phoneNumber },
           }),
         ]);
-        con
       let userExists = false;
-
       if (
         emailValidityResponse.status === "fulfilled" &&
         emailValidityResponse.value.status === 200

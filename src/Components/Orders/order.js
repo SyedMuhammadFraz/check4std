@@ -18,6 +18,10 @@ const OrderPage = () => {
 
   const location = useLocation();
   const { selectedTests = [] } = location.state || {};
+  const [tests, setTests] = useState(selectedTests);
+  const [totalCost, setTotalCost] = useState(
+    selectedTests.reduce((acc, test) => acc + test.price, 0)
+  );
 
   const onChangeLocation = () => {
     navigate("/test-centers");
@@ -36,12 +40,13 @@ const OrderPage = () => {
   };
 
   useEffect(() => {
+    console.log(tests)
     const fetchAllDiseaseIds = async () => {
-      if (!selectedTests || selectedTests.length === 0) return;
+      if (!tests || tests.length === 0) return;
 
       try {
         const diseaseIds = await Promise.all(
-          selectedTests.map((test) => getData(test.name))
+          tests.map((test) => getData(test.name))
         );
 
         // Filter out null values in case of errors
@@ -52,11 +57,10 @@ const OrderPage = () => {
     };
 
     fetchAllDiseaseIds();
-
-  }, [selectedTests]); // Dependency to re-run if selectedTests change
+  }, [tests]); // Dependency to re-run if selectedTests change
 
   useEffect(() => {
-    console.log("Disease Array: " + Disease)
+    console.log("Disease Array: " + Disease);
   }, [Disease]);
 
   const [formData, setFormData] = useState({
@@ -93,8 +97,6 @@ const OrderPage = () => {
   const gotoPricePackages = () => {
     navigate("/price-packages");
   };
-
-  const totalCost = selectedTests.reduce((sum, test) => sum + test.price, 0);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -143,7 +145,6 @@ const OrderPage = () => {
       !/^\(\d{3}\) \d{3}-\d{4}$/.test(formData.phone)
     ) {
       newErrors.phone =
-       
         "Please enter a valid phone number (e.g., (xxx) xxx-xxxx).";
     }
     if (!formData.dobMonth || !formData.dobDay || !formData.dobYear) {
@@ -215,11 +216,11 @@ const OrderPage = () => {
   }, [formData.dobMonth, formData.dobDay, formData.dobYear]);
 
   useEffect(() => {
-    console.log(selectedTests[0].name)
+    console.log(selectedTests[0].name);
     const timer = setTimeout(() => {
       if (authToken === null) {
         navigate("/login");
-        toast.error("Login to place an order!")
+        toast.error("Login to place an order!");
       }
       setLoading(false);
     }, 1000); // Adjust delay as needed
@@ -227,27 +228,8 @@ const OrderPage = () => {
     return () => clearTimeout(timer);
   }, [authToken, navigate]);
 
-  const handleUpgrade = (price) => {
-    setTotalCost(totalCost + price);
-    toast.success("Upgrade added!");
-  };
-
-  if (loading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <ClipLoader size={50} color={"#36d7b7"} loading={loading} />
-      </div>
-    );
-  }
-
   const createCheckoutSession = async (diseases, authToken) => {
+    console.log("Checkout disease",diseases);
     try {
       // Extract IDs from the diseases array
       const response = await webApiInstance.post(
@@ -272,61 +254,130 @@ const OrderPage = () => {
   };
 
   const handlePlaceOrder = () => {
-    console.log(authToken)
+    console.log(authToken);
     if (Disease !== null) {
       createCheckoutSession(Disease, authToken);
     }
   };
+  
+  const handleUpgrade = () => {
+    const tenTestPanelPrice = 150.00; // Set the fixed price for 10 Test Panel
+
+    if (totalCost < 140) {
+      setTests([{ name: "10 Test Panel", price: tenTestPanelPrice }]); // Replace with single test
+      setTotalCost(tenTestPanelPrice); // Set total cost to the new test price
+    }
+  };
+
+  const handleHIVRNAUpgrade = () => {
+    const tenTestRNAPanelPrice = 270.00;
+    const hivRNAUpgrade = {
+      name: "10 Test Panel with HIV RNA Early Detection",
+      price: tenTestRNAPanelPrice,
+    };
+
+    setTests([hivRNAUpgrade]); // Add new test to existing list
+    setTotalCost(tenTestRNAPanelPrice); // Update total cost
+  };
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <ClipLoader size={50} color={"#36d7b7"} loading={loading} />
+      </div>
+    );
+  }
 
   return (
     <div className="order-page">
-      <div className="order-card">
-        <div className="order-card-content">
-          <h2>Order Summary</h2>
-          <ul>
-            {(selectedTests || []).map((test, index) => (
-              <li key={index}>
-                {test.name} - ${test.price.toFixed(2)}
-              </li>
-            ))}
-          </ul>
-          <h3>Total: ${totalCost.toFixed(2)}</h3>
-          <button onClick={gotoPricePackages}>Add/Edit Tests</button>
-        </div>
-      </div>
-
-
-      {selectedTests[0].name !== "10 Test Panel" && (
-        <div className="upgrade-card">
-          <h3>Save by testing for common STDs</h3>
-          <p>
-            Upgrade to the <strong className="highlight">10 Test Panel</strong>
-          </p>
-
-          <hr />
-
-          <div className="test-list">
+      <div class="responsive-container">
+        <div className="order-card">
+          <div className="order-card-content">
+            <h2>Order Summary</h2>
             <ul>
-              <li>✔️ HIV Type 1</li>
-              <li>✔️ Hepatitis A</li>
-              <li>✔️ Gonorrhea</li>
-              <li>✔️ Herpes 2</li>
-              <li>✔️ Chlamydia</li>
+              {tests.map((test, index) => (
+                <li key={index}>
+                  {test.name} - ${test.price.toFixed(2)}
+                </li>
+              ))}
             </ul>
-            <ul>
-              <li>✔️ Herpes 1</li>
-              <li>✔️ Hepatitis C</li>
-              <li>✔️ HIV Type 2</li>
-              <li>✔️ Hepatitis B</li>
-              <li>✔️ Syphilis</li>
-            </ul>
+            <h3>Total: ${totalCost.toFixed(2)}</h3>
+            <button
+              onClick={() =>
+                navigate("/price-packages", { state: { selectedTests: tests } })
+              }
+            >
+              Add/Edit Tests
+            </button>
           </div>
-
-          <button className="upgrade-btn" onClick={() => handleUpgrade(25)}>
-            Upgrade Now <span className="price">+ $25.00</span>
-          </button>
         </div>
-      )}
+
+        {tests.length > 0 &&
+          tests[0].name !== "10 Test Panel" &&
+          tests[0].name !== "10 Test Panel with HIV RNA Early Detection" &&
+          totalCost < 150 && (
+            <div className="upgrade-card">
+              <h3>Save by testing for common STDs</h3>
+              <p>
+                Upgrade to the{" "}
+                <strong className="highlight">10 Test Panel</strong>
+              </p>
+
+              <hr />
+
+              <div className="test-list">
+                <ul>
+                  <li>✔️ HIV Type 1</li>
+                  <li>✔️ Hepatitis A</li>
+                  <li>✔️ Gonorrhea</li>
+                  <li>✔️ Herpes 2</li>
+                  <li>✔️ Chlamydia</li>
+                </ul>
+                <ul>
+                  <li>✔️ Herpes 1</li>
+                  <li>✔️ Hepatitis C</li>
+                  <li>✔️ HIV Type 2</li>
+                  <li>✔️ Hepatitis B</li>
+                  <li>✔️ Syphilis</li>
+                </ul>
+              </div>
+
+              <button className="upgrade-btn" onClick={handleUpgrade}>
+                Upgrade Now{" "}
+                <span className="price">
+                  + ${Math.max(0, 150.0 - totalCost).toFixed(2)}
+                </span>
+              </button>
+            </div>
+          )}
+
+        {/* Show HIV RNA Upgrade Card ONLY if "10 Test Panel" is selected */}
+        {tests.length > 0 && tests[0].name === "10 Test Panel" && (
+          <div className="upgrade-card">
+            <h3 className="highlight">Worried about recent exposure?</h3>
+            <p>
+              Upgrade with the{" "}
+              <strong className="highlight">HIV RNA Early Detection</strong>
+            </p>
+
+            <hr />
+
+            <button className="upgrade-btn" onClick={handleHIVRNAUpgrade}>
+              Upgrade
+              <span className="price">
+                + ${Math.max(0, 270.0 - totalCost).toFixed(2)}
+              </span>
+            </button>
+          </div>
+        )}
+      </div>
 
       <div className="container">
         <h1>Quick & Confidential STD Testing</h1>
@@ -339,7 +390,9 @@ const OrderPage = () => {
               <label className="order-labels">Your Selected Lab:</label>
               <p>{selectedLocation}</p>
               <p>4651 W Kennedy Blvd, Tampa, FL 33609</p>
-              <button type="button" onClick={onChangeLocation}>Change Location</button>
+              <button type="button" onClick={onChangeLocation}>
+                Change Location
+              </button>
             </div>
           </section>
 

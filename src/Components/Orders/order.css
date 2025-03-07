@@ -129,19 +129,6 @@
   font-weight: bold;
 }
 
-.order-page .order-card {
-  width: 350px; /* Fixed width for the card */
-  background: #ecf1e5;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-  border-radius: 10px;
-  padding: 20px;
-  position: absolute;
-  right: 20px; /* Set from the right */
-  pointer-events: auto;
-}
-
 /* Content inside the order card */
 .order-page .order-card-content {
   padding: 15px;
@@ -209,6 +196,7 @@
 }
 
 .upgrade-card {
+  order: 2;
   background-color: #fdf4e4; /* Light orange background */
   border: 1px solid #e0a96d; /* Border similar to image */
   border-radius: 10px;
@@ -216,9 +204,25 @@
   text-align: center;
   width: 100%;
   max-width: 350px;
-  margin: 20px auto;
+  margin-top: 330px;
+  position: absolute;
+  pointer-events: auto;
+  right: 20px;
 }
 
+.order-page .order-card {
+  width: 350px; /* Fixed width for the card */
+  background: #ecf1e5;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  border-radius: 10px;
+  padding: 20px;
+  order: 1;
+  position: absolute;
+  right: 20px; /* Set from the right */
+  pointer-events: auto;
+}
 .upgrade-card h3 {
   color: #d48806;
   font-size: 1.2rem;
@@ -271,7 +275,6 @@
   margin-left: 10px;
 }
 
-
 @media (max-width: 1600px) {
   .order-page .order-card {
     background: #ecf1e5;
@@ -282,6 +285,25 @@
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Full width on small screens */
+    max-width: 800px; /* Limits the width for larger screens */
+  }
+  .order-page .upgrade-card {
+    background: #fdf4e4;
+    right: 0;
+    position: relative;
+    margin: 1rem auto;
+    padding: 1rem;
+    border: 1px solid #e0a96d;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Ensures text and button are centered */
+    width: 100%; /* Full width on small screens */
+    max-width: 800px; /* Limits the width for larger screens */
+  }
+
+  .order-page .responsive-container {
+    margin: 20px;
   }
 
   .order-card-content {

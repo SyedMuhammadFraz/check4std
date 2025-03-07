@@ -6,16 +6,11 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "../../utils/AuthContext";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
 import { LocationContext } from "../../utils/LocationContext";
 import { webApiInstance } from "../../AxiosInstance";
 
 const OrderPage = () => {
   const { selectedLocation } = useContext(LocationContext);
-  const stripe = useStripe();
-  const elements = useElements();
   const { authToken } = useContext(AuthContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -28,24 +23,40 @@ const OrderPage = () => {
     navigate("/test-centers");
   };
 
-  const getData = async (name, setter) => {
+  const getData = async (name) => {
     try {
       const response = await webApiInstance.get(
         `/Disease/get-by-name/${encodeURIComponent(name)}`
       );
-      setter(response.data.result);
+      return response.data.result.id; // Return only the ID
     } catch (error) {
       console.error(`Error fetching data for ${name}:`, error);
+      return null; // Return null if there's an error
     }
   };
 
   useEffect(() => {
-    console.log(selectedTests);
-    getData(selectedTests[0].name, setDisease);
-  }, []);
+    const fetchAllDiseaseIds = async () => {
+      if (!selectedTests || selectedTests.length === 0) return;
+
+      try {
+        const diseaseIds = await Promise.all(
+          selectedTests.map((test) => getData(test.name))
+        );
+
+        // Filter out null values in case of errors
+        setDisease(diseaseIds.filter((id) => id !== null));
+      } catch (error) {
+        console.error("Error fetching disease IDs:", error);
+      }
+    };
+
+    fetchAllDiseaseIds();
+
+  }, [selectedTests]); // Dependency to re-run if selectedTests change
 
   useEffect(() => {
-    console.log(Disease);
+    console.log("Disease Array: " + Disease)
   }, [Disease]);
 
   const [formData, setFormData] = useState({
@@ -109,25 +120,6 @@ const OrderPage = () => {
       return newErrors;
     });
   };
-  const handleStripeSubmit = async (event) => {
-    event.preventDefault();
-    if (!stripe || !elements) return;
-
-    const cardElement = elements.getElement(CardElement);
-
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card: cardElement,
-    });
-
-    if (error) {
-      console.error("Payment error:", error.message);
-    } else {
-      console.log("Payment method created:", paymentMethod);
-      alert("Payment Method Created Successfully");
-    }
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -248,12 +240,13 @@ const OrderPage = () => {
     );
   }
 
-  const createCheckoutSession = async (disease, authToken) => {
+  const createCheckoutSession = async (diseases, authToken) => {
     try {
+      // Extract IDs from the diseases array
       const response = await webApiInstance.post(
         "/Payment/create-checkout-session",
         {
-          diseaseIdList: [disease.id],
+          diseaseIdList: diseases, // Send all IDs
         },
         {
           headers: {
@@ -262,13 +255,9 @@ const OrderPage = () => {
         }
       );
 
-      console.log("Checkout session created:", response.data);
-
       // Redirect to the checkout session in a new tab
       if (response.data.sessionUrl) {
         window.open(response.data.sessionUrl, "_blank");
-      } else {
-        console.error("No session URL received.");
       }
     } catch (error) {
       console.error("Error creating checkout session:", error);
@@ -276,7 +265,7 @@ const OrderPage = () => {
   };
 
   const handlePlaceOrder = () => {
-    console.log("Bearer Token: " + authToken);
+    console.log(authToken)
     if (Disease !== null) {
       createCheckoutSession(Disease, authToken);
     }
@@ -501,68 +490,6 @@ const OrderPage = () => {
 
             {errors.notificationMethod && (
               <span className="error">{errors.notificationMethod}</span>
-            )}
-          </section>
-
-          {/* Section 4: Enter Payment Information */}
-          <section>
-            <h2 className="blue-background">3. Enter Payment Information</h2>
-            <div>
-              <select
-                name="paymentMethod"
-                value={formData.paymentMethod}
-                onChange={handleChange}
-              >
-                <option value="">Choose Payment Method</option>
-                <option value="Credit Card">Credit Card</option>
-                <option value="PayPal">PayPal</option>
-              </select>
-            </div>
-            {formData.paymentMethod === "Credit Card" ? (
-              <form onSubmit={handleStripeSubmit}>
-                <CardElement options={{ hidePostalCode: true }} />
-                <button
-                  type="submit"
-                  disabled={!stripe}
-                  className="bg-blue-500 text-white p-2 rounded mt-4"
-                >
-                  Pay with Stripe
-                </button>
-              </form>
-            ) : (
-              <div>
-                <input
-                  type="text"
-                  name="creditCardNumber"
-                  placeholder="Credit Card Number"
-                  value={formData.creditCardNumber}
-                  onChange={handleChange}
-                />
-                <select
-                  name="cardExpirationMonth"
-                  value={formData.cardExpirationMonth}
-                  onChange={handleChange}
-                >
-                  <option value="">Month</option>
-                  {months.map((month, index) => (
-                    <option key={index} value={month}>
-                      {month}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  name="cardExpirationYear"
-                  value={formData.cardExpirationYear}
-                  onChange={handleChange}
-                >
-                  <option value="">Year</option>
-                  {years.map((year) => (
-                    <option key={year} value={year}>
-                      {year}
-                    </option>
-                  ))}
-                </select>
-              </div>
             )}
           </section>
 

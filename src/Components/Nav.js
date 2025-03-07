@@ -145,7 +145,7 @@ function Nav() {
           className={`nav__menu ${showMenu ? "show-menu" : ""}`}
           id="nav-menu"
         >
-          <ul className="nav__list">
+          <ul className="nav__list main__list">
             <li className="nav__item">
               <a onClick={onHomeClick} className="navbar-main-heading">
                 Home

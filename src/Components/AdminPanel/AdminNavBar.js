@@ -7,12 +7,17 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useContext, useState } from "react";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../utils/AuthContext";
+import '../Nav.css';
 
 function AdminNavBar() {
   const [showMenu, setShowMenu] = useState(false);
   const { authToken, logout } = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
+  };
 
   const confirmLogout = () => {
     logout();
@@ -22,7 +27,7 @@ function AdminNavBar() {
   };
 
   const closeMenuOnMobile = () => {
-    if (window.innerWidth <= 1150) {
+    if (window.innerWidth <= 1472) {
       setShowMenu(false);
     }
   };
@@ -73,28 +78,6 @@ function AdminNavBar() {
               </a>
             </li>
             <li className="nav__buttons">
-              {/* {!authToken ? (
-                                <>
-                                    <NavLink to="/login" className="button1" >
-                                        Sign In
-                                    </NavLink>
-                                    <NavLink to="/signup" className="button1 mx-3" >
-                                        Sign Up
-                                    </NavLink>
-                                </>
-                            ) : (
-                                <>
-                                    <NavLink to="/user-profile" className="button1" >
-                                        Profile
-                                    </NavLink>
-                                    <button
-                                        onClick={handleLogout}
-                                        className="button1 mx-3 logout-button"
-                                    >
-                                        Logout
-                                    </button>
-                                </>
-                            )} */}
               <button
                 onClick={handleLogout}
                 className="button1 mx-3 logout-button"
@@ -103,12 +86,12 @@ function AdminNavBar() {
               </button>
             </li>
           </ul>
-          <div className="nav__close" id="nav-close">
+          <div className="nav__close" id="nav-close"  onClick={toggleMenu}>
             <IoClose />
           </div>
         </div>
 
-        <div className="nav__toggle" id="nav-toggle">
+        <div className="nav__toggle" id="nav-toggle"  onClick={toggleMenu}>
           <IoMenu />
         </div>
       </nav>

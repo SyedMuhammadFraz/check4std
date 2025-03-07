@@ -1,7 +1,7 @@
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { webApiInstance } from "../../../AxiosInstance";
 import "./Testpanel.css";
-import '../MainPage.css'
+import "../MainPage.css";
 import GenericSection from "../GenericSection";
 import { useNavigate } from "react-router-dom";
 import { useLoader } from "../../../utils/LoaderContext";
@@ -27,14 +27,17 @@ function Testpanel() {
     if (checked1) {
       selectedTest = { name: TenTestPanel.name, price: TenTestPanel.price };
     } else if (checked2) {
-      selectedTest = { name: TenTestPanelEarlyRNA.name, price: TenTestPanelEarlyRNA.price };
+      selectedTest = {
+        name: TenTestPanelEarlyRNA.name,
+        price: TenTestPanelEarlyRNA.price,
+      };
     }
-  if (selectedTest) {
-    navigate("/order", { state: { selectedTests: [selectedTest] } });
-  } else {
-    alert("Please select a test before proceeding.");
-  }
-};
+    if (selectedTest) {
+      navigate("/order", { state: { selectedTests: [selectedTest] } });
+    } else {
+      alert("Please select a test before proceeding.");
+    }
+  };
 
   function toggleContent(id) {
     const content = document.getElementById(`content-${id}`);
@@ -43,33 +46,36 @@ function Testpanel() {
       .querySelectorAll(".content")
       .forEach((el) => (el.style.display = "none")); // Hide all contents
     content.style.display = isVisible ? "none" : "block"; // Toggle the clicked one
+  }
+
+  const [TenTestPanel, setTenTestPanel] = useState(null);
+  const [TenTestPanelEarlyRNA, setTenTestPanelEarlyRNA] = useState(null);
+
+  const getData = async (name, setter) => {
+    try {
+      const response = await webApiInstance.get(
+        `/Disease/get-by-name/${encodeURIComponent(name)}`
+      );
+      setter(response.data.result);
+    } catch (error) {
+      console.error(`Error fetching data for ${name}:`, error);
+    }
   };
 
-    const [TenTestPanel, setTenTestPanel] = useState(null);
-    const [TenTestPanelEarlyRNA, setTenTestPanelEarlyRNA] = useState(null);
-  
-    const getData = async (name, setter) => {
-      try {
-        const response = await webApiInstance.get(`/Disease/get-by-name/${encodeURIComponent(name)}`);
-        setter(response.data.result);
-      } catch (error) {
-        console.error(`Error fetching data for ${name}:`, error);
-      }
-    };
-  
-    useEffect(() => {
-      setLoading(true);
-      getData(
-        "10 Test Panel with HIV RNA Early Detection",
-        setTenTestPanelEarlyRNA
-      );
-      getData("10 Test Panel", setTenTestPanel);
-      setLoading(false);
-    }, []);
+  useEffect(() => {
+    setLoading(true);
+    getData(
+      "10 Test Panel with HIV RNA Early Detection",
+      setTenTestPanelEarlyRNA
+    );
+    getData("10 Test Panel", setTenTestPanel);
+  }, []);
 
-    useEffect(() => {
+  useEffect(() => {
+    if (TenTestPanel !== null) {
       setLoading(false);
-    }, [TenTestPanel]);
+    }
+  }, [TenTestPanel]);
 
   return (
     <section className="Testpanel">
@@ -123,7 +129,10 @@ function Testpanel() {
                 />
                 10 Test Panel
               </div>
-              <div className="card-price"> ${TenTestPanel !== null ? TenTestPanel.price : ""}</div>
+              <div className="card-price">
+                {" "}
+                ${TenTestPanel !== null ? TenTestPanel.price : ""}
+              </div>
             </div>
             <div className="card-radio" onClick={handleCheckbox2}>
               <div className="card-checkbox">
@@ -134,10 +143,18 @@ function Testpanel() {
                 />
                 10 Test Panel with HIV RNA Early Detection
               </div>
-              <div className="card-price"> ${TenTestPanelEarlyRNA !== null ? TenTestPanelEarlyRNA.price : ""}</div>
+              <div className="card-price">
+                {" "}
+                $
+                {TenTestPanelEarlyRNA !== null
+                  ? TenTestPanelEarlyRNA.price
+                  : ""}
+              </div>
             </div>
             <div className="card-button">
-              <button className="button3" onClick={handleGetTested}>Get Tested</button>
+              <button className="button3" onClick={handleGetTested}>
+                Get Tested
+              </button>
             </div>
           </div>
         </div>
@@ -860,7 +877,7 @@ function Testpanel() {
           </div>
         </div>
       </section>
-      <GenericSection/>
+      <GenericSection />
     </section>
   );
 }

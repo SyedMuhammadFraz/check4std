@@ -3,8 +3,11 @@ import "./10-test-panel/Testpanel.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { webApiInstance } from "../../AxiosInstance";
+import { useLoader } from "../../utils/LoaderContext";
 
 function GenericSection() {
+  const { setLoading } = useLoader();
+
   const navigate = useNavigate();
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
@@ -45,7 +48,9 @@ function GenericSection() {
 
   const getData = async (name, setter) => {
     try {
-      const response = await webApiInstance.get(`/Disease/get-by-name/${encodeURIComponent(name)}`);
+      const response = await webApiInstance.get(
+        `/Disease/get-by-name/${encodeURIComponent(name)}`
+      );
       setter(response.data.result);
     } catch (error) {
       console.error(`Error fetching data for ${name}:`, error);
@@ -53,12 +58,19 @@ function GenericSection() {
   };
 
   useEffect(() => {
+    setLoading(true);
     getData(
       "10 Test Panel with HIV RNA Early Detection",
       setTenTestPanelEarlyRNA
     );
     getData("10 Test Panel", setTenTestPanel);
   }, []);
+
+  useEffect(() => {
+    if (TenTestPanel !== null) {
+      setLoading(false);
+    }
+  }, [TenTestPanel]);
 
   useEffect(() => {
     console.log(TenTestPanel);
@@ -463,7 +475,10 @@ function GenericSection() {
                   />
                   10 Test Panel
                 </div>
-                <div className="card-price"> ${TenTestPanel !== null ? TenTestPanel.price : ""}</div>
+                <div className="card-price">
+                  {" "}
+                  ${TenTestPanel !== null ? TenTestPanel.price : ""}
+                </div>
               </div>
               <div className="card-radio" onClick={handleCheckbox2}>
                 <div className="card-checkbox">
@@ -474,7 +489,13 @@ function GenericSection() {
                   />
                   10 Test Panel with HIV RNA Early Detection
                 </div>
-                <div className="card-price"> ${TenTestPanelEarlyRNA !== null ? TenTestPanelEarlyRNA.price : ""}</div>
+                <div className="card-price">
+                  {" "}
+                  $
+                  {TenTestPanelEarlyRNA !== null
+                    ? TenTestPanelEarlyRNA.price
+                    : ""}
+                </div>
               </div>
               <div className="card-button">
                 <button className="button3" onClick={handleGetTested}>

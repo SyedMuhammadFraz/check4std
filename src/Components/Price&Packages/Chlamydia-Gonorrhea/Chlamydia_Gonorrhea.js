@@ -5,9 +5,11 @@ import "./Chlamydia_Gonorrhea.css";
 import "../Card.css";
 import "../10-test-panel/Testpanel.css";
 import { useNavigate } from "react-router-dom";
+import { useLoader } from "../../../utils/LoaderContext";
 
 function Chlamydia_Gonorrhea() {
   const navigate = useNavigate();
+  const { setLoading } = useLoader();
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
@@ -28,6 +30,7 @@ function Chlamydia_Gonorrhea() {
   };
 
   useEffect(() => {
+    setLoading(true);
     getData(
       "10 Test Panel with HIV RNA Early Detection",
       setTenTestPanelEarlyRNA
@@ -35,6 +38,12 @@ function Chlamydia_Gonorrhea() {
     getData("10 Test Panel", setTenTestPanel);
     getData("Chlamydia & Gonorrhea", setChlamydia_Gonorrhea);
   }, []);
+
+  useEffect(() => {
+    if (Chlamydia_Gonorrhea !== null) {
+      setLoading(false);
+    }
+  }, [Chlamydia_Gonorrhea]);
 
   const handleCheckbox1 = () => {
     setChecked1(!checked1);
@@ -63,9 +72,12 @@ function Chlamydia_Gonorrhea() {
   const handleGetTested = () => {
     let selectedTest = null;
     if (checked1) {
-      selectedTest = { name: Chlamydia_Gonorrhea.name, price: Chlamydia_Gonorrhea.price };
+      selectedTest = {
+        name: Chlamydia_Gonorrhea.name,
+        price: Chlamydia_Gonorrhea.price,
+      };
     } else if (checked2) {
-      selectedTest = { name: TenTestPanel.name, price:TenTestPanel.price };
+      selectedTest = { name: TenTestPanel.name, price: TenTestPanel.price };
     } else if (checked3) {
       selectedTest = {
         name: TenTestPanelEarlyRNA.name,
@@ -126,7 +138,10 @@ function Chlamydia_Gonorrhea() {
               />
               Chlamydia & Gonorrhea
             </div>
-            <div className="card-price"> ${Chlamydia_Gonorrhea !== null ? Chlamydia_Gonorrhea.price : ""}</div>
+            <div className="card-price">
+              {" "}
+              ${Chlamydia_Gonorrhea !== null ? Chlamydia_Gonorrhea.price : ""}
+            </div>
           </div>
           <div className="card-radio">
             <div className="card-checkbox" onClick={handleCheckbox2}>
@@ -137,7 +152,10 @@ function Chlamydia_Gonorrhea() {
               />
               10 Test Panel
             </div>
-            <div className="card-price"> ${TenTestPanel !== null ? TenTestPanel.price : ""}</div>
+            <div className="card-price">
+              {" "}
+              ${TenTestPanel !== null ? TenTestPanel.price : ""}
+            </div>
           </div>
           <div className="card-radio" onClick={handleCheckbox3}>
             <div className="card-checkbox">
@@ -148,7 +166,10 @@ function Chlamydia_Gonorrhea() {
               />
               10 Test Panel with HIV RNA Early Detection
             </div>
-            <div className="card-price"> ${TenTestPanelEarlyRNA !== null ? TenTestPanelEarlyRNA.price : ""}</div>
+            <div className="card-price">
+              {" "}
+              ${TenTestPanelEarlyRNA !== null ? TenTestPanelEarlyRNA.price : ""}
+            </div>
           </div>
           <div className="card-button">
             <button className="button3" onClick={handleGetTested}>

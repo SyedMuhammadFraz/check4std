@@ -207,6 +207,71 @@
   color: red;
   font-size: 12px;
 }
+
+.upgrade-card {
+  background-color: #fdf4e4; /* Light orange background */
+  border: 1px solid #e0a96d; /* Border similar to image */
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  max-width: 350px;
+  margin: 20px auto;
+}
+
+.upgrade-card h3 {
+  color: #d48806;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.upgrade-card .highlight {
+  color: #e67e22;
+  font-size: 1.4rem;
+}
+
+.test-list {
+  display: flex;
+  justify-content: space-between;
+  text-align: left;
+  margin-top: 10px;
+}
+
+.test-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.test-list li {
+  font-size: 0.9rem;
+  color: #333;
+  margin: 5px 0;
+}
+
+.upgrade-btn {
+  background-color: #ff8c00;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.upgrade-btn:hover {
+  background-color: #e67e22;
+}
+
+.price {
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+
 @media (max-width: 1600px) {
   .order-page .order-card {
     background: #ecf1e5;

@@ -11,9 +11,8 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { LocationContext } from "../../utils/LocationContext";
 
-
 const OrderPage = () => {
-  const { selectedLocation } = useContext(LocationContext); 
+  const { selectedLocation } = useContext(LocationContext);
   const stripe = useStripe();
   const elements = useElements();
   const { authToken } = useContext(AuthContext);
@@ -25,7 +24,7 @@ const OrderPage = () => {
 
   const onChangeLocation = () => {
     navigate("/test-centers");
-  }
+  };
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -129,7 +128,8 @@ const OrderPage = () => {
       formData.notificationMethod === "Text Me (SMS)" &&
       !/^\(\d{3}\) \d{3}-\d{4}$/.test(formData.phone)
     ) {
-      newErrors.phone = "Please enter a valid phone number (e.g., (xxx) xxx-xxxx).";
+      newErrors.phone =
+        "Please enter a valid phone number (e.g., (xxx) xxx-xxxx).";
     }
     if (!formData.dobMonth || !formData.dobDay || !formData.dobYear) {
       newErrors.dob = "Date of birth is required.";
@@ -147,7 +147,6 @@ const OrderPage = () => {
     toast.success("Order submitted successfully!");
     navigate("/#");
   };
-
 
   const months = [
     "January",
@@ -200,12 +199,12 @@ const OrderPage = () => {
     });
   }, [formData.dobMonth, formData.dobDay, formData.dobYear]);
 
-
   useEffect(() => {
+    console.log(selectedTests[0].name)
     const timer = setTimeout(() => {
       if (authToken === null) {
         navigate("/login");
-        toast.error("Login to place an order!")
+        toast.error("Login to place an order!");
       }
       setLoading(false);
     }, 1000); // Adjust delay as needed
@@ -213,9 +212,21 @@ const OrderPage = () => {
     return () => clearTimeout(timer);
   }, [authToken, navigate]);
 
+  const handleUpgrade = (price) => {
+    setTotalCost(totalCost + price);
+    toast.success("Upgrade added!");
+  };
+
   if (loading) {
     return (
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
         <ClipLoader size={50} color={"#36d7b7"} loading={loading} />
       </div>
     );
@@ -237,6 +248,40 @@ const OrderPage = () => {
           <button onClick={gotoPricePackages}>Add/Edit Tests</button>
         </div>
       </div>
+
+
+      {selectedTests[0].name !== "10 Test Panel" && (
+        <div className="upgrade-card">
+          <h3>Save by testing for common STDs</h3>
+          <p>
+            Upgrade to the <strong className="highlight">10 Test Panel</strong>
+          </p>
+
+          <hr />
+
+          <div className="test-list">
+            <ul>
+              <li>✔️ HIV Type 1</li>
+              <li>✔️ Hepatitis A</li>
+              <li>✔️ Gonorrhea</li>
+              <li>✔️ Herpes 2</li>
+              <li>✔️ Chlamydia</li>
+            </ul>
+            <ul>
+              <li>✔️ Herpes 1</li>
+              <li>✔️ Hepatitis C</li>
+              <li>✔️ HIV Type 2</li>
+              <li>✔️ Hepatitis B</li>
+              <li>✔️ Syphilis</li>
+            </ul>
+          </div>
+
+          <button className="upgrade-btn" onClick={() => handleUpgrade(25)}>
+            Upgrade Now <span className="price">+ $25.00</span>
+          </button>
+        </div>
+      )}
+
       <div className="container">
         <h1>Quick & Confidential STD Testing</h1>
 
@@ -248,7 +293,9 @@ const OrderPage = () => {
               <label className="order-labels">Your Selected Lab:</label>
               <p>{selectedLocation}</p>
               <p>4651 W Kennedy Blvd, Tampa, FL 33609</p>
-              <button type="button" onClick={onChangeLocation}>Change Location</button>
+              <button type="button" onClick={onChangeLocation}>
+                Change Location
+              </button>
             </div>
           </section>
 
@@ -403,7 +450,7 @@ const OrderPage = () => {
                 </label>
               </div>
             )} */}
-{/* 
+            {/* 
             {formData.notificationMethod === "Text Me (SMS)" && (
               <div>
                 <div>
@@ -501,7 +548,6 @@ const OrderPage = () => {
                 </select>
               </div>
             )}
-
           </section>
 
           <button type="submit">Place Your Order</button>

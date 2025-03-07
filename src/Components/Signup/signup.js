@@ -71,31 +71,6 @@ const SignUp = () => {
 
     return true;
   };
-
-  const userExistenceCheck = async (email, phoneNumber) => {
-    try {
-      const emailValidityResponse = await webApiInstance.get(
-        `/User/get-by-email`,
-        {
-          params: { email },
-        }
-      );
-      const phoneNumberValidityResponse = await webApiInstance.get(
-        `/User/get-by-phone-number`,
-        {
-          params: { email },
-        }
-      );
-      // if (userResponse.email) {
-      //   toast.error("User with this email already exists. Please login.");
-      //   return false;
-      // }
-      // return userResponse.data.result || null;
-    } catch (error) {
-      console.error("Error checking user existence:", error);
-      return null;
-    }
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 

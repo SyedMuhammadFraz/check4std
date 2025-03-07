@@ -110,7 +110,7 @@ const SignUp = () => {
             params: { phoneNumber: formData.phoneNumber },
           }),
         ]);
-
+        con
       let userExists = false;
 
       if (
@@ -251,6 +251,14 @@ const SignUp = () => {
               </span>
             </div>
           </div>
+          <h4 className="password-guidelines-heading">Password Guidelines</h4>
+          <ul className="password-guidelines">
+            <li>At least 8 characters</li>
+            <li>One uppercase letter (A-Z)</li>
+            <li>One lowercase letter (a-z)</li>
+            <li>One number (0-9)</li>
+            <li>One special character (!@#$%^&*)</li>
+          </ul>
           <button type="submit" className="signup-auth-button">
             Sign Up
           </button>

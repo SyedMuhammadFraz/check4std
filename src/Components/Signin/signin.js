@@ -66,6 +66,7 @@ const SignIn = () => {
       if (response.data.access_token) {
         const token = response.data.access_token;
         const decodedData = decodeJWT(token);
+        console.log(token);
         console.log(decodedData);
         const role1 = decodedData.role;
         console.log(role1);

@@ -58,9 +58,13 @@ function App() {
   return (
     <>
       <Elements stripe={stripePromise}>
-        <AuthProvider>
-          <LocationProvider>
-            <ToastContainer />
+        <LocationProvider>
+          <AuthProvider>
+            <ToastContainer
+              position="top-right" // Change to "top-center", "bottom-right", etc.
+              autoClose={3000}
+              style={{ marginTop: "40px" }} // Moves it lower
+            />
             <LoaderProvider>
               <Loader />
               <BrowserRouter>
@@ -174,7 +178,12 @@ function App() {
                       path="syphilis-test"
                       element={<Syphilis_Test />}
                     />
-                    <Route index path="order" element={<OrderPage />} />
+                    <Route
+                      path="order"
+                      element={<ProtectedRoute allowedRoles={["user"]} />}
+                    >
+                      <Route index element={<OrderPage />} />
+                    </Route>
                     <Route index path="signup" element={<SignUp />} />
                     <Route index path="login" element={<SignIn />} />
                     <Route index path="get-otp" element={<OTPPage />} />
@@ -207,8 +216,8 @@ function App() {
                 </Routes>
               </BrowserRouter>
             </LoaderProvider>
-          </LocationProvider>
-        </AuthProvider>
+          </AuthProvider>
+        </LocationProvider>
       </Elements>
     </>
     //AdminPass12@

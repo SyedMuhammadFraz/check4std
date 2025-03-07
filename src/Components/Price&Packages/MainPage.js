@@ -2,12 +2,14 @@ import React from "react";
 import "./MainPage.css";
 import "./Card.css";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { webApiInstance } from "../../AxiosInstance";
 import useGotoOrderPage from "./order-handle";
+import { AuthContext } from "../../utils/AuthContext";
 
 const MainPage = () => {
   const navigate = useNavigate();
+  const { authToken } = useContext(AuthContext);
   const gotoOrderPage = useGotoOrderPage();
   const [selectedTests, setSelectedTests] = useState([]);
   const [Chlamydia, setChlamydia] = useState(null);
@@ -25,7 +27,11 @@ const MainPage = () => {
   const getData = async (name, setter) => {
     try {
       const response = await webApiInstance.get(
-        `/Disease/get-by-name/${encodeURIComponent(name)}`
+        `/Disease/get-by-name/${encodeURIComponent(name)}`,{
+          headers: {
+            Authorization: `Bearer ${authToken}`, // Replace with actual token
+          },
+        }
       );
       setter(response.data.result);
     } catch (error) {

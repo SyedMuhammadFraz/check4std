@@ -10,22 +10,43 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { LocationContext } from "../../utils/LocationContext";
-
+import { webApiInstance } from "../../AxiosInstance";
 
 const OrderPage = () => {
-  const { selectedLocation } = useContext(LocationContext); 
+  const { selectedLocation } = useContext(LocationContext);
   const stripe = useStripe();
   const elements = useElements();
   const { authToken } = useContext(AuthContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
+  const [Disease, setDisease] = useState(null);
 
   const location = useLocation();
   const { selectedTests = [] } = location.state || {};
 
   const onChangeLocation = () => {
     navigate("/test-centers");
-  }
+  };
+
+  const getData = async (name, setter) => {
+    try {
+      const response = await webApiInstance.get(
+        `/Disease/get-by-name/${encodeURIComponent(name)}`
+      );
+      setter(response.data.result);
+    } catch (error) {
+      console.error(`Error fetching data for ${name}:`, error);
+    }
+  };
+
+  useEffect(() => {
+    console.log(selectedTests);
+    getData(selectedTests[0].name, setDisease);
+  }, []);
+
+  useEffect(() => {
+    console.log(Disease);
+  }, [Disease]);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -129,7 +150,8 @@ const OrderPage = () => {
       formData.notificationMethod === "Text Me (SMS)" &&
       !/^\(\d{3}\) \d{3}-\d{4}$/.test(formData.phone)
     ) {
-      newErrors.phone = "Please enter a valid phone number (e.g., (xxx) xxx-xxxx).";
+      newErrors.phone =
+        "Please enter a valid phone number (e.g., (xxx) xxx-xxxx).";
     }
     if (!formData.dobMonth || !formData.dobDay || !formData.dobYear) {
       newErrors.dob = "Date of birth is required.";
@@ -147,7 +169,6 @@ const OrderPage = () => {
     toast.success("Order submitted successfully!");
     navigate("/#");
   };
-
 
   const months = [
     "January",
@@ -200,12 +221,11 @@ const OrderPage = () => {
     });
   }, [formData.dobMonth, formData.dobDay, formData.dobYear]);
 
-
   useEffect(() => {
     const timer = setTimeout(() => {
       if (authToken === null) {
         navigate("/login");
-        toast.error("Login to place an order!")
+        toast.error("Login to place an order!");
       }
       setLoading(false);
     }, 1000); // Adjust delay as needed
@@ -215,11 +235,52 @@ const OrderPage = () => {
 
   if (loading) {
     return (
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
         <ClipLoader size={50} color={"#36d7b7"} loading={loading} />
       </div>
     );
   }
+
+  const createCheckoutSession = async (disease, authToken) => {
+    try {
+      const response = await webApiInstance.post(
+        "/Payment/create-checkout-session",
+        {
+          diseaseIdList: [disease.id],
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      console.log("Checkout session created:", response.data);
+
+      // Redirect to the checkout session in a new tab
+      if (response.data.sessionUrl) {
+        window.open(response.data.sessionUrl, "_blank");
+      } else {
+        console.error("No session URL received.");
+      }
+    } catch (error) {
+      console.error("Error creating checkout session:", error);
+    }
+  };
+
+  const handlePlaceOrder = () => {
+    console.log("Bearer Token: " + authToken);
+    if (Disease !== null) {
+      createCheckoutSession(Disease, authToken);
+    }
+  };
 
   return (
     <div className="order-page">
@@ -248,7 +309,9 @@ const OrderPage = () => {
               <label className="order-labels">Your Selected Lab:</label>
               <p>{selectedLocation}</p>
               <p>4651 W Kennedy Blvd, Tampa, FL 33609</p>
-              <button type="button" onClick={onChangeLocation}>Change Location</button>
+              <button type="button" onClick={onChangeLocation}>
+                Change Location
+              </button>
             </div>
           </section>
 
@@ -403,7 +466,7 @@ const OrderPage = () => {
                 </label>
               </div>
             )} */}
-{/* 
+            {/* 
             {formData.notificationMethod === "Text Me (SMS)" && (
               <div>
                 <div>
@@ -501,10 +564,11 @@ const OrderPage = () => {
                 </select>
               </div>
             )}
-
           </section>
 
-          <button type="submit">Place Your Order</button>
+          <button type="submit" onClick={handlePlaceOrder}>
+            Place Your Order
+          </button>
         </form>
       </div>
     </div>

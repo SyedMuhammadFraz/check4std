@@ -114,7 +114,7 @@ const Footer = () => {
           <h4>Contact Us</h4>
           <p>
             Need help? Have a question? Speak with a health specialist today.{" "}
-            <a href="tel:1-800-456-2323">Call 1-800-456-2323</a>
+            <a href="mailto:satellitehealth@check4std.com">satellitehealth@check4std.com</a>
           </p>
         </div>
       </div>

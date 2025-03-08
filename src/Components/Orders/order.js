@@ -40,7 +40,7 @@ const OrderPage = () => {
   };
 
   useEffect(() => {
-    console.log(tests)
+    console.log(tests);
     const fetchAllDiseaseIds = async () => {
       if (!tests || tests.length === 0) return;
 
@@ -229,7 +229,7 @@ const OrderPage = () => {
   }, [authToken, navigate]);
 
   const createCheckoutSession = async (diseases, authToken) => {
-    console.log("Checkout disease",diseases);
+    console.log("Checkout disease", diseases);
     try {
       // Extract IDs from the diseases array
       const response = await webApiInstance.post(
@@ -259,18 +259,31 @@ const OrderPage = () => {
       createCheckoutSession(Disease, authToken);
     }
   };
-  
-  const handleUpgrade = () => {
-    const tenTestPanelPrice = 150.00; // Set the fixed price for 10 Test Panel
 
-    if (totalCost < 140) {
-      setTests([{ name: "10 Test Panel", price: tenTestPanelPrice }]); // Replace with single test
-      setTotalCost(tenTestPanelPrice); // Set total cost to the new test price
+  const handleUpgrade = async () => {
+    try {
+      const response = webApiInstance.get(`/Disease/get-by-name/10 Test Panel`);
+
+      const data = await response;
+      const tenTestPanelPrice = data.data.result.price; // Extract price from API response
+
+      if (totalCost < 140) {
+        setTests([{ name: "10 Test Panel", price: tenTestPanelPrice }]); // Replace with single test
+        setTotalCost(tenTestPanelPrice); // Set total cost to the new test price
+      }
+    } catch (error) {
+      console.error("Error fetching test panel price:", error);
     }
   };
 
-  const handleHIVRNAUpgrade = () => {
-    const tenTestRNAPanelPrice = 270.00;
+  const handleHIVRNAUpgrade = async () => {
+    const response = webApiInstance.get(
+      `/Disease/get-by-name/10 Test Panel with HIV RNA Early Detection`
+    );
+
+    const data = await response;
+    const tenTestRNAPanelPrice = data.data.result.price;
+
     const hivRNAUpgrade = {
       name: "10 Test Panel with HIV RNA Early Detection",
       price: tenTestRNAPanelPrice,

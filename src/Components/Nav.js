@@ -403,7 +403,7 @@ function Nav() {
                   >
                     Logout
                   </button>
-                  <NavLink to="/admin-panel" className="button1 mx-3" onClick={closeMenuOnMobile}>
+                  <NavLink to="/admin-panel" className="button1" onClick={closeMenuOnMobile}>
                     Go to Admin Panel
                   </NavLink>
                 </>

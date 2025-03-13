@@ -223,8 +223,12 @@ nav ul li a {
   display: block;
 }
 
+.container{
+  max-width: 1800px;
+}
+
 /* Responsive Dropdown Behavior for Mobile */
-@media screen and (max-width: 1472px) {
+@media screen and (max-width: 1772px) {
   .dropdown-container {
     display: none;
   }
@@ -260,7 +264,7 @@ nav ul li a {
     margin-bottom: 5vh;
   }
 
-  .navbar-main-heading{
+  .navbar-main-heading {
     font-size: 20px;
     font-weight: bold;
   }
@@ -270,7 +274,7 @@ nav ul li a {
   }
 }
 
-@media screen and (max-width: 1473px) {
+@media screen and (max-width: 1773px) {
   .nav__menu {
     position: fixed;
     top: 0;
@@ -304,9 +308,10 @@ nav ul li a {
     width: 100vw;
     height: 100vh;
   }
+
 }
 
-@media screen and (min-width: 1473px) {
+@media screen and (min-width: 1773px) {
   .nav {
     height: calc(var(--header-height) + 1rem);
   }
@@ -321,7 +326,6 @@ nav ul li a {
     column-gap: 2.5rem;
   }
 }
-
 
 .logout-button {
   background-color: #ff0000;

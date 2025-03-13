@@ -50,6 +50,10 @@ import ForgotPassword from "./Components/Signin/ForgotPassword";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import Loader from "./Loader/Loader";
 import { LoaderProvider } from "./utils/LoaderContext";
+import PaymentFailure from "./utils/PaymentFailure";
+import PaymentSuccess from "./utils/PaymentSuccess";
+import RedirectHandler from "./utils/RedirectHandler";
+import Unauthorized from "./Modals/Unauthorized";
 
 function App() {
   const stripePromise = loadStripe(
@@ -68,6 +72,7 @@ function App() {
             <LoaderProvider>
               <Loader />
               <BrowserRouter>
+                <RedirectHandler />
                 <Routes>
                   <Route element={<LandingPage />}>
                     {/* <Route index path="diseases" element={<Diseases />} /> */}
@@ -190,6 +195,11 @@ function App() {
                     <Route index path="test-centers" element={<MapPage />} />
                     <Route
                       index
+                      path="unauthorized"
+                      element={<Unauthorized />}
+                    />
+                    <Route
+                      index
                       path="user-profile"
                       element={<ProfilePage />}
                     />
@@ -199,6 +209,14 @@ function App() {
                       element={<ForgotPassword />}
                     />
                     <Route index path="/" element={<Home />} />
+                    <Route
+                      path="/payment-success"
+                      element={<PaymentSuccess />}
+                    />
+                    <Route
+                      path="/payment-failed"
+                      element={<PaymentFailure />}
+                    />
                   </Route>
                   {/* Protected Admin Routes */}
                   <Route

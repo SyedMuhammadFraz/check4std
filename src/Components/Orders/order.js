@@ -10,6 +10,10 @@ import { LocationContext } from "../../utils/LocationContext";
 import { webApiInstance } from "../../AxiosInstance";
 
 const OrderPage = () => {
+  const [testPrices, setTestPrices] = useState({
+    tenTestPanel: null,
+    tenTestPanelHIVRNA: null,
+  });
   const { selectedLocation } = useContext(LocationContext);
   const { authToken } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -158,9 +162,6 @@ const OrderPage = () => {
       toast.error("Please fix the errors before submitting.");
       return;
     }
-
-    // Proceed if no errors
-    toast.success("Order submitted successfully!");
     navigate("/#");
   };
 
@@ -216,7 +217,7 @@ const OrderPage = () => {
   }, [formData.dobMonth, formData.dobDay, formData.dobYear]);
 
   useEffect(() => {
-    console.log(selectedTests[0].name);
+    
     const timer = setTimeout(() => {
       if (authToken === null) {
         navigate("/login");
@@ -256,41 +257,45 @@ const OrderPage = () => {
   const handlePlaceOrder = () => {
     console.log(authToken);
     if (Disease !== null) {
+      toast.success("Redirecting to Payment Checkout Page");
       createCheckoutSession(Disease, authToken);
     }
   };
 
-  const handleUpgrade = async () => {
-    try {
-      const response = webApiInstance.get(`/Disease/get-by-name/10 Test Panel`);
+  useEffect(() => {
+    const fetchPrices = async () => {
+      try {
+        const [panelResponse, hivRNAResponse] = await Promise.all([
+          webApiInstance.get(`/Disease/get-by-name/10 Test Panel`),
+          webApiInstance.get(`/Disease/get-by-name/10 Test Panel with HIV RNA Early Detection`),
+        ]);
 
-      const data = await response;
-      const tenTestPanelPrice = data.data.result.price; // Extract price from API response
-
-      if (totalCost < 140) {
-        setTests([{ name: "10 Test Panel", price: tenTestPanelPrice }]); // Replace with single test
-        setTotalCost(tenTestPanelPrice); // Set total cost to the new test price
+        setTestPrices({
+          tenTestPanel: panelResponse.data.result.price,
+          tenTestPanelHIVRNA: hivRNAResponse.data.result.price,
+        });
+      } catch (error) {
+        console.error("Error fetching test prices:", error);
       }
-    } catch (error) {
-      console.error("Error fetching test panel price:", error);
+    };
+
+    fetchPrices();
+  }, []);
+
+  // Handle Upgrade for 10 Test Panel
+  const handleUpgrade = () => {
+    if (testPrices.tenTestPanel && totalCost < testPrices.tenTestPanel) {
+      setTests([{ name: "10 Test Panel", price: testPrices.tenTestPanel }]);
+      setTotalCost(testPrices.tenTestPanel);
     }
   };
 
-  const handleHIVRNAUpgrade = async () => {
-    const response = webApiInstance.get(
-      `/Disease/get-by-name/10 Test Panel with HIV RNA Early Detection`
-    );
-
-    const data = await response;
-    const tenTestRNAPanelPrice = data.data.result.price;
-
-    const hivRNAUpgrade = {
-      name: "10 Test Panel with HIV RNA Early Detection",
-      price: tenTestRNAPanelPrice,
-    };
-
-    setTests([hivRNAUpgrade]); // Add new test to existing list
-    setTotalCost(tenTestRNAPanelPrice); // Update total cost
+  // Handle Upgrade for 10 Test Panel with HIV RNA
+  const handleHIVRNAUpgrade = () => {
+    if (testPrices.tenTestPanelHIVRNA) {
+      setTests([{ name: "10 Test Panel with HIV RNA Early Detection", price: testPrices.tenTestPanelHIVRNA }]);
+      setTotalCost(testPrices.tenTestPanelHIVRNA);
+    }
   };
 
   if (loading) {
@@ -365,7 +370,7 @@ const OrderPage = () => {
               <button className="upgrade-btn" onClick={handleUpgrade}>
                 Upgrade Now{" "}
                 <span className="price">
-                  + ${Math.max(0, 150.0 - totalCost).toFixed(2)}
+                  + ${Math.max(0, testPrices.tenTestPanel - totalCost).toFixed(2)}
                 </span>
               </button>
             </div>
@@ -385,7 +390,7 @@ const OrderPage = () => {
             <button className="upgrade-btn" onClick={handleHIVRNAUpgrade}>
               Upgrade
               <span className="price">
-                + ${Math.max(0, 270.0 - totalCost).toFixed(2)}
+                + ${Math.max(0, testPrices.tenTestPanelHIVRNA - totalCost).toFixed(2)}
               </span>
             </button>
           </div>

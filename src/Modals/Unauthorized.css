@@ -1,0 +1,45 @@
+/* UnauthorizedRedirect.css */
+
+.unauthorized-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f4f6;
+  }
+  
+  .unauthorized-box {
+    background: white;
+    padding: 24px;
+    border-radius: 16px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .unauthorized-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ef4444;
+  }
+  
+  .unauthorized-text {
+    margin-top: 8px;
+    color: #4b5563;
+  }
+  
+  .unauthorized-button {
+    margin-top: 16px;
+    padding: 8px 16px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .unauthorized-button:hover {
+    background-color: #2563eb;
+  }
+  

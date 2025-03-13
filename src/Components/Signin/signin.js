@@ -176,7 +176,7 @@ const SignIn = () => {
           >
             Go to Profile
           </button>
-          <button className="signin-auth-button" onClick={handleLogout}>
+          <button className="signin-logout-button" onClick={handleLogout}>
             Logout
           </button>
         </div>

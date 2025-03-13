@@ -388,6 +388,9 @@ function Nav() {
                   <NavLink to="/signup" className="button1 mx-3" onClick={closeMenuOnMobile}>
                     Sign Up
                   </NavLink>
+                  {/* <NavLink to="/admin-panel" className="button1 mx-3" onClick={closeMenuOnMobile}>
+                    Go to Admin Panel
+                  </NavLink> */}
                 </>
               ) : (
                 <>
@@ -400,6 +403,9 @@ function Nav() {
                   >
                     Logout
                   </button>
+                  <NavLink to="/admin-panel" className="button1 mx-3" onClick={closeMenuOnMobile}>
+                    Go to Admin Panel
+                  </NavLink>
                 </>
               )}
             </li>

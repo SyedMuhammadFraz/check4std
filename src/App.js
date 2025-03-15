@@ -54,6 +54,7 @@ import PaymentFailure from "./utils/PaymentFailure";
 import PaymentSuccess from "./utils/PaymentSuccess";
 import RedirectHandler from "./utils/RedirectHandler";
 import Unauthorized from "./Modals/Unauthorized";
+import DoctorConsultation from "./Components/How it Works/Doctor Consultation/DoctorConsultation";
 
 function App() {
   const stripePromise = loadStripe(
@@ -193,6 +194,7 @@ function App() {
                     <Route index path="login" element={<SignIn />} />
                     <Route index path="get-otp" element={<OTPPage />} />
                     <Route index path="test-centers" element={<MapPage />} />
+                    <Route index path="doctor-consultation" element={<DoctorConsultation />} />
                     <Route
                       index
                       path="unauthorized"

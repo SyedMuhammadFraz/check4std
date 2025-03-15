@@ -97,6 +97,11 @@ function Nav() {
     navigate("/test-centers");
   };
 
+  const onDoctorConsultaionClick = () => {
+    closeMenuOnMobile();
+    navigate("/doctor-consultation");
+  };
+
   const onTenTestPanelClick = () => {
     closeMenuOnMobile();
     navigate("/ten-test-panel");
@@ -191,7 +196,7 @@ function Nav() {
                   <a href="#">Sample STD Test Results</a>
                 </li>
                 <li>
-                  <a href="#">Doctor Consultation</a>
+                  <a onClick={onDoctorConsultaionClick}>Doctor Consultation</a>
                 </li>
                 <li>
                   <a href="#">Patient Testimonials</a>
@@ -382,10 +387,18 @@ function Nav() {
             <li className="nav__buttons">
               {!authToken ? (
                 <>
-                  <NavLink to="/login" className="button1" onClick={closeMenuOnMobile}>
+                  <NavLink
+                    to="/login"
+                    className="button1"
+                    onClick={closeMenuOnMobile}
+                  >
                     Sign In
                   </NavLink>
-                  <NavLink to="/signup" className="button1 mx-3" onClick={closeMenuOnMobile}>
+                  <NavLink
+                    to="/signup"
+                    className="button1 mx-3"
+                    onClick={closeMenuOnMobile}
+                  >
                     Sign Up
                   </NavLink>
                   {/* <NavLink to="/admin-panel" className="button1 mx-3" onClick={closeMenuOnMobile}>
@@ -394,7 +407,11 @@ function Nav() {
                 </>
               ) : (
                 <>
-                  <NavLink to="/user-profile" className="button1" onClick={closeMenuOnMobile}>
+                  <NavLink
+                    to="/user-profile"
+                    className="button1"
+                    onClick={closeMenuOnMobile}
+                  >
                     Profile
                   </NavLink>
                   <button
@@ -403,7 +420,11 @@ function Nav() {
                   >
                     Logout
                   </button>
-                  <NavLink to="/admin-panel" className="button1" onClick={closeMenuOnMobile}>
+                  <NavLink
+                    to="/admin-panel"
+                    className="button1"
+                    onClick={closeMenuOnMobile}
+                  >
                     Go to Admin Panel
                   </NavLink>
                 </>

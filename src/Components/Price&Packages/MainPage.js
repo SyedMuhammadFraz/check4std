@@ -6,9 +6,11 @@ import { useState, useEffect, useContext } from "react";
 import { webApiInstance } from "../../AxiosInstance";
 import useGotoOrderPage from "./order-handle";
 import { AuthContext } from "../../utils/AuthContext";
+import { useLoader } from "../../utils/LoaderContext";
 
 const MainPage = () => {
   const navigate = useNavigate();
+  const { setLoading } = useLoader();
   const { authToken } = useContext(AuthContext);
   const gotoOrderPage = useGotoOrderPage();
   const [selectedTests, setSelectedTests] = useState([]);
@@ -24,10 +26,13 @@ const MainPage = () => {
   const [HIV1_24thGen, setHIV1_24thGen] = useState(null);
   const [Herpes1, setHerpes1] = useState(null);
   const [Herpes2, setHerpes2] = useState(null);
+
+  
   const getData = async (name, setter) => {
     try {
       const response = await webApiInstance.get(
-        `/Disease/get-by-name/${encodeURIComponent(name)}`,{
+        `/Disease/get-by-name/${encodeURIComponent(name)}`,
+        {
           headers: {
             Authorization: `Bearer ${authToken}`, // Replace with actual token
           },
@@ -40,23 +45,47 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    getData(
-      "10 Test Panel with HIV RNA Early Detection",
-      setTenTestPanelEarlyRNA
-    );
-    getData("10 Test Panel", setTenTestPanel);
-    getData("Chlamydia", setChlamydia);
-    getData("Gonorrhea", setGonnorhea);
-    getData("Hepatitis A", setHepA);
-    getData("Hepatitis B", setHepB);
-    getData("Hepatitis C", setHepC);
-    getData("Chlamydia & Gonorrhea", setChlamydia_Gonorrhea);
-    getData("HIV 1 & 2 Antibody (4th Gen)", setHIV1_24thGen);
-    getData("Herpes I", setHerpes1);
-    getData("Herpes II", setHerpes2);
-    getData("Syphilis", setSyphilis);
+    setLoading(true);
 
-  }, []);
+    const testNames = [
+      {
+        name: "10 Test Panel with HIV RNA Early Detection",
+        setter: setTenTestPanelEarlyRNA,
+      },
+      { name: "10 Test Panel", setter: setTenTestPanel },
+      { name: "Chlamydia", setter: setChlamydia },
+      { name: "Gonorrhea", setter: setGonnorhea },
+      { name: "Hepatitis A", setter: setHepA },
+      { name: "Hepatitis B", setter: setHepB },
+      { name: "Hepatitis C", setter: setHepC },
+      { name: "Chlamydia & Gonorrhea", setter: setChlamydia_Gonorrhea },
+      { name: "HIV 1 & 2 Antibody (4th Gen)", setter: setHIV1_24thGen },
+      { name: "Herpes I", setter: setHerpes1 },
+      { name: "Herpes II", setter: setHerpes2 },
+      { name: "Syphilis", setter: setSyphilis },
+    ];
+
+    const fetchData = async () => {
+      try {
+        await Promise.all(
+          testNames.map(({ name, setter }) => getData(name, setter))
+        );
+      } catch (error) {
+        console.error("Error fetching test data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []); // ✅ Include dependencies to resolve the warning
+
+  // Ensure loading is set to false only when selectedTests is set
+  useEffect(() => {
+    if (Syphilis !== null) {
+      setLoading(false);
+    }
+  }, [Syphilis]);
 
   const handleCheckboxChange = (testName, price) => {
     setSelectedTests((prev) => {
@@ -431,12 +460,17 @@ const MainPage = () => {
             <div className="cards">
               <div className="card">
                 <div className="card-header">10 Test Panel</div>
-                <div className="card-price"> ${TenTestPanel !== null ? TenTestPanel.price : ""}</div>
+                <div className="card-price">
+                  {" "}
+                  ${TenTestPanel !== null ? TenTestPanel.price : ""}
+                </div>
                 <div className="card-button">
                   <button
                     className="button3"
                     onClick={() =>
-                      gotoOrderPage([{ name: TenTestPanel.name, price: TenTestPanel.price }])
+                      gotoOrderPage([
+                        { name: TenTestPanel.name, price: TenTestPanel.price },
+                      ])
                     }
                   >
                     Get Tested
@@ -448,7 +482,13 @@ const MainPage = () => {
                 <div className="card-header italic">
                   with HIV RNA Early Detection
                 </div>
-                <div className="card-price"> ${TenTestPanelEarlyRNA !== null ? TenTestPanelEarlyRNA.price : ""}</div>
+                <div className="card-price">
+                  {" "}
+                  $
+                  {TenTestPanelEarlyRNA !== null
+                    ? TenTestPanelEarlyRNA.price
+                    : ""}
+                </div>
                 <div className="card-button">
                   <button
                     className="button3"
@@ -484,10 +524,14 @@ const MainPage = () => {
             <label className="Dform">
               <input
                 type="checkbox"
-                onChange={() => handleCheckboxChange(Chlamydia.name, Chlamydia.price)}
+                onChange={() =>
+                  handleCheckboxChange(Chlamydia.name, Chlamydia.price)
+                }
               />
               <p>Chlamydia</p>
-              <div className="check-price">${Chlamydia !== null ? Chlamydia.price : ""}</div>
+              <div className="check-price">
+                ${Chlamydia !== null ? Chlamydia.price : ""}
+              </div>
             </label>
             <label className="Dform">
               <input
@@ -495,7 +539,9 @@ const MainPage = () => {
                 onChange={() => handleCheckboxChange(HepC.name, HepC.price)}
               />
               <p>Hepatitis C</p>
-              <div className="check-price">${HepC !== null ? HepC.price : ""}</div>
+              <div className="check-price">
+                ${HepC !== null ? HepC.price : ""}
+              </div>
             </label>
           </div>
           <div className="check">
@@ -503,37 +549,54 @@ const MainPage = () => {
               <input
                 type="checkbox"
                 onChange={() =>
-                  handleCheckboxChange(Chlamydia_Gonorrhea.name, Chlamydia_Gonorrhea.price)
+                  handleCheckboxChange(
+                    Chlamydia_Gonorrhea.name,
+                    Chlamydia_Gonorrhea.price
+                  )
                 }
               />
               <p>Chlamydia & Gonorrhea</p>
-              <div className="check-price">${Chlamydia_Gonorrhea !== null ? Chlamydia_Gonorrhea.price : ""}</div>
+              <div className="check-price">
+                ${Chlamydia_Gonorrhea !== null ? Chlamydia_Gonorrhea.price : ""}
+              </div>
             </label>
             <label className="Dform">
               <input
                 type="checkbox"
-                onChange={() => handleCheckboxChange(Herpes1.name, Herpes1.price)}
+                onChange={() =>
+                  handleCheckboxChange(Herpes1.name, Herpes1.price)
+                }
               />
               <p>Herpes I</p>
-              <div className="check-price">${Herpes1 !== null ? Herpes1.price : ""}</div>
+              <div className="check-price">
+                ${Herpes1 !== null ? Herpes1.price : ""}
+              </div>
             </label>
           </div>
           <div className="check">
             <label className="Dform">
               <input
                 type="checkbox"
-                onChange={() => handleCheckboxChange(Gonnorhea.name, Gonnorhea.price)}
+                onChange={() =>
+                  handleCheckboxChange(Gonnorhea.name, Gonnorhea.price)
+                }
               />
               <p>Gonorrhea</p>
-              <div className="check-price">${Gonnorhea !== null ? Gonnorhea.price : ""}</div>
+              <div className="check-price">
+                ${Gonnorhea !== null ? Gonnorhea.price : ""}
+              </div>
             </label>
             <label className="Dform">
               <input
                 type="checkbox"
-                onChange={() => handleCheckboxChange(Herpes2.name, Herpes2.price)}
+                onChange={() =>
+                  handleCheckboxChange(Herpes2.name, Herpes2.price)
+                }
               />
               <p>Herpes II</p>
-              <div className="check-price">${Herpes2 !== null ? Herpes2.price : ""}</div>
+              <div className="check-price">
+                ${Herpes2 !== null ? Herpes2.price : ""}
+              </div>
             </label>
           </div>
           <div className="check">
@@ -543,7 +606,9 @@ const MainPage = () => {
                 onChange={() => handleCheckboxChange(HepA.name, HepA.price)}
               />
               <p>Hepatitis A</p>
-              <div className="check-price">${HepA !== null ? HepA.price : ""}</div>
+              <div className="check-price">
+                ${HepA !== null ? HepA.price : ""}
+              </div>
             </label>
             <label className="Dform">
               <input
@@ -553,7 +618,9 @@ const MainPage = () => {
                 }
               />
               <p>HIV 1 & 2 Antibody (4th Gen)</p>
-              <div className="check-price">${HIV1_24thGen !== null ? HIV1_24thGen.price : ""}</div>
+              <div className="check-price">
+                ${HIV1_24thGen !== null ? HIV1_24thGen.price : ""}
+              </div>
             </label>
           </div>
           <div className="check">
@@ -563,15 +630,21 @@ const MainPage = () => {
                 onChange={() => handleCheckboxChange(HepB.name, HepB.price)}
               />
               <p>Hepatitis B</p>
-              <div className="check-price">${HepB !== null ? HepB.price : ""}</div>
+              <div className="check-price">
+                ${HepB !== null ? HepB.price : ""}
+              </div>
             </label>
             <label className="Dform">
               <input
                 type="checkbox"
-                onChange={() => handleCheckboxChange(Syphilis.name, Syphilis.price)}
+                onChange={() =>
+                  handleCheckboxChange(Syphilis.name, Syphilis.price)
+                }
               />
               <p>Syphilis</p>
-              <div className="check-price">${Syphilis !== null ? Syphilis.price : ""}</div>
+              <div className="check-price">
+                ${Syphilis !== null ? Syphilis.price : ""}
+              </div>
             </label>
           </div>
         </div>

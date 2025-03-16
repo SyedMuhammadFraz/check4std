@@ -7,6 +7,7 @@ import "./signup.css";
 import { authServerInstance, webApiInstance } from "../../AxiosInstance";
 import { useAuth } from "../../utils/AuthContext";
 import ClipLoader from "react-spinners/ClipLoader";
+import { userRegisterInstance } from "../../AxiosInstance";
 
 const SignUp = () => {
   const { setPendingUser } = useAuth();
@@ -16,6 +17,7 @@ const SignUp = () => {
     phoneNumber: "",
     password: "",
     confirmPassword: "",
+    roleId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     dob: "",
   });
 
@@ -75,6 +77,7 @@ const SignUp = () => {
     e.preventDefault();
 
     if (!validateForm()) return;
+
     try {
       const [emailValidityResponse, phoneNumberValidityResponse] =
         await Promise.allSettled([
@@ -85,7 +88,9 @@ const SignUp = () => {
             params: { phoneNumber: formData.phoneNumber },
           }),
         ]);
+
       let userExists = false;
+
       if (
         emailValidityResponse.status === "fulfilled" &&
         emailValidityResponse.value.status === 200
@@ -106,10 +111,22 @@ const SignUp = () => {
 
       if (userExists) return;
 
-      // If neither exists, proceed to OTP verification
-      setPendingUser(formData);
-      navigate("/get-otp");
-      toast.success('Click on "Send OTP" to verify your email or phone number');
+      // If user doesn't exist, proceed to register
+      // setPendingUser(formData);
+
+      const response = await userRegisterInstance.post(
+        "/UserRegistration",
+        formData
+      ); // Calls user registration API
+      console.log(response);
+      // if (response.success) {
+      //   navigate("/get-otp"); // Navigate to OTP verification page
+      //   toast.success(
+      //     'Click on "Send OTP" to verify your email or phone number'
+      //   );
+      // } else {
+      //   toast.error(response.message);
+      // }
     } catch (error) {
       console.error("Error checking user existence:", error);
       toast.error("An error occurred. Please try again later.");

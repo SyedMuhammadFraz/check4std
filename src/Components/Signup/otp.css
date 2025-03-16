@@ -64,12 +64,32 @@
   background-color: #ffffff;
 }
 
+
+
 .otp-page__form-input:focus {
   background-color: #edeeee;
 }
 
 .otp-page__form-verify-button {
   margin-top: 15px;
+}
+
+.otp-page__button--resend{
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.otp-page__button--resend:disabled{
+  background-color: #6cb1fc;
+}
+
+.otp-page__button--resend:hover {
+  background-color: #0056b3;
 }
 
 .otp-page__message {

@@ -1,128 +1,157 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import ClipLoader from "react-spinners/ClipLoader"; // Import ClipLoader
+import ClipLoader from "react-spinners/ClipLoader";
 import "./otp.css";
 import { useAuth } from "../../utils/AuthContext";
 
 const OTPPage = () => {
   const { userRegister } = useAuth();
-  const [otp, setOtp] = useState("");
-  const [timer, setTimer] = useState(120); // 2 minutes in seconds
-  const [isOtpSent, setIsOtpSent] = useState(false);
-  const [isOtpVerified, setIsOtpVerified] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // Sending OTP
-  const [isVerifying, setIsVerifying] = useState(false); // Verifying OTP
   const navigate = useNavigate();
 
+  const [otp, setOtp] = useState("");
+  const [attemptsLeft, setAttemptsLeft] = useState(3);
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [timer, setTimer] = useState(getStoredTimer());
+  const [canResend, setCanResend] = useState(timer <= 0);
+
   useEffect(() => {
-    let countdown;
-    if (timer > 0 && isOtpSent) {
-      countdown = setInterval(() => {
-        setTimer((prev) => prev - 1);
+    if (timer > 0) {
+      const countdown = setInterval(() => {
+        setTimer((prev) => {
+          const newTime = prev - 1;
+          localStorage.setItem("otpTimer", newTime);
+          return newTime;
+        });
       }, 1000);
-    } else if (timer === 0) {
-      clearInterval(countdown);
+      return () => clearInterval(countdown);
+    } else {
+      setCanResend(true);
     }
+  }, [timer]);
 
-    return () => clearInterval(countdown); // Cleanup interval on component unmount
-  }, [timer, isOtpSent]);
+  useEffect(() => {
+    console.log("User: ", userRegister);
+  }, []);
 
-  const handleSendOtp = async () => {
-    setIsLoading(true); // Start loading
+  function getStoredTimer() {
+    const storedTimestamp = localStorage.getItem("otpTimestamp");
+    if (storedTimestamp) {
+      const elapsed = Math.floor(
+        (Date.now() - parseInt(storedTimestamp)) / 1000
+      );
+      return Math.max(300 - elapsed, 0);
+    }
+    return 300;
+  }
+
+  const sendOtp = async () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate API call
-      setIsOtpSent(true);
-      setTimer(120); // Reset timer
       toast.success("OTP sent successfully!");
       console.log("OTP sent to user");
+
+      const newTimestamp = Date.now();
+      localStorage.setItem("otpTimestamp", newTimestamp);
+      localStorage.setItem("otpTimer", 300);
+      setTimer(300);
+      setCanResend(false);
     } catch (error) {
       toast.error("Failed to send OTP. Please try again.");
-    } finally {
-      setIsLoading(false); // Stop loading
     }
+  };
+
+  const verifyOtpAPI = async (otp) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({ success: otp === "123456" });
+      }, 2000);
+    });
   };
 
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
-    setIsVerifying(true); // Start loading
+    if (otp.length !== 6) {
+      toast.error("OTP must be 6 digits.");
+      return;
+    }
+
+    setIsVerifying(true);
     try {
-      // await new Promise((resolve) => setTimeout(resolve, 4000)); // Simulate API call
-      if (otp === "123456") {
-        try {
-          const response = await userRegister(); // Wait for user registration
-          console.log(response);
-          if (response.success === true) {
-            // Check if registration was successful
-            setIsOtpVerified(true);
-            toast.success("OTP verified successfully!");
-            toast.success("User Registered successfully!");
-            navigate("/"); // Navigate only if successful
-          } else {
-            toast.error("Registration failed. Please try again.");
-          }
-        } catch (error) {
-          toast.error("Something went wrong. Please try again.");
+      const response = await verifyOtpAPI(otp);
+      if (response.success) {
+        const registerResponse = await userRegister();
+        if (registerResponse.success) {
+          toast.success("OTP verified & User Registered!");
+          localStorage.removeItem("otpTimestamp"); // Clear OTP timestamp on success
+          navigate("/");
+        } else {
+          toast.error("Registration failed. Try again.");
+        }
+      } else {
+        setAttemptsLeft((prev) => prev - 1);
+        toast.error(`Invalid OTP. ${attemptsLeft - 1} attempts left.`);
+        if (attemptsLeft - 1 === 0) {
+          toast.error("Maximum attempts reached. Please request a new OTP.");
         }
       }
     } catch (error) {
-      toast.error("Error verifying OTP. Please try again.");
+      toast.error("Error verifying OTP. Try again.");
     } finally {
-      setIsVerifying(false); // Stop loading
+      setIsVerifying(false);
     }
   };
 
   return (
     <div className="otp-page__container">
       <h2 className="otp-page__title">Enter OTP</h2>
+      <p>
+        An OTP has been sent to your email. If you dont find it in your inbox,
+        please check the spam folder.
+      </p>
+      <div className="otp-page__timer">
+        {timer > 0 ? (
+          <p>
+            Resend in: {Math.floor(timer / 60)}:
+            {String(timer % 60).padStart(2, "0")}
+          </p>
+        ) : (
+          <p>You can request a new OTP</p>
+        )}
+      </div>
 
-      {isOtpSent ? (
-        <div className="otp-page__timer">
-          {timer > 0 ? (
-            <p>
-              Time Remaining: {Math.floor(timer / 60)}:{timer % 60}
-            </p>
-          ) : (
-            <p>OTP Expired</p>
-          )}
-        </div>
-      ) : (
+      <form onSubmit={handleVerifyOtp} className="otp-page__form">
+        <input
+          type="text"
+          value={otp}
+          onChange={(e) => setOtp(e.target.value)}
+          maxLength="6"
+          required
+          className="otp-page__form-input"
+          disabled={isVerifying}
+          placeholder="Enter 6-digit OTP"
+        />
         <button
-          onClick={handleSendOtp}
-          className="otp-page__button--send"
-          disabled={isLoading}
+          type="submit"
+          className="otp-page__button--verify"
+          disabled={isVerifying || otp.length !== 6 || attemptsLeft === 0}
         >
-          {isLoading ? <ClipLoader size={18} color="#fff" /> : "Send OTP"}
+          {isVerifying ? <ClipLoader size={18} color="#fff" /> : "Verify OTP"}
         </button>
-      )}
+      </form>
 
-      {isOtpSent && !isOtpVerified && (
-        <form onSubmit={handleVerifyOtp} className="otp-page__form">
-          <div className="otp-page__form-group">
-            <label className="otp-page__form-label">Enter OTP</label>
-            <input
-              type="text"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              maxLength="6"
-              required
-              className="otp-page__form-input"
-              disabled={isVerifying}
-            />
-          </div>
+      <button
+        onClick={sendOtp}
+        className="otp-page__button--resend"
+        disabled={!canResend}
+      >
+        Resend OTP
+      </button>
 
-          <button
-            type="submit"
-            className="otp-page__button--verify"
-            disabled={isVerifying}
-          >
-            {isVerifying ? <ClipLoader size={18} color="#fff" /> : "Verify OTP"}
-          </button>
-        </form>
-      )}
-
-      {isOtpVerified && (
-        <p className="otp-page__message">OTP Verified Successfully!</p>
+      {attemptsLeft === 0 && (
+        <p className="otp-page__message">
+          Too many wrong attempts. Request a new OTP.
+        </p>
       )}
     </div>
   );

@@ -61,7 +61,7 @@ const OrderPage = () => {
     };
 
     fetchAllDiseaseIds();
-  }, [tests]); // Dependency to re-run if selectedTests change
+  }, [selectedTests]); // Dependency to re-run if selectedTests change
 
   useEffect(() => {
     console.log("Disease Array: " + Disease);

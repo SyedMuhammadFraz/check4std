@@ -41,6 +41,10 @@ function AdminNavBar() {
     navigate("/admin-panel/order-table");
     closeMenuOnMobile();
   };
+  const handleDoctorsClick=()=>{
+    navigate("/admin-panel/doctors");
+    closeMenuOnMobile();
+  }
   const handleTestsClick = () => {
     navigate("/admin-panel/test-table");
     closeMenuOnMobile();
@@ -75,6 +79,11 @@ function AdminNavBar() {
             <li className="nav__item">
               <a className="navbar-main-heading" onClick={handleTestsClick}>
                 Tests
+              </a>
+            </li>
+            <li className="nav__item">
+              <a className="navbar-main-heading" onClick={handleDoctorsClick}>
+                Doctors
               </a>
             </li>
             <li className="nav__buttons">

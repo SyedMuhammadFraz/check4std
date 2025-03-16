@@ -55,6 +55,8 @@ import PaymentSuccess from "./utils/PaymentSuccess";
 import RedirectHandler from "./utils/RedirectHandler";
 import Unauthorized from "./Modals/Unauthorized";
 import DoctorConsultation from "./Components/How it Works/Doctor Consultation/DoctorConsultation";
+import AdminManageDoctor from "./Components/AdminPanel/Admin_Manage_Doctor";
+import Admin_Manage_Doctor from "./Components/AdminPanel/Admin_Manage_Doctor";
 
 function App() {
   const stripePromise = loadStripe(
@@ -228,6 +230,7 @@ function App() {
                     <Route index element={<AdminDashboard />} />
                     <Route path="dashboard" element={<AdminDashboard />} />
                     <Route path="order-table" element={<Admin_User_Table />} />
+                    <Route path="doctors" element={<Admin_Manage_Doctor />} />
                     <Route
                       path="test-table"
                       element={<Admin_Disease_Table />}

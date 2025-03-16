@@ -163,6 +163,10 @@ const OrderPage = () => {
       return;
     }
     navigate("/#");
+    if (Disease !== null) {
+      toast.success("Redirecting to Payment Checkout Page");
+      createCheckoutSession(Disease, authToken);
+    }
   };
 
   const months = [
@@ -603,7 +607,7 @@ const OrderPage = () => {
             )}
           </section>
 
-          <button type="submit" onClick={handlePlaceOrder}>
+          <button type="submit" onClick={handleSubmit}>
             Place Your Order
           </button>
         </form>

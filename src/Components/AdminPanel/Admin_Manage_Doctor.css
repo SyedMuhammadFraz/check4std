@@ -18,6 +18,36 @@
   flex-wrap: wrap;
 }
 
+.button-container {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+}
+
+.add-doctor-btn {
+  background-color: #007bff !important; /* Blue */
+  color: white;
+}
+
+.book-appointment-btn {
+  background-color: #28a745 !important; /* Green */
+  color: white;
+}
+
+/* Hover effect */
+.add-doctor-btn:hover,
+.book-appointment-btn:hover {
+  opacity: 0.8 !important;
+  transform: scale(1.05);
+}
+
+/* Responsive Design (For Small Screens) */
+@media (max-width: 600px) {
+  .button-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
 .doctor-filters input,
 .doctor-filters select {
   padding: 8px;
@@ -52,10 +82,10 @@
 .edit-doctor-button {
   padding: 6px 12px;
   border: none;
-  border-radius: 5px;
-  background-color: var(--Action-Warning);
-  color: white;
-  cursor: pointer;
+  /* border-radius: 5px;
+  /* background-color: var(--Action-Warning); */
+  /* color: white; */
+  /* cursor: pointer;  */
 }
 
 /* Modal Styles */
@@ -150,7 +180,6 @@
   }
 }
 
-
 .available {
   color: green;
   font-weight: bold;
@@ -162,24 +191,41 @@
 }
 
 .toggle-availability-button {
-  padding: 6px 12px;
+  padding: 4px 8px; /* Reduced padding for a compact look */
+  font-size: 14px; /* Slightly smaller font */
   border: none;
-  border-radius: 5px;
+  border-radius: 14px;
   cursor: pointer;
+  transition: all 0.3s ease-in-out;
   margin-left: 5px;
+  font-weight: 600;
 }
 
 .available-btn {
-  background-color:var(--Shades-S2);
+  background-color: #d32f2f; /* Red for unavailable */
   color: white;
 }
 
 .unavailable-btn {
-  background-color: green;
+  background-color: #388e3c; /* Green for available */
   color: white;
 }
 
-.delete-doctor-button{
+.toggle-availability-button:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+  .toggle-availability-button {
+    margin-top: 5px;
+    padding: 3px 6px; /* Further reduce padding */
+    font-size: 12px; /* Smaller font size */
+    margin-left: 3px;
+  }
+}
+
+.delete-doctor-button {
   padding: 6px 12px;
   border: none;
   margin-left: 5px;
@@ -187,4 +233,41 @@
   background-color: var(--Action-Error);
   color: white;
   cursor: pointer;
+}
+
+.status-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 14px;
+  border: none;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  gap: 8px;
+  text-align: left;
+}
+
+.status-btn::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.Available {
+  background-color: #d4f4cc;
+  color: #28a745;
+}
+
+.Unavailable {
+  background-color: #ffb7b7;
+  color: #d9534f;
+}
+
+.Booked {
+  background-color: #fae2a6;
+  color: #fbc02d;
 }

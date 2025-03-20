@@ -6,7 +6,6 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./signup.css";
 import { authServerInstance, webApiInstance } from "../../AxiosInstance";
 import { useAuth } from "../../utils/AuthContext";
-import ClipLoader from "react-spinners/ClipLoader";
 import { userRegisterInstance } from "../../AxiosInstance";
 import { useLoader } from "../../utils/LoaderContext";
 
@@ -111,7 +110,10 @@ const SignUp = () => {
         userExists = true;
       }
 
-      if (userExists) return;
+      if (userExists) {
+        setLoading(false);
+        return;
+      }
 
       // If user doesn't exist, proceed to register
       // setPendingUser(formData);
@@ -124,7 +126,6 @@ const SignUp = () => {
         roleId: formData.roleId,
         phoneNumber: formData.phoneNumber,
       };
-      // console.log(apiPayload);
       const response = await userRegisterInstance.post(
         "/UserRegistration/register-user",
         apiPayload
@@ -136,8 +137,6 @@ const SignUp = () => {
         setTimeout(() => {
           const storedUser = localStorage.getItem("user");
           if (storedUser) {
-            // console.log("before ")
-            // console.log(storedUser)
             setLoading(false);
             navigate("/get-otp");
           }

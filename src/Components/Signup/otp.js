@@ -1,4 +1,4 @@
-import React, { useState, useEffect , useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import qs from "qs";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,7 @@ const OTPPage = () => {
   // const { authToken } = useContext(AuthContext);
   const { userRegister } = useAuth();
   const navigate = useNavigate();
-  const { login} = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const [otp, setOtp] = useState("");
   const [otpID, setOtpID] = useState("");
   const [user, setUser] = useState(null);
@@ -45,6 +45,8 @@ const OTPPage = () => {
     }
 
     if (storedUser) {
+      // console.log("After");
+      // console.log(storedUser);
       try {
         setUser(JSON.parse(storedUser));
       } catch (error) {
@@ -122,6 +124,7 @@ const OTPPage = () => {
   };
 
   const VerifyOTP = async () => {
+    setIsVerifying(true);
     const data = qs.stringify({
       grant_type: "otp_grant",
       OtpId: otpID,
@@ -133,14 +136,18 @@ const OTPPage = () => {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       });
-      
-      if(response.status === 200)
-      {
+
+      if (response.status === 200) {
         login(response.data.access_token);
-        navigate('/');
+        navigate("/");
       }
     } catch (error) {
-      console.error("Error verifying OTP:", error.response?.data || error.message);
+      console.error(
+        "Error verifying OTP:",
+        error.response?.data || error.message
+      );
+    } finally {
+      setIsVerifying(false);
     }
   };
 

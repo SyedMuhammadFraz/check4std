@@ -4,12 +4,16 @@ import { useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import "./otp.css";
 import { useAuth } from "../../utils/AuthContext";
+import { AuthContext } from "../../utils/AuthContext";
 
 const OTPPage = () => {
+  // const { authToken } = useContext(AuthContext);
   const { userRegister } = useAuth();
   const navigate = useNavigate();
 
   const [otp, setOtp] = useState("");
+  const [otpID, setOtpID] = useState("");
+  const [user, setUser] = useState(null);
   const [attemptsLeft, setAttemptsLeft] = useState(3);
   const [isVerifying, setIsVerifying] = useState(false);
   const [timer, setTimer] = useState(getStoredTimer());
@@ -31,8 +35,28 @@ const OTPPage = () => {
   }, [timer]);
 
   useEffect(() => {
-    console.log("User: ", userRegister);
+    const storedOtpID = localStorage.getItem("optID");
+    const storedUser = localStorage.getItem("user");
+
+    if (storedOtpID) {
+      setOtpID(storedOtpID);
+    }
+
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error("Error parsing user data:", error);
+      }
+    }
   }, []);
+
+  useEffect(() => {
+    if (user !== null) {
+      console.log(user);
+    }
+    console.log("OTPID : " + otpID);
+  }, [user]);
 
   function getStoredTimer() {
     const storedTimestamp = localStorage.getItem("otpTimestamp");
@@ -102,6 +126,8 @@ const OTPPage = () => {
     }
   };
 
+  const VerifyOTP = async () => {};
+
   return (
     <div className="otp-page__container">
       <h2 className="otp-page__title">Enter OTP</h2>
@@ -135,6 +161,7 @@ const OTPPage = () => {
           type="submit"
           className="otp-page__button--verify"
           disabled={isVerifying || otp.length !== 6 || attemptsLeft === 0}
+          onClick={VerifyOTP}
         >
           {isVerifying ? <ClipLoader size={18} color="#fff" /> : "Verify OTP"}
         </button>

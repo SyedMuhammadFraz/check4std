@@ -18,6 +18,6 @@ export const webApiInstance = axios.create({
 });
 
 export const userRegisterInstance = axios.create({
-  baseURL: 'https://localhost:5143/api',
+  baseURL: 'http://localhost:5143/api',
   withCredentials: true,
 });

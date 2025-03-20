@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Admin_User_Table.css";
 import AdminNavBar from "./AdminNavBar";
 import { webApiInstance } from "../../AxiosInstance";
+import PatientInfoModal from "./Patient_info_Modal";
 
 function Admin_User_Table() {
   const [orders, setOrders] = useState([]);
@@ -14,6 +15,14 @@ function Admin_User_Table() {
   const [selectedOrders, setSelectedOrders] = useState([]);
   const [newStatus, setNewStatus] = useState("Pending");
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [selectedDiseases, setSelectedDiseases] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(true);
+
+  const handleInfoClick = (diseases) => {
+    setSelectedDiseases(diseases); // Store diseases in state
+    setIsModalOpen(true); // Open modal
+  };
 
   const recordsPerPage = 20;
 
@@ -29,6 +38,7 @@ function Admin_User_Table() {
     try {
       const response = await webApiInstance.get(`/Order/get-all`);
       const data = response.data.result;
+      console.log(response.data.result);
       setOrders(data);
       setFilteredOrders(data);
     } catch (error) {
@@ -299,11 +309,17 @@ function Admin_User_Table() {
                   />
                 </th>
                 <th>Sr No.</th>
-                <th>Order ID</th>
+                <th>User Email</th>
                 <th>User Name</th>
+                <th>Patient Name</th>
+                <th>Gender</th>
+                <th>DOB</th>
+                <th>Contact</th>
+                <th>Diseases</th>
                 <th>Status</th>
                 <th>Date</th>
                 <th>Last Updated</th>
+                <th>Info</th>
               </tr>
             </thead>
             <tbody>
@@ -320,6 +336,30 @@ function Admin_User_Table() {
                   <td>{record.userEmail}</td>
                   <td>{record.userName}</td>
                   <td>
+                    {record.patientInfo.firstName} {record.patientInfo.lastName}
+                  </td>
+                  <td>{record.patientInfo.genderValue}</td>
+                  <td>
+                    {new Date(record.patientInfo.dob).toLocaleDateString(
+                      "en-US"
+                    )}
+                  </td>
+                  <td>{record.patientInfo.contactValue}</td>
+                  <td>
+                    {record.diseases.length > 0 ? (
+                      <span
+                        title={record.diseases
+                          .map((d) => `${d.name} - $${d.price}`)
+                          .join(", ")}
+                      >
+                        {record.diseases.length} Diseases
+                      </span>
+                    ) : (
+                      "No Diseases"
+                    )}
+                  </td>
+
+                  <td>
                     <button
                       className={`status-btn ${record.orderStatus}`}
                       onClick={() => {
@@ -334,6 +374,49 @@ function Admin_User_Table() {
                   </td>
                   <td>
                     {new Date(record.lastUpdated).toLocaleDateString("en-US")}
+                  </td>
+                  <td
+                    className="td-info"
+                    onClick={() => handleInfoClick(record.diseases)}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 48 48"
+                    >
+                      <defs>
+                        <mask id="ipTInfo0">
+                          <g fill="none">
+                            <path
+                              fill="#555555"
+                              stroke="#fff"
+                              stroke-linejoin="round"
+                              stroke-width="4"
+                              d="M24 44a19.94 19.94 0 0 0 14.142-5.858A19.94 19.94 0 0 0 44 24a19.94 19.94 0 0 0-5.858-14.142A19.94 19.94 0 0 0 24 4A19.94 19.94 0 0 0 9.858 9.858A19.94 19.94 0 0 0 4 24a19.94 19.94 0 0 0 5.858 14.142A19.94 19.94 0 0 0 24 44Z"
+                            />
+                            <path
+                              fill="#fff"
+                              fill-rule="evenodd"
+                              d="M24 11a2.5 2.5 0 1 1 0 5a2.5 2.5 0 0 1 0-5"
+                              clip-rule="evenodd"
+                            />
+                            <path
+                              stroke="#fff"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="4"
+                              d="M24.5 34V20h-2M21 34h7"
+                            />
+                          </g>
+                        </mask>
+                      </defs>
+                      <path
+                        fill="#fbc02d"
+                        d="M0 0h48v48H0z"
+                        mask="url(#ipTInfo0)"
+                      />
+                    </svg>
                   </td>
                 </tr>
               ))}
@@ -355,6 +438,12 @@ function Admin_User_Table() {
           </div>
         </section>
       </section>
+      {isModalOpen && (
+        <PatientInfoModal
+          diseases={selectedDiseases}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

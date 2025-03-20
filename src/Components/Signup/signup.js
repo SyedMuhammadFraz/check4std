@@ -17,7 +17,7 @@ const SignUp = () => {
     phoneNumber: "",
     password: "",
     confirmPassword: "",
-    roleId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    roleId: "69c7e03d-0333-43d8-aef8-bac7f5aa7910",
     dob: "",
   });
 
@@ -114,19 +114,35 @@ const SignUp = () => {
       // If user doesn't exist, proceed to register
       // setPendingUser(formData);
 
+      const apiPayload = {
+        email: formData.email, // Change the email as required
+        password: formData.password,
+        name: formData.name, // Convert name to lowercase if needed
+        dob: formData.dob, // Change the DOB as required
+        roleId: formData.roleId,
+        phoneNumber: formData.phoneNumber,
+      };
+      console.log(apiPayload);
       const response = await userRegisterInstance.post(
-        "/UserRegistration",
-        formData
+        "/UserRegistration/register-user",
+        apiPayload
       ); // Calls user registration API
-      console.log(response);
-      // if (response.success) {
-      //   navigate("/get-otp"); // Navigate to OTP verification page
-      //   toast.success(
-      //     'Click on "Send OTP" to verify your email or phone number'
-      //   );
-      // } else {
-      //   toast.error(response.message);
-      // }
+      if (response.status === 200) {
+        localStorage.setItem("optID", response.data);
+        localStorage.setItem("user", JSON.stringify(apiPayload));
+
+        setTimeout(() => {
+          const storedUser = localStorage.getItem("user");
+          if (storedUser) {
+            navigate("/get-otp");
+          }
+        }, 100);
+        toast.success(
+          'Click on "Send OTP" to verify your email or phone number'
+        );
+      } else {
+        toast.error(response.message);
+      }
     } catch (error) {
       console.error("Error checking user existence:", error);
       toast.error("An error occurred. Please try again later.");

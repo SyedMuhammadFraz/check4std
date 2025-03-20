@@ -29,7 +29,7 @@ function Admin_Disease_Table() {
           Authorization: `Bearer ${authToken}`, // Replace with actual token
         },
       });
-
+      console.log(response)
       if (response.data.statusCode === 200) {
         setDiseases(response.data.result);
       }

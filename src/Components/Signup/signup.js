@@ -8,6 +8,7 @@ import { authServerInstance, webApiInstance } from "../../AxiosInstance";
 import { useAuth } from "../../utils/AuthContext";
 import ClipLoader from "react-spinners/ClipLoader";
 import { userRegisterInstance } from "../../AxiosInstance";
+import { useLoader } from "../../utils/LoaderContext";
 
 const SignUp = () => {
   const { setPendingUser } = useAuth();
@@ -24,7 +25,7 @@ const SignUp = () => {
   const { authToken, login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(false);
+  const { setLoading } = useLoader();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -74,6 +75,7 @@ const SignUp = () => {
     return true;
   };
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     if (!validateForm()) return;
@@ -122,7 +124,7 @@ const SignUp = () => {
         roleId: formData.roleId,
         phoneNumber: formData.phoneNumber,
       };
-      console.log(apiPayload);
+      // console.log(apiPayload);
       const response = await userRegisterInstance.post(
         "/UserRegistration/register-user",
         apiPayload
@@ -134,6 +136,9 @@ const SignUp = () => {
         setTimeout(() => {
           const storedUser = localStorage.getItem("user");
           if (storedUser) {
+            // console.log("before ")
+            // console.log(storedUser)
+            setLoading(false);
             navigate("/get-otp");
           }
         }, 100);

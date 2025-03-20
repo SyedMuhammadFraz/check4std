@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useContext } from "react";
+import qs from "qs";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import "./otp.css";
 import { useAuth } from "../../utils/AuthContext";
 import { AuthContext } from "../../utils/AuthContext";
+import { connectTokenInstance } from "../../AxiosInstance";
 
 const OTPPage = () => {
   // const { authToken } = useContext(AuthContext);
   const { userRegister } = useAuth();
   const navigate = useNavigate();
-
+  const { login} = useContext(AuthContext);
   const [otp, setOtp] = useState("");
   const [otpID, setOtpID] = useState("");
   const [user, setUser] = useState(null);
@@ -50,13 +52,6 @@ const OTPPage = () => {
       }
     }
   }, []);
-
-  useEffect(() => {
-    if (user !== null) {
-      console.log(user);
-    }
-    console.log("OTPID : " + otpID);
-  }, [user]);
 
   function getStoredTimer() {
     const storedTimestamp = localStorage.getItem("otpTimestamp");
@@ -126,7 +121,28 @@ const OTPPage = () => {
     }
   };
 
-  const VerifyOTP = async () => {};
+  const VerifyOTP = async () => {
+    const data = qs.stringify({
+      grant_type: "otp_grant",
+      OtpId: otpID,
+      Otp: otp,
+    });
+    try {
+      const response = await connectTokenInstance.post("/connect/token", data, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+      
+      if(response.status === 200)
+      {
+        login(response.data.access_token);
+        navigate('/');
+      }
+    } catch (error) {
+      console.error("Error verifying OTP:", error.response?.data || error.message);
+    }
+  };
 
   return (
     <div className="otp-page__container">

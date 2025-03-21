@@ -3,6 +3,7 @@ import { webApiInstance } from "../../../AxiosInstance";
 import "../Herpes1_2/herpes1_2.css";
 import GenericSection from "../GenericSection";
 import { useNavigate } from "react-router-dom";
+import { useLoader } from "../../../utils/LoaderContext";
 
 function HepB_Test() {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ function HepB_Test() {
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
   const [checked4, setChecked4] = useState(false);
-
+  const { setLoading } = useLoader();
   const [TenTestPanel, setTenTestPanel] = useState(null);
   const [TenTestPanelEarlyRNA, setTenTestPanelEarlyRNA] = useState(null);
   const [HepB, setHepB] = useState(null);
@@ -27,12 +28,15 @@ function HepB_Test() {
   };
 
   useEffect(() => {
+    setLoading(true);
+    window.scrollTo(0, 0);
     getData(
       "10 Test Panel with HIV RNA Early Detection",
       setTenTestPanelEarlyRNA
     );
     getData("10 Test Panel", setTenTestPanel);
     getData("Hepatitis B", setHepB);
+    setLoading(false);
   }, []);
 
   const handleGetTested = () => {

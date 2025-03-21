@@ -66,62 +66,62 @@ const OTPPage = () => {
     return 300;
   }
 
-  const sendOtp = async () => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate API call
-      toast.success("OTP sent successfully!");
-      console.log("OTP sent to user");
+  // const sendOtp = async () => {
+  //   try {
+  //     await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate API call
+  //     toast.success("OTP sent successfully!");
+  //     console.log("OTP sent to user");
 
-      const newTimestamp = Date.now();
-      localStorage.setItem("otpTimestamp", newTimestamp);
-      localStorage.setItem("otpTimer", 300);
-      setTimer(300);
-      setCanResend(false);
-    } catch (error) {
-      toast.error("Failed to send OTP. Please try again.");
-    }
-  };
+  //     const newTimestamp = Date.now();
+  //     localStorage.setItem("otpTimestamp", newTimestamp);
+  //     localStorage.setItem("otpTimer", 300);
+  //     setTimer(300);
+  //     setCanResend(false);
+  //   } catch (error) {
+  //     toast.error("Failed to send OTP. Please try again.");
+  //   }
+  // };
 
-  const verifyOtpAPI = async (otp) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({ success: otp === "123456" });
-      }, 2000);
-    });
-  };
+  // const verifyOtpAPI = async (otp) => {
+  //   return new Promise((resolve) => {
+  //     setTimeout(() => {
+  //       resolve({ success: otp === "123456" });
+  //     }, 2000);
+  //   });
+  // };
 
-  const handleVerifyOtp = async (e) => {
-    e.preventDefault();
-    if (otp.length !== 6) {
-      toast.error("OTP must be 6 digits.");
-      return;
-    }
+  // const handleVerifyOtp = async (e) => {
+  //   e.preventDefault();
+  //   if (otp.length !== 6) {
+  //     toast.error("OTP must be 6 digits.");
+  //     return;
+  //   }
 
-    setIsVerifying(true);
-    try {
-      const response = await verifyOtpAPI(otp);
-      if (response.success) {
-        const registerResponse = await userRegister();
-        if (registerResponse.success) {
-          toast.success("OTP verified & User Registered!");
-          localStorage.removeItem("otpTimestamp"); // Clear OTP timestamp on success
-          navigate("/");
-        } else {
-          toast.error("Registration failed. Try again.");
-        }
-      } else {
-        setAttemptsLeft((prev) => prev - 1);
-        toast.error(`Invalid OTP. ${attemptsLeft - 1} attempts left.`);
-        if (attemptsLeft - 1 === 0) {
-          toast.error("Maximum attempts reached. Please request a new OTP.");
-        }
-      }
-    } catch (error) {
-      toast.error("Error verifying OTP. Try again.");
-    } finally {
-      setIsVerifying(false);
-    }
-  };
+  //   setIsVerifying(true);
+  //   try {
+  //     const response = await verifyOtpAPI(otp);
+  //     if (response.success) {
+  //       const registerResponse = await userRegister();
+  //       if (registerResponse.success) {
+  //         toast.success("OTP verified & User Registered!");
+  //         localStorage.removeItem("otpTimestamp"); // Clear OTP timestamp on success
+  //         navigate("/");
+  //       } else {
+  //         toast.error("Registration failed. Try again.");
+  //       }
+  //     } else {
+  //       setAttemptsLeft((prev) => prev - 1);
+  //       toast.error(`Invalid OTP. ${attemptsLeft - 1} attempts left.`);
+  //       if (attemptsLeft - 1 === 0) {
+  //         toast.error("Maximum attempts reached. Please request a new OTP.");
+  //       }
+  //     }
+  //   } catch (error) {
+  //     toast.error("Error verifying OTP. Try again.");
+  //   } finally {
+  //     setIsVerifying(false);
+  //   }
+  // };
 
   const VerifyOTP = async () => {
     setIsVerifying(true);
@@ -140,6 +140,9 @@ const OTPPage = () => {
       if (response.status === 200) {
         login(response.data.access_token);
         navigate("/");
+      }
+      else{
+        toast.error("Invalid Otp. Please try again");
       }
     } catch (error) {
       console.error(
@@ -169,7 +172,7 @@ const OTPPage = () => {
         )}
       </div>
 
-      <form onSubmit={handleVerifyOtp} className="otp-page__form">
+      <form className="otp-page__form">
         <input
           type="text"
           value={otp}
@@ -184,14 +187,14 @@ const OTPPage = () => {
           type="submit"
           className="otp-page__button--verify"
           disabled={isVerifying || otp.length !== 6 || attemptsLeft === 0}
-          onClick={VerifyOTP}
+          // onClick={VerifyOTP}
         >
           {isVerifying ? <ClipLoader size={18} color="#fff" /> : "Verify OTP"}
         </button>
       </form>
 
       <button
-        onClick={sendOtp}
+        // onClick={sendOtp}
         className="otp-page__button--resend"
         disabled={!canResend}
       >

@@ -7,6 +7,7 @@ import { useLoader } from "../../../utils/LoaderContext";
 
 function Gonorrhea_Test() {
   const navigate = useNavigate();
+  const { setLoading } = useLoader();
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
@@ -29,6 +30,8 @@ function Gonorrhea_Test() {
   };
 
   useEffect(() => {
+    setLoading(true);
+    window.scrollTo(0, 0);
     getData(
       "10 Test Panel with HIV RNA Early Detection",
       setTenTestPanelEarlyRNA
@@ -36,6 +39,7 @@ function Gonorrhea_Test() {
     getData("10 Test Panel", setTenTestPanel);
     getData("Chlamydia & Gonorrhea", setChlamydia_Gonorrhea);
     getData("Gonorrhea", setGonnorhea);
+    setLoading(false);
   }, []);
 
   const handleCheckbox1 = () => {

@@ -32,6 +32,7 @@ function Chlamydia_Test() {
 
   useEffect(() => {
     setLoading(true);
+    window.scrollTo(0, 0);
     getData(
       "10 Test Panel with HIV RNA Early Detection",
       setTenTestPanelEarlyRNA

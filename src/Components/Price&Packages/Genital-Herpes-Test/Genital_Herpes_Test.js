@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useLoader } from "../../../utils/LoaderContext";
 
 function Genital_Herpes_Test() {
+  const { setLoading } = useLoader();
   const navigate = useNavigate();
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
@@ -28,6 +29,8 @@ function Genital_Herpes_Test() {
   };
 
   useEffect(() => {
+    setLoading(true);
+    window.scrollTo(0, 0);
     getData(
       "10 Test Panel with HIV RNA Early Detection",
       setTenTestPanelEarlyRNA
@@ -35,6 +38,7 @@ function Genital_Herpes_Test() {
     getData("10 Test Panel", setTenTestPanel);
     getData("Genital Herpes (HSV-2)", setGenital_Herpes);
     getData("Herpes I & II", setHerpes1_2);
+    setLoading(false);
   }, []);
 
   const handleGetTested = () => {

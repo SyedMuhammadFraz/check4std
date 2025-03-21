@@ -7,6 +7,7 @@ import { useLoader } from "../../../utils/LoaderContext";
 
 function HepA_Test() {
   const navigate = useNavigate();
+  const { setLoading } = useLoader();
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
@@ -27,12 +28,15 @@ function HepA_Test() {
   };
 
   useEffect(() => {
+    setLoading(true);
+    window.scrollTo(0, 0);
     getData(
       "10 Test Panel with HIV RNA Early Detection",
       setTenTestPanelEarlyRNA
     );
     getData("10 Test Panel", setTenTestPanel);
     getData("Hepatitis A", setHepA);
+    setLoading(false);
   }, []);
 
   const handleCheckbox1 = () => {

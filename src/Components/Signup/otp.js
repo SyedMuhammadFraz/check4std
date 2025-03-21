@@ -187,7 +187,7 @@ const OTPPage = () => {
           type="submit"
           className="otp-page__button--verify"
           disabled={isVerifying || otp.length !== 6 || attemptsLeft === 0}
-          // onClick={VerifyOTP}
+          onClick={VerifyOTP}
         >
           {isVerifying ? <ClipLoader size={18} color="#fff" /> : "Verify OTP"}
         </button>

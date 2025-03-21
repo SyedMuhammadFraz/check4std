@@ -3,13 +3,14 @@ import { webApiInstance } from "../../../AxiosInstance";
 import "../Herpes1_2/herpes1_2.css";
 import GenericSection from "../GenericSection";
 import { useNavigate } from "react-router-dom";
+import { useLoader } from "../../../utils/LoaderContext";
 
 function HepC_Test() {
   const navigate = useNavigate();
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
-
+  const { setLoading } = useLoader();
   const [TenTestPanel, setTenTestPanel] = useState(null);
   const [TenTestPanelEarlyRNA, setTenTestPanelEarlyRNA] = useState(null);
   const [HepC, setHepC] = useState(null);
@@ -26,12 +27,15 @@ function HepC_Test() {
   };
 
   useEffect(() => {
+    setLoading(true);
+    window.scrollTo(0, 0);
     getData(
       "10 Test Panel with HIV RNA Early Detection",
       setTenTestPanelEarlyRNA
     );
     getData("10 Test Panel", setTenTestPanel);
     getData("Hepatitis C", setHepC);
+    setLoading(false);
   }, []);
 
   const handleGetTested = () => {

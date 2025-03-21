@@ -3,11 +3,13 @@ import { webApiInstance } from "../../../AxiosInstance";
 import "../Herpes1_2/herpes1_2.css";
 import GenericSection from "../GenericSection";
 import { useNavigate } from "react-router-dom";
+import { useLoader } from "../../../utils/LoaderContext";
 
 function HIV_RNA_Test() {
   const navigate = useNavigate();
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
+  const { setLoading } = useLoader();
 
   const [TenTestPanelEarlyRNA, setTenTestPanelEarlyRNA] = useState(null);
   const [HIV_EarlyGeneration, setHIV_EarlyGeneration] = useState(null);
@@ -24,8 +26,11 @@ function HIV_RNA_Test() {
   };
 
   useEffect(() => {
+    setLoading(true);
+    window.scrollTo(0, 0);
     getData("HIV RNA Early Detection", setHIV_EarlyGeneration);
     getData("10 Test Panel with HIV RNA Early Detection", setTenTestPanelEarlyRNA);
+    setLoading(false);
   }, []);
 
   const handleCheckbox1 = () => {

@@ -27,7 +27,6 @@ const MainPage = () => {
   const [Herpes1, setHerpes1] = useState(null);
   const [Herpes2, setHerpes2] = useState(null);
 
-  
   const getData = async (name, setter) => {
     try {
       const response = await webApiInstance.get(
@@ -46,7 +45,7 @@ const MainPage = () => {
 
   useEffect(() => {
     setLoading(true);
-
+    window.scrollTo(0, 0);
     const testNames = [
       {
         name: "10 Test Panel with HIV RNA Early Detection",

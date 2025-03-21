@@ -3,13 +3,13 @@ import { webApiInstance } from "../../../AxiosInstance";
 import "../Herpes1_2/herpes1_2.css";
 import GenericSection from "../GenericSection";
 import { useNavigate } from "react-router-dom";
-
+import { useLoader } from "../../../utils/LoaderContext";
 function Syphilis_Test() {
   const navigate = useNavigate();
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
-
+  const { setLoading } = useLoader();
   const [TenTestPanel, setTenTestPanel] = useState(null);
   const [TenTestPanelEarlyRNA, setTenTestPanelEarlyRNA] = useState(null);
   const [Syphilis, setSyphilis] = useState(null);
@@ -26,12 +26,15 @@ function Syphilis_Test() {
   };
 
   useEffect(() => {
+    setLoading(true);
+    window.scrollTo(0, 0);
     getData(
       "10 Test Panel with HIV RNA Early Detection",
       setTenTestPanelEarlyRNA
     );
     getData("10 Test Panel", setTenTestPanel);
     getData("Syphilis", setSyphilis);
+    setLoading(false);
   }, []);
 
   const handleCheckbox1 = () => {
@@ -129,7 +132,10 @@ function Syphilis_Test() {
               />
               Syphilis
             </div>
-            <div className="card-price"> ${Syphilis !== null ? Syphilis.price : ""}</div>
+            <div className="card-price">
+              {" "}
+              ${Syphilis !== null ? Syphilis.price : ""}
+            </div>
           </div>
           <div className="card-radio">
             <div className="card-checkbox" onClick={handleCheckbox2}>
@@ -140,7 +146,10 @@ function Syphilis_Test() {
               />
               10 Test Panel
             </div>
-            <div className="card-price"> ${TenTestPanel !== null ? TenTestPanel.price : ""}</div>
+            <div className="card-price">
+              {" "}
+              ${TenTestPanel !== null ? TenTestPanel.price : ""}
+            </div>
           </div>
           <div className="card-radio">
             <div className="card-checkbox" onClick={handleCheckbox3}>
@@ -151,7 +160,10 @@ function Syphilis_Test() {
               />
               10 Test Panel with HIV RNA Early Detection
             </div>
-            <div className="card-price"> ${TenTestPanelEarlyRNA !== null ? TenTestPanelEarlyRNA.price : ""}</div>
+            <div className="card-price">
+              {" "}
+              ${TenTestPanelEarlyRNA !== null ? TenTestPanelEarlyRNA.price : ""}
+            </div>
           </div>
           <div className="card-button">
             <button className="button3" onClick={handleGetTested}>

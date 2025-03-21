@@ -3,14 +3,14 @@ import AdminNavBar from "./AdminNavBar";
 import "./Admin_User_Table.css";
 import { webApiInstance } from "../../AxiosInstance";
 import { AuthContext } from "../../utils/AuthContext";
-
+import { useLoader } from "../../utils/LoaderContext";
 function Admin_Disease_Table() {
   const { authToken } = useContext(AuthContext);
   const [Diseases, setDiseases] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [newPrice, setNewPrice] = useState("");
   const { AuthToken } = useContext(AuthContext);
-
+  const { setLoading } = useLoader();
   // const getData = async () => {
   //   try {
   //     const response = await webApiInstance.get(`/Disease`);
@@ -53,6 +53,7 @@ function Admin_Disease_Table() {
 
   const handleUpdatePrice = async (disease) => {
     try {
+      setLoading(true);
       const updatedDisease = {
         id: disease.id,
         name: disease.name, // Keep the name unchanged
@@ -75,6 +76,9 @@ function Admin_Disease_Table() {
       setEditingId(null); // Exit edit mode
     } catch (error) {
       console.error("Error updating price:", error);
+    }
+    finally{
+      setLoading(false);
     }
   };
 

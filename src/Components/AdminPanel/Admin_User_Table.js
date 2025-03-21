@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect , useContext } from "react";
 import "./Admin_User_Table.css";
 import AdminNavBar from "./AdminNavBar";
 import { webApiInstance } from "../../AxiosInstance";
 import PatientInfoModal from "./Patient_info_Modal";
+import { AuthContext } from "../../utils/AuthContext";
 
 function Admin_User_Table() {
+    const { authToken } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -36,7 +38,13 @@ function Admin_User_Table() {
 
   const getData = async () => {
     try {
-      const response = await webApiInstance.get(`/Order/get-all`);
+      const response = await webApiInstance.get(`/Order/get-all` , 
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`, // Replace with actual token
+          },
+        }
+      );
       const data = response.data.result;
       console.log(response.data.result);
       setOrders(data);

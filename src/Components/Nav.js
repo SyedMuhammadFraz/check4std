@@ -10,7 +10,7 @@ import { AuthContext } from "../utils/AuthContext";
 import { toast } from "react-toastify";
 
 function Nav() {
-  const { authToken, logout } = useContext(AuthContext);
+  const { authToken, logout, userRole } = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
@@ -420,13 +420,15 @@ function Nav() {
                   >
                     Logout
                   </button>
-                  <NavLink
-                    to="/admin-panel"
-                    className="button1"
-                    onClick={closeMenuOnMobile}
-                  >
-                    Go to Admin Panel
-                  </NavLink>
+                  {userRole === "admin" && (
+                    <NavLink
+                      to="/admin-panel"
+                      className="button1"
+                      onClick={closeMenuOnMobile}
+                    >
+                      Go to Admin Panel
+                    </NavLink>
+                  )}
                 </>
               )}
             </li>

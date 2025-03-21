@@ -25,12 +25,6 @@ const ProtectedRoute = ({ allowedRoles, children }) => {
   }
 
   try {
-    const decodedToken = decodeJWT(authToken);
-    console.log("Decoded Token:", decodedToken); // ✅ Debugging
-
-    const role1 = decodedToken?.role;
-    console.log("User Role:", role1); // ✅ Debugging
-
     if (role1 == null) {
       return <Navigate to="/login" />;
     }

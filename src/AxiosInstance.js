@@ -7,7 +7,7 @@ export const authServerInstance = axios.create({
 });
 
 export const connectTokenInstance = axios.create({
-  baseURL: 'http://check4std-authserverbackend-env.eba-kuzevk48.us-east-1.elasticbeanstalk.com/',
+  baseURL: 'https://check4std-authserverbackend-env.eba-kuzevk48.us-east-1.elasticbeanstalk.com/',
   withCredentials: true, // Important for sending cookies
 });
 
@@ -18,6 +18,6 @@ export const webApiInstance = axios.create({
 });
 
 export const userRegisterInstance = axios.create({
-  baseURL: 'http://check4std-authserverbackend-env.eba-kuzevk48.us-east-1.elasticbeanstalk.com/api',
+  baseURL: 'https://check4std-authserverbackend-env.eba-kuzevk48.us-east-1.elasticbeanstalk.com/api',
   withCredentials: true,
 });

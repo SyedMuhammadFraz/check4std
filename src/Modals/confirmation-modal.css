@@ -1,4 +1,4 @@
-.modal-overlay {
+.confirmation-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -13,7 +13,7 @@
     overflow: hidden;
   }
   
-  .modal-content {
+  .confirmation-modal-content {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
@@ -23,19 +23,19 @@
     color: #333333; 
   }
   
-  .modal-content .modal-heading {
+  .confirmation-modal-content .confirmation-modal-heading {
     margin: 0 0 15px;
     font-size: 1.5em; 
     color: #2c3e50;
   }
   
-  .modal-content p {
+  .confirmation-modal-content p {
     margin: 10px 0;
     font-size: 1em;
     line-height: 1.5;
   }
   
-  .modal-buttons {
+  .confirmation-modal-buttons {
     max-width: 100%;
     max-height: 100%;
     margin-top: 20px;
@@ -44,7 +44,7 @@
     gap: 25px; 
   }
   
-  .modal-buttons .button1 {
+  .confirmation-modal-buttons .button1 {
     background-color: #3498db;
     color: white;
     padding: 10px 20px;
@@ -55,20 +55,20 @@
     transition: background-color 0.3s ease, transform 0.2s ease;
   }
   
-  .modal-buttons .button1:hover {
+  .confirmation-modal-buttons .button1:hover {
     background-color: #2980b9;
     transform: scale(1.02);
   }
   
-  .modal-buttons .button1:active {
+  .confirmation-modal-buttons .button1:active {
     background-color: #1f6391;
   }
   
-  .modal-buttons .button1:focus {
+  .confirmation-modal-buttons .button1:focus {
     outline: 2px solid #2980b9;
   }
   
-  .modal-buttons .button2 {
+  .confirmation-modal-buttons .button2 {
     background-color: #e74c3c;
     color: white;
     padding: 10px 20px;
@@ -79,17 +79,17 @@
     transition: background-color 0.3s ease, transform 0.2s ease;
   }
   
-  .modal-buttons .button2:hover {
+  .confirmation-modal-buttons .button2:hover {
     background-color: #c0392b;
     transform: scale(1.02);
   }
   
-  .modal-buttons .button2:active {
+  .confirmation-modal-buttons .button2:active {
     background-color: #992d22;
  
   }
   
-  .modal-buttons .button2:focus {
+  .confirmation-modal-buttons .button2:focus {
     outline: 2px solid #c0392b;
   }
   

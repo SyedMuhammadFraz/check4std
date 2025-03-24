@@ -115,19 +115,96 @@
 }
 
 .password-wrapper {
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex:2;
-  }
-  
-  .toggle-password {
-    position: absolute;
-    right: 10px;
-    cursor: pointer;
-    color: #555;
-  }
-  
-  .toggle-password:hover {
-    color: #007bff;
-  }
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex: 2;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  color: #555;
+}
+
+.toggle-password:hover {
+  color: #007bff;
+}
+
+/* Password Change Section */
+.change-password-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+.password-field {
+  position: relative;
+  width: 100%;
+}
+
+.password-input {
+  width: 100%;
+  padding: 10px 40px 10px 10px;
+  border-radius: 5px;
+  font-size: 16px;
+  display: flex;
+  border: 1px solid #868282;
+  background: #ffffff;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #555;
+}
+
+.toggle-password:hover {
+  color: #000;
+}
+
+.confirm-password-button {
+  background-color: var(--Neutral-Logo-Blue);
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+}
+
+.confirm-password-button:hover {
+  background-color: var(--Neutral-Logo-Blue-hover);
+}
+
+.profile-actions .change-password-button {
+  background: #a0259e;
+  color: white;
+  margin-top: 10px;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.profile-actions .change-password-button:hover {
+  background: #bd36bb;
+}

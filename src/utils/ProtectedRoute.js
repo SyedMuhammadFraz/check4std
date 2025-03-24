@@ -30,7 +30,9 @@ const ProtectedRoute = ({ allowedRoles, children }) => {
 
     const role1 = decodedToken?.role;
     console.log("User Role:", role1); // ✅ Debugging
+
     if (role1 == null) {
+      toast.error("You have to login to place an order!");
       return <Navigate to="/login" />;
     }
 

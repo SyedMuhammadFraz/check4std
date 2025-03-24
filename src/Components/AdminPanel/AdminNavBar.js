@@ -53,6 +53,10 @@ function AdminNavBar() {
     navigate("/admin-panel/dashboard");
     closeMenuOnMobile();
   };
+  const handleHomeClick = () => {
+    navigate("/");
+    closeMenuOnMobile();
+  };
   return (
     <header className="header">
       <nav className="nav container">
@@ -66,6 +70,11 @@ function AdminNavBar() {
           id="nav-menu"
         >
           <ul className="nav__list">
+            <li className="nav__item">
+              <a className="navbar-main-heading" onClick={handleHomeClick}>
+                Home
+              </a>
+            </li>
             <li className="nav__item">
               <a className="navbar-main-heading" onClick={handleDashboardClick}>
                 Dashboard

@@ -9,7 +9,6 @@ import { AuthContext } from "../../utils/AuthContext";
 import { connectTokenInstance } from "../../AxiosInstance";
 
 const OTPPage = () => {
-  // const { authToken } = useContext(AuthContext);
   const { userRegister } = useAuth();
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
@@ -18,137 +17,125 @@ const OTPPage = () => {
   const [user, setUser] = useState(null);
   const [attemptsLeft, setAttemptsLeft] = useState(3);
   const [isVerifying, setIsVerifying] = useState(false);
-  const [timer, setTimer] = useState(getStoredTimer());
-  const [canResend, setCanResend] = useState(timer <= 0);
+  const [timer, setTimer] = useState(30);
+  const [canResend, setCanResend] = useState(false);
+
+  // Function to get the remaining timer from localStorage
+  const getStoredTimer = () => {
+    const storedTimestamp = localStorage.getItem("otpTimestamp");
+    if (storedTimestamp) {
+      const elapsed = Math.floor(
+        (Date.now() - parseInt(storedTimestamp)) / 1000
+      );
+      return Math.max(30 - elapsed, 0);
+    }
+    return 30; // Default to 30 seconds if no timestamp is stored
+  };
+
+  useEffect(() => {
+    const storedTimestamp = localStorage.getItem("otpTimestamp");
+
+    if (storedTimestamp) {
+      const elapsed = Math.floor(
+        (Date.now() - parseInt(storedTimestamp)) / 1000
+      );
+      const remainingTime = Math.max(30 - elapsed, 0);
+
+      setTimer(remainingTime);
+      setCanResend(remainingTime === 0);
+    }
+
+    if (timer > 0) {
+      const countdown = setInterval(() => {
+        setTimer((prev) => {
+          if (prev <= 1) {
+            clearInterval(countdown);
+            setCanResend(true);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(countdown);
+    }
+    console.log("Timer: " + timer);
+  }, []);
 
   useEffect(() => {
     if (timer > 0) {
+      setCanResend(false);
       const countdown = setInterval(() => {
         setTimer((prev) => {
           const newTime = prev - 1;
           localStorage.setItem("otpTimer", newTime);
+          if (newTime <= 0) {
+            setCanResend(true);
+            clearInterval(countdown);
+          }
           return newTime;
         });
       }, 1000);
+
       return () => clearInterval(countdown);
     } else {
       setCanResend(true);
     }
   }, [timer]);
 
-  useEffect(() => {
-    const storedOtpID = localStorage.getItem("optID");
-    const storedUser = localStorage.getItem("user");
-
-    if (storedOtpID) {
-      setOtpID(storedOtpID);
-    }
-
-    if (storedUser) {
-      // console.log("After");
-      // console.log(storedUser);
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (error) {
-        console.error("Error parsing user data:", error);
-      }
-    }
-  }, []);
-
-  function getStoredTimer() {
-    const storedTimestamp = localStorage.getItem("otpTimestamp");
-    if (storedTimestamp) {
-      const elapsed = Math.floor(
-        (Date.now() - parseInt(storedTimestamp)) / 1000
-      );
-      return Math.max(300 - elapsed, 0);
-    }
-    return 300;
-  }
-
-  // const sendOtp = async () => {
-  //   try {
-  //     await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate API call
-  //     toast.success("OTP sent successfully!");
-  //     console.log("OTP sent to user");
-
-  //     const newTimestamp = Date.now();
-  //     localStorage.setItem("otpTimestamp", newTimestamp);
-  //     localStorage.setItem("otpTimer", 300);
-  //     setTimer(300);
-  //     setCanResend(false);
-  //   } catch (error) {
-  //     toast.error("Failed to send OTP. Please try again.");
-  //   }
-  // };
-
-  // const verifyOtpAPI = async (otp) => {
-  //   return new Promise((resolve) => {
-  //     setTimeout(() => {
-  //       resolve({ success: otp === "123456" });
-  //     }, 2000);
-  //   });
-  // };
-
-  // const handleVerifyOtp = async (e) => {
-  //   e.preventDefault();
-  //   if (otp.length !== 6) {
-  //     toast.error("OTP must be 6 digits.");
-  //     return;
-  //   }
-
-  //   setIsVerifying(true);
-  //   try {
-  //     const response = await verifyOtpAPI(otp);
-  //     if (response.success) {
-  //       const registerResponse = await userRegister();
-  //       if (registerResponse.success) {
-  //         toast.success("OTP verified & User Registered!");
-  //         localStorage.removeItem("otpTimestamp"); // Clear OTP timestamp on success
-  //         navigate("/");
-  //       } else {
-  //         toast.error("Registration failed. Try again.");
-  //       }
-  //     } else {
-  //       setAttemptsLeft((prev) => prev - 1);
-  //       toast.error(`Invalid OTP. ${attemptsLeft - 1} attempts left.`);
-  //       if (attemptsLeft - 1 === 0) {
-  //         toast.error("Maximum attempts reached. Please request a new OTP.");
-  //       }
-  //     }
-  //   } catch (error) {
-  //     toast.error("Error verifying OTP. Try again.");
-  //   } finally {
-  //     setIsVerifying(false);
-  //   }
-  // };
-
-  const VerifyOTP = async () => {
+  const VerifyOTP = async (e) => {
+    e.preventDefault();
     setIsVerifying(true);
     const data = qs.stringify({
       grant_type: "otp_grant",
       OtpId: otpID,
       Otp: otp,
     });
+
     try {
       const response = await connectTokenInstance.post("/connect/token", data, {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
       });
 
       if (response.status === 200) {
         login(response.data.access_token);
         navigate("/");
-      }
-      else{
-        toast.error("Invalid Otp. Please try again");
+      } else {
+        toast.error("Invalid OTP. Please try again.");
       }
     } catch (error) {
+      toast.error(`Invalid OTP. ${attemptsLeft} Attempts Left.`);
+      setAttemptsLeft((prev) => prev - 1);
+    } finally {
+      setIsVerifying(false);
+    }
+  };
+
+  const resendOtp = async () => {
+    if (!user?.email) {
+      toast.error("User email not found!");
+      return;
+    }
+
+    setIsVerifying(true);
+    try {
+      const response = await connectTokenInstance.post(
+        `/api/UserRegistration/request-otp/${user.email}`
+      );
+      console.log(response);
+      toast.success("OTP Resent!");
+
+      // Reset timer
+      const newTimestamp = Date.now();
+      localStorage.setItem("otpTimestamp", newTimestamp);
+      setTimer(30);
+      setCanResend(false);
+    } catch (error) {
       console.error(
-        "Error verifying OTP:",
+        "Error requesting OTP:",
         error.response?.data || error.message
       );
+      toast.error("Error sending OTP. Please try again.");
     } finally {
       setIsVerifying(false);
     }
@@ -158,9 +145,10 @@ const OTPPage = () => {
     <div className="otp-page__container">
       <h2 className="otp-page__title">Enter OTP</h2>
       <p>
-        An OTP has been sent to your email. If you dont find it in your inbox,
-        please check the spam folder.
+        An OTP has been sent to your email. If you don't see it, check the spam
+        folder.
       </p>
+
       <div className="otp-page__timer">
         {timer > 0 ? (
           <p>
@@ -172,7 +160,7 @@ const OTPPage = () => {
         )}
       </div>
 
-      <form className="otp-page__form">
+      <form className="otp-page__form" onSubmit={VerifyOTP}>
         <input
           type="text"
           value={otp}
@@ -187,14 +175,13 @@ const OTPPage = () => {
           type="submit"
           className="otp-page__button--verify"
           disabled={isVerifying || otp.length !== 6 || attemptsLeft === 0}
-          onClick={VerifyOTP}
         >
           {isVerifying ? <ClipLoader size={18} color="#fff" /> : "Verify OTP"}
         </button>
       </form>
 
       <button
-        // onClick={sendOtp}
+        onClick={resendOtp}
         className="otp-page__button--resend"
         disabled={!canResend}
       >

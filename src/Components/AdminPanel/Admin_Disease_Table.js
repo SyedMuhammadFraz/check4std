@@ -58,8 +58,6 @@ function Admin_Disease_Table() {
         id: disease.id,
         name: disease.name, // Keep the name unchanged
         price: Number(newPrice), // Convert price to number
-        createdAt: disease.createdAt, // Keep original createdAt
-        updatedAt: new Date().toISOString(), // Set updatedAt to now
       };
       const response = await webApiInstance.put(
         `/Disease/${disease.id}`,

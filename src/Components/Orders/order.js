@@ -19,6 +19,10 @@ const OrderPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [Disease, setDisease] = useState(null);
+  const [genderLookup, setGenderLookup] = useState([]);
+  const [selectedGender, setSelectedGender] = useState(null);
+  const [contactMediumLookup, setContactMediumLookup] = useState([]);
+  const [selectedContactMedium, setSelectedContactMedium] = useState(null);
 
   const location = useLocation();
   const { selectedTests = [] } = location.state || {};
@@ -61,7 +65,7 @@ const OrderPage = () => {
     };
 
     fetchAllDiseaseIds();
-  }, [selectedTests]); // Dependency to re-run if selectedTests change
+  }, [selectedTests]);
 
   useEffect(() => {
     console.log("Disease Array: " + Disease);
@@ -70,41 +74,30 @@ const OrderPage = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    gender: "",
+    genderId: "",
+    contactTypeId: "",
     dobMonth: "",
     dobDay: "",
     dobYear: "",
-    notificationMethod: "",
     email: "",
-    phone: "",
-    voicemail: "",
-    addPartnerTest: false,
-    paymentMethod: "",
-    creditCardNumber: "",
-    cardExpirationMonth: "",
-    cardExpirationYear: "",
-    billingCountry: "",
-    billingZipCode: "",
+    phoneNumber: "",
+    genderValue: "",
+    contactValue: "",
   });
 
   const [errors, setErrors] = useState({
     email: "",
-    phone: "",
+    phoneNumber: "",
     firstName: "",
     lastName: "",
-    gender: "",
-    notificationMethod: "",
+    genderId: "",
+    contactTypeId: "",
     dob: "",
-    voicemail: "",
   });
-
-  const gotoPricePackages = () => {
-    navigate("/price-packages");
-  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-
+   
     // Create the updated form data
     const updatedFormData = {
       ...formData,
@@ -128,33 +121,57 @@ const OrderPage = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    var fullDate='';
     const newErrors = {};
 
     // Validate each field
     if (!formData.firstName) newErrors.firstName = "First name is required.";
     if (!formData.lastName) newErrors.lastName = "Last name is required.";
-    if (!formData.gender) newErrors.gender = "Gender is required.";
-    if (!formData.notificationMethod)
-      newErrors.notificationMethod =
+    console.log("Gender ID",formData.genderId)
+    if (!formData.genderId) newErrors.genderId = "Gender is required.";
+    if (!formData.contactTypeId)
+      newErrors.contactTypeId =
         "Select a method to notify you when your results are available.";
     if (
-      formData.notificationMethod === "Email" &&
+      formData.contactValue === "Email" &&
       !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email)
     ) {
       newErrors.email = "Please enter a valid email address.";
     }
     if (
-      formData.notificationMethod === "Text Me (SMS)" &&
-      !/^\(\d{3}\) \d{3}-\d{4}$/.test(formData.phone)
+      formData.contactValue === "PhoneNumber" &&
+      !/^\(\d{3}\) \d{3}-\d{4}$/.test(formData.phoneNumber)
     ) {
-      newErrors.phone =
+      newErrors.phoneNumber =
         "Please enter a valid phone number (e.g., (xxx) xxx-xxxx).";
     }
     if (!formData.dobMonth || !formData.dobDay || !formData.dobYear) {
       newErrors.dob = "Date of birth is required.";
     }
+    
+    else if(formData.dobMonth && formData.dobDay && formData.dobYear){
+      fullDate = new Date(
+        `${formData.dobMonth}-${formData.dobDay}-${formData.dobYear}`
+      ).toISOString();
+    }
 
+    
+
+    // ✅ Prepare the final payload
+    const payload = {
+      patientInfo: {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        genderId: Number(formData.genderId),
+        contactTypeId: Number(formData.contactTypeId),
+        email: formData.email,
+        phoneNumber: formData.phoneNumber,
+        genderValue: formData.genderValue, 
+        contactValue: formData.contactValue,
+        dob: fullDate, // Date in ISO format
+      },
+    };
+    console.log(payload);
     setErrors(newErrors);
     console.log(errors);
     // Prevent submission if there are errors
@@ -165,7 +182,7 @@ const OrderPage = () => {
     navigate("/#");
     if (Disease !== null) {
       toast.success("Redirecting to Payment Checkout Page");
-      createCheckoutSession(Disease, authToken);
+      createCheckoutSession(Disease, authToken, payload.patientInfo);
     }
   };
 
@@ -221,7 +238,6 @@ const OrderPage = () => {
   }, [formData.dobMonth, formData.dobDay, formData.dobYear]);
 
   useEffect(() => {
-    
     const timer = setTimeout(() => {
       if (authToken === null) {
         navigate("/login");
@@ -233,14 +249,45 @@ const OrderPage = () => {
     return () => clearTimeout(timer);
   }, [authToken, navigate]);
 
-  const createCheckoutSession = async (diseases, authToken) => {
+  useEffect(() => {
+    const FetchLookups = async () => {
+      try {
+        const genderResponse = await webApiInstance.get("/Lookup/get-by-type", {
+          params: { type: "Gender" },
+        });
+        console.log("Gender Lookup:", genderResponse.data.result);
+        setGenderLookup(genderResponse.data.result);
+
+        const contactMediumResponse = await webApiInstance.get(
+          "/Lookup/get-by-type",
+          {
+            params: { type: "ContactMedium" },
+          }
+        );
+        console.log(
+          "Contact Medium Lookup:",
+          contactMediumResponse.data.result
+        );
+        setContactMediumLookup(contactMediumResponse.data.result);
+      } catch (error) {
+        console.error("Error fetching lookup data:", error);
+        setGenderLookup([]);
+        setContactMediumLookup([]);
+      }
+    };
+
+    FetchLookups();
+  }, []);
+
+  const createCheckoutSession = async (diseases, authToken, patientInfo) => {
     console.log("Checkout disease", diseases);
     try {
       // Extract IDs from the diseases array
       const response = await webApiInstance.post(
         "/Payment/create-checkout-session",
         {
-          diseaseIdList: diseases, // Send all IDs
+          diseaseIdList: diseases,
+          patientinfo: patientInfo,
         },
         {
           headers: {
@@ -258,6 +305,68 @@ const OrderPage = () => {
     }
   };
 
+  const handleGenderChange = (e) => {
+    const { name, value } = e.target;
+
+    // If the user selects a gender, update both genderId and genderValue
+    if (name === "genderId") {
+      const selectedGender = genderLookup.find((g) => g.id === Number(value));
+
+      setFormData((prevData) => ({
+        ...prevData,
+        genderId: value, // Numeric ID
+        genderValue: selectedGender ? selectedGender.lookupValue : "", // Actual Gender Text
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+
+    setErrors((prevErrors) => {
+      const newErrors = { ...prevErrors };
+
+      // Remove specific field errors if the field is no longer invalid
+      if (newErrors[name]) {
+        delete newErrors[name];
+      }
+
+      return newErrors;
+    });
+  };
+
+  const handleContactMediumChange = (e) => {
+    const { name, value } = e.target;
+
+    // If the user selects a gender, update both genderId and genderValue
+    if (name === "contactTypeId") {
+      const selectedContactMedium = contactMediumLookup.find((g) => g.id === Number(value));
+
+      setFormData((prevData) => ({
+        ...prevData,
+        contactTypeId: value, // Numeric ID
+        contactValue: selectedContactMedium ? selectedContactMedium.lookupValue : "", // Actual Gender Text
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+
+    setErrors((prevErrors) => {
+      const newErrors = { ...prevErrors };
+
+      // Remove specific field errors if the field is no longer invalid
+      if (newErrors[name]) {
+        delete newErrors[name];
+      }
+
+      return newErrors;
+    });
+  };
+
   const handlePlaceOrder = () => {
     console.log(authToken);
     if (Disease !== null) {
@@ -271,7 +380,9 @@ const OrderPage = () => {
       try {
         const [panelResponse, hivRNAResponse] = await Promise.all([
           webApiInstance.get(`/Disease/get-by-name/10 Test Panel`),
-          webApiInstance.get(`/Disease/get-by-name/10 Test Panel with HIV RNA Early Detection`),
+          webApiInstance.get(
+            `/Disease/get-by-name/10 Test Panel with HIV RNA Early Detection`
+          ),
         ]);
 
         setTestPrices({
@@ -297,7 +408,12 @@ const OrderPage = () => {
   // Handle Upgrade for 10 Test Panel with HIV RNA
   const handleHIVRNAUpgrade = () => {
     if (testPrices.tenTestPanelHIVRNA) {
-      setTests([{ name: "10 Test Panel with HIV RNA Early Detection", price: testPrices.tenTestPanelHIVRNA }]);
+      setTests([
+        {
+          name: "10 Test Panel with HIV RNA Early Detection",
+          price: testPrices.tenTestPanelHIVRNA,
+        },
+      ]);
       setTotalCost(testPrices.tenTestPanelHIVRNA);
     }
   };
@@ -374,7 +490,8 @@ const OrderPage = () => {
               <button className="upgrade-btn" onClick={handleUpgrade}>
                 Upgrade Now{" "}
                 <span className="price">
-                  + ${Math.max(0, testPrices.tenTestPanel - totalCost).toFixed(2)}
+                  + $
+                  {Math.max(0, testPrices.tenTestPanel - totalCost).toFixed(2)}
                 </span>
               </button>
             </div>
@@ -394,7 +511,10 @@ const OrderPage = () => {
             <button className="upgrade-btn" onClick={handleHIVRNAUpgrade}>
               Upgrade
               <span className="price">
-                + ${Math.max(0, testPrices.tenTestPanelHIVRNA - totalCost).toFixed(2)}
+                + $
+                {Math.max(0, testPrices.tenTestPanelHIVRNA - totalCost).toFixed(
+                  2
+                )}
               </span>
             </button>
           </div>
@@ -447,31 +567,22 @@ const OrderPage = () => {
             )}
 
             <label className="order-labels">Sex</label>
-            <div>
-              <label>
-                <input
-                  type="radio"
-                  name="gender"
-                  value="Male"
-                  checked={formData.gender === "Male"}
-                  onChange={handleChange}
-                />
-                Male
-              </label>
-              <label>
-                <input
-                  type="radio"
-                  name="gender"
-                  value="Female"
-                  checked={formData.gender === "Female"}
-                  onChange={handleChange}
-                />
-                Female
-              </label>
-            </div>
-            {errors.gender && <span className="error">{errors.gender}</span>}
-            <label className="order-labels">Date of Birth</label>
+            <select
+              name="genderId"
+              value={formData.genderId}
+              onChange={handleGenderChange}
+            >
+              <option value="">Select One</option>
+              {genderLookup.map((gender) => (
+                <option key={gender.id} value={gender.id}>
+                  {gender.lookupValue}
+                </option>
+              ))}
+            </select>
 
+            {errors.genderId && <span className="error">{errors.genderId}</span>}
+
+            <label className="order-labels">Date of Birth</label>
             <div>
               <select value={formData.dobMonth} onChange={handleMonthChange}>
                 <option value="">Month</option>
@@ -505,61 +616,58 @@ const OrderPage = () => {
             </label>
             <div>
               <select
-                name="notificationMethod"
-                value={formData.notificationMethod}
-                onChange={handleChange}
+                name="contactTypeId"
+                value={formData.contactTypeId}
+                onChange={handleContactMediumChange}
               >
                 <option value="">Select One</option>
-                <option value="Email">Email</option>
-                <option value="Text Me (SMS)">Text Me (SMS)</option>
-                <option value="Do not contact me, I will call to check on my results.">
-                  Do not contact me, I will call to check on my results.
-                </option>
+                {contactMediumLookup.map((contact) => (
+                  <option key={contact.id} value={contact.id}>
+                    {contact.lookupValue}
+                  </option>
+                ))}
               </select>
             </div>
-            {formData.notificationMethod === "Email" && (
+            {formData.contactValue === "Email" && (
               <div>
                 <label className="order-labels" htmlFor="email">
                   Email Address:
                 </label>
-                <div>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Enter your email address"
-                    required
-                  />
-                  {errors.email && (
-                    <span className="error">{errors.email}</span>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {formData.notificationMethod === "Text Me (SMS)" && (
-              <div>
-                <label className="order-labels" htmlFor="sms">
-                  Phone Number (SMS):
-                </label>
-              </div>
-            )}
-
-            {formData.notificationMethod === "Text Me (SMS)" && (
-              <div>
                 <input
-                  type="tel"
-                  name="phone"
-                  id="sms"
-                  value={formData.phone}
+                  type="email"
+                  name="email"
+                  id="email"
+                  value={formData.email}
                   onChange={handleChange}
-                  placeholder="(xxx) xxx-xxxx"
+                  placeholder="Enter your email address"
                   required
                 />
-                {errors.phone && <span className="error">{errors.phone}</span>}
+                {errors.email && <span className="error">{errors.email}</span>}
               </div>
+            )}
+
+            {formData.contactValue === "PhoneNumber" && (
+              <>
+                <div>
+                  <label className="order-labels" htmlFor="sms">
+                    Phone Number (SMS):
+                  </label>
+                </div>
+                <div>
+                  <input
+                    type="tel"
+                    name="phoneNumber"
+                    id="sms"
+                    value={formData.phoneNumer}
+                    onChange={handleChange}
+                    placeholder="(xxx) xxx-xxxx"
+                    required
+                  />
+                  {errors.phoneNumber && (
+                    <span className="error">{errors.phoneNumber}</span>
+                  )}
+                </div>
+              </>
             )}
 
             {/* {formData.notificationMethod === "Text Me (SMS)" && (
@@ -602,8 +710,8 @@ const OrderPage = () => {
               </div>
             )} */}
 
-            {errors.notificationMethod && (
-              <span className="error">{errors.notificationMethod}</span>
+            {errors.contactTypeId && (
+              <span className="error">{errors.contactTypeId}</span>
             )}
           </section>
 

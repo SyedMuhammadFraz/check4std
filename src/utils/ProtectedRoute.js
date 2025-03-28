@@ -32,7 +32,6 @@ const ProtectedRoute = ({ allowedRoles, children }) => {
     console.log("User Role:", role1); // ✅ Debugging
 
     if (role1 == null) {
-      toast.error("You have to login to place an order!");
       return <Navigate to="/login" />;
     }
 

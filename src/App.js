@@ -57,6 +57,7 @@ import Unauthorized from "./Modals/Unauthorized";
 import DoctorConsultation from "./Components/How it Works/Doctor Consultation/DoctorConsultation";
 import AdminManageDoctor from "./Components/AdminPanel/Admin_Manage_Doctor";
 import Admin_Manage_Doctor from "./Components/AdminPanel/Admin_Manage_Doctor";
+import ForgotPasswordOtp from "./Components/Signin/ForgotPasswordOtp";
 
 function App() {
   const stripePromise = loadStripe(
@@ -211,6 +212,11 @@ function App() {
                       index
                       path="forgot-password"
                       element={<ForgotPassword />}
+                    />
+                    <Route
+                      index
+                      path="forgot-password-otp"
+                      element={<ForgotPasswordOtp />}
                     />
                     <Route index path="/" element={<Home />} />
                     <Route

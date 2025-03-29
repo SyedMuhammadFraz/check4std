@@ -2,24 +2,66 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "./ForgotPassword.css";
+import { connectTokenInstance, webApiInstance } from "../../AxiosInstance";
+import { useLoader } from "../../utils/LoaderContext";
 
 const ForgotPassword = () => {
+  const { setLoading } = useLoader();
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
+  const [user, SetUser] = useState(null);
 
-  const handlePasswordReset = (e) => {
-    e.preventDefault();
-    toast.dismiss();
+  const ResetLogin = async (event) => {
+    event.preventDefault(); // Prevent form refresh
+    setLoading(true);
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    if (!email) {
-      toast.error("Please enter your email.");
+    if (!emailRegex.test(email)) {
+      toast.error("Invalid email address");
       return;
     }
 
-    setTimeout(() => {
-      toast.success("Password reset link sent to your email!");
-      setEmail("");
-    }, 1000);
+    try {
+      // const checkUser = await webApiInstance.get(
+      //   `/User/get-by-email?email=${encodeURIComponent(email)}`
+      // );
+
+      // if (checkUser.status === 200) {
+        // User exists
+        // SetUser(checkUser.data.result);
+        // localStorage.setItem("User", checkUser.data.result);
+        // Perform further actions here
+        try {
+          const response = await connectTokenInstance.post(
+            `/api/UserRegistration/request-otp/${email}`
+          );
+          if(response.status === 200)
+          {
+            localStorage.setItem("User-Otp" , response.data);
+            setLoading(false);
+            navigate("/forgot-password-otp")
+          }
+        } catch (err) {
+          setLoading(false);
+          if(err.response.status === 400)
+          {
+            toast.error("You must wait to get another otp.")
+          }
+          else
+          {
+            toast.error("Something went wrong. Please try again.")
+          }
+        }
+      // }
+    } catch (err) {
+      setLoading(false);
+      if (err.response && err.response.status === 404) {
+        toast.error("This email does not have any user.");
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    }
+    setLoading(false);
   };
 
   return (
@@ -27,7 +69,7 @@ const ForgotPassword = () => {
       <h2>Forgot Password?</h2>
       <p>Enter your email to receive a password reset link.</p>
 
-      <form onSubmit={handlePasswordReset}>
+      <form onSubmit={ResetLogin}>
         <div className="form-group">
           <label>Email</label>
           <input

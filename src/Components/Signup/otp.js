@@ -4,12 +4,10 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import "./otp.css";
-import { useAuth } from "../../utils/AuthContext";
 import { AuthContext } from "../../utils/AuthContext";
 import { connectTokenInstance } from "../../AxiosInstance";
 
 const OTPPage = () => {
-  const { userRegister } = useAuth();
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
   const [otp, setOtp] = useState("");

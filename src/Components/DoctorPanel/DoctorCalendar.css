@@ -1,0 +1,14 @@
+.Appointments {
+  text-align: center;
+  font-weight: bold;
+}
+
+.Doctor-DropDown {
+    width: 80vw;              /* Set width */
+    padding: 10px;
+    margin: 10px auto;        /* Use auto for horizontal centering */
+    display: block;           /* Ensure it's a block element */
+    position: relative;
+    border-radius: 6px;
+  }
+  

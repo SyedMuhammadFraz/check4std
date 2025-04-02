@@ -58,6 +58,7 @@ import DoctorConsultation from "./Components/How it Works/Doctor Consultation/Do
 import AdminManageDoctor from "./Components/AdminPanel/Admin_Manage_Doctor";
 import Admin_Manage_Doctor from "./Components/AdminPanel/Admin_Manage_Doctor";
 import ForgotPasswordOtp from "./Components/Signin/ForgotPasswordOtp";
+import DoctorCalendar from "./Components/DoctorPanel/DoctorCalendar";
 
 function App() {
   const stripePromise = loadStripe(
@@ -197,7 +198,16 @@ function App() {
                     <Route index path="login" element={<SignIn />} />
                     <Route index path="get-otp" element={<OTPPage />} />
                     <Route index path="test-centers" element={<MapPage />} />
-                    <Route index path="doctor-consultation" element={<DoctorConsultation />} />
+                    <Route
+                      index
+                      path="doctor-consultation"
+                      element={<DoctorConsultation />}
+                    />
+                    <Route
+                      index
+                      path="doctor-calendar"
+                      element={<DoctorCalendar />}
+                    />
                     <Route
                       index
                       path="unauthorized"

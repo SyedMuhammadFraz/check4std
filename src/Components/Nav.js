@@ -138,6 +138,10 @@ function Nav() {
     // }
   };
 
+  const handleDoctorCalendarClick = ()=>{
+    navigate('/doctor-calendar');
+  }
+
   return (
     <header className="header">
       <nav className="nav container">
@@ -197,6 +201,9 @@ function Nav() {
                 </li>
                 <li>
                   <a onClick={onDoctorConsultaionClick}>Doctor Consultation</a>
+                </li>
+                <li>
+                  <a onClick={handleDoctorCalendarClick}>Doctor Calendar</a>
                 </li>
                 <li>
                   <a href="#">Patient Testimonials</a>

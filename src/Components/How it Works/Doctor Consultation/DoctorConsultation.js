@@ -81,7 +81,6 @@ const DoctorConsultation = () => {
           []
         );
 
-
         const filteredDoctors = formattedDoctors.filter(
           (doctor) => doctor.availableDates.length > 0
         );
@@ -157,7 +156,7 @@ const DoctorConsultation = () => {
       );
 
       console.log("Response:", response.data);
-      if (response.statusCode === 200) {
+      if (response.data.statusCode === 200) {
         toast.success(
           `Appointment successfully booked with ${
             selectedDoctor.name
@@ -227,19 +226,33 @@ const DoctorConsultation = () => {
                   (a, b) =>
                     new Date(`1970-01-01T${a.startTime}`) -
                     new Date(`1970-01-01T${b.startTime}`)
-                )
-                .map((slot) => (
-                  <button
-                    key={slot.id}
-                    className={`time-slot ${
-                      selectedTime?.id === slot.id ? "selected" : ""
-                    }`}
-                    onClick={() => handleTimeSlotSelection(slot)}
-                  >
-                    {convertToAmPm(slot.startTime)} -{" "}
-                    {convertToAmPm(slot.endTime)}
-                  </button>
-                ))}
+                ).length > 0 ? (
+                // Show time slots if available
+                selectedDoctor.availableDates
+                  .find((dateObj) => dateObj.date === formattedDate)
+                  ?.times.sort(
+                    (a, b) =>
+                      new Date(`1970-01-01T${a.startTime}`) -
+                      new Date(`1970-01-01T${b.startTime}`)
+                  )
+                  .map((slot) => (
+                    <button
+                      key={slot.id}
+                      className={`time-slot ${
+                        selectedTime?.id === slot.id ? "selected" : ""
+                      }`}
+                      onClick={() => handleTimeSlotSelection(slot)}
+                    >
+                      {convertToAmPm(slot.startTime)} -{" "}
+                      {convertToAmPm(slot.endTime)}
+                    </button>
+                  ))
+              ) : (
+                // Display message if no time slots are available
+                <p className="no-doctor">
+                  No time slots avialable for this date and doctor.
+                </p>
+              )}
             </div>
           </>
         )}
@@ -256,7 +269,7 @@ const DoctorConsultation = () => {
         <button
           className="book-button"
           onClick={handleAppointment}
-          disabled={!selectedDoctor}
+          disabled={!selectedDoctor || !selectedTime} // Disable if no doctor or time slot is selected
         >
           Book Appointment
         </button>

@@ -96,6 +96,7 @@ const SignUp = () => {
         emailValidityResponse.status === "fulfilled" &&
         emailValidityResponse.value.status === 200
       ) {
+        setLoading(false);
         toast.error("User with this email already exists. Please login.");
         userExists = true;
       }
@@ -104,6 +105,7 @@ const SignUp = () => {
         phoneNumberValidityResponse.status === "fulfilled" &&
         phoneNumberValidityResponse.value.status === 200
       ) {
+        setLoading(false);
         toast.error(
           "User with this phone number already exists. Use a different number."
         );
@@ -132,7 +134,7 @@ const SignUp = () => {
       ); // Calls user registration API
       if (response.status === 200) {
         localStorage.setItem("optID", response.data);
-        localStorage.setItem("user", JSON.stringify(apiPayload));
+        localStorage.setItem("email", apiPayload.email);
 
         setTimeout(() => {
           const storedUser = localStorage.getItem("user");
@@ -147,10 +149,13 @@ const SignUp = () => {
       } else {
         toast.error(response.message);
       }
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error("Error checking user existence:", error);
       toast.error("An error occurred. Please try again later.");
     }
+    setLoading(false);
   };
 
   const handleLogout = () => {

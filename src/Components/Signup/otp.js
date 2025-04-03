@@ -4,12 +4,10 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import "./otp.css";
-import { useAuth } from "../../utils/AuthContext";
 import { AuthContext } from "../../utils/AuthContext";
 import { connectTokenInstance } from "../../AxiosInstance";
 
 const OTPPage = () => {
-  const { userRegister } = useAuth();
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
   const [otp, setOtp] = useState("");
@@ -17,71 +15,12 @@ const OTPPage = () => {
   const [user, setUser] = useState(null);
   const [attemptsLeft, setAttemptsLeft] = useState(3);
   const [isVerifying, setIsVerifying] = useState(false);
-  const [timer, setTimer] = useState(30);
-  const [canResend, setCanResend] = useState(false);
-
-  // Function to get the remaining timer from localStorage
-  const getStoredTimer = () => {
-    const storedTimestamp = localStorage.getItem("otpTimestamp");
-    if (storedTimestamp) {
-      const elapsed = Math.floor(
-        (Date.now() - parseInt(storedTimestamp)) / 1000
-      );
-      return Math.max(30 - elapsed, 0);
-    }
-    return 30; // Default to 30 seconds if no timestamp is stored
-  };
+  const [Resendotp , setResentOtp] = useState(false)
 
   useEffect(() => {
-    const storedTimestamp = localStorage.getItem("otpTimestamp");
-
-    if (storedTimestamp) {
-      const elapsed = Math.floor(
-        (Date.now() - parseInt(storedTimestamp)) / 1000
-      );
-      const remainingTime = Math.max(30 - elapsed, 0);
-
-      setTimer(remainingTime);
-      setCanResend(remainingTime === 0);
-    }
-
-    if (timer > 0) {
-      const countdown = setInterval(() => {
-        setTimer((prev) => {
-          if (prev <= 1) {
-            clearInterval(countdown);
-            setCanResend(true);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-
-      return () => clearInterval(countdown);
-    }
-    console.log("Timer: " + timer);
+    setOtpID(localStorage.getItem("optID"));
+    setUser(localStorage.getItem("email"));
   }, []);
-
-  useEffect(() => {
-    if (timer > 0) {
-      setCanResend(false);
-      const countdown = setInterval(() => {
-        setTimer((prev) => {
-          const newTime = prev - 1;
-          localStorage.setItem("otpTimer", newTime);
-          if (newTime <= 0) {
-            setCanResend(true);
-            clearInterval(countdown);
-          }
-          return newTime;
-        });
-      }, 1000);
-
-      return () => clearInterval(countdown);
-    } else {
-      setCanResend(true);
-    }
-  }, [timer]);
 
   const VerifyOTP = async (e) => {
     e.preventDefault();
@@ -99,6 +38,7 @@ const OTPPage = () => {
 
       if (response.status === 200) {
         login(response.data.access_token);
+        toast.success("Email verified successfully.")
         navigate("/");
       } else {
         toast.error("Invalid OTP. Please try again.");
@@ -111,33 +51,26 @@ const OTPPage = () => {
     }
   };
 
-  const resendOtp = async () => {
-    if (!user?.email) {
-      toast.error("User email not found!");
-      return;
-    }
-
-    setIsVerifying(true);
+  const resendOtp = async (event) => {
+    event.preventDefault();
+    console.log(user);
+    setResentOtp(true);
     try {
       const response = await connectTokenInstance.post(
-        `/api/UserRegistration/request-otp/${user.email}`
+        `/api/UserRegistration/request-otp/${user}`
       );
-      console.log(response);
-      toast.success("OTP Resent!");
-
-      // Reset timer
-      const newTimestamp = Date.now();
-      localStorage.setItem("otpTimestamp", newTimestamp);
-      setTimer(30);
-      setCanResend(false);
+      if (response.status === 200) {
+        setOtpID(response.data);
+        toast.success("OTP Resent!");
+      }
     } catch (error) {
-      console.error(
-        "Error requesting OTP:",
-        error.response?.data || error.message
-      );
-      toast.error("Error sending OTP. Please try again.");
+      if (error.response.status === 400) {
+        toast.error("You must wait to get another otp.");
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
     } finally {
-      setIsVerifying(false);
+      setResentOtp(false);
     }
   };
 
@@ -149,16 +82,9 @@ const OTPPage = () => {
         folder.
       </p>
 
-      <div className="otp-page__timer">
-        {timer > 0 ? (
-          <p>
-            Resend in: {Math.floor(timer / 60)}:
-            {String(timer % 60).padStart(2, "0")}
-          </p>
-        ) : (
-          <p>You can request a new OTP</p>
-        )}
-      </div>
+      <p className="my-3">
+        You must wait for <strong>2 minutes </strong>to request another OTP.
+      </p>
 
       <form className="otp-page__form" onSubmit={VerifyOTP}>
         <input
@@ -180,12 +106,8 @@ const OTPPage = () => {
         </button>
       </form>
 
-      <button
-        onClick={resendOtp}
-        className="otp-page__button--resend"
-        disabled={!canResend}
-      >
-        Resend OTP
+      <button onClick={resendOtp} className="otp-page__button--resend" >
+      {Resendotp ? <ClipLoader size={18} color="#fff" /> : "Resend OTP"}
       </button>
 
       {attemptsLeft === 0 && (

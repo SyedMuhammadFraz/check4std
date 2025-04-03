@@ -41,6 +41,12 @@ function Genital_Herpes_Test() {
     setLoading(false);
   }, []);
 
+  useEffect(() => {
+    if (Herpes1_2 !== null) {
+      setLoading(false);
+    }
+  }, [Herpes1_2]);
+
   const handleGetTested = () => {
     let selectedTest = null;
     if (checked1) {
@@ -135,7 +141,10 @@ function Genital_Herpes_Test() {
               />
               Genital Herpes (HSV-2)
             </div>
-            <div className="card-price"> ${Genital_Herpes !== null ? Genital_Herpes.price : ""}</div>
+            <div className="card-price">
+              {" "}
+              ${Genital_Herpes !== null ? Genital_Herpes.price : ""}
+            </div>
           </div>
           <div className="card-radio">
             <div className="card-checkbox" onClick={handleCheckbox2}>
@@ -146,7 +155,10 @@ function Genital_Herpes_Test() {
               />
               Herpes I & II
             </div>
-            <div className="card-price"> ${Herpes1_2 !== null ? Herpes1_2.price : ""}</div>
+            <div className="card-price">
+              {" "}
+              ${Herpes1_2 !== null ? Herpes1_2.price : ""}
+            </div>
           </div>
           <div className="card-radio">
             <div className="card-checkbox" onClick={handleCheckbox3}>
@@ -157,7 +169,10 @@ function Genital_Herpes_Test() {
               />
               10 Test Panel
             </div>
-            <div className="card-price"> ${TenTestPanel !== null ? TenTestPanel.price : ""}</div>
+            <div className="card-price">
+              {" "}
+              ${TenTestPanel !== null ? TenTestPanel.price : ""}
+            </div>
           </div>
           <div className="card-radio" onClick={handleCheckbox4}>
             <div className="card-checkbox">
@@ -168,7 +183,10 @@ function Genital_Herpes_Test() {
               />
               10 Test Panel with HIV RNA Early Detection
             </div>
-            <div className="card-price"> ${TenTestPanelEarlyRNA !== null ? TenTestPanelEarlyRNA.price : ""}</div>
+            <div className="card-price">
+              {" "}
+              ${TenTestPanelEarlyRNA !== null ? TenTestPanelEarlyRNA.price : ""}
+            </div>
           </div>
           <div className="card-button">
             <button className="button3" onClick={handleGetTested}>

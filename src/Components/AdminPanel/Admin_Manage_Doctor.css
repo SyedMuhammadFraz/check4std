@@ -107,7 +107,7 @@
   background: white;
   padding: 20px;
   width: 90%;
-  max-width: 500px;
+  max-width: 600px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -175,8 +175,26 @@
 /* Mobile Optimization */
 @media (max-width: 480px) {
   .doctor-modal-box {
-    width: 95%;
+    width: 95%; /* Slightly wider for smaller screens */
     padding: 15px;
+  }
+
+  .doctor-modal-actions {
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 8px;
+  }
+  .time-slot-container{
+    overflow-x: auto; 
+  }
+
+  .table-button-container {
+    flex-direction: column; /* Stack buttons on top of each other */
+    gap: 5px; /* Reduce space between buttons when stacked */
+  }
+
+  .doctor-save-button,
+  .doctor-cancel-button {
+    width: 100%; /* Full width on mobile */
   }
 }
 
@@ -223,6 +241,15 @@
     font-size: 12px; /* Smaller font size */
     margin-left: 3px;
   }
+
+ 
+}
+
+.table-button-container {
+  display: flex;
+  gap: 10px; /* Adds space between buttons */
+  justify-content: flex-start; /* Align buttons to the left */
+  flex-wrap: wrap; /* Allows wrapping on small screens */
 }
 
 .delete-doctor-button {
@@ -271,3 +298,94 @@
   background-color: #fae2a6;
   color: #fbc02d;
 }
+
+
+/* Base Button Styles */
+.btn {
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  margin-right: 8px; /* Spacing between buttons */
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-between; /* Ensures buttons stay in line */
+  gap: 6px; /* Minimal gap between buttons */
+  margin-top: 10px; /* Small margin from other elements */
+}
+
+
+/* Toggle Status Button - Warning */
+.toggle-status-btn {
+  background-color: #ffc107; /* Yellow */
+  color: #333;
+}
+
+/* Delete Slot Button - Danger */
+.delete-slot-btn {
+  background-color: #dc3545; /* Red */
+  color: white;
+}
+
+/* Disabled Button */
+.add-time-slot-btn {
+  background-color: #007bff; /* Blue */
+  color: white;
+}
+
+/* Delete Button - Danger */
+.delete-btn {
+  background-color: #dc3545; /* Red */
+  color: white;
+}
+
+/* Disabled Button */
+.btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.td-info{
+  cursor: pointer;
+}
+
+
+/* Container to enable scrolling on smaller screens */
+.time-slots-info-container {
+  width: 100%;
+  overflow-x: auto; /* Enables horizontal scrolling if needed */
+}
+
+/* Table Styling */
+.time-slots-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px; /* Ensures the table doesn’t shrink too much */
+}
+
+
+/* Table Data */
+.time-slots-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+}
+
+/* 📱 Mobile-Specific Adjustments */
+@media (max-width: 768px) {
+  .time-slots-table {
+    min-width: 100%; /* Ensures the table takes full width */
+  }
+
+  .time-slots-info-container {
+    overflow-x: auto; /* Enables horizontal scrolling */
+  }
+}
+
+

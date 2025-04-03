@@ -1,83 +1,1217 @@
-import React, { useState } from "react";
+// import React, { useState, useEffect } from "react";
+// import "./Admin_Manage_Doctor.css";
+// import AdminNavBar from "./AdminNavBar";
+
+// const AdminManageDoctor = () => {
+//   const [showDoctorModal, setShowDoctorModal] = useState(false);
+//   const [showAppointmentModal, setShowAppointmentModal] = useState(false);
+//   const [selectedDoctor, setSelectedDoctor] = useState(null);
+//   const [selectedAppointment, setSelectedAppointment] = useState(null);
+//   const [editIndex, setEditIndex] = useState(null);
+//   const [doctorData, setDoctorData] = useState({
+//     name: "",
+//     profession: "",
+//     email: "",
+//   });
+
+//   const [selectedDayInfo, setSelectedDayInfo] = useState({
+//     doctorName: "",
+//     date: "",
+//     timeSlots: [],
+//   });
+
+//   const [appointments, setAppointments] = useState([
+//     {
+//       doctorName: "Dr. John Doe",
+//       patientName: "Alice",
+//       date: "2025-04-10",
+//       timeSlots: [
+//         { startTime: "09:00", endTime: "10:00", availability: "Available" },
+//         { startTime: "10:30", endTime: "11:30", availability: "Unavailable" },
+//         { startTime: "13:00", endTime: "14:00", availability: "Booked" },
+//       ],
+//     },
+//     {
+//       doctorName: "Dr. Smith",
+//       patientName: "",
+//       date: "2025-04-11",
+//       timeSlots: [
+//         { startTime: "08:00", endTime: "09:00", availability: "Available" },
+//         { startTime: "09:30", endTime: "10:30", availability: "Available" },
+//       ],
+//     },
+//   ]);
+
+//   const [showTimeSlotsInfoModal, setShowTimeSlotsInfoModal] = useState(false);
+
+//   const [appointmentData, setAppointmentData] = useState({
+//     doctorName: "",
+//     date: "",
+//     startTime: "",
+//     endTime: "",
+//     availability: "Available",
+//   });
+
+//   const openTimeSlotsInfoModal = (doctorName, date) => {
+//     // Find appointment that matches doctor and date
+//     const appointmentForDay = appointments.find(
+//       (app) => app.doctorName === doctorName && app.date === date
+//     );
+
+//     if (appointmentForDay) {
+//       setSelectedDayInfo({
+//         doctorName: appointmentForDay.doctorName,
+//         date: appointmentForDay.date,
+//         timeSlots: appointmentForDay.timeSlots || [],
+//       });
+//       setShowTimeSlotsInfoModal(true);
+//     } else {
+//       // Handle case when no appointment found
+//       setSelectedDayInfo({
+//         doctorName: doctorName,
+//         date: date,
+//         timeSlots: [],
+//       });
+//       setShowTimeSlotsInfoModal(true);
+//     }
+//   };
+
+//   // Handler to toggle availability for a specific time slot
+//   const toggleTimeSlotAvailability = (slotIndex) => {
+//     const updatedTimeSlots = [...selectedDayInfo.timeSlots];
+
+//     // Cycle through availability states: Available -> Unavailable -> Booked -> Available
+//     const currentStatus = updatedTimeSlots[slotIndex].availability;
+//     let newStatus;
+
+//     switch (currentStatus) {
+//       case "Available":
+//         newStatus = "Unavailable";
+//         break;
+//       case "Unavailable":
+//         newStatus = "Booked";
+//         break;
+//       case "Booked":
+//         newStatus = "Available";
+//         break;
+//       default:
+//         newStatus = "Available";
+//     }
+
+//     updatedTimeSlots[slotIndex].availability = newStatus;
+
+//     // Update selectedDayInfo state
+//     setSelectedDayInfo({
+//       ...selectedDayInfo,
+//       timeSlots: updatedTimeSlots,
+//     });
+//   };
+
+//   const [doctors, setDoctors] = useState([
+//     {
+//       name: "Dr. John Doe",
+//       profession: "Doctor",
+//       email: "hsh@hi.com",
+//     },
+//     {
+//       name: "Sarah",
+//       profession: "Nurse",
+//       email: "hsh@hi.com",
+//     },
+//     {
+//       name: "Dr. Smith",
+//       profession: "Doctor",
+//       email: "hsh@hi.com",
+//     },
+//   ]);
+//   const handleChange = (e) => {
+//     setDoctorData({ ...doctorData, [e.target.name]: e.target.value });
+//   };
+
+//   const handleAppointmentChange = (e) => {
+//     const { name, value } = e.target;
+//     setAppointmentData((prev) => ({
+//       ...prev,
+//       [name]: value,
+//     }));
+//     // Remove the following code that references undeclared updatedTimeSlots:
+//     /*
+//     setAppointments(prevAppointments => {
+//       return prevAppointments.map(app => {
+//         if (app.doctorName === selectedDayInfo.doctorName && app.date === selectedDayInfo.date) {
+//           return {
+//             ...app,
+//             timeSlots: updatedTimeSlots  // This variable isn't defined!
+//           };
+//         }
+//         return app;
+//       });
+//     });
+//     */
+//   };
+
+//   const [error, setError] = useState("");
+
+//   const [startTimeSlotInput, setStartTimeSlotInput] = useState("");
+//   const [endTimeSlotInput, setEndTimeSlotInput] = useState("");
+//   const [selectedAppointmentIndex, setSelectedAppointmentIndex] =
+//     useState(null);
+//   const [showTimeSlotModal, setShowTimeSlotModal] = useState(false);
+
+//   const openTimeSlotModal = (index) => {
+//     setSelectedAppointmentIndex(index);
+//     setShowTimeSlotModal(true);
+//   };
+
+//   // Updated addTimeSlot function to use the object format
+//   const addTimeSlot = () => {
+//     if (
+//       selectedAppointmentIndex !== null &&
+//       startTimeSlotInput &&
+//       endTimeSlotInput
+//     ) {
+//       let updatedAppointments = [...appointments];
+
+//       // Check if timeSlots array exists, if not initialize it
+//       if (!updatedAppointments[selectedAppointmentIndex].timeSlots) {
+//         updatedAppointments[selectedAppointmentIndex].timeSlots = [];
+//       }
+
+//       // Create a time slot with availability status
+//       let newTimeSlot = {
+//         time: `${startTimeSlotInput} - ${endTimeSlotInput}`,
+//         availability: "Available",
+//       };
+
+//       // Check if the new time slot already exists
+//       const timeSlotExists = updatedAppointments[
+//         selectedAppointmentIndex
+//       ].timeSlots.some(
+//         (slot) => typeof slot === "object" && slot.time === newTimeSlot.time
+//       );
+
+//       if (!timeSlotExists) {
+//         updatedAppointments[selectedAppointmentIndex].timeSlots.push(
+//           newTimeSlot
+//         );
+//         setAppointments(updatedAppointments);
+
+//         // Clear inputs
+//         setStartTimeSlotInput("");
+//         setEndTimeSlotInput("");
+//       }
+//     }
+
+//     setShowTimeSlotModal(false);
+//   };
+
+//   // Updated removeTimeSlot function for the new format
+//   const removeTimeSlot = (appointmentIndex, slotIndex) => {
+//     let updatedAppointments = [...appointments];
+//     if (updatedAppointments[appointmentIndex].timeSlots) {
+//       updatedAppointments[appointmentIndex].timeSlots.splice(slotIndex, 1);
+//       setAppointments(updatedAppointments);
+//     }
+//   };
+
+//   const handleSaveDoctor = () => {
+//     // Check if all fields are filled
+//     if (!doctorData.name || !doctorData.email || !doctorData.profession) {
+//       setError("All fields are required.");
+//       return;
+//     }
+
+//     if (editIndex !== null) {
+//       const updatedDoctors = [...doctors];
+//       updatedDoctors[editIndex] = doctorData;
+//       setDoctors(updatedDoctors);
+//       setEditIndex(null);
+//     } else {
+//       setDoctors([...doctors, doctorData]);
+//     }
+
+//     setEditIndex(null);
+//     // Reset fields & hide modal
+//     setDoctorData({
+//       name: "",
+//       profession: "",
+//       email: "",
+//     });
+//     setShowDoctorModal(false);
+//     setError("");
+//   };
+
+//   const handleBookAppointment = () => {
+//     if (
+//       !appointmentData.doctorName ||
+//       !appointmentData.date ||
+//       !appointmentData.startTime ||
+//       !appointmentData.endTime
+//     ) {
+//       setError("All fields are required.");
+//       return;
+//     }
+
+//     const selectedDate = new Date(appointmentData.date);
+//     const today = new Date();
+//     today.setHours(0, 0, 0, 0);
+
+//     if (selectedDate < today) {
+//       setError("Date must be today or a future date.");
+//       return;
+//     }
+
+//     // Add this function to save changes from the modal back to the main appointments state
+//     const saveTimeSlotChanges = () => {
+//       setAppointments((prevAppointments) => {
+//         return prevAppointments.map((app) => {
+//           if (
+//             app.doctorName === selectedDayInfo.doctorName &&
+//             app.date === selectedDayInfo.date
+//           ) {
+//             return {
+//               ...app,
+//               timeSlots: selectedDayInfo.timeSlots,
+//             };
+//           }
+//           return app;
+//         });
+//       });
+//       setShowTimeSlotsInfoModal(false);
+//     };
+//     // Validate Time Difference (0.5 to 3 hours)
+//     const startTime = new Date(`1970-01-01T${appointmentData.startTime}`);
+//     const endTime = new Date(`1970-01-01T${appointmentData.endTime}`);
+//     const timeDiff = (endTime - startTime) / (1000 * 60 * 60); // Convert to hours
+
+//     if (timeDiff < 0.5 || timeDiff > 3) {
+//       setError("Time slot must be between 30 minutes and 3 hours.");
+//       return;
+//     }
+
+//     // If editing, update the list; otherwise, add a new entry
+//     if (editIndex !== null) {
+//       const updatedAppointments = [...appointments];
+//       updatedAppointments[editIndex] = appointmentData;
+//       setAppointments(updatedAppointments);
+//       setEditIndex(null);
+//     } else {
+//       setAppointments([...appointments, appointmentData]);
+//     }
+
+//     setEditIndex(null);
+//     setAppointmentData({
+//       doctorName: "",
+//       date: "",
+//       startTime: "",
+//       endTime: "",
+//     });
+//     setShowAppointmentModal(false);
+//     setError("");
+//   };
+
+//   const handleDoctorEdit = (index) => {
+//     setDoctorData(doctors[index]);
+//     setEditIndex(index);
+//     setShowDoctorModal(true);
+//   };
+
+//   const handleAppointmentEdit = (index) => {
+//     setAppointmentData(appointments[index]);
+//     setEditIndex(index);
+//     setShowAppointmentModal(true);
+//   };
+
+//   const handleCancelModal = () => {
+//     setEditIndex(null);
+//     setDoctorData({
+//       name: "",
+//       profession: "",
+//       email: "",
+//     });
+//     setShowDoctorModal(false);
+//     setError("");
+//   };
+
+//   const handleAppointmentCancelModal = () => {
+//     setEditIndex(null);
+//     setAppointmentData({
+//       doctorName: "",
+//       date: "",
+//       startTime: "",
+//       endTime: "",
+//     });
+//     setShowAppointmentModal(false);
+//     setError("");
+//   };
+//   const handleDoctorDelete = (index) => {
+//     const updatedDoctors = doctors.filter((_, i) => i !== index);
+//     setDoctors(updatedDoctors);
+//   };
+
+//   const handleAppointmentDelete = (index) => {
+//     const updatedAppointments = appointments.filter((_, i) => i !== index);
+//     setAppointments(updatedAppointments);
+//   };
+
+//   useEffect(() => {
+//     console.log("Time Slots:", selectedDayInfo?.timeSlots);
+//   }, [selectedDayInfo]);
+
+//   const toggleAvailability = (doctorName, date, startTime, endTime) => {
+//     setAppointments((prevAppointments) =>
+//       prevAppointments.map((appointment) =>
+//         appointment.doctorName === doctorName &&
+//         appointment.date === date &&
+//         appointment.startTime === startTime &&
+//         appointment.endTime === endTime
+//           ? {
+//               ...appointment,
+//               availability:
+//                 appointment.availability === "Available"
+//                   ? "Unavailable"
+//                   : "Available",
+//             }
+//           : appointment
+//       )
+//     );
+//   };
+//   // Add this function to convert existing string time slots to objects
+//   const convertTimeSlots = () => {
+//     const updatedAppointments = appointments.map((appointment) => {
+//       if (appointment.timeSlots && appointment.timeSlots.length > 0) {
+//         // Check if the first time slot is a string
+//         if (typeof appointment.timeSlots[0] === "string") {
+//           // Convert string time slots to objects
+//           const convertedTimeSlots = appointment.timeSlots.map((slot) => ({
+//             time: slot,
+//             availability: "Available",
+//           }));
+//           return {
+//             ...appointment,
+//             timeSlots: convertedTimeSlots,
+//           };
+//         }
+//       }
+//       return appointment;
+//     });
+
+//     setAppointments(updatedAppointments);
+//   };
+
+//   // Call this function once, perhaps in a useEffect
+//   useEffect(() => {
+//     convertTimeSlots();
+//   }, []);
+//   const [nameFilter, setNameFilter] = useState("");
+//   const [professionFilter, setProfessionFilter] = useState("All");
+//   const [emailFilter, setEmailFilter] = useState("");
+
+//   const filteredDoctors = doctors.filter((doctor) => {
+//     const matchesName =
+//       nameFilter === "" ||
+//       doctor.name.toLowerCase().includes(nameFilter.toLowerCase());
+
+//     const matchesProfession =
+//       professionFilter === "All" || doctor.profession === professionFilter;
+
+//     const matchesEmail =
+//       emailFilter === "" ||
+//       doctor.email.toLowerCase().includes(emailFilter.toLowerCase());
+
+//     return matchesName && matchesProfession && matchesEmail;
+//   });
+
+//   // Filtered Appointments
+
+//   const [doctorFilter, setDoctorFilter] = useState("");
+//   const [availabilityFilter, setAvailabilityFilter] = useState("All");
+//   const [dateFilter, setDateFilter] = useState({ from: "", to: "" });
+//   const [timeFilter, setTimeFilter] = useState({ start: "", end: "" });
+
+//   const filteredAppointments = appointments.filter((appointment) => {
+//     const matchesDoctor =
+//       doctorFilter === "" ||
+//       appointment.doctorName.toLowerCase().includes(doctorFilter.toLowerCase());
+
+//     const matchesAvailability =
+//       availabilityFilter === "All" ||
+//       appointment.availability === availabilityFilter;
+
+//     const matchesDate =
+//       (!dateFilter.from || appointment.date >= dateFilter.from) &&
+//       (!dateFilter.to || appointment.date <= dateFilter.to);
+
+//     const matchesTime =
+//       (!timeFilter.start || appointment.startTime >= timeFilter.start) &&
+//       (!timeFilter.end || appointment.endTime <= timeFilter.end);
+
+//     return matchesDoctor && matchesAvailability && matchesDate && matchesTime;
+//   });
+
+//   return (
+//     <>
+//       <AdminNavBar />
+//       <div className="admin-doctor-wrapper">
+//         <h1>
+//           <strong>Doctor Dashboard</strong>
+//         </h1>
+//         <div className="button-container">
+//           <button
+//             className="button2 add-doctor-btn"
+//             onClick={() => setShowDoctorModal(true)}
+//           >
+//             + Add Doctor
+//           </button>
+
+//           <button
+//             className="button2 book-appointment-btn"
+//             onClick={() => setShowAppointmentModal(true)}
+//           >
+//             Add Doctor Time Slot
+//           </button>
+//         </div>
+
+//         {/* Doctor Filters Section */}
+//         <div className="doctor-filters">
+//           <input
+//             type="text"
+//             placeholder="Search by name..."
+//             value={nameFilter}
+//             onChange={(e) => setNameFilter(e.target.value)}
+//           />
+
+//           <select
+//             value={professionFilter}
+//             onChange={(e) => setProfessionFilter(e.target.value)}
+//           >
+//             <option value="All">All Professions</option>
+//             <option value="Nurse">Nurse</option>
+//             <option value="Doctor">Doctor</option>
+//           </select>
+
+//           <input
+//             type="text"
+//             placeholder="Search by email..."
+//             value={emailFilter}
+//             onChange={(e) => setEmailFilter(e.target.value)}
+//           />
+//         </div>
+
+//         <section className="Admin-Doctor-Table">
+//           <h2>
+//             <strong>Appointments Data</strong>
+//           </h2>
+//           <table className="doctor-list-table">
+//             <thead>
+//               <tr>
+//                 <th className="table-header">Doctor Name</th>
+//                 <th className="table-header">Date</th>
+//                 <th className="table-header">Time Slots</th>
+//                 <th className="table-header">Actions</th>
+//                 <th className="table-header">Info</th>
+//               </tr>
+//             </thead>
+//             <tbody>
+//               {filteredAppointments.map((appointment, index) => (
+//                 <tr key={index}>
+//                   <td className="table-data">{appointment.doctorName}</td>
+//                   <td className="table-data">{appointment.date}</td>
+//                   <td>
+//                     {appointment.timeSlots &&
+//                     appointment.timeSlots.length > 0 ? (
+//                       <span>{appointment.timeSlots.length} time slots</span>
+//                     ) : (
+//                       <span>No time slots</span>
+//                     )}
+//                   </td>
+//                   <td>
+//                     <button onClick={() => openTimeSlotModal(index)}>
+//                       Add Time Slot
+//                     </button>
+//                   </td>
+//                   <td className="table-data">
+//                     {/* Info button to view all time slots */}
+//                     <button
+//                       className="info-button"
+//                       onClick={() =>
+//                         openTimeSlotsInfoModal(
+//                           appointment.doctorName,
+//                           appointment.date
+//                         )
+//                       }
+//                     >
+//                       <svg
+//                         xmlns="http://www.w3.org/2000/svg"
+//                         width="24"
+//                         height="24"
+//                         viewBox="0 0 24 24"
+//                         fill="none"
+//                         stroke="currentColor"
+//                         strokeWidth="2"
+//                         strokeLinecap="round"
+//                         strokeLinejoin="round"
+//                       >
+//                         <circle cx="12" cy="12" r="10"></circle>
+//                         <line x1="12" y1="16" x2="12" y2="12"></line>
+//                         <line x1="12" y1="8" x2="12.01" y2="8"></line>
+//                       </svg>
+//                     </button>
+
+//                     {/* Other action buttons */}
+//                   </td>
+//                 </tr>
+//               ))}
+//             </tbody>
+//           </table>
+//         </section>
+
+//         {/* APPOINTMENT FILTERS */}
+
+//         <div className="doctor-filters">
+//           <input
+//             type="text"
+//             placeholder="Search by doctor's name..."
+//             value={doctorFilter}
+//             onChange={(e) => setDoctorFilter(e.target.value)}
+//           />
+
+//           <select
+//             value={availabilityFilter}
+//             onChange={(e) => setAvailabilityFilter(e.target.value)}
+//           >
+//             <option value="All">All Availability</option>
+//             <option value="Available">Available</option>
+//             <option value="Booked">Booked</option>
+//             <option value="Unavailable">Unavailable</option>
+//           </select>
+
+//           <input
+//             type="date"
+//             onChange={(e) =>
+//               setDateFilter({ ...dateFilter, from: e.target.value })
+//             }
+//           />
+//           <input
+//             type="date"
+//             onChange={(e) =>
+//               setDateFilter({ ...dateFilter, to: e.target.value })
+//             }
+//           />
+
+//           <input
+//             type="time"
+//             onChange={(e) =>
+//               setTimeFilter({ ...timeFilter, start: e.target.value })
+//             }
+//           />
+//           <input
+//             type="time"
+//             onChange={(e) =>
+//               setTimeFilter({ ...timeFilter, end: e.target.value })
+//             }
+//           />
+//         </div>
+
+//         {/* APPOINTMETS TABLE */}
+
+//         <section className="Admin-Doctor-Table">
+//           <h2>
+//             <strong>Appointments Data</strong>
+//           </h2>
+//           <table className="doctor-list-table">
+//             <thead>
+//               <tr>
+//                 <th className="table-header">Doctor Name</th>
+//                 <th className="table-header">Date</th>
+//                 <th className="table-header">Time Slot</th>
+//                 <th className="table-header">Availability</th>
+//                 <th className="table-header">Actions</th>
+//               </tr>
+//             </thead>
+//             <tbody>
+//               {filteredAppointments.map((appointments, index) => (
+//                 <tr key={index}>
+//                   <td className="table-data">{appointments.doctorName}</td>
+//                   <td className="table-data">{appointments.date}</td>
+//                   <td>
+//                     {appointments.timeSlots.length > 0 ? (
+//                       appointments.timeSlots.map((slot, i) => (
+//                         <span key={i} className="time-slot">
+//                           {slot}{" "}
+//                           <button onClick={() => removeTimeSlot(index, i)}>
+//                             ❌
+//                           </button>
+//                         </span>
+//                       ))
+//                     ) : (
+//                       <span>No time slots</span>
+//                     )}
+//                   </td>
+//                   <td>
+//                     <button onClick={() => openTimeSlotModal(index)}>
+//                       Add Time Slot
+//                     </button>
+//                     <button onClick={() => deleteAppointment(index)}>
+//                       Delete
+//                     </button>
+//                   </td>
+//                   <td>
+//                     <button
+//                       className={`table-data status-btn ${appointments.availability}`}
+//                     >
+//                       {appointments.availability}
+//                     </button>
+//                   </td>
+//                   <td className="table-data">
+//                     <span
+//                       // className="edit-doctor-button"
+//                       onClick={() => handleAppointmentEdit(index)}
+//                     >
+//                       <svg
+//                         xmlns="http://www.w3.org/2000/svg"
+//                         width="30px"
+//                         height="30px"
+//                         viewBox="0 0 24 24"
+//                       >
+//                         <g
+//                           fill="none"
+//                           stroke="#e6cb34"
+//                           stroke-linecap="round"
+//                           stroke-linejoin="round"
+//                           stroke-width="2"
+//                         >
+//                           <path
+//                             stroke-dasharray="20"
+//                             stroke-dashoffset="20"
+//                             d="M3 21h18"
+//                           >
+//                             <animate
+//                               fill="freeze"
+//                               attributeName="stroke-dashoffset"
+//                               dur="0.2s"
+//                               values="20;0"
+//                             />
+//                           </path>
+//                           <path
+//                             stroke-dasharray="48"
+//                             stroke-dashoffset="48"
+//                             d="M7 17v-4l10 -10l4 4l-10 10h-4"
+//                           >
+//                             <animate
+//                               fill="freeze"
+//                               attributeName="stroke-dashoffset"
+//                               begin="0.2s"
+//                               dur="0.6s"
+//                               values="48;0"
+//                             />
+//                           </path>
+//                           <path
+//                             stroke-dasharray="8"
+//                             stroke-dashoffset="8"
+//                             d="M14 6l4 4"
+//                           >
+//                             <animate
+//                               fill="freeze"
+//                               attributeName="stroke-dashoffset"
+//                               begin="0.8s"
+//                               dur="0.2s"
+//                               values="8;0"
+//                             />
+//                           </path>
+//                         </g>
+//                         <path
+//                           fill="#e6cb34"
+//                           fill-opacity="0"
+//                           d="M14 6l4 4L21 7L17 3Z"
+//                         >
+//                           <animate
+//                             fill="freeze"
+//                             attributeName="fill-opacity"
+//                             begin="1.1s"
+//                             dur="0.5s"
+//                             values="0;1"
+//                           />
+//                         </path>
+//                       </svg>{" "}
+//                     </span>
+//                     <span
+//                       style={{ marginLeft: "10px" }}
+//                       // className="delete-doctor-button"
+//                       onClick={() => handleAppointmentDelete(index)}
+//                     >
+//                       <svg
+//                         xmlns="http://www.w3.org/2000/svg"
+//                         width="30px"
+//                         height="30px"
+//                         viewBox="0 0 24 24"
+//                       >
+//                         <g
+//                           fill="none"
+//                           stroke="#d51e1e"
+//                           stroke-linecap="round"
+//                           stroke-linejoin="round"
+//                           stroke-width="2"
+//                         >
+//                           <path
+//                             stroke-dasharray="20"
+//                             stroke-dashoffset="20"
+//                             d="M3 21v-1c0 -2.21 1.79 -4 4 -4h4c2.21 0 4 1.79 4 4v1"
+//                           >
+//                             <animate
+//                               fill="freeze"
+//                               attributeName="stroke-dashoffset"
+//                               dur="0.2s"
+//                               values="20;0"
+//                             />
+//                           </path>
+//                           <path
+//                             stroke-dasharray="20"
+//                             stroke-dashoffset="20"
+//                             d="M9 13c-1.66 0 -3 -1.34 -3 -3c0 -1.66 1.34 -3 3 -3c1.66 0 3 1.34 3 3c0 1.66 -1.34 3 -3 3Z"
+//                           >
+//                             <animate
+//                               fill="freeze"
+//                               attributeName="stroke-dashoffset"
+//                               begin="0.2s"
+//                               dur="0.2s"
+//                               values="20;0"
+//                             />
+//                           </path>
+//                           <path
+//                             stroke-dasharray="10"
+//                             stroke-dashoffset="10"
+//                             d="M15 3l6 6"
+//                           >
+//                             <animate
+//                               fill="freeze"
+//                               attributeName="stroke-dashoffset"
+//                               begin="0.5s"
+//                               dur="0.2s"
+//                               values="10;0"
+//                             />
+//                           </path>
+//                           <path
+//                             stroke-dasharray="10"
+//                             stroke-dashoffset="10"
+//                             d="M21 3l-6 6"
+//                           >
+//                             <animate
+//                               fill="freeze"
+//                               attributeName="stroke-dashoffset"
+//                               begin="0.7s"
+//                               dur="0.2s"
+//                               values="10;0"
+//                             />
+//                           </path>
+//                         </g>
+//                       </svg>
+//                     </span>
+//                     <button
+//                       style={{ marginLeft: "10px" }}
+//                       className={`toggle-availability-button ${
+//                         appointments.availability === "Available"
+//                           ? "available-btn"
+//                           : "unavailable-btn"
+//                       }`}
+//                       onClick={() =>
+//                         toggleAvailability(
+//                           appointments.doctorName,
+//                           appointments.date,
+//                           appointments.startTime,
+//                           appointments.endTime
+//                         )
+//                       }
+//                     >
+//                       {appointments.availability === "Available"
+//                         ? "Mark Unavailable"
+//                         : "Mark Available"}
+//                     </button>
+//                   </td>
+//                 </tr>
+//               ))}
+//             </tbody>
+//           </table>
+//         </section>
+
+//         {/* MODAL */}
+//         {showDoctorModal && (
+//           <div className="doctor-modal-overlay">
+//             <div className="doctor-modal-box">
+//               <h2>{editIndex !== null ? "Edit Doctor" : "Add Doctor"}</h2>
+
+//               <label>Name:</label>
+//               <input
+//                 className="doctor-modal-input"
+//                 type="text"
+//                 name="name"
+//                 value={doctorData.name}
+//                 onChange={handleChange}
+//                 required
+//               />
+
+//               <label>Profession:</label>
+//               <select
+//                 className="doctor-modal-input"
+//                 name="profession"
+//                 value={doctorData.profession}
+//                 onChange={handleChange}
+//                 required
+//               >
+//                 <option value="">Select Profession</option>
+//                 <option value="Nurse">Nurse</option>
+//                 <option value="Doctor">Doctor</option>
+//               </select>
+
+//               <label>Email:</label>
+//               <input
+//                 className="doctor-modal-input"
+//                 type="email"
+//                 name="email"
+//                 value={doctorData.email}
+//                 onChange={handleChange}
+//                 required
+//               />
+//               {/* Error Message */}
+//               {error && <p className="error-message">{error}</p>}
+//               <div className="doctor-modal-actions">
+//                 <button
+//                   className="doctor-save-button"
+//                   onClick={handleSaveDoctor}
+//                 >
+//                   {editIndex !== null ? "Update" : "Add"}
+//                 </button>
+//                 <button
+//                   className="doctor-cancel-button"
+//                   onClick={() => handleCancelModal()}
+//                 >
+//                   Cancel
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         )}
+
+//         {showTimeSlotModal && (
+//           <div className="doctor-modal-overlay">
+//             <div className="doctor-modal-box">
+//               <h3>Add Time Slot</h3>
+//               <label>Select Start Time</label>
+//               <input
+//                 name="startTime"
+//                 className="doctor-modal-input"
+//                 type="time"
+//                 value={startTimeSlotInput}
+//                 onChange={(e) => setStartTimeSlotInput(e.target.value)}
+//               />
+//               <label>Select End Time</label>
+//               <input
+//                 name="endTime"
+//                 className="doctor-modal-input"
+//                 type="time"
+//                 value={endTimeSlotInput}
+//                 onChange={(e) => setEndTimeSlotInput(e.target.value)}
+//               />
+//               <button onClick={addTimeSlot}>Add</button>
+//               <button onClick={() => setShowTimeSlotModal(false)}>Close</button>
+//             </div>
+//           </div>
+//         )}
+
+//         {showTimeSlotsInfoModal && (
+//           <div className="doctor-modal-overlay">
+//             <div className="doctor-modal-box">
+//               <h2>Time Slots for {selectedDayInfo.doctorName}</h2>
+//               <h3>Date: {selectedDayInfo.date}</h3>
+
+//               {selectedDayInfo.timeSlots &&
+//               selectedDayInfo.timeSlots.length > 0 ? (
+//                 <div className="time-slots-info-container">
+//                   <table className="time-slots-table">
+//                     <thead>
+//                       <tr>
+//                         <th>Time Slot</th>
+//                         <th>Status</th>
+//                         <th>Action</th>
+//                       </tr>
+//                     </thead>
+//                     <tbody>
+//                     {selectedDayInfo?.timeSlots?.length > 0 ? (
+//   selectedDayInfo.timeSlots.map((slot, idx) => (
+//     <tr key={idx}>
+//       <td>{slot?.startTime || "N/A"}</td>
+//       <td>{slot?.endTime || "N/A"}</td>
+//       <td>
+//         <span className={`status-badge ${slot?.availability?.toLowerCase() || ""}`}>
+//           {slot?.availability || "Unknown"}
+//         </span>
+//       </td>
+//       <td>
+//         <button
+//           className="toggle-button"
+//           onClick={() => toggleTimeSlotAvailability(idx)}
+//         >
+//           Change Status
+//         </button>
+//       </td>
+//     </tr>
+//   ))
+// ) : (
+//   <tr>
+//     <td colSpan="4">No time slots available</td>
+//   </tr>
+// )}
+
+//                     </tbody>
+//                   </table>
+//                 </div>
+//               ) : (
+//                 <p>No time slots available for this date.</p>
+//               )}
+
+//               <div className="doctor-modal-actions">
+//                 <button
+//                   className="doctor-save-button"
+//                   onClick={saveTimeSlotChanges}
+//                 >
+//                   Save Changes
+//                 </button>
+//                 <button
+//                   className="doctor-cancel-button"
+//                   onClick={() => setShowTimeSlotsInfoModal(false)}
+//                 >
+//                   Cancel
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         )}
+//         {showAppointmentModal && (
+//           <div className="doctor-modal-overlay">
+//             <div className="doctor-modal-box">
+//               <h2>Add Doctor Time Slot</h2>
+
+//               <label>Select Doctor/Nurse:</label>
+//               <select
+//                 className="doctor-modal-input"
+//                 name="doctorName"
+//                 value={appointmentData.doctorName}
+//                 onChange={handleAppointmentChange}
+//                 required
+//               >
+//                 <option value="">Select a Doctor/Nurse</option>
+//                 {doctors.map((app, index) => (
+//                   <option key={index} value={app.name}>
+//                     {app.name} ({app.profession})
+//                   </option>
+//                 ))}
+//               </select>
+
+//               <label>Date:</label>
+//               <input
+//                 className="doctor-modal-input"
+//                 type="date"
+//                 name="date"
+//                 value={appointmentData.date}
+//                 onChange={handleAppointmentChange}
+//                 required
+//               />
+
+//               <label className="doctor-modal-label">Time Slot:</label>
+//               <div className="time-slot-container">
+//                 <input
+//                   type="time"
+//                   name="startTime"
+//                   value={appointmentData.startTime}
+//                   className="doctor-modal-input"
+//                   onChange={handleAppointmentChange}
+//                   required
+//                 />
+//                 <span className="time-slot-separator"> to </span>
+//                 <input
+//                   type="time"
+//                   name="endTime"
+//                   value={appointmentData.endTime}
+//                   className="doctor-modal-input"
+//                   onChange={handleAppointmentChange}
+//                   required
+//                 />
+//               </div>
+//               {/* Error Message */}
+//               {error && <p className="error-message">{error}</p>}
+
+//               <div className="doctor-modal-actions">
+//                 <button
+//                   className="doctor-save-button"
+//                   onClick={handleBookAppointment}
+//                 >
+//                   {editIndex !== null ? "Update" : "Add"}
+//                 </button>
+//                 <button
+//                   className="doctor-cancel-button"
+//                   onClick={() => handleAppointmentCancelModal()}
+//                 >
+//                   Cancel
+//                 </button>
+//               </div>
+//             </div>
+//           </div>
+//         )}
+//       </div>
+//     </>
+//   );
+// };
+
+// export default AdminManageDoctor;
+
+import React, { useState, useEffect } from "react";
 import "./Admin_Manage_Doctor.css";
 import AdminNavBar from "./AdminNavBar";
+import { webApiInstance } from "../../AxiosInstance";
+import { toast } from "react-toastify";
 
 const AdminManageDoctor = () => {
   const [showDoctorModal, setShowDoctorModal] = useState(false);
   const [showAppointmentModal, setShowAppointmentModal] = useState(false);
-  const [selectedDoctor, setSelectedDoctor] = useState(null);
-  const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [showTimeSlotModal, setShowTimeSlotModal] = useState(false);
+  const [showTimeSlotsInfoModal, setShowTimeSlotsInfoModal] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
+  const [error, setError] = useState("");
+
+  // Form inputs
   const [doctorData, setDoctorData] = useState({
     name: "",
     profession: "",
     email: "",
   });
-  const [appointments, setAppointments] = useState([
-    {
-      doctorName: "Dr. Sarah Ahmed",
-      date: "2025-03-18",
-      startTime: "10:00 AM",
-      endTime: "11:00 AM",
-      availability: "Available",
-    },
-    {
-      doctorName: "Dr. Ali Khan",
-      date: "2025-03-19",
-      startTime: "02:00 PM",
-      endTime: "03:00 PM",
-      availability: "Booked",
-    },
-    {
-      doctorName: "Dr. Ayesha Malik",
-      date: "2025-03-20",
-      startTime: "09:00 AM",
-      endTime: "10:30 AM",
-      availability: "Available",
-    },
-    {
-      doctorName: "Dr. Omar Farooq",
-      date: "2025-03-21",
-      startTime: "11:30 AM",
-      endTime: "12:30 PM",
-      availability: "Unavailable",
-    },
-    {
-      doctorName: "Dr. Hina Rehman",
-      date: "2025-03-22",
-      startTime: "12:10",
-      endTime: "14:59",
-      availability: "Available",
-    },
-  ]);
 
   const [appointmentData, setAppointmentData] = useState({
+    doctorId: "",
     doctorName: "",
     date: "",
-    startTime: "",
-    endTime: "",
-    availability: "Available",
+    timeSlots: [],
   });
 
-  const [doctors, setDoctors] = useState([
-    {
-      name: "Dr. John Doe",
-      profession: "Doctor",
-      email: "hsh@hi.com",
-    },
-    {
-      name: "Sarah",
-      profession: "Nurse",
-      email: "hsh@hi.com",
-    },
-    {
-      name: "Dr. Smith",
-      profession: "Doctor",
-      email: "hsh@hi.com",
-    },
-  ]);
+  const [startTimeSlotInput, setStartTimeSlotInput] = useState("");
+  const [endTimeSlotInput, setEndTimeSlotInput] = useState("");
+  const [selectedAppointmentIndex, setSelectedAppointmentIndex] =
+    useState(null);
+
+  // Selected data for modals
+  const [selectedDayInfo, setSelectedDayInfo] = useState({
+    doctorName: "",
+    date: "",
+    timeSlots: [],
+  });
+
+  const updateAppointmentsAfterSlotRemoval = (dayInfo, removedSlotIndex) => {
+    // Find the corresponding appointment in your data source
+    // This will depend on your data structure
+    // For example, if you have a flat list of appointments:
+
+    // Find the matching appointment by doctor name and date
+    const appointmentToUpdate = appointments.find(
+      (app) =>
+        app.doctorName === dayInfo.doctorName && app.date === dayInfo.date
+    );
+
+    if (appointmentToUpdate) {
+      // Update the time slots
+      appointmentToUpdate.timeSlots = dayInfo.timeSlots;
+
+      // If you need to update the state with the modified appointments
+      setAppointments([...appointments]);
+
+      // If you're using an API, make the update call here
+      // saveAppointmentToAPI(appointmentToUpdate);
+    }
+  };
+  // Filter states
+  const [nameFilter, setNameFilter] = useState("");
+  const [professionFilter, setProfessionFilter] = useState("All");
+  const [emailFilter, setEmailFilter] = useState("");
+  const [doctorFilter, setDoctorFilter] = useState("");
+  const [availabilityFilter, setAvailabilityFilter] = useState("All");
+  const [dateFilter, setDateFilter] = useState({ from: "", to: "" });
+  const [timeFilter, setTimeFilter] = useState({ start: "", end: "" });
+  const [professionLookup, setProfessionLookup] = useState([]);
+
+  // Main data
+  const [doctors, setDoctors] = useState([]);
+
+  const [appointments, setAppointments] = useState([]);
+  useEffect(() => {
+    // Simulating an API call
+    const fetchAppointments = async () => {
+      const response = await webApiInstance.get("/Doctor/get-all-availbility");
+      const data = await response.data.result;
+      console.log(data);
+
+      // Set the data received from the API into the state
+      setAppointments(data);
+    };
+
+    fetchAppointments();
+  }, []); //
+
+  // Handle opening the time slots info modal
+  const openTimeSlotsInfoModal = (doctorName, date) => {
+    const appointmentForDay = appointments.find(
+      (app) => app.doctorName === doctorName && app.date === date
+    );
+
+    if (appointmentForDay) {
+      setSelectedDayInfo({
+        doctorName: appointmentForDay.doctorName,
+        date: appointmentForDay.date,
+        timeSlots: appointmentForDay.timeSlots || [],
+      });
+    } else {
+      setSelectedDayInfo({
+        doctorName: doctorName,
+        date: date,
+        timeSlots: [],
+      });
+    }
+    setShowTimeSlotsInfoModal(true);
+  };
+
+  // Toggle availability for a time slot
+  const toggleTimeSlotAvailability = (slotIndex) => {
+    setSelectedDayInfo((prevInfo) => {
+      const updatedTimeSlots = prevInfo.timeSlots.map((slot, index) => {
+        if (index === slotIndex) {
+          // Prevent changing status if the slot is booked
+          if (slot.isBooked) {
+            alert("Cannot change status of a booked time slot.");
+            return slot;
+          }
+
+          // Toggle status
+          const newStatus =
+            slot.statusName === "Available" ? "Unavailable" : "Available";
+
+          return { ...slot, statusName: newStatus, isToggled: true }; // Mark as toggled
+        }
+        return slot;
+      });
+
+      return { ...prevInfo, timeSlots: updatedTimeSlots };
+    });
+  };
+
+  // Form change handlers
   const handleChange = (e) => {
     setDoctorData({ ...doctorData, [e.target.name]: e.target.value });
+  };
+
+  const handleToggleTimeSlot = (slotId) => {
+    setSelectedDayInfo((prevInfo) => ({
+      ...prevInfo,
+      timeSlots: prevInfo.timeSlots.map((slot) =>
+        slot.id === slotId ? { ...slot, isToggled: !slot.isToggled } : slot
+      ),
+    }));
   };
 
   const handleAppointmentChange = (e) => {
@@ -88,9 +1222,69 @@ const AdminManageDoctor = () => {
     }));
   };
 
-  const [error, setError] = useState("");
+  // Modal handlers
+  const openTimeSlotModal = (index) => {
+    setSelectedAppointmentIndex(index);
+    setShowTimeSlotModal(true);
+  };
 
-  const handleSaveDoctor = () => {
+  // Save functions
+  const saveTimeSlotChanges = async () => {
+    try {
+      // Extract the list of time slot IDs from selectedDayInfo.timeSlots
+      const toggledTimeSlotIds = selectedDayInfo.timeSlots
+        .filter((slot) => slot.isToggled) // Only send slots that were toggled
+        .map((slot) => slot.id);
+
+      if (toggledTimeSlotIds.length === 0) {
+        toast.error("No time slots selected for update.");
+        return;
+      }
+
+      // API request payload
+      const payload = {
+        timeSlotIds: toggledTimeSlotIds,
+      };
+
+      // Send the PUT request
+      const response = await webApiInstance.put(
+        "/Doctor/toggle-availbility-timeslots-status", // Replace with actual API endpoint
+        payload
+      );
+
+      if (response.status === 200) {
+        const updatedTimeSlots = selectedDayInfo.timeSlots.map((slot) => {
+          const updatedSlot = response.data.result.find(
+            (updated) => updated.id === slot.id
+          );
+
+          return updatedSlot
+            ? { ...slot, statusName: updatedSlot.statusName }
+            : slot;
+        });
+
+        // Update state with new time slot statuses
+        setAppointments((prevAppointments) =>
+          prevAppointments.map((app) =>
+            app.doctorName === selectedDayInfo.doctorName &&
+            app.date === selectedDayInfo.date
+              ? { ...app, timeSlots: updatedTimeSlots }
+              : app
+          )
+        );
+        toast.success("Time slots status updated successfully!");
+        setShowTimeSlotsInfoModal(false);
+      } else {
+        console.error("Failed to update time slots");
+        toast.error("Error updating time slots. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error updating time slots:", error);
+      toast.error("An error occurred while updating time slots.");
+    }
+  };
+
+  const handleSaveDoctor = async () => {
     // Check if all fields are filled
     if (!doctorData.name || !doctorData.email || !doctorData.profession) {
       setError("All fields are required.");
@@ -101,9 +1295,26 @@ const AdminManageDoctor = () => {
       const updatedDoctors = [...doctors];
       updatedDoctors[editIndex] = doctorData;
       setDoctors(updatedDoctors);
-      setEditIndex(null);
     } else {
-      setDoctors([...doctors, doctorData]);
+      try {
+        const response = await webApiInstance.post("/Doctor", {
+          name: doctorData.name,
+          email: doctorData.email,
+          profession: doctorData.profession,
+        });
+
+        console.log("New Doctor", response);
+        const newDoctor = response.data.result;
+        console.log("New Doctor", newDoctor);
+        setDoctors([...doctors, newDoctor]); // Update state with the new doctor
+
+        // Reset form & close modal
+        setDoctorData({ name: "", profession: "", email: "" });
+        setShowDoctorModal(false);
+        setError("");
+      } catch (error) {
+        setError(error.response?.data?.message || "Something went wrong.");
+      }
     }
 
     setEditIndex(null);
@@ -117,13 +1328,8 @@ const AdminManageDoctor = () => {
     setError("");
   };
 
-  const handleBookAppointment = () => {
-    if (
-      !appointmentData.doctorName ||
-      !appointmentData.date ||
-      !appointmentData.startTime ||
-      !appointmentData.endTime
-    ) {
+  const handleBookAppointment = async () => {
+    if (!appointmentData.doctorName || !appointmentData.date) {
       setError("All fields are required.");
       return;
     }
@@ -137,47 +1343,176 @@ const AdminManageDoctor = () => {
       return;
     }
 
-    // Validate Time Difference (0.5 to 3 hours)
-    const startTime = new Date(`1970-01-01T${appointmentData.startTime}`);
-    const endTime = new Date(`1970-01-01T${appointmentData.endTime}`);
-    const timeDiff = (endTime - startTime) / (1000 * 60 * 60); // Convert to hours
+    const selectedDoctor = doctors.find(
+      (doc) => doc.name === appointmentData.doctorName
+    );
 
-    if (timeDiff < 0.5 || timeDiff > 3) {
-      setError("Time slot must be between 30 minutes and 3 hours.");
+    if (!selectedDoctor) {
+      setError("Selected doctor not found.");
       return;
     }
 
-    // If editing, update the list; otherwise, add a new entry
-    if (editIndex !== null) {
+    // Check if appointment for this doctor and date already exists
+    const existingAppIndex = appointments.findIndex(
+      (app) =>
+        app.doctorName === appointmentData.doctorName &&
+        app.date === appointmentData.date
+    );
+
+    if (existingAppIndex !== -1) {
+      // Add time slot to existing appointment
       const updatedAppointments = [...appointments];
-      updatedAppointments[editIndex] = appointmentData;
+      updatedAppointments[existingAppIndex].timeSlots.push(newTimeSlot);
       setAppointments(updatedAppointments);
-      setEditIndex(null);
     } else {
-      setAppointments([...appointments, appointmentData]);
+      const newAppointment = {
+        doctorId: selectedDoctor.id,
+        date: appointmentData.date,
+      };
+
+      console.log(newAppointment);
+      try {
+        const response = await webApiInstance.post(
+          "/Doctor/add-availbility",
+          newAppointment
+        );
+        console.log(response.data.result); // Replace with your API endpoint
+        setAppointments([...appointments, response.data.result]); // Update state with API response
+
+        // Reset form
+        setAppointmentData({
+          doctorName: "",
+          date: "",
+        });
+        setShowAppointmentModal(false);
+        setError("");
+      } catch (err) {
+        console.error("Error booking appointment:", err);
+        toast.error("Failed to book appointment. Please try again.");
+      }
     }
+  };
+  // Add a new time slot to an existing appointment
+  const addTimeSlot = async () => {
+    if (
+      selectedAppointmentIndex !== null &&
+      startTimeSlotInput &&
+      endTimeSlotInput
+    ) {
+      const startTime = new Date(`1970-01-01T${startTimeSlotInput}`);
+      const endTime = new Date(`1970-01-01T${endTimeSlotInput}`);
+      const timeDiff = (endTime - startTime) / (1000 * 60);
 
-    setEditIndex(null);
-    setAppointmentData({
-      doctorName: "",
-      date: "",
-      startTime: "",
-      endTime: "",
-    });
-    setShowAppointmentModal(false);
-    setError("");
+      // Validate time slot duration (30 mins - 3 hours)
+      if (timeDiff < 30 || timeDiff > 180) {
+        setError("Time slot must be between 30 minutes and 3 hours.");
+        return;
+      }
+
+      const updatedAppointments = [...appointments];
+
+      console.log(appointments[selectedAppointmentIndex].id);
+      console.log(startTimeSlotInput);
+      const newTimeSlot = {
+        availbilityId: appointments[selectedAppointmentIndex].id, // Assuming the appointment ID is used as availabilityId
+        startTime: startTimeSlotInput,
+        endTime: endTimeSlotInput,
+      };
+
+      // Check if new time slot conflicts with existing ones
+      const isOverlap = updatedAppointments[
+        selectedAppointmentIndex
+      ].timeSlots.some((slot) => checkOverlap(slot, newTimeSlot));
+
+      if (isOverlap) {
+        setError("This time slot overlaps with an existing one.");
+        return;
+      }
+
+      try {
+        // API request to save the time slot
+        const response = await webApiInstance.post(
+          "/Doctor/add-availbility-timeslot",
+          newTimeSlot
+        );
+        console.log(response);
+        if (response.status === 200) {
+          const updatedAppointments = [...appointments];
+
+          // Add the new time slot to the UI
+          updatedAppointments[selectedAppointmentIndex].timeSlots.push(
+            newTimeSlot
+          );
+          setAppointments(updatedAppointments);
+
+          // Clear inputs & errors
+
+          toast.success("Time slot added successfully!");
+        } else {
+          throw new Error("Failed to add time slot.");
+        }
+      } catch (error) {
+        setError("Error adding time slot. Please try again.");
+        console.error("API Error:", error);
+      }
+
+      setStartTimeSlotInput("");
+      setEndTimeSlotInput("");
+      setError("");
+      setShowTimeSlotModal(false);
+    }
   };
 
-  const handleDoctorEdit = (index) => {
-    setDoctorData(doctors[index]);
-    setEditIndex(index);
-    setShowDoctorModal(true);
+  const checkOverlap = (existingSlot, newSlot) => {
+    const existingStart = convertToMinutes(existingSlot.startTime);
+    const existingEnd = convertToMinutes(existingSlot.endTime);
+    const newStart = convertToMinutes(newSlot.startTime);
+    const newEnd = convertToMinutes(newSlot.endTime);
+
+    return Math.max(existingStart, newStart) < Math.min(existingEnd, newEnd);
   };
 
-  const handleAppointmentEdit = (index) => {
-    setAppointmentData(appointments[index]);
-    setEditIndex(index);
-    setShowAppointmentModal(true);
+  // Converts "HH:MM" to total minutes for easy comparison
+  const convertToMinutes = (time) => {
+    const [hours, minutes] = time.split(":").map(Number);
+    return hours * 60 + minutes;
+  };
+
+  // Handlers for edit, delete, and modal actions
+
+  const handleAppointmentDelete = (index) => {
+    const updatedAppointments = appointments.filter((_, i) => i !== index);
+    setAppointments(updatedAppointments);
+  };
+
+  const deleteAppointment = (index) => {
+    handleAppointmentDelete(index);
+  };
+
+  const removeTimeSlot = (slotIndex) => {
+    // Show confirmation dialog before deletion
+    if (
+      window.confirm(
+        "Are you sure you want to remove this time slot? This action cannot be undone."
+      )
+    ) {
+      // Create a copy of the selected day info
+      const updatedDayInfo = { ...selectedDayInfo };
+
+      // Remove the time slot at the specified index
+      updatedDayInfo.timeSlots.splice(slotIndex, 1);
+
+      // Update the selectedDayInfo state
+      setSelectedDayInfo(updatedDayInfo);
+
+      // Update your data source (appointments, database, etc.)
+      // This part will depend on how your data is structured
+      // Option 1: If you're working with a local state:
+      updateAppointmentsAfterSlotRemoval(updatedDayInfo, slotIndex);
+
+      // Optional: Close modal or show notification
+      // showNotification("Time slot successfully removed");
+    }
   };
 
   const handleCancelModal = () => {
@@ -190,51 +1525,63 @@ const AdminManageDoctor = () => {
     setShowDoctorModal(false);
     setError("");
   };
+  useEffect(() => {
+    const FetchLookups = async () => {
+      try {
+        const professionResponse = await webApiInstance.get(
+          "/Lookup/get-by-type",
+          {
+            params: { type: "Profession" },
+          }
+        );
+        console.log("Profession Lookup:", professionResponse.data.result);
+        setProfessionLookup(professionResponse.data.result);
+      } catch (error) {
+        console.error("Error fetching lookup data:", error);
+        setProfessionLookup([]);
+      }
+    };
+
+    FetchLookups();
+  }, []);
+
+  const handleDoctorEdit = (index) => {
+    setDoctorData(doctors[index]);
+    setEditIndex(index);
+    setShowDoctorModal(true);
+  };
 
   const handleAppointmentCancelModal = () => {
     setEditIndex(null);
     setAppointmentData({
       doctorName: "",
       date: "",
-      startTime: "",
-      endTime: "",
     });
     setShowAppointmentModal(false);
     setError("");
   };
+
   const handleDoctorDelete = (index) => {
     const updatedDoctors = doctors.filter((_, i) => i !== index);
     setDoctors(updatedDoctors);
   };
 
-  const handleAppointmentDelete = (index) => {
-    const updatedAppointments = appointments.filter((_, i) => i !== index);
-    setAppointments(updatedAppointments);
-  };
+  useEffect(() => {
+    const fetchDoctors = async () => {
+      try {
+        const response = await webApiInstance.get("/Doctor"); // Replace with your API URL
+        console.log(response);
+        setDoctors(response.data.result); // Assuming API returns an array
+      } catch (err) {
+        console.error("Error fetching doctors:", err);
+        setError("Failed to fetch doctors");
+      }
+    };
 
-  const toggleAvailability = (doctorName, date, startTime, endTime) => {
-    setAppointments((prevAppointments) =>
-      prevAppointments.map((appointment) =>
-        appointment.doctorName === doctorName &&
-        appointment.date === date &&
-        appointment.startTime === startTime &&
-        appointment.endTime === endTime
-          ? {
-              ...appointment,
-              availability:
-                appointment.availability === "Available"
-                  ? "Unavailable"
-                  : "Available",
-            }
-          : appointment
-      )
-    );
-  };
+    fetchDoctors();
+  }, []); // Runs only once on mount
 
-  const [nameFilter, setNameFilter] = useState("");
-  const [professionFilter, setProfessionFilter] = useState("All");
-  const [emailFilter, setEmailFilter] = useState("");
-
+  // Filtering logic
   const filteredDoctors = doctors.filter((doctor) => {
     const matchesName =
       nameFilter === "" ||
@@ -250,31 +1597,20 @@ const AdminManageDoctor = () => {
     return matchesName && matchesProfession && matchesEmail;
   });
 
-  // Filtered Appointments
-
-  const [doctorFilter, setDoctorFilter] = useState("");
-  const [availabilityFilter, setAvailabilityFilter] = useState("All");
-  const [dateFilter, setDateFilter] = useState({ from: "", to: "" });
-  const [timeFilter, setTimeFilter] = useState({ start: "", end: "" });
-
   const filteredAppointments = appointments.filter((appointment) => {
     const matchesDoctor =
       doctorFilter === "" ||
       appointment.doctorName.toLowerCase().includes(doctorFilter.toLowerCase());
 
-    const matchesAvailability =
-      availabilityFilter === "All" ||
-      appointment.availability === availabilityFilter;
+    // Skip availability check since it's now at the time slot level
 
     const matchesDate =
       (!dateFilter.from || appointment.date >= dateFilter.from) &&
       (!dateFilter.to || appointment.date <= dateFilter.to);
 
-    const matchesTime =
-      (!timeFilter.start || appointment.startTime >= timeFilter.start) &&
-      (!timeFilter.end || appointment.endTime <= timeFilter.end);
+    // Skip time check since start/end times are now in time slots
 
-    return matchesDoctor && matchesAvailability && matchesDate && matchesTime;
+    return matchesDoctor && matchesDate;
   });
 
   return (
@@ -326,9 +1662,10 @@ const AdminManageDoctor = () => {
           />
         </div>
 
+        {/* Doctor Table */}
         <section className="Admin-Doctor-Table">
           <h2>
-            <strong>Doctors Data</strong>
+            <strong>Doctors & Nurses</strong>
           </h2>
           <table className="doctor-list-table">
             <thead>
@@ -346,9 +1683,9 @@ const AdminManageDoctor = () => {
                   <td className="table-data">{doctor.profession}</td>
                   <td className="table-data">{doctor.email}</td>
                   <td className="table-data">
-                    <span
-                      // className="edit-doctor-button"
+                    {/* <span
                       onClick={() => handleDoctorEdit(index)}
+                      style={{ cursor: "pointer", marginRight: "10px" }}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -359,13 +1696,13 @@ const AdminManageDoctor = () => {
                         <g
                           fill="none"
                           stroke="#e6cb34"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
                         >
                           <path
-                            stroke-dasharray="20"
-                            stroke-dashoffset="20"
+                            strokeDasharray="20"
+                            strokeDashoffset="20"
                             d="M3 21h18"
                           >
                             <animate
@@ -376,8 +1713,8 @@ const AdminManageDoctor = () => {
                             />
                           </path>
                           <path
-                            stroke-dasharray="48"
-                            stroke-dashoffset="48"
+                            strokeDasharray="48"
+                            strokeDashoffset="48"
                             d="M7 17v-4l10 -10l4 4l-10 10h-4"
                           >
                             <animate
@@ -389,8 +1726,8 @@ const AdminManageDoctor = () => {
                             />
                           </path>
                           <path
-                            stroke-dasharray="8"
-                            stroke-dashoffset="8"
+                            strokeDasharray="8"
+                            strokeDashoffset="8"
                             d="M14 6l4 4"
                           >
                             <animate
@@ -404,7 +1741,7 @@ const AdminManageDoctor = () => {
                         </g>
                         <path
                           fill="#e6cb34"
-                          fill-opacity="0"
+                          fillOpacity="0"
                           d="M14 6l4 4L21 7L17 3Z"
                         >
                           <animate
@@ -415,12 +1752,11 @@ const AdminManageDoctor = () => {
                             values="0;1"
                           />
                         </path>
-                      </svg>{" "}
-                    </span>
+                      </svg>
+                    </span> */}
                     <span
-                      style={{ marginLeft: "10px" }}
-                      // className="delete-doctor-button"
                       onClick={() => handleDoctorDelete(index)}
+                      style={{ cursor: "pointer" }}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -431,13 +1767,13 @@ const AdminManageDoctor = () => {
                         <g
                           fill="none"
                           stroke="#d51e1e"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
                         >
                           <path
-                            stroke-dasharray="20"
-                            stroke-dashoffset="20"
+                            strokeDasharray="20"
+                            strokeDashoffset="20"
                             d="M3 21v-1c0 -2.21 1.79 -4 4 -4h4c2.21 0 4 1.79 4 4v1"
                           >
                             <animate
@@ -448,8 +1784,8 @@ const AdminManageDoctor = () => {
                             />
                           </path>
                           <path
-                            stroke-dasharray="20"
-                            stroke-dashoffset="20"
+                            strokeDasharray="20"
+                            strokeDashoffset="20"
                             d="M9 13c-1.66 0 -3 -1.34 -3 -3c0 -1.66 1.34 -3 3 -3c1.66 0 3 1.34 3 3c0 1.66 -1.34 3 -3 3Z"
                           >
                             <animate
@@ -461,8 +1797,8 @@ const AdminManageDoctor = () => {
                             />
                           </path>
                           <path
-                            stroke-dasharray="10"
-                            stroke-dashoffset="10"
+                            strokeDasharray="10"
+                            strokeDashoffset="10"
                             d="M15 3l6 6"
                           >
                             <animate
@@ -474,8 +1810,8 @@ const AdminManageDoctor = () => {
                             />
                           </path>
                           <path
-                            stroke-dasharray="10"
-                            stroke-dashoffset="10"
+                            strokeDasharray="10"
+                            strokeDashoffset="10"
                             d="M21 3l-6 6"
                           >
                             <animate
@@ -496,8 +1832,7 @@ const AdminManageDoctor = () => {
           </table>
         </section>
 
-        {/* APPOINTMENT FILTERS */}
-
+        {/* Appointment Filters */}
         <div className="doctor-filters">
           <input
             type="text"
@@ -506,45 +1841,23 @@ const AdminManageDoctor = () => {
             onChange={(e) => setDoctorFilter(e.target.value)}
           />
 
-          <select
-            value={availabilityFilter}
-            onChange={(e) => setAvailabilityFilter(e.target.value)}
-          >
-            <option value="All">All Availability</option>
-            <option value="Available">Available</option>
-            <option value="Booked">Booked</option>
-            <option value="Unavailable">Unavailable</option>
-          </select>
-
           <input
             type="date"
+            placeholder="From date"
             onChange={(e) =>
               setDateFilter({ ...dateFilter, from: e.target.value })
             }
           />
           <input
             type="date"
+            placeholder="To date"
             onChange={(e) =>
               setDateFilter({ ...dateFilter, to: e.target.value })
             }
           />
-
-          <input
-            type="time"
-            onChange={(e) =>
-              setTimeFilter({ ...timeFilter, start: e.target.value })
-            }
-          />
-          <input
-            type="time"
-            onChange={(e) =>
-              setTimeFilter({ ...timeFilter, end: e.target.value })
-            }
-          />
         </div>
 
-        {/* APPOINTMETS TABLE */}
-
+        {/* Appointments Table */}
         <section className="Admin-Doctor-Table">
           <h2>
             <strong>Appointments Data</strong>
@@ -554,198 +1867,106 @@ const AdminManageDoctor = () => {
               <tr>
                 <th className="table-header">Doctor Name</th>
                 <th className="table-header">Date</th>
-                <th className="table-header">Time Slot</th>
-                <th className="table-header">Availability</th>
+                <th className="table-header">Time Slots</th>
                 <th className="table-header">Actions</th>
+                <th className="table-header">Info</th>
               </tr>
             </thead>
             <tbody>
-              {filteredAppointments.map((appointments, index) => (
-                <tr key={index}>
-                  <td className="table-data">{appointments.doctorName}</td>
-                  <td className="table-data">{appointments.date}</td>
-                  <td className="table-data">
-                    {appointments.startTime} - {appointments.endTime}
-                  </td>
-                  <td>
-                    <button
-                      className={`table-data status-btn ${appointments.availability}`}
-                    >
-                      {appointments.availability}
-                    </button>
-                  </td>
-                  <td className="table-data">
-                    <span
-                      // className="edit-doctor-button"
-                      onClick={() => handleAppointmentEdit(index)}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="30px"
-                        height="30px"
-                        viewBox="0 0 24 24"
+              {filteredAppointments.map((appointment, index) => {
+                const hasTimeSlots = appointment.timeSlots?.length > 0;
+                const isDeletable = !appointment.timeSlots?.some(
+                  (slot) => slot.availability === "Booked"
+                );
+
+                return (
+                  <tr key={appointment.id}>
+                    <td className="table-data">{appointment.doctorName}</td>
+                    <td className="table-data">{appointment.date}</td>
+                    <td>
+                      {hasTimeSlots ? (
+                        <span>{appointment.timeSlots.length} time slots</span>
+                      ) : (
+                        <span>No time slots</span>
+                      )}
+                    </td>
+                    <td>
+                      <div className="table-btn-container">
+                        <button
+                          className="btn add-time-slot-btn"
+                          onClick={() => openTimeSlotModal(appointment.id)}
+                        >
+                          Add Time Slot
+                        </button>
+                        <button
+                          className="btn delete-btn"
+                          onClick={() => deleteAppointment(appointment.id)}
+                          style={{ marginLeft: "10px" }}
+                          disabled={!isDeletable} // Disable if any slot is "Booked"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                    <td className="table-data">
+                      {/* Info button to view all time slots */}
+                      <button
+                        className="td-info"
+                        onClick={() =>
+                          openTimeSlotsInfoModal(
+                            appointment.doctorName,
+                            appointment.date
+                          )
+                        }
                       >
-                        <g
-                          fill="none"
-                          stroke="#e6cb34"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 48 48"
                         >
+                          <defs>
+                            <mask id="ipTInfo0">
+                              <g fill="none">
+                                <path
+                                  fill="#555555"
+                                  stroke="#fff"
+                                  stroke-linejoin="round"
+                                  stroke-width="4"
+                                  d="M24 44a19.94 19.94 0 0 0 14.142-5.858A19.94 19.94 0 0 0 44 24a19.94 19.94 0 0 0-5.858-14.142A19.94 19.94 0 0 0 24 4A19.94 19.94 0 0 0 9.858 9.858A19.94 19.94 0 0 0 4 24a19.94 19.94 0 0 0 5.858 14.142A19.94 19.94 0 0 0 24 44Z"
+                                />
+                                <path
+                                  fill="#fff"
+                                  fill-rule="evenodd"
+                                  d="M24 11a2.5 2.5 0 1 1 0 5a2.5 2.5 0 0 1 0-5"
+                                  clip-rule="evenodd"
+                                />
+                                <path
+                                  stroke="#fff"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="4"
+                                  d="M24.5 34V20h-2M21 34h7"
+                                />
+                              </g>
+                            </mask>
+                          </defs>
                           <path
-                            stroke-dasharray="20"
-                            stroke-dashoffset="20"
-                            d="M3 21h18"
-                          >
-                            <animate
-                              fill="freeze"
-                              attributeName="stroke-dashoffset"
-                              dur="0.2s"
-                              values="20;0"
-                            />
-                          </path>
-                          <path
-                            stroke-dasharray="48"
-                            stroke-dashoffset="48"
-                            d="M7 17v-4l10 -10l4 4l-10 10h-4"
-                          >
-                            <animate
-                              fill="freeze"
-                              attributeName="stroke-dashoffset"
-                              begin="0.2s"
-                              dur="0.6s"
-                              values="48;0"
-                            />
-                          </path>
-                          <path
-                            stroke-dasharray="8"
-                            stroke-dashoffset="8"
-                            d="M14 6l4 4"
-                          >
-                            <animate
-                              fill="freeze"
-                              attributeName="stroke-dashoffset"
-                              begin="0.8s"
-                              dur="0.2s"
-                              values="8;0"
-                            />
-                          </path>
-                        </g>
-                        <path
-                          fill="#e6cb34"
-                          fill-opacity="0"
-                          d="M14 6l4 4L21 7L17 3Z"
-                        >
-                          <animate
-                            fill="freeze"
-                            attributeName="fill-opacity"
-                            begin="1.1s"
-                            dur="0.5s"
-                            values="0;1"
+                            fill="#fbc02d"
+                            d="M0 0h48v48H0z"
+                            mask="url(#ipTInfo0)"
                           />
-                        </path>
-                      </svg>{" "}
-                    </span>
-                    <span
-                      style={{ marginLeft: "10px" }}
-                      // className="delete-doctor-button"
-                      onClick={() => handleAppointmentDelete(index)}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="30px"
-                        height="30px"
-                        viewBox="0 0 24 24"
-                      >
-                        <g
-                          fill="none"
-                          stroke="#d51e1e"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                        >
-                          <path
-                            stroke-dasharray="20"
-                            stroke-dashoffset="20"
-                            d="M3 21v-1c0 -2.21 1.79 -4 4 -4h4c2.21 0 4 1.79 4 4v1"
-                          >
-                            <animate
-                              fill="freeze"
-                              attributeName="stroke-dashoffset"
-                              dur="0.2s"
-                              values="20;0"
-                            />
-                          </path>
-                          <path
-                            stroke-dasharray="20"
-                            stroke-dashoffset="20"
-                            d="M9 13c-1.66 0 -3 -1.34 -3 -3c0 -1.66 1.34 -3 3 -3c1.66 0 3 1.34 3 3c0 1.66 -1.34 3 -3 3Z"
-                          >
-                            <animate
-                              fill="freeze"
-                              attributeName="stroke-dashoffset"
-                              begin="0.2s"
-                              dur="0.2s"
-                              values="20;0"
-                            />
-                          </path>
-                          <path
-                            stroke-dasharray="10"
-                            stroke-dashoffset="10"
-                            d="M15 3l6 6"
-                          >
-                            <animate
-                              fill="freeze"
-                              attributeName="stroke-dashoffset"
-                              begin="0.5s"
-                              dur="0.2s"
-                              values="10;0"
-                            />
-                          </path>
-                          <path
-                            stroke-dasharray="10"
-                            stroke-dashoffset="10"
-                            d="M21 3l-6 6"
-                          >
-                            <animate
-                              fill="freeze"
-                              attributeName="stroke-dashoffset"
-                              begin="0.7s"
-                              dur="0.2s"
-                              values="10;0"
-                            />
-                          </path>
-                        </g>
-                      </svg>
-                    </span>
-                    <button
-                      style={{ marginLeft: "10px" }}
-                      className={`toggle-availability-button ${
-                        appointments.availability === "Available"
-                          ? "available-btn"
-                          : "unavailable-btn"
-                      }`}
-                      onClick={() =>
-                        toggleAvailability(
-                          appointments.doctorName,
-                          appointments.date,
-                          appointments.startTime,
-                          appointments.endTime
-                        )
-                      }
-                    >
-                      {appointments.availability === "Available"
-                        ? "Mark Unavailable"
-                        : "Mark Available"}
-                    </button>
-                  </td>
-                </tr>
-              ))}
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </section>
 
-        {/* MODAL */}
+        {/* Doctor Modal */}
         {showDoctorModal && (
           <div className="doctor-modal-overlay">
             <div className="doctor-modal-box">
@@ -767,11 +1988,13 @@ const AdminManageDoctor = () => {
                 name="profession"
                 value={doctorData.profession}
                 onChange={handleChange}
-                required
               >
-                <option value="">Select Profession</option>
-                <option value="Nurse">Nurse</option>
-                <option value="Doctor">Doctor</option>
+                <option value="All">All Professions</option>
+                {professionLookup.map((profession) => (
+                  <option key={profession.id} value={profession.id}>
+                    {profession.lookupValue}
+                  </option>
+                ))}
               </select>
 
               <label>Email:</label>
@@ -794,7 +2017,136 @@ const AdminManageDoctor = () => {
                 </button>
                 <button
                   className="doctor-cancel-button"
-                  onClick={() => handleCancelModal()}
+                  onClick={handleCancelModal}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Time Slot Modal */}
+        {showTimeSlotModal && (
+          <div className="doctor-modal-overlay">
+            <div className="doctor-modal-box">
+              <h3>Add Time Slot</h3>
+              <label>Select Start Time</label>
+              <input
+                name="startTime"
+                className="doctor-modal-input"
+                type="time"
+                value={startTimeSlotInput}
+                onChange={(e) => setStartTimeSlotInput(e.target.value)}
+              />
+              <label>Select End Time</label>
+              <input
+                name="endTime"
+                className="doctor-modal-input"
+                type="time"
+                value={endTimeSlotInput}
+                onChange={(e) => setEndTimeSlotInput(e.target.value)}
+              />
+              {error && <p className="error-message">{error}</p>}
+              <div className="doctor-modal-actions">
+                <button className="doctor-save-button" onClick={addTimeSlot}>
+                  Add
+                </button>
+                <button
+                  className="doctor-cancel-button"
+                  onClick={() => {
+                    setShowTimeSlotModal(false);
+                    setError("");
+                  }}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Time Slots Info Modal */}
+        {showTimeSlotsInfoModal && (
+          <div className="doctor-modal-overlay">
+            <div className="doctor-modal-box">
+              <h2>Time Slots for {selectedDayInfo.doctorName}</h2>
+              <h3>Date: {selectedDayInfo.date}</h3>
+
+              {selectedDayInfo.timeSlots &&
+              selectedDayInfo.timeSlots.length > 0 ? (
+                <div className="time-slots-info-container">
+                  <table className="time-slots-table">
+                    <thead>
+                      <tr>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Booking Status</th>
+                        <th>Available Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {selectedDayInfo.timeSlots.map((slot, idx) => (
+                        <tr key={idx}>
+                          <td>{slot.startTime || "N/A"}</td>
+                          <td>{slot.endTime || "N/A"}</td>
+                          <td>
+                            {slot.isBooked !== undefined
+                              ? slot.isBooked.toString()
+                              : "N/A"}
+                          </td>
+                          <td>
+                            <span
+                              className={`status-badge ${
+                                slot.statusName?.toLowerCase() || ""
+                              }`}
+                            >
+                              {slot.statusName || "Unknown"}
+                            </span>
+                          </td>
+                          <td>
+                            <div className="btn-container">
+                              <button
+                                className="btn toggle-status-btn"
+                                onClick={() => toggleTimeSlotAvailability(idx)}
+                              >
+                                Change
+                              </button>
+
+                              <button
+                                className="btn delete-slot-btn"
+                                onClick={() => removeTimeSlot(idx)}
+                                disabled={slot.isBooked === true}
+                                title={
+                                  slot.statusName === "Booked"
+                                    ? "Booked slots cannot be deleted"
+                                    : "Delete this time slot"
+                                }
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <p>No time slots available for this date.</p>
+              )}
+
+              <div className="doctor-modal-actions">
+                <button
+                  className="doctor-save-button"
+                  onClick={saveTimeSlotChanges}
+                >
+                  Save Changes
+                </button>
+                <button
+                  className="doctor-cancel-button"
+                  onClick={() => setShowTimeSlotsInfoModal(false)}
                 >
                   Cancel
                 </button>
@@ -834,26 +2186,6 @@ const AdminManageDoctor = () => {
                 required
               />
 
-              <label className="doctor-modal-label">Time Slot:</label>
-              <div className="time-slot-container">
-                <input
-                  type="time"
-                  name="startTime"
-                  value={appointmentData.startTime}
-                  className="doctor-modal-input"
-                  onChange={handleAppointmentChange}
-                  required
-                />
-                <span className="time-slot-separator"> to </span>
-                <input
-                  type="time"
-                  name="endTime"
-                  value={appointmentData.endTime}
-                  className="doctor-modal-input"
-                  onChange={handleAppointmentChange}
-                  required
-                />
-              </div>
               {/* Error Message */}
               {error && <p className="error-message">{error}</p>}
 

@@ -11,6 +11,7 @@ import { connectTokenInstance } from "../../AxiosInstance";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showLoginReminder, setShowLoginReminder] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const { authToken, login, logout } = useContext(AuthContext);
   const [showLoggedIn, setShowLoggedIn] = useState(false);
@@ -116,6 +117,13 @@ const SignIn = () => {
   return (
     <div className="signin-auth-container">
       <h2>{authToken ? "Welcome Back!" : "Account Login"}</h2>
+
+      {!authToken && showLoginReminder && (
+        <div className="login-reminder-card">
+          <p>You need to log in to place an order.</p>
+          <button onClick={() => setShowLoginReminder(false)}>Dismiss</button>
+        </div>
+      )}
 
       {!authToken ? (
         <form onSubmit={handleSubmit}>

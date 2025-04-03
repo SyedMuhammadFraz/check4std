@@ -94,3 +94,26 @@
 a:hover {
   text-decoration: underline;
 }
+
+.login-reminder-card {
+  background-color: #ffefc1;
+  padding: 10px;
+  border-left: 5px solid #ffa500;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.login-reminder-card p {
+  margin: 0;
+  font-weight: bold;
+}
+
+.login-reminder-card button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: #d9534f;
+}

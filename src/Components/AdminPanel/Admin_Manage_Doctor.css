@@ -1,6 +1,9 @@
 .Admin-Doctor-Table {
   width: 100%;
   max-width: 90vw;
+  height: 500px;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
   margin: 0 auto;
   padding: 20px;
   background-color: #f9f9f9;
@@ -79,6 +82,13 @@
   color: white;
 }
 
+.table-btn-container svg{
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  margin: 0 10px;
+}
+
 .edit-doctor-button {
   padding: 6px 12px;
   border: none;
@@ -106,8 +116,7 @@
 .doctor-modal-box {
   background: white;
   padding: 20px;
-  width: 90%;
-  max-width: 600px;
+  width: 80vw;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -172,6 +181,20 @@
   margin-top: 5px;
 }
 
+.appointment-table-svg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.appointment-table-svg svg{
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+
+}
+
 /* Mobile Optimization */
 @media (max-width: 480px) {
   .doctor-modal-box {
@@ -187,9 +210,9 @@
     overflow-x: auto; 
   }
 
-  .table-button-container {
-    flex-direction: column; /* Stack buttons on top of each other */
-    gap: 5px; /* Reduce space between buttons when stacked */
+  .table-button-container svg {
+    flex-direction: column; 
+    gap: 5px; 
   }
 
   .doctor-save-button,
@@ -299,6 +322,10 @@
   color: #fbc02d;
 }
 
+.doctor-modal-box h3 , h2{
+  text-align: center;
+}
+
 
 /* Base Button Styles */
 .btn {
@@ -314,9 +341,14 @@
 
 .btn-container {
   display: flex;
-  justify-content: space-between; /* Ensures buttons stay in line */
-  gap: 6px; /* Minimal gap between buttons */
-  margin-top: 10px; /* Small margin from other elements */
+  justify-content: center; /* Ensures buttons stay in line */
+  gap: 10px; /* Minimal gap between buttons */
+}
+
+.btn-container svg{
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
 }
 
 
@@ -367,6 +399,7 @@
   width: 100%;
   border-collapse: collapse;
   min-width: 600px; /* Ensures the table doesn’t shrink too much */
+  margin: 20px 0;
 }
 
 

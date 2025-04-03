@@ -6,6 +6,7 @@ import "../Card.css";
 import "../10-test-panel/Testpanel.css";
 import { useNavigate } from "react-router-dom";
 import { useLoader } from "../../../utils/LoaderContext";
+import { toast } from "react-toastify";
 
 function Chlamydia_Gonorrhea() {
   const navigate = useNavigate();
@@ -18,27 +19,42 @@ function Chlamydia_Gonorrhea() {
   const [TenTestPanelEarlyRNA, setTenTestPanelEarlyRNA] = useState(null);
   const [Chlamydia_Gonorrhea, setChlamydia_Gonorrhea] = useState(null);
 
-  const getData = async (name, setter) => {
+  const getData = async (name, setter, setErrorFlag) => {
     try {
       const response = await webApiInstance.get(
         `/Disease/get-by-name/${encodeURIComponent(name)}`
       );
-      setter(response.data.result);
+      if (response.data.statusCode === 200) {
+        setter(response.data.result);
+      } else {
+        if (!setErrorFlag.current) {
+          setErrorFlag.current = true;
+          toast.error("There was an error fetching the data. Please try again.");
+          navigate("/");
+        }
+      }
     } catch (error) {
+      if (!setErrorFlag.current) {
+        setErrorFlag.current = true;
+        toast.error("There was an error fetching the data. Please try again.");
+        navigate("/");
+      }
       console.error(`Error fetching data for ${name}:`, error);
+    } finally {
+      setLoading(false);
     }
   };
-
+  
   useEffect(() => {
     setLoading(true);
     window.scrollTo(0, 0);
-    getData(
-      "10 Test Panel with HIV RNA Early Detection",
-      setTenTestPanelEarlyRNA
-    );
-    getData("10 Test Panel", setTenTestPanel);
-    getData("Chlamydia & Gonorrhea", setChlamydia_Gonorrhea);
+    const errorFlag = { current: false }; // Shared flag to prevent multiple toasts/navigation
+  
+    getData("10 Test Panel with HIV RNA Early Detection", setTenTestPanelEarlyRNA, errorFlag);
+    getData("10 Test Panel", setTenTestPanel, errorFlag);
+    getData("Chlamydia & Gonorrhea", setChlamydia_Gonorrhea, errorFlag);
   }, []);
+  
 
   useEffect(() => {
     if (Chlamydia_Gonorrhea !== null) {

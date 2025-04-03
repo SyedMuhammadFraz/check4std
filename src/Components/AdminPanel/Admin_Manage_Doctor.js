@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import "./Admin_Manage_Doctor.css";
 import AdminNavBar from "./AdminNavBar";
@@ -556,15 +555,12 @@ const AdminManageDoctor = () => {
           <strong>Doctor Dashboard</strong>
         </h1>
         <div className="button-container">
-          <button
-            className="button2 add-doctor-btn"
-            onClick={() => setShowDoctorModal(true)}
-          >
+          <button className="button3 " onClick={() => setShowDoctorModal(true)}>
             + Add Doctor
           </button>
 
           <button
-            className="button2 book-appointment-btn"
+            className="button2"
             onClick={() => setShowAppointmentModal(true)}
           >
             Add Doctor Time Slot
@@ -598,10 +594,10 @@ const AdminManageDoctor = () => {
         </div>
 
         {/* Doctor Table */}
+        <h2>
+          <strong>Doctors & Nurses</strong>
+        </h2>
         <section className="Admin-Doctor-Table">
-          <h2>
-            <strong>Doctors & Nurses</strong>
-          </h2>
           <table className="doctor-list-table">
             <thead>
               <tr>
@@ -793,10 +789,10 @@ const AdminManageDoctor = () => {
         </div>
 
         {/* Appointments Table */}
-        <section className="Admin-Doctor-Table">
-          <h2>
-            <strong>Appointments Data</strong>
-          </h2>
+        <h2>
+          <strong>Appointments Data</strong>
+        </h2>
+        <section className="Admin-Doctor-Table my-3">
           <table className="doctor-list-table">
             <thead>
               <tr>
@@ -826,27 +822,64 @@ const AdminManageDoctor = () => {
                       )}
                     </td>
                     <td>
-                      <div className="table-btn-container">
-                        <button
-                          className="btn add-time-slot-btn"
+                      <div className="appointment-table-svg">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
                           onClick={() => openTimeSlotModal(appointment.id)}
                         >
-                          Add Time Slot
-                        </button>
-                        <button
-                          className="btn delete-btn"
-                          onClick={() => deleteAppointment(appointment.id)}
-                          style={{ marginLeft: "10px" }}
+                          <path
+                            fill="#f57a00"
+                            d="M11 8h2v6h-2zm4-7H9v2h6zm-3 19c-3.87 0-7-3.13-7-7s3.13-7 7-7s7 3.13 7 7c.7 0 1.36.13 2 .35V13c0-2.12-.74-4.07-1.97-5.61l1.42-1.42c-.45-.51-.9-.97-1.41-1.41L17.62 6c-1.55-1.26-3.5-2-5.62-2a9 9 0 0 0 0 18c.59 0 1.16-.06 1.71-.17c-.31-.58-.53-1.23-.63-1.92c-.36.05-.71.09-1.08.09m8-2v-3h-2v3h-3v2h3v3h2v-3h3v-2z"
+                          />
+                        </svg>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="48"
+                          height="48"
+                          viewBox="0 0 48 48"
                           disabled={!isDeletable} // Disable if any slot is "Booked"
+                          onClick={() => deleteAppointment(appointment.id)}
                         >
-                          Delete
-                        </button>
+                          <defs>
+                            <mask id="ipTDelete0">
+                              <g
+                                fill="none"
+                                stroke="#fff"
+                                stroke-linejoin="round"
+                                stroke-width="4"
+                              >
+                                <path fill="#555555" d="M9 10v34h30V10z" />
+                                <path
+                                  stroke-linecap="round"
+                                  d="M20 20v13m8-13v13M4 10h40"
+                                />
+                                <path
+                                  fill="#555555"
+                                  d="m16 10l3.289-6h9.488L32 10z"
+                                />
+                              </g>
+                            </mask>
+                          </defs>
+                          <path
+                            fill="#e53835"
+                            d="M0 0h48v48H0z"
+                            mask="url(#ipTDelete0)"
+                          />
+                        </svg>
                       </div>
                     </td>
                     <td className="table-data">
                       {/* Info button to view all time slots */}
-                      <button
+
+                      <svg
                         className="td-info"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 48 48"
                         onClick={() =>
                           openTimeSlotsInfoModal(
                             appointment.doctorName,
@@ -854,45 +887,38 @@ const AdminManageDoctor = () => {
                           )
                         }
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 48 48"
-                        >
-                          <defs>
-                            <mask id="ipTInfo0">
-                              <g fill="none">
-                                <path
-                                  fill="#555555"
-                                  stroke="#fff"
-                                  stroke-linejoin="round"
-                                  stroke-width="4"
-                                  d="M24 44a19.94 19.94 0 0 0 14.142-5.858A19.94 19.94 0 0 0 44 24a19.94 19.94 0 0 0-5.858-14.142A19.94 19.94 0 0 0 24 4A19.94 19.94 0 0 0 9.858 9.858A19.94 19.94 0 0 0 4 24a19.94 19.94 0 0 0 5.858 14.142A19.94 19.94 0 0 0 24 44Z"
-                                />
-                                <path
-                                  fill="#fff"
-                                  fill-rule="evenodd"
-                                  d="M24 11a2.5 2.5 0 1 1 0 5a2.5 2.5 0 0 1 0-5"
-                                  clip-rule="evenodd"
-                                />
-                                <path
-                                  stroke="#fff"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="4"
-                                  d="M24.5 34V20h-2M21 34h7"
-                                />
-                              </g>
-                            </mask>
-                          </defs>
-                          <path
-                            fill="#fbc02d"
-                            d="M0 0h48v48H0z"
-                            mask="url(#ipTInfo0)"
-                          />
-                        </svg>
-                      </button>
+                        <defs>
+                          <mask id="ipTInfo0">
+                            <g fill="none">
+                              <path
+                                fill="#555555"
+                                stroke="#fff"
+                                stroke-linejoin="round"
+                                stroke-width="4"
+                                d="M24 44a19.94 19.94 0 0 0 14.142-5.858A19.94 19.94 0 0 0 44 24a19.94 19.94 0 0 0-5.858-14.142A19.94 19.94 0 0 0 24 4A19.94 19.94 0 0 0 9.858 9.858A19.94 19.94 0 0 0 4 24a19.94 19.94 0 0 0 5.858 14.142A19.94 19.94 0 0 0 24 44Z"
+                              />
+                              <path
+                                fill="#fff"
+                                fill-rule="evenodd"
+                                d="M24 11a2.5 2.5 0 1 1 0 5a2.5 2.5 0 0 1 0-5"
+                                clip-rule="evenodd"
+                              />
+                              <path
+                                stroke="#fff"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="4"
+                                d="M24.5 34V20h-2M21 34h7"
+                              />
+                            </g>
+                          </mask>
+                        </defs>
+                        <path
+                          fill="#fbc02d"
+                          d="M0 0h48v48H0z"
+                          mask="url(#ipTInfo0)"
+                        />
+                      </svg>
                     </td>
                   </tr>
                 );
@@ -944,10 +970,7 @@ const AdminManageDoctor = () => {
               {/* Error Message */}
               {error && <p className="error-message">{error}</p>}
               <div className="doctor-modal-actions">
-                <button
-                  className="doctor-save-button"
-                  onClick={handleSaveDoctor}
-                >
+                <button className="button3" onClick={handleSaveDoctor}>
                   {editIndex !== null ? "Update" : "Add"}
                 </button>
                 <button
@@ -984,7 +1007,7 @@ const AdminManageDoctor = () => {
               />
               {error && <p className="error-message">{error}</p>}
               <div className="doctor-modal-actions">
-                <button className="doctor-save-button" onClick={addTimeSlot}>
+                <button className="button3" onClick={addTimeSlot}>
                   Add
                 </button>
                 <button
@@ -1005,7 +1028,7 @@ const AdminManageDoctor = () => {
         {showTimeSlotsInfoModal && (
           <div className="doctor-modal-overlay">
             <div className="doctor-modal-box">
-              <h2>Time Slots for {selectedDayInfo.doctorName}</h2>
+              <h2><strong>Time Slots for {selectedDayInfo.doctorName}</strong></h2>
               <h3>Date: {selectedDayInfo.date}</h3>
 
               {selectedDayInfo.timeSlots &&
@@ -1042,15 +1065,24 @@ const AdminManageDoctor = () => {
                           </td>
                           <td>
                             <div className="btn-container">
-                              <button
-                                className="btn toggle-status-btn"
+                              <svg
                                 onClick={() => toggleTimeSlotAvailability(idx)}
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
                               >
-                                Change
-                              </button>
-
-                              <button
-                                className="btn delete-slot-btn"
+                                <path
+                                  fill="#f57a00"
+                                  d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8s-8-3.59-8-8s3.59-8 8-8m.06 9.34v2.14a3.46 3.46 0 0 1-2.54-1.01c-1.12-1.12-1.3-2.8-.59-4.13l-1.1-1.1c-1.28 1.94-1.07 4.59.64 6.29A4.95 4.95 0 0 0 12 17h.06v2l2.83-2.83zm3.48-4.88c-.99-.99-2.3-1.46-3.6-1.45V5L9.11 7.83l2.83 2.83V8.51H12c.9 0 1.79.34 2.48 1.02c1.12 1.12 1.3 2.8.59 4.13l1.1 1.1a5.03 5.03 0 0 0-.63-6.3"
+                                  opacity="0.3"
+                                />
+                                <path
+                                  fill="#f57a00"
+                                  d="M12 4c4.41 0 8 3.59 8 8s-3.59 8-8 8s-8-3.59-8-8s3.59-8 8-8m0-2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m.06 11.34v2.14a3.46 3.46 0 0 1-2.54-1.01c-1.12-1.12-1.3-2.8-.59-4.13l-1.1-1.1c-1.28 1.94-1.07 4.59.64 6.29A4.95 4.95 0 0 0 12 17h.06v2l2.83-2.83zm3.48-4.88c-.99-.99-2.3-1.46-3.6-1.45V5L9.11 7.83l2.83 2.83V8.51H12c.9 0 1.79.34 2.48 1.02c1.12 1.12 1.3 2.8.59 4.13l1.1 1.1a5.03 5.03 0 0 0-.63-6.3"
+                                />
+                              </svg>
+                              <svg
                                 onClick={() => removeTimeSlot(idx)}
                                 disabled={slot.isBooked === true}
                                 title={
@@ -1058,9 +1090,40 @@ const AdminManageDoctor = () => {
                                     ? "Booked slots cannot be deleted"
                                     : "Delete this time slot"
                                 }
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="48"
+                                height="48"
+                                viewBox="0 0 48 48"
                               >
-                                Delete
-                              </button>
+                                <defs>
+                                  <mask id="ipTDelete0">
+                                    <g
+                                      fill="none"
+                                      stroke="#fff"
+                                      stroke-linejoin="round"
+                                      stroke-width="4"
+                                    >
+                                      <path
+                                        fill="#555555"
+                                        d="M9 10v34h30V10z"
+                                      />
+                                      <path
+                                        stroke-linecap="round"
+                                        d="M20 20v13m8-13v13M4 10h40"
+                                      />
+                                      <path
+                                        fill="#555555"
+                                        d="m16 10l3.289-6h9.488L32 10z"
+                                      />
+                                    </g>
+                                  </mask>
+                                </defs>
+                                <path
+                                  fill="#e53835"
+                                  d="M0 0h48v48H0z"
+                                  mask="url(#ipTDelete0)"
+                                />
+                              </svg>
                             </div>
                           </td>
                         </tr>
@@ -1074,7 +1137,7 @@ const AdminManageDoctor = () => {
 
               <div className="doctor-modal-actions">
                 <button
-                  className="doctor-save-button"
+                  className="button3"
                   onClick={saveTimeSlotChanges}
                 >
                   Save Changes

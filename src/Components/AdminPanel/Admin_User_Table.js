@@ -1,12 +1,15 @@
-import React, { useState, useEffect , useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Admin_User_Table.css";
 import AdminNavBar from "./AdminNavBar";
 import { webApiInstance } from "../../AxiosInstance";
 import PatientInfoModal from "./Patient_info_Modal";
 import { AuthContext } from "../../utils/AuthContext";
+import { useLoader } from "../../utils/LoaderContext";
+import { toast } from "react-toastify";
 
 function Admin_User_Table() {
-    const { authToken } = useContext(AuthContext);
+  const { authToken } = useContext(AuthContext);
+  const { setLoading } = useLoader();
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -29,6 +32,7 @@ function Admin_User_Table() {
   const recordsPerPage = 20;
 
   useEffect(() => {
+    setLoading(true);
     getData();
   }, []);
 
@@ -38,19 +42,28 @@ function Admin_User_Table() {
 
   const getData = async () => {
     try {
-      const response = await webApiInstance.get(`/Order/get-all` , 
-        {
-          headers: {
-            Authorization: `Bearer ${authToken}`, // Replace with actual token
-          },
-        }
-      );
-      const data = response.data.result;
-      console.log(response.data.result);
-      setOrders(data);
-      setFilteredOrders(data);
+      const response = await webApiInstance.get(`/Order/get-all`, {
+        headers: {
+          Authorization: `Bearer ${authToken}`, // Replace with actual token
+        },
+      });
+      if(response.data.statusCode === 200)
+      {
+
+        const data = response.data.result;
+        setOrders(data);
+        setFilteredOrders(data);
+        setLoading(false)
+      }
+      else
+      {
+        toast.error("There was an error fetching the data. Please try again.")
+        setLoading(false)
+      }
     } catch (error) {
+      toast.error("There was an error fetching the data. Please try again.")
       console.error("Error fetching data:", error);
+      setLoading(false)
     }
   };
 

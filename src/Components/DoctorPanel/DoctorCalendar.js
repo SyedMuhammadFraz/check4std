@@ -104,7 +104,7 @@ function DoctorCalendar() {
 
       <Calendar
         localizer={localizer}
-        events={filteredAppointments}  // Use the filtered appointments
+        events={filteredAppointments} // Use the filtered appointments
         startAccessor="start"
         endAccessor="end"
         date={currentDate}

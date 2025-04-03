@@ -46,6 +46,11 @@
   align-items: center;
   justify-content: center;
 }
+.nav__buttons svg{
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
 
 .nav__item a svg {
   width: 30px;

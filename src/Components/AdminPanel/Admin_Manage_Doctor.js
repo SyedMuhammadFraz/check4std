@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Admin_Manage_Doctor.css";
 import AdminNavBar from "./AdminNavBar";
 import { webApiInstance } from "../../AxiosInstance";
 import { toast } from "react-toastify";
 import { useLoader } from "../../utils/LoaderContext";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../utils/AuthContext";
 
 const AdminManageDoctor = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { authToken } = useContext(AuthContext);
   const [showDoctorModal, setShowDoctorModal] = useState(false);
   const [showAppointmentModal, setShowAppointmentModal] = useState(false);
   const [showTimeSlotModal, setShowTimeSlotModal] = useState(false);
@@ -95,12 +97,12 @@ const AdminManageDoctor = () => {
           toast.error(
             "There was an error fetching the data. Please try again."
           );
-          navigate('/')
+          navigate("/");
         }
       } catch (err) {
         toast.error("There was an error fetching the data. Please try again.");
         setLoading(false);
-        navigate('/')
+        navigate("/");
       }
     };
 
@@ -250,24 +252,27 @@ const AdminManageDoctor = () => {
       setDoctors(updatedDoctors);
     } else {
       try {
+        setLoading(true);
         const response = await webApiInstance.post("/Doctor", {
           name: doctorData.name,
           email: doctorData.email,
           profession: doctorData.profession,
         });
-
-        console.log("New Doctor", response);
-        const newDoctor = response.data.result;
-        console.log("New Doctor", newDoctor);
-        setDoctors([...doctors, newDoctor]); // Update state with the new doctor
-
+        if (response.data.statusCode === 200) {
+          const newDoctor = response.data.result;
+          setDoctors([...doctors, newDoctor]); // Update state with the new doctor
+          setDoctorData({ name: "", profession: "", email: "" });
+          setShowDoctorModal(false);
+          setError("");
+          toast.success("Data added successfully!");
+        } else {
+          toast.error("There was an error. Please try again");
+        }
         // Reset form & close modal
-        setDoctorData({ name: "", profession: "", email: "" });
-        setShowDoctorModal(false);
-        setError("");
       } catch (error) {
-        setError(error.response?.data?.message || "Something went wrong.");
-        console.log(error)
+        toast.error("There was an error. Please try again");
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -324,25 +329,35 @@ const AdminManageDoctor = () => {
         date: appointmentData.date,
       };
 
-      console.log(newAppointment);
       try {
+        setLoading(true);
         const response = await webApiInstance.post(
           "/Doctor/add-availbility",
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`, // Replace with actual token
+            },
+          },
           newAppointment
         );
-        console.log(response.data.result); // Replace with your API endpoint
-        setAppointments([...appointments, response.data.result]); // Update state with API response
-
-        // Reset form
+        console.log(response);
+        if (response.data.statusCode === 200) {
+          setAppointments([...appointments, response.data.result]); // Update state with API response
+          toast.success("Data added successfully!");
+        } else {
+          toast.error("There was an error. Please try again");
+        }
+      } catch (err) {
+        toast.error("There was an error. Please try again");
+        console.log(error);
+      } finally {
         setAppointmentData({
           doctorName: "",
           date: "",
         });
         setShowAppointmentModal(false);
         setError("");
-      } catch (err) {
-        console.error("Error booking appointment:", err);
-        toast.error("Failed to book appointment. Please try again.");
+        setLoading(false);
       }
     }
   };
@@ -522,13 +537,20 @@ const AdminManageDoctor = () => {
 
   useEffect(() => {
     const fetchDoctors = async () => {
+      setLoading(true);
       try {
         const response = await webApiInstance.get("/Doctor"); // Replace with your API URL
-        console.log(response);
-        setDoctors(response.data.result); // Assuming API returns an array
+        if (response.data.statusCode === 200) {
+          setDoctors(response.data.result); // Assuming API returns an array
+        } else {
+          toast.error("Error fetching doctors");
+          navigate("/");
+        }
       } catch (err) {
-        console.error("Error fetching doctors:", err);
-        setError("Failed to fetch doctors");
+        toast.error("Error fetching doctors");
+        navigate("/");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -627,7 +649,7 @@ const AdminManageDoctor = () => {
                 <th className="table-header">Actions</th>
               </tr>
             </thead>
-            <tbody >
+            <tbody>
               {filteredDoctors.map((doctor, index) => (
                 <tr key={index}>
                   <td className="table-data">{doctor.name}</td>
@@ -1207,10 +1229,7 @@ const AdminManageDoctor = () => {
               {error && <p className="error-message">{error}</p>}
 
               <div className="doctor-modal-actions">
-                <button
-                  className="doctor-save-button"
-                  onClick={handleBookAppointment}
-                >
+                <button className="button3" onClick={handleBookAppointment}>
                   {editIndex !== null ? "Update" : "Add"}
                 </button>
                 <button

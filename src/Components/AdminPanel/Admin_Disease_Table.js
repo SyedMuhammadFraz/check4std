@@ -11,18 +11,7 @@ function Admin_Disease_Table() {
   const [Diseases, setDiseases] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [newPrice, setNewPrice] = useState("");
-  const { AuthToken } = useContext(AuthContext);
   const { setLoading } = useLoader();
-  // const getData = async () => {
-  //   try {
-  //     const response = await webApiInstance.get(`/Disease`);
-  //     if (response.data.statusCode === 200) {
-  //       setDiseases(response.data.result);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
 
   const getData = async () => {
     try {
@@ -31,7 +20,6 @@ function Admin_Disease_Table() {
           Authorization: `Bearer ${authToken}`, // Replace with actual token
         },
       });
-      console.log(response);
       if (response.data.statusCode === 200) {
         setDiseases(response.data.result);
         setLoading(false);

@@ -49,10 +49,8 @@ function Admin_User_Table() {
       });
       if(response.data.statusCode === 200)
       {
-
-        const data = response.data.result;
-        setOrders(data);
-        setFilteredOrders(data);
+        setOrders(response.data.result);
+        setFilteredOrders(response.data.result);
         setLoading(false)
       }
       else

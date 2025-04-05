@@ -4,6 +4,7 @@ import "../Herpes1_2/herpes1_2.css";
 import GenericSection from "../GenericSection";
 import { useNavigate } from "react-router-dom";
 import { useLoader } from "../../../utils/LoaderContext";
+import { toast } from "react-toastify";
 
 function HIV_RNA_Test() {
   const navigate = useNavigate();
@@ -14,23 +15,40 @@ function HIV_RNA_Test() {
   const [TenTestPanelEarlyRNA, setTenTestPanelEarlyRNA] = useState(null);
   const [HIV_EarlyGeneration, setHIV_EarlyGeneration] = useState(null);
 
-  const getData = async (name, setter) => {
+  const getData = async (name, setter, setErrorFlag) => {
     try {
       const response = await webApiInstance.get(
         `/Disease/get-by-name/${encodeURIComponent(name)}`
       );
-      setter(response.data.result);
+      if (response.data.statusCode === 200) {
+        setter(response.data.result);
+      } else {
+        if (!setErrorFlag.current) {
+          setErrorFlag.current = true;
+          toast.error(
+            "There was an error fetching the data. Please try again."
+          );
+          navigate("/");
+        }
+      }
     } catch (error) {
+      if (!setErrorFlag.current) {
+        setErrorFlag.current = true;
+        toast.error("There was an error fetching the data. Please try again.");
+        navigate("/");
+      }
       console.error(`Error fetching data for ${name}:`, error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     setLoading(true);
     window.scrollTo(0, 0);
-    getData("HIV RNA Early Detection", setHIV_EarlyGeneration);
-    getData("10 Test Panel with HIV RNA Early Detection", setTenTestPanelEarlyRNA);
-    setLoading(false);
+    const errorFlag = { current: false };
+    getData("HIV RNA Early Detection", setHIV_EarlyGeneration , errorFlag);
+    getData("10 Test Panel with HIV RNA Early Detection", setTenTestPanelEarlyRNA , errorFlag);
   }, []);
 
   const handleCheckbox1 = () => {

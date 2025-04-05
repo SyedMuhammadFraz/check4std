@@ -46,35 +46,39 @@ function GenericSection() {
   const [TenTestPanel, setTenTestPanel] = useState(null);
   const [TenTestPanelEarlyRNA, setTenTestPanelEarlyRNA] = useState(null);
 
-  const getData = async (name, setter) => {
+  const getData = async (name, setter, setErrorFlag) => {
     try {
       const response = await webApiInstance.get(
         `/Disease/get-by-name/${encodeURIComponent(name)}`
       );
-      setter(response.data.result);
+      if (response.data.statusCode === 200) {
+        setter(response.data.result);
+      } else {
+        if (!setErrorFlag.current) {
+          setErrorFlag.current = true;
+          navigate("/");
+        }
+      }
     } catch (error) {
-      console.error(`Error fetching data for ${name}:`, error);
+      if (!setErrorFlag.current) {
+        setErrorFlag.current = true;
+        navigate("/");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     setLoading(true);
+    const errorFlag = { current: false };
     getData(
       "10 Test Panel with HIV RNA Early Detection",
-      setTenTestPanelEarlyRNA
+      setTenTestPanelEarlyRNA,
+      errorFlag
     );
-    getData("10 Test Panel", setTenTestPanel);
+    getData("10 Test Panel", setTenTestPanel, errorFlag);
   }, []);
-
-  useEffect(() => {
-    if (TenTestPanel !== null) {
-      setLoading(false);
-    }
-  }, [TenTestPanel]);
-
-  useEffect(() => {
-    console.log(TenTestPanel);
-  }, [TenTestPanel]);
 
   return (
     <section>

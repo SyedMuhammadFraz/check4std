@@ -7,6 +7,7 @@ import { webApiInstance } from "../../AxiosInstance";
 import useGotoOrderPage from "./order-handle";
 import { AuthContext } from "../../utils/AuthContext";
 import { useLoader } from "../../utils/LoaderContext";
+import { toast } from "react-toastify";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -27,25 +28,43 @@ const MainPage = () => {
   const [Herpes1, setHerpes1] = useState(null);
   const [Herpes2, setHerpes2] = useState(null);
 
-  const getData = async (name, setter) => {
+  const getData = async (name, setter, errorFlag) => {
     try {
       const response = await webApiInstance.get(
         `/Disease/get-by-name/${encodeURIComponent(name)}`,
         {
           headers: {
-            Authorization: `Bearer ${authToken}`, // Replace with actual token
+            Authorization: `Bearer ${authToken}`,
           },
         }
       );
-      setter(response.data.result);
+  
+      if (response.data.statusCode === 200) {
+        setter(response.data.result);
+      } else {
+        if (!errorFlag.current) {
+          errorFlag.current = true;
+          setLoading(false);
+          toast.error("There was an error fetching the data. Please try again.");
+          navigate("/");
+        }
+      }
     } catch (error) {
+      if (!errorFlag.current) {
+        errorFlag.current = true;
+        setLoading(false);
+        toast.error("There was an error fetching the data. Please try again.");
+        navigate("/");
+      }
       console.error(`Error fetching data for ${name}:`, error);
     }
   };
-
+  
   useEffect(() => {
     setLoading(true);
     window.scrollTo(0, 0);
+    const errorFlag = { current: false };
+  
     const testNames = [
       {
         name: "10 Test Panel with HIV RNA Early Detection",
@@ -63,28 +82,19 @@ const MainPage = () => {
       { name: "Herpes II", setter: setHerpes2 },
       { name: "Syphilis", setter: setSyphilis },
     ];
-
+  
     const fetchData = async () => {
-      try {
-        await Promise.all(
-          testNames.map(({ name, setter }) => getData(name, setter))
-        );
-      } catch (error) {
-        console.error("Error fetching test data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []); // ✅ Include dependencies to resolve the warning
-
-  // Ensure loading is set to false only when selectedTests is set
-  useEffect(() => {
-    if (Syphilis !== null) {
+      await Promise.all(
+        testNames.map(({ name, setter }) =>
+          getData(name, setter, errorFlag)
+        )
+      );
       setLoading(false);
-    }
-  }, [Syphilis]);
+    };
+  
+    fetchData();
+  }, []);
+  
 
   const handleCheckboxChange = (testName, price) => {
     setSelectedTests((prev) => {

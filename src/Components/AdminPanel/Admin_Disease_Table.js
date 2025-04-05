@@ -4,6 +4,8 @@ import "./Admin_User_Table.css";
 import { webApiInstance } from "../../AxiosInstance";
 import { AuthContext } from "../../utils/AuthContext";
 import { useLoader } from "../../utils/LoaderContext";
+import { toast } from "react-toastify";
+
 function Admin_Disease_Table() {
   const { authToken } = useContext(AuthContext);
   const [Diseases, setDiseases] = useState([]);
@@ -29,16 +31,23 @@ function Admin_Disease_Table() {
           Authorization: `Bearer ${authToken}`, // Replace with actual token
         },
       });
-      console.log(response)
+      console.log(response);
       if (response.data.statusCode === 200) {
         setDiseases(response.data.result);
+        setLoading(false);
+      } else {
+        toast.error("There was an error fetching the data. Please try again.");
+        setLoading(false);
       }
     } catch (error) {
+      toast.error("There was an error fetching the data. Please try again.");
+      setLoading(false);
       console.error("Error fetching data:", error);
     }
   };
 
   useEffect(() => {
+    setLoading(true);
     getData();
   }, []);
 
@@ -74,8 +83,7 @@ function Admin_Disease_Table() {
       setEditingId(null); // Exit edit mode
     } catch (error) {
       console.error("Error updating price:", error);
-    }
-    finally{
+    } finally {
       setLoading(false);
     }
   };

@@ -87,13 +87,6 @@ function Testpanel() {
     getData("10 Test Panel", setTenTestPanel, errorFlag);
   }, []);
   
-
-  useEffect(() => {
-    if (TenTestPanel !== null) {
-      setLoading(false);
-    }
-  }, [TenTestPanel]);
-
   return (
     <section className="Testpanel">
       <h1 className="center my-3">

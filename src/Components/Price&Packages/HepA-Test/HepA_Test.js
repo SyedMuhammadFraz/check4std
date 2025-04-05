@@ -4,7 +4,7 @@ import "../Herpes1_2/herpes1_2.css";
 import GenericSection from "../GenericSection";
 import { useNavigate } from "react-router-dom";
 import { useLoader } from "../../../utils/LoaderContext";
-
+import { toast } from "react-toastify";
 function HepA_Test() {
   const navigate = useNavigate();
   const { setLoading } = useLoader();
@@ -16,27 +16,45 @@ function HepA_Test() {
   const [TenTestPanelEarlyRNA, setTenTestPanelEarlyRNA] = useState(null);
   const [HepA, setHepA] = useState(null);
 
-  const getData = async (name, setter) => {
+  const getData = async (name, setter, setErrorFlag) => {
     try {
       const response = await webApiInstance.get(
         `/Disease/get-by-name/${encodeURIComponent(name)}`
       );
-      setter(response.data.result);
+      if (response.data.statusCode === 200) {
+        setter(response.data.result);
+      } else {
+        if (!setErrorFlag.current) {
+          setErrorFlag.current = true;
+          toast.error(
+            "There was an error fetching the data. Please try again."
+          );
+          navigate("/");
+        }
+      }
     } catch (error) {
+      if (!setErrorFlag.current) {
+        setErrorFlag.current = true;
+        toast.error("There was an error fetching the data. Please try again.");
+        navigate("/");
+      }
       console.error(`Error fetching data for ${name}:`, error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     setLoading(true);
     window.scrollTo(0, 0);
+    const errorFlag = { current: false };
     getData(
       "10 Test Panel with HIV RNA Early Detection",
-      setTenTestPanelEarlyRNA
+      setTenTestPanelEarlyRNA,
+      errorFlag
     );
-    getData("10 Test Panel", setTenTestPanel);
-    getData("Hepatitis A", setHepA);
-    setLoading(false);
+    getData("10 Test Panel", setTenTestPanel, errorFlag);
+    getData("Hepatitis A", setHepA, errorFlag);
   }, []);
 
   const handleCheckbox1 = () => {
@@ -70,10 +88,10 @@ function HepA_Test() {
     } else if (checked2) {
       selectedTest = { name: TenTestPanel.name, price: TenTestPanel.price };
     } else if (checked3) {
-        selectedTest = {
-            name: TenTestPanelEarlyRNA.name,
-            price: TenTestPanelEarlyRNA.price,
-          };
+      selectedTest = {
+        name: TenTestPanelEarlyRNA.name,
+        price: TenTestPanelEarlyRNA.price,
+      };
     }
     if (selectedTest) {
       navigate("/order", { state: { selectedTests: [selectedTest] } });
@@ -117,7 +135,10 @@ function HepA_Test() {
               />
               Hepatitis A
             </div>
-            <div className="card-price"> ${HepA !== null ? HepA.price : ""}</div>
+            <div className="card-price">
+              {" "}
+              ${HepA !== null ? HepA.price : ""}
+            </div>
           </div>
           <div className="card-radio">
             <div className="card-checkbox" onClick={handleCheckbox2}>
@@ -128,7 +149,10 @@ function HepA_Test() {
               />
               10 Test Panel
             </div>
-            <div className="card-price"> ${TenTestPanel !== null ? TenTestPanel.price : ""}</div>
+            <div className="card-price">
+              {" "}
+              ${TenTestPanel !== null ? TenTestPanel.price : ""}
+            </div>
           </div>
           <div className="card-radio" onClick={handleCheckbox3}>
             <div className="card-checkbox">
@@ -139,7 +163,10 @@ function HepA_Test() {
               />
               10 Test Panel with HIV RNA Early Detection
             </div>
-            <div className="card-price"> ${TenTestPanelEarlyRNA !== null ? TenTestPanelEarlyRNA.price : ""}</div>
+            <div className="card-price">
+              {" "}
+              ${TenTestPanelEarlyRNA !== null ? TenTestPanelEarlyRNA.price : ""}
+            </div>
           </div>
           <div className="card-button">
             <button className="button3" onClick={handleGetTested}>

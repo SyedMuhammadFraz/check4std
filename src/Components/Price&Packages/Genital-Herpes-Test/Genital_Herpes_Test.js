@@ -4,7 +4,7 @@ import "../Herpes1_2/herpes1_2.css";
 import GenericSection from "../GenericSection";
 import { useNavigate } from "react-router-dom";
 import { useLoader } from "../../../utils/LoaderContext";
-
+import { toast } from "react-toastify";
 function Genital_Herpes_Test() {
   const { setLoading } = useLoader();
   const navigate = useNavigate();
@@ -17,28 +17,45 @@ function Genital_Herpes_Test() {
   const [Genital_Herpes, setGenital_Herpes] = useState(null);
   const [Herpes1_2, setHerpes1_2] = useState(null);
 
-  const getData = async (name, setter) => {
+  const getData = async (name, setter, setErrorFlag) => {
     try {
       const response = await webApiInstance.get(
         `/Disease/get-by-name/${encodeURIComponent(name)}`
       );
-      setter(response.data.result);
+      if (response.data.statusCode === 200) {
+        setter(response.data.result);
+      } else {
+        if (!setErrorFlag.current) {
+          setErrorFlag.current = true;
+          toast.error(
+            "There was an error fetching the data. Please try again."
+          );
+          navigate("/");
+        }
+      }
     } catch (error) {
+      if (!setErrorFlag.current) {
+        setErrorFlag.current = true;
+        toast.error("There was an error fetching the data. Please try again.");
+        navigate("/");
+      }
       console.error(`Error fetching data for ${name}:`, error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     setLoading(true);
     window.scrollTo(0, 0);
+    const errorFlag = { current: false }; // Shared error flag to prevent multiple toasts
     getData(
       "10 Test Panel with HIV RNA Early Detection",
-      setTenTestPanelEarlyRNA
+      setTenTestPanelEarlyRNA, errorFlag
     );
-    getData("10 Test Panel", setTenTestPanel);
-    getData("Genital Herpes (HSV-2)", setGenital_Herpes);
-    getData("Herpes I & II", setHerpes1_2);
-    setLoading(false);
+    getData("10 Test Panel", setTenTestPanel, errorFlag);
+    getData("Genital Herpes (HSV-2)", setGenital_Herpes, errorFlag);
+    getData("Herpes I & II", setHerpes1_2, errorFlag);
   }, []);
 
   useEffect(() => {

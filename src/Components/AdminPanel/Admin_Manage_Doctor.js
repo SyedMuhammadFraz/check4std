@@ -3,8 +3,11 @@ import "./Admin_Manage_Doctor.css";
 import AdminNavBar from "./AdminNavBar";
 import { webApiInstance } from "../../AxiosInstance";
 import { toast } from "react-toastify";
+import { useLoader } from "../../utils/LoaderContext";
+import { useNavigate } from "react-router-dom";
 
 const AdminManageDoctor = () => {
+    const navigate = useNavigate();
   const [showDoctorModal, setShowDoctorModal] = useState(false);
   const [showAppointmentModal, setShowAppointmentModal] = useState(false);
   const [showTimeSlotModal, setShowTimeSlotModal] = useState(false);
@@ -69,20 +72,36 @@ const AdminManageDoctor = () => {
   const [dateFilter, setDateFilter] = useState({ from: "", to: "" });
   const [timeFilter, setTimeFilter] = useState({ start: "", end: "" });
   const [professionLookup, setProfessionLookup] = useState([]);
-
+  const { setLoading } = useLoader();
   // Main data
   const [doctors, setDoctors] = useState([]);
 
   const [appointments, setAppointments] = useState([]);
   useEffect(() => {
+    setLoading(true);
     // Simulating an API call
     const fetchAppointments = async () => {
-      const response = await webApiInstance.get("/Doctor/get-all-availbility");
-      const data = await response.data.result;
-      console.log(data);
+      try {
+        const response = await webApiInstance.get(
+          "/Doctor/get-all-availbility"
+        );
 
-      // Set the data received from the API into the state
-      setAppointments(data);
+        if (response.data.statusCode === 200) {
+          const data = response.data.result;
+          setAppointments(data);
+          setLoading(false);
+        } else {
+          setLoading(false);
+          toast.error(
+            "There was an error fetching the data. Please try again."
+          );
+          navigate('/')
+        }
+      } catch (err) {
+        toast.error("There was an error fetching the data. Please try again.");
+        setLoading(false);
+        navigate('/')
+      }
     };
 
     fetchAppointments();
@@ -248,6 +267,7 @@ const AdminManageDoctor = () => {
         setError("");
       } catch (error) {
         setError(error.response?.data?.message || "Something went wrong.");
+        console.log(error)
       }
     }
 
@@ -607,7 +627,7 @@ const AdminManageDoctor = () => {
                 <th className="table-header">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody >
               {filteredDoctors.map((doctor, index) => (
                 <tr key={index}>
                   <td className="table-data">{doctor.name}</td>
@@ -1028,7 +1048,9 @@ const AdminManageDoctor = () => {
         {showTimeSlotsInfoModal && (
           <div className="doctor-modal-overlay">
             <div className="doctor-modal-box">
-              <h2><strong>Time Slots for {selectedDayInfo.doctorName}</strong></h2>
+              <h2>
+                <strong>Time Slots for {selectedDayInfo.doctorName}</strong>
+              </h2>
               <h3>Date: {selectedDayInfo.date}</h3>
 
               {selectedDayInfo.timeSlots &&
@@ -1136,10 +1158,7 @@ const AdminManageDoctor = () => {
               )}
 
               <div className="doctor-modal-actions">
-                <button
-                  className="button3"
-                  onClick={saveTimeSlotChanges}
-                >
+                <button className="button3" onClick={saveTimeSlotChanges}>
                   Save Changes
                 </button>
                 <button

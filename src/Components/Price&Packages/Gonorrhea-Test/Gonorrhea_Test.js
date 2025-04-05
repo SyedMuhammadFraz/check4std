@@ -4,6 +4,7 @@ import "../Herpes1_2/herpes1_2.css";
 import GenericSection from "../GenericSection";
 import { useNavigate } from "react-router-dom";
 import { useLoader } from "../../../utils/LoaderContext";
+import { toast } from "react-toastify";
 
 function Gonorrhea_Test() {
   const navigate = useNavigate();
@@ -18,28 +19,44 @@ function Gonorrhea_Test() {
   const [Chlamydia_Gonorrhea, setChlamydia_Gonorrhea] = useState(null);
   const [Gonnorhea, setGonnorhea] = useState(null);
 
-  const getData = async (name, setter) => {
+  const getData = async (name, setter, setErrorFlag) => {
     try {
       const response = await webApiInstance.get(
         `/Disease/get-by-name/${encodeURIComponent(name)}`
       );
-      setter(response.data.result);
+      if (response.data.statusCode === 200) {
+        setter(response.data.result);
+      } else {
+        if (!setErrorFlag.current) {
+          setErrorFlag.current = true;
+          toast.error(
+            "There was an error fetching the data. Please try again."
+          );
+          navigate("/");
+        }
+      }
     } catch (error) {
+      if (!setErrorFlag.current) {
+        setErrorFlag.current = true;
+        toast.error("There was an error fetching the data. Please try again.");
+        navigate("/");
+      }
       console.error(`Error fetching data for ${name}:`, error);
+    } finally {
+      setLoading(false);
     }
   };
-
   useEffect(() => {
     setLoading(true);
     window.scrollTo(0, 0);
+    const errorFlag = { current: false }; 
     getData(
       "10 Test Panel with HIV RNA Early Detection",
-      setTenTestPanelEarlyRNA
+      setTenTestPanelEarlyRNA, errorFlag
     );
-    getData("10 Test Panel", setTenTestPanel);
-    getData("Chlamydia & Gonorrhea", setChlamydia_Gonorrhea);
-    getData("Gonorrhea", setGonnorhea);
-    setLoading(false);
+    getData("10 Test Panel", setTenTestPanel, errorFlag);
+    getData("Chlamydia & Gonorrhea", setChlamydia_Gonorrhea, errorFlag);
+    getData("Gonorrhea", setGonnorhea, errorFlag);
   }, []);
 
   const handleCheckbox1 = () => {

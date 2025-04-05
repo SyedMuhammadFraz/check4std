@@ -332,13 +332,13 @@ const AdminManageDoctor = () => {
       try {
         setLoading(true);
         const response = await webApiInstance.post(
-          "/Doctor/add-availbility",
+          "Doctor/add-availbility",
+          newAppointment,
           {
             headers: {
               Authorization: `Bearer ${authToken}`, // Replace with actual token
             },
           },
-          newAppointment
         );
         console.log(response);
         if (response.data.statusCode === 200) {

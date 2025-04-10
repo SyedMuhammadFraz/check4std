@@ -97,7 +97,7 @@ const OrderPage = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-   
+
     // Create the updated form data
     const updatedFormData = {
       ...formData,
@@ -121,13 +121,12 @@ const OrderPage = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    var fullDate='';
+    var fullDate = "";
     const newErrors = {};
 
     // Validate each field
     if (!formData.firstName) newErrors.firstName = "First name is required.";
     if (!formData.lastName) newErrors.lastName = "Last name is required.";
-    console.log("Gender ID",formData.genderId)
     if (!formData.genderId) newErrors.genderId = "Gender is required.";
     if (!formData.contactTypeId)
       newErrors.contactTypeId =
@@ -147,15 +146,11 @@ const OrderPage = () => {
     }
     if (!formData.dobMonth || !formData.dobDay || !formData.dobYear) {
       newErrors.dob = "Date of birth is required.";
-    }
-    
-    else if(formData.dobMonth && formData.dobDay && formData.dobYear){
+    } else if (formData.dobMonth && formData.dobDay && formData.dobYear) {
       fullDate = new Date(
         `${formData.dobMonth}-${formData.dobDay}-${formData.dobYear}`
       ).toISOString();
     }
-
-    
 
     // ✅ Prepare the final payload
     const payload = {
@@ -166,14 +161,12 @@ const OrderPage = () => {
         contactTypeId: Number(formData.contactTypeId),
         email: formData.email,
         phoneNumber: formData.phoneNumber,
-        genderValue: formData.genderValue, 
+        genderValue: formData.genderValue,
         contactValue: formData.contactValue,
         dob: fullDate, // Date in ISO format
       },
     };
-    console.log(payload);
     setErrors(newErrors);
-    console.log(errors);
     // Prevent submission if there are errors
     if (Object.keys(newErrors).length > 0) {
       toast.error("Please fix the errors before submitting.");
@@ -280,7 +273,6 @@ const OrderPage = () => {
   }, []);
 
   const createCheckoutSession = async (diseases, authToken, patientInfo) => {
-    console.log("Checkout disease", diseases);
     try {
       // Extract IDs from the diseases array
       const response = await webApiInstance.post(
@@ -298,7 +290,7 @@ const OrderPage = () => {
 
       // Redirect to the checkout session in a new tab
       if (response.data.sessionUrl) {
-        window.open(response.data.sessionUrl, "_blank");
+        window.location.href = response.data.sessionUrl;
       }
     } catch (error) {
       console.error("Error creating checkout session:", error);
@@ -341,12 +333,16 @@ const OrderPage = () => {
 
     // If the user selects a gender, update both genderId and genderValue
     if (name === "contactTypeId") {
-      const selectedContactMedium = contactMediumLookup.find((g) => g.id === Number(value));
+      const selectedContactMedium = contactMediumLookup.find(
+        (g) => g.id === Number(value)
+      );
 
       setFormData((prevData) => ({
         ...prevData,
         contactTypeId: value, // Numeric ID
-        contactValue: selectedContactMedium ? selectedContactMedium.lookupValue : "", // Actual Gender Text
+        contactValue: selectedContactMedium
+          ? selectedContactMedium.lookupValue
+          : "", // Actual Gender Text
       }));
     } else {
       setFormData((prevData) => ({
@@ -580,7 +576,9 @@ const OrderPage = () => {
               ))}
             </select>
 
-            {errors.genderId && <span className="error">{errors.genderId}</span>}
+            {errors.genderId && (
+              <span className="error">{errors.genderId}</span>
+            )}
 
             <label className="order-labels">Date of Birth</label>
             <div>

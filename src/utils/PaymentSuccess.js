@@ -8,8 +8,8 @@ const PaymentSuccess = () => {
   const orderId = searchParams.get("orderId");
 
   useEffect(() => {
-    const allowed = sessionStorage.getItem("allowSuccessPage");
-    console.log("Redirecting with session flag:", sessionStorage.getItem("allowSuccessPage"));
+    const allowed = localStorage.getItem("allowSuccessPage");
+    console.log("Redirecting with session flag:", localStorage.getItem("allowSuccessPage"));
 
     console.log(allowed)
     console.log(orderId)
@@ -18,7 +18,7 @@ const PaymentSuccess = () => {
       navigate("/"); 
     } else {
       console.log("else is running")
-      sessionStorage.removeItem("allowSuccessPage"); // Use-once
+      localStorage.removeItem("allowSuccessPage"); // Use-once
     }
   }, [navigate, orderId]);
 

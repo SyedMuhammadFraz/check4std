@@ -12,13 +12,13 @@ const RedirectHandler = () => {
     const orderId = params.get("orderId");
 
     if (success === "true" && orderId) {
-      sessionStorage.setItem("allowSuccessPage", "true");
+      localStorage.setItem("allowSuccessPage", "true");
 
       setTimeout(() => {
         navigate(`/payment-success?orderId=${orderId}`);
       }, 100); // wait 100ms before navigating
     } else if (canceled === "true" && orderId) {
-      sessionStorage.setItem("allowFailurePage", "true");
+      localStorage.setItem("allowFailurePage", "true");
 
       setTimeout(() => {
         navigate(`/payment-failure?orderId=${orderId}`);

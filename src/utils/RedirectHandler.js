@@ -1,20 +1,32 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-function RedirectHandler() {
+
+const RedirectHandler = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
+    const success = params.get("success");
+    const canceled = params.get("canceled");
+    const orderId = params.get("orderId");
 
-    if (params.get("success") === "true") {
-      navigate("/payment-success");
-    } else if (params.get("canceled") === "true") {
-      navigate("/payment-failed");
+    if (success === "true" && orderId) {
+      sessionStorage.setItem("allowSuccessPage", "true");
+
+      setTimeout(() => {
+        navigate(`/payment-success?orderId=${orderId}`);
+      }, 100); // wait 100ms before navigating
+    } else if (canceled === "true" && orderId) {
+      sessionStorage.setItem("allowFailurePage", "true");
+
+      setTimeout(() => {
+        navigate(`/payment-failure?orderId=${orderId}`);
+      }, 100); // wait 100ms before navigating
     }
   }, [location, navigate]);
 
-  return null; // This component doesn't render anything
-}
+  return <p>Redirecting...</p>;
+};
 
 export default RedirectHandler;

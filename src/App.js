@@ -77,7 +77,7 @@ function App() {
             <LoaderProvider>
               <Loader />
               <BrowserRouter>
-                <RedirectHandler />
+                {/* <RedirectHandler /> */}
                 <Routes>
                   <Route element={<LandingPage />}>
                     {/* <Route index path="diseases" element={<Diseases />} /> */}
@@ -237,6 +237,7 @@ function App() {
                       path="/payment-failed"
                       element={<PaymentFailure />}
                     />
+                    <Route path="/redirect-handler" element={<RedirectHandler />} />
                   </Route>
                   {/* Protected Admin Routes */}
                   <Route

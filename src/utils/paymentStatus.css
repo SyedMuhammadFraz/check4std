@@ -1,0 +1,62 @@
+/* General Wrapper */
+.payment-status-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Shared styles for both success & failure */
+  .payment-status-box {
+    background-color: white;
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .payment-status-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .payment-status-message {
+    font-size: 1.1rem;
+    color: #444;
+  }
+  
+  /* Specific to Success */
+  .payment-success-box {
+    border-left: 6px solid #38a169;
+  }
+  
+  .payment-success-title {
+    color: #38a169;
+  }
+  
+  /* Specific to Failure */
+  .payment-failure-box {
+    border-left: 6px solid #e53e3e;
+  }
+  
+  .payment-failure-title {
+    color: #e53e3e;
+  }
+  
+  /* Responsive for smaller screens */
+  @media (max-width: 480px) {
+    .payment-status-title {
+      font-size: 1.5rem;
+    }
+  
+    .payment-status-message {
+      font-size: 1rem;
+    }
+  }
+  

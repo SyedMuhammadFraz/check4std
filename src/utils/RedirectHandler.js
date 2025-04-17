@@ -10,19 +10,23 @@ const RedirectHandler = () => {
     const success = params.get("success");
     const canceled = params.get("canceled");
     const orderId = params.get("orderId");
-
+  
     if (success === "true" && orderId) {
+      // Set the flag first
       sessionStorage.setItem("allowSuccessPage", "true");
-
+      console.log("Setting allowSuccessPage to true for orderId:", orderId);
+  
+      // Then navigate after a short delay
       setTimeout(() => {
-        navigate(`/payment-success?orderId=${orderId}`);
-      }, 100); // wait 100ms before navigating
+        navigate(`/payment-success`);
+      }, 200); // Slightly longer delay
     } else if (canceled === "true" && orderId) {
       sessionStorage.setItem("allowFailurePage", "true");
-
+      console.log("Setting allowFailurePage to true for orderId:", orderId);
+  
       setTimeout(() => {
-        navigate(`/payment-failure?orderId=${orderId}`);
-      }, 100); // wait 100ms before navigating
+        navigate(`/payment-failed`);
+      }, 200);
     }
   }, [location, navigate]);
 

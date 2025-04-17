@@ -17,6 +17,8 @@ const RedirectHandler = () => {
       console.log("Setting allowSuccessPage to true for orderId:", orderId);
   
       // Then navigate after a short delay
+      localStorage.setItem("allowSuccessPage", "true");
+
       setTimeout(() => {
         navigate(`/payment-success`);
       }, 200); // Slightly longer delay
@@ -24,6 +26,8 @@ const RedirectHandler = () => {
       sessionStorage.setItem("allowFailurePage", "true");
       console.log("Setting allowFailurePage to true for orderId:", orderId);
   
+      localStorage.setItem("allowFailurePage", "true");
+
       setTimeout(() => {
         navigate(`/payment-failed`);
       }, 200);

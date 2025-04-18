@@ -2,8 +2,6 @@ import React from "react";
 import "./Footer.css";
 
 const Footer = () => {
- 
-
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -114,13 +112,16 @@ const Footer = () => {
           <h4>Contact Us</h4>
           <p>
             Need help? Have a question? Speak with a health specialist today.{" "}
-            <a href="mailto:satellitehealth@check4std.com">satellitehealth@check4std.com</a>
+            <a href="mailto:satellitehealth@check4std.com">
+              satellitehealth@check4std.com
+            </a>
           </p>
         </div>
       </div>
-
       <div className="footer-bottom">
-        <p>&copy; {2024}, STDCheck.com, All Rights Reserved</p>
+        <p>
+          &copy; {new Date().getFullYear()}, check4Std.com, All Rights Reserved
+        </p>
       </div>
     </footer>
   );

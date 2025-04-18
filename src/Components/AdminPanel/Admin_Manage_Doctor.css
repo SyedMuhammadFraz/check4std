@@ -133,7 +133,7 @@
 /* Time Slot */
 .time-slot-container {
   display: flex;
-  align-items: center;
+  align-items: center
 }
 
 .time-slot-separator {
@@ -322,7 +322,7 @@
   color: #fbc02d;
 }
 
-.doctor-modal-box h3 , h2{
+.doctor-modal-box h3 , .doctor-modal-box h2{
   text-align: center;
 }
 

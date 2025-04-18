@@ -363,6 +363,7 @@ const AdminManageDoctor = () => {
   };
   // Add a new time slot to an existing appointment
   const addTimeSlot = async () => {
+    console.log(selectedAppointmentIndex)
     if (
       selectedAppointmentIndex !== null &&
       startTimeSlotInput &&
@@ -373,24 +374,27 @@ const AdminManageDoctor = () => {
       const timeDiff = (endTime - startTime) / (1000 * 60);
 
       // Validate time slot duration (30 mins - 3 hours)
-      if (timeDiff < 30 || timeDiff > 180) {
-        setError("Time slot must be between 30 minutes and 3 hours.");
+      if (timeDiff < 5 || timeDiff > 15) {
+        setError("Time slot must be between 5 to 15 minutes.");
         return;
       }
 
       const updatedAppointments = [...appointments];
+      console.log(updatedAppointments)
+      const newIndex=updatedAppointments.findIndex((app) => app.id === selectedAppointmentIndex);
+      console.log(newIndex)
 
-      console.log(appointments[selectedAppointmentIndex].id);
+      console.log(updatedAppointments[newIndex].id);
       console.log(startTimeSlotInput);
       const newTimeSlot = {
-        availbilityId: appointments[selectedAppointmentIndex].id, // Assuming the appointment ID is used as availabilityId
+        availbilityId: appointments[newIndex].id, // Assuming the appointment ID is used as availabilityId
         startTime: startTimeSlotInput,
         endTime: endTimeSlotInput,
       };
 
       // Check if new time slot conflicts with existing ones
       const isOverlap = updatedAppointments[
-        selectedAppointmentIndex
+        newIndex
       ].timeSlots.some((slot) => checkOverlap(slot, newTimeSlot));
 
       if (isOverlap) {
@@ -409,7 +413,7 @@ const AdminManageDoctor = () => {
           const updatedAppointments = [...appointments];
 
           // Add the new time slot to the UI
-          updatedAppointments[selectedAppointmentIndex].timeSlots.push(
+          updatedAppointments[newIndex].timeSlots.push(
             newTimeSlot
           );
           setAppointments(updatedAppointments);
@@ -656,77 +660,6 @@ const AdminManageDoctor = () => {
                   <td className="table-data">{doctor.profession}</td>
                   <td className="table-data">{doctor.email}</td>
                   <td className="table-data">
-                    {/* <span
-                      onClick={() => handleDoctorEdit(index)}
-                      style={{ cursor: "pointer", marginRight: "10px" }}
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="30px"
-                        height="30px"
-                        viewBox="0 0 24 24"
-                      >
-                        <g
-                          fill="none"
-                          stroke="#e6cb34"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                        >
-                          <path
-                            strokeDasharray="20"
-                            strokeDashoffset="20"
-                            d="M3 21h18"
-                          >
-                            <animate
-                              fill="freeze"
-                              attributeName="stroke-dashoffset"
-                              dur="0.2s"
-                              values="20;0"
-                            />
-                          </path>
-                          <path
-                            strokeDasharray="48"
-                            strokeDashoffset="48"
-                            d="M7 17v-4l10 -10l4 4l-10 10h-4"
-                          >
-                            <animate
-                              fill="freeze"
-                              attributeName="stroke-dashoffset"
-                              begin="0.2s"
-                              dur="0.6s"
-                              values="48;0"
-                            />
-                          </path>
-                          <path
-                            strokeDasharray="8"
-                            strokeDashoffset="8"
-                            d="M14 6l4 4"
-                          >
-                            <animate
-                              fill="freeze"
-                              attributeName="stroke-dashoffset"
-                              begin="0.8s"
-                              dur="0.2s"
-                              values="8;0"
-                            />
-                          </path>
-                        </g>
-                        <path
-                          fill="#e6cb34"
-                          fillOpacity="0"
-                          d="M14 6l4 4L21 7L17 3Z"
-                        >
-                          <animate
-                            fill="freeze"
-                            attributeName="fill-opacity"
-                            begin="1.1s"
-                            dur="0.5s"
-                            values="0;1"
-                          />
-                        </path>
-                      </svg>
-                    </span> */}
                     <span
                       onClick={() => handleDoctorDelete(index)}
                       style={{ cursor: "pointer" }}
@@ -1220,6 +1153,7 @@ const AdminManageDoctor = () => {
                 className="doctor-modal-input"
                 type="date"
                 name="date"
+                min={new Date(Date.now() + 86400000).toISOString().split("T")[0]}
                 value={appointmentData.date}
                 onChange={handleAppointmentChange}
                 required

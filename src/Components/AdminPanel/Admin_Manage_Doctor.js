@@ -288,6 +288,7 @@ const AdminManageDoctor = () => {
   };
 
   const handleBookAppointment = async () => {
+    
     if (!appointmentData.doctorName || !appointmentData.date) {
       setError("All fields are required.");
       return;
@@ -331,6 +332,8 @@ const AdminManageDoctor = () => {
 
       try {
         setLoading(true);
+        console.log(authToken)
+        console.log(newAppointment)
         const response = await webApiInstance.post(
           "Doctor/add-availbility",
           newAppointment,

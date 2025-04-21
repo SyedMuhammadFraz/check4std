@@ -3,15 +3,16 @@ import "./Nav.css";
 import { NavLink } from "react-router-dom";
 import { IoClose, IoMenu } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import { useEffect, useContext } from "react";
+import {useContext } from "react";
 import ConfirmationModal from "../Modals/confirmation-modal";
 import { AuthContext } from "../utils/AuthContext";
 import { toast } from "react-toastify";
+import AddPatient from "../Modals/AddPatient";
 
 function Nav() {
   const { authToken, logout, userRole } = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
+  const [showAddPatientModal, setshowAddPatientModal] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -408,6 +409,7 @@ function Nav() {
                   >
                     Sign Up
                   </NavLink>
+                  <button onClick={()=>setshowAddPatientModal(true)} className="button3">Add Patient</button>
                   {/* <NavLink to="/admin-panel" className="button1 mx-3" onClick={closeMenuOnMobile}>
                     Go to Admin Panel
                   </NavLink> */}
@@ -455,6 +457,10 @@ function Nav() {
         onClose={cancelLogout}
         onConfirm={confirmLogout}
       />
+      {showAddPatientModal &&
+      (
+        <AddPatient onClose={()=> setshowAddPatientModal(false)}/>
+      )}
     </header>
   );
 }

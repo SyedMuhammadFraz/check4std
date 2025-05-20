@@ -59,6 +59,8 @@ import AdminManageDoctor from "./Components/AdminPanel/Admin_Manage_Doctor";
 import Admin_Manage_Doctor from "./Components/AdminPanel/Admin_Manage_Doctor";
 import ForgotPasswordOtp from "./Components/Signin/ForgotPasswordOtp";
 import DoctorCalendar from "./Components/DoctorPanel/DoctorCalendar";
+import DoctorForm from "./Modals/DoctorForm";
+import NurseForm from "./Modals/NurseForm";
 
 function App() {
   const stripePromise = loadStripe(
@@ -253,6 +255,8 @@ function App() {
                       element={<Admin_Disease_Table />}
                     />
                   </Route>
+                  <Route path="/doctorform" element={<DoctorForm />} />
+                  <Route path="/nurse-form" element={<NurseForm />} />
                 </Routes>
               </BrowserRouter>
             </LoaderProvider>

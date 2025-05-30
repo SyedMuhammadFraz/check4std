@@ -61,6 +61,8 @@ import ForgotPasswordOtp from "./Components/Signin/ForgotPasswordOtp";
 import DoctorCalendar from "./Components/DoctorPanel/DoctorCalendar";
 import DoctorForm from "./Modals/DoctorForm";
 import NurseForm from "./Modals/NurseForm";
+import DoctorDashboard from "./Components/DoctorPanel/DoctorDashboard";
+import DoctorNavBar from "./Components/DoctorPanel/DoctorNavBar";
 
 function App() {
   const stripePromise = loadStripe(
@@ -257,6 +259,15 @@ function App() {
                   </Route>
                   <Route path="/doctorform" element={<DoctorForm />} />
                   <Route path="/nurse-form" element={<NurseForm />} />
+                  <Route
+                    path="/doctor-dashboard"
+                    element={
+                      <>
+                        <DoctorNavBar />
+                        <DoctorDashboard />
+                      </>
+                    }
+                  />
                 </Routes>
               </BrowserRouter>
             </LoaderProvider>

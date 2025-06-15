@@ -11,17 +11,31 @@ import { useLoader } from "../../utils/LoaderContext";
 
 const SignUp = () => {
   const { setPendingUser } = useAuth();
+  const [role, setRole] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phoneNumber: "",
     password: "",
     confirmPassword: "",
-    roleId: "69c7e03d-0333-43d8-aef8-bac7f5aa7910",
+    roleId: "",
     dob: "",
   });
 
-  const { authToken, login, logout } = useContext(AuthContext);
+  useEffect(() => {
+    const fetchRole = async () => {
+      try {
+        const response = await webApiInstance.get("/Role/get-by-name/user");
+        setRole(response.data.result.id);
+      } catch (error) {
+        console.error("Failed to fetch roles", error);
+      }
+    };
+
+    fetchRole();
+  }, []);
+
+  const { authToken, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const { setLoading } = useLoader();
@@ -125,9 +139,10 @@ const SignUp = () => {
         password: formData.password,
         name: formData.name, // Convert name to lowercase if needed
         dob: formData.dob, // Change the DOB as required
-        roleId: formData.roleId,
+        roleId: role,
         phoneNumber: formData.phoneNumber,
       };
+
       const response = await userRegisterInstance.post(
         "/UserRegistration/register-user",
         apiPayload
@@ -152,7 +167,6 @@ const SignUp = () => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      console.error("Error checking user existence:", error);
       toast.error("An error occurred. Please try again later.");
     }
     setLoading(false);
@@ -162,6 +176,12 @@ const SignUp = () => {
     logout();
     toast.success("Successfully logged out!");
     navigate("/");
+  };
+
+  const getMaxDOB = () => {
+    const today = new Date();
+    today.setFullYear(today.getFullYear() - 18);
+    return today.toISOString().split("T")[0]; // Format as YYYY-MM-DD
   };
 
   return (
@@ -226,6 +246,7 @@ const SignUp = () => {
               value={formData.dob}
               onChange={handleChange}
               required
+              max={getMaxDOB()}
             />
           </div>
           <div className="form-group password-container">

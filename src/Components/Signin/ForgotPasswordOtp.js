@@ -16,15 +16,7 @@ function ForgotPasswordOtp() {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   useEffect(() => {
     setOtpId(localStorage.getItem("User-Otp"));
-    console.log(localStorage.getItem("User-Otp"));
   }, []);
-
-  useEffect(() => {
-    if (otp !== null) {
-      console.log("Otp: ");
-      console.log(otpId);
-    }
-  }, [otpId]);
 
   const OnSubmit = async (event) => {
     event.preventDefault();
@@ -48,14 +40,12 @@ function ForgotPasswordOtp() {
         password: NewPassword,
         confirmPassword: ConfirmNewPassword,
       };
-      console.log(requestData)
       const response = await connectTokenInstance.post(
         `/api/UserRegistration/reset-password`,
         requestData
       );
       if (response.status === 200) {
         toast.success("Password reset successfully!");
-        console.log(response.data);
         setLoading(false);
         navigate("/");
       } else {
@@ -63,7 +53,6 @@ function ForgotPasswordOtp() {
       }
     } catch (err) {
       setLoading(false);
-      console.log(err);
       if (err.response.status === 500) {
         toast.error("Otp is expired. Please try again.");
         navigate("/forgot-password")

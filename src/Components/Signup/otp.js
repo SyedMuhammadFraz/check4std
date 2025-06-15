@@ -53,7 +53,6 @@ const OTPPage = () => {
 
   const resendOtp = async (event) => {
     event.preventDefault();
-    console.log(user);
     setResentOtp(true);
     try {
       const response = await connectTokenInstance.post(

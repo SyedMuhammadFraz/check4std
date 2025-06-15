@@ -47,21 +47,18 @@ function Admin_User_Table() {
           Authorization: `Bearer ${authToken}`, // Replace with actual token
         },
       });
-      if(response.data.statusCode === 200)
-      {
+      if (response.data.statusCode === 200) {
         setOrders(response.data.result);
         setFilteredOrders(response.data.result);
-        setLoading(false)
-      }
-      else
-      {
-        toast.error("There was an error fetching the data. Please try again.")
-        setLoading(false)
+        setLoading(false);
+      } else {
+        toast.error("There was an error fetching the data. Please try again.");
+        setLoading(false);
       }
     } catch (error) {
-      toast.error("There was an error fetching the data. Please try again.")
+      toast.error("There was an error fetching the data. Please try again.");
       console.error("Error fetching data:", error);
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -88,13 +85,19 @@ function Admin_User_Table() {
       // Use Promise.all to send multiple requests in parallel
       await Promise.all(
         selectedOrders.map(async (orderId) => {
-          await webApiInstance.put(`/Order/update-status/${orderId}`, {
-            status: statusValue,
-          });
+          await webApiInstance.put(
+            `/Order/update-status/${orderId}`,
+            {
+              status: statusValue,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${authToken}`,
+              },
+            }
+          );
         })
       );
-
-      console.log("Order statuses updated successfully.");
     } catch (error) {
       console.error("Error updating order statuses:", error);
     }
@@ -354,16 +357,14 @@ function Admin_User_Table() {
                   <td>{(currentPage - 1) * recordsPerPage + index + 1}</td>
                   <td>{record.userEmail}</td>
                   <td>{record.userName}</td>
-                  <td>
-                    {record.patientInfo.firstName} {record.patientInfo.lastName}
-                  </td>
+                  <td>{record.patientInfo.name}</td>
                   <td>{record.patientInfo.genderValue}</td>
                   <td>
                     {new Date(record.patientInfo.dob).toLocaleDateString(
                       "en-US"
                     )}
                   </td>
-                  <td>{record.patientInfo.contactValue}</td>
+                  <td>{record.patientInfo.phone}</td>
                   <td>
                     {record.diseases.length > 0 ? (
                       <span

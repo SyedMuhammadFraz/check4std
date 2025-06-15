@@ -10,12 +10,11 @@ const RedirectHandler = () => {
     const success = params.get("success");
     const canceled = params.get("canceled");
     const orderId = params.get("orderId");
-  
+
     if (success === "true" && orderId) {
       // Set the flag first
       sessionStorage.setItem("allowSuccessPage", "true");
-      console.log("Setting allowSuccessPage to true for orderId:", orderId);
-  
+
       // Then navigate after a short delay
       localStorage.setItem("allowSuccessPage", "true");
 
@@ -24,8 +23,6 @@ const RedirectHandler = () => {
       }, 200); // Slightly longer delay
     } else if (canceled === "true" && orderId) {
       sessionStorage.setItem("allowFailurePage", "true");
-      console.log("Setting allowFailurePage to true for orderId:", orderId);
-  
       localStorage.setItem("allowFailurePage", "true");
 
       setTimeout(() => {

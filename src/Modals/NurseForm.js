@@ -72,13 +72,6 @@ function NurseForm() {
     const xmlPayload = buildXml();
     setXml(xmlPayload);
     setSubmitted(true);
-    console.log("Generated XML:", xmlPayload);
-    // Example POST request (replace URL with actual endpoint)
-    // await fetch("/your-endpoint", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/xml" },
-    //   body: xmlPayload
-    // });
   };
 
   return (

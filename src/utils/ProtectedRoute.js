@@ -5,8 +5,6 @@ import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 
 const ProtectedRoute = ({ allowedRoles, children }) => {
-  console.log("Allowed Roles:", allowedRoles); // ✅ Debugging
-
   const { authToken, userRole, loading } = useAuth();
 
   if (loading) {
@@ -26,11 +24,9 @@ const ProtectedRoute = ({ allowedRoles, children }) => {
 
   try {
     const decodedToken = decodeJWT(authToken);
-    console.log("Decoded Token:", decodedToken); // ✅ Debugging
 
     const role1 = decodedToken?.role;
-    console.log("User Role:", role1); // ✅ Debugging
-
+    
     if (role1 == null) {
       return <Navigate to="/login" />;
     }

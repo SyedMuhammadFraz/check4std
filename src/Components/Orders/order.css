@@ -5,6 +5,11 @@
   color: #333;
 }
 
+.order-page{
+   position: relative;
+  padding-bottom: 250px; 
+}
+
 /* Container */
 .order-page .container {
   max-width: 800px;
@@ -14,6 +19,7 @@
   border-radius: 8px;
   padding-top: 0;
   padding: 20px;
+   
 }
 
 /* Header */
@@ -308,5 +314,55 @@
 
   .order-card-content {
     padding: 1rem;
+  }
+}
+
+.selectpatient-section {
+  max-width: 800px;
+  margin: 20px auto;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Responsive adjustments for screens up to 600px */
+@media (max-width: 600px) {
+  .selectpatient-section {
+    margin: 10px;
+    padding: 15px 12px;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* Specific adjustments for very small screens (e.g., 300px) */
+@media (max-width: 350px) {
+  .selectpatient-section {
+    padding: 12px 8px;
+  }
+
+  .patient-table {
+    font-size: 12px;
+  }
+
+  .patient-table th,
+  .patient-table td {
+    padding: 4px 6px;
+  }
+
+  .patient-table th:nth-child(2),
+  .patient-table td:nth-child(2) {
+    display: none; /* Optionally hide DOB column to save space */
+  }
+
+  .patient-table td button {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+
+  h2 {
+    font-size: 16px;
   }
 }

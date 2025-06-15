@@ -332,8 +332,6 @@ const AdminManageDoctor = () => {
 
       try {
         setLoading(true);
-        console.log(authToken)
-        console.log(newAppointment)
         const response = await webApiInstance.post(
           "Doctor/add-availbility",
           newAppointment,
@@ -343,7 +341,6 @@ const AdminManageDoctor = () => {
             },
           },
         );
-        console.log(response);
         if (response.data.statusCode === 200) {
           setAppointments([...appointments, response.data.result]); // Update state with API response
           toast.success("Data added successfully!");
@@ -352,7 +349,6 @@ const AdminManageDoctor = () => {
         }
       } catch (err) {
         toast.error("There was an error. Please try again");
-        console.log(error);
       } finally {
         setAppointmentData({
           doctorName: "",
@@ -366,7 +362,6 @@ const AdminManageDoctor = () => {
   };
   // Add a new time slot to an existing appointment
   const addTimeSlot = async () => {
-    console.log(selectedAppointmentIndex)
     if (
       selectedAppointmentIndex !== null &&
       startTimeSlotInput &&
@@ -383,12 +378,8 @@ const AdminManageDoctor = () => {
       }
 
       const updatedAppointments = [...appointments];
-      console.log(updatedAppointments)
       const newIndex=updatedAppointments.findIndex((app) => app.id === selectedAppointmentIndex);
-      console.log(newIndex)
 
-      console.log(updatedAppointments[newIndex].id);
-      console.log(startTimeSlotInput);
       const newTimeSlot = {
         availbilityId: appointments[newIndex].id, // Assuming the appointment ID is used as availabilityId
         startTime: startTimeSlotInput,
@@ -411,7 +402,7 @@ const AdminManageDoctor = () => {
           "/Doctor/add-availbility-timeslot",
           newTimeSlot
         );
-        console.log(response);
+      
         if (response.status === 200) {
           const updatedAppointments = [...appointments];
 
@@ -510,7 +501,6 @@ const AdminManageDoctor = () => {
             params: { type: "Profession" },
           }
         );
-        console.log("Profession Lookup:", professionResponse.data.result);
         setProfessionLookup(professionResponse.data.result);
       } catch (error) {
         console.error("Error fetching lookup data:", error);

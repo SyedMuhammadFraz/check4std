@@ -30,7 +30,6 @@ function Admin_Disease_Table() {
     } catch (error) {
       toast.error("There was an error fetching the data. Please try again.");
       setLoading(false);
-      console.error("Error fetching data:", error);
     }
   };
 
@@ -67,10 +66,11 @@ function Admin_Disease_Table() {
       );
       if (response.status === 204) {
         getData();
+        toast.success("Price updated successfully!");
       }
       setEditingId(null); // Exit edit mode
     } catch (error) {
-      console.error("Error updating price:", error);
+      toast.error("Error updating price:", error);
     } finally {
       setLoading(false);
     }

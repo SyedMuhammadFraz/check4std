@@ -81,6 +81,12 @@ const SignIn = () => {
           console.log("Auth Token:", token);
           toast.success("Successfully signed in!");
           navigate("/admin-panel/");
+        }
+          else if (role1 === "doctor") {
+          login(token);
+          console.log("Auth Token:", token);
+          toast.success("Successfully signed in!");
+          navigate("/admin-panel/");
         } else {
           toast.error("Wrong password or Usename");
         }

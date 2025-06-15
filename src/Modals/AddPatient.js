@@ -1,44 +1,95 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./AddPatient.css";
+import { webApiInstance } from "../AxiosInstance";
+import { toast } from "react-toastify";
+import { useLookupData } from "../utils/GenderLookup";
+import { AuthContext } from "../utils/AuthContext";
 
 function AddPatient({ onClose }) {
   const [formData, setFormData] = useState({
-    patientName: "",
-    sex: "",
-    dob: "",
-    // age: "",
-    address: "",
+    name: "",
+    gender: "",
+    email: "",
     phone: "",
+    dob: "",
+    // address: "",
     primaryInsurance: "",
     secondaryInsurance: "",
   });
 
+  const { authToken } = useContext(AuthContext);
   const [errors, setErrors] = useState({});
+  const [genderOptions, setGenderOptions] = useState([]);
 
   const validate = () => {
     const newErrors = {};
     const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
-    if (!formData.patientName) newErrors.patientName = "Required";
-    if (!formData.sex) newErrors.sex = "Required";
-    if (!formData.dob) newErrors.dob = "Required";
+    if (!formData.name) newErrors.name = "Name is required.";
+    if (!formData.gender) newErrors.gender = "Gender is required.";
+    if (!formData.dob) newErrors.dob = "Date of birth is required.";
     // if (!formData.age || isNaN(formData.age)) newErrors.age = "Valid age required";
-    if (!formData.address) newErrors.address = "Required";
+    if (!formData.email) newErrors.email = "Email is required.";
     if (!phoneRegex.test(formData.phone))
-      newErrors.phone = "Invalid US phone number";
+      newErrors.phone = "Use valid phone number format (e.g., (123) 456-7890.";
 
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    useLookupData([
+      {
+        type: "Gender",
+        setter: setGenderOptions,
+      },
+    ]);
+  }, []);
+  const todayMinus18 = new Date();
+  todayMinus18.setFullYear(todayMinus18.getFullYear() - 18);
+  const maxDate = todayMinus18.toISOString().split("T")[0];
+  const handleGenderChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "gender") {
+      const selectedGender = genderOptions.find((g) => g.id === Number(value));
+      setFormData((prevData) => ({
+        ...prevData,
+        gender: value,
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+
+    setErrors((prevErrors) => {
+      const newErrors = { ...prevErrors };
+      if (newErrors[name]) {
+        delete newErrors[name];
+      }
+      return newErrors;
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
     } else {
       setErrors({});
-      // You can now send formData to backend or handle it further
-      console.log("Form submitted:", formData);
+      try {
+        await webApiInstance.post("/Patient", formData, {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+        toast.success("Patient added successfully!");
+      } catch (error) {
+        console.error("Error adding patient:", error);
+        toast.error("Failed to add patient. Please try again.");
+      }
       onClose(); // Optionally close modal on successful submit
     }
   };
@@ -55,21 +106,26 @@ function AddPatient({ onClose }) {
         <form onSubmit={handleSubmit} className="space-y-2">
           <input
             type="text"
-            name="patientName"
-            placeholder="Patient Name"
-            className={`input ${errors.patientName ? "border-red-500" : ""}`}
-            value={formData.patientName}
+            name="name"
+            placeholder={errors.name || "Patient Name"}
+            className={`input ${errors.name ? "border-red-500" : ""}`}
+            value={formData.name}
             onChange={handleChange}
           />
           <select
-            name="sex"
-            className={`input ${errors.sex ? "border-red-500" : ""}`}
-            value={formData.sex}
-            onChange={handleChange}
+            name="gender"
+            className={`input ${errors.gender ? "border-red-500" : ""}`}
+            value={formData.gender}
+            onChange={handleGenderChange}
           >
-            <option value="">Select Sex</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
+            <option value="" disabled>
+              -- Select Gender --
+            </option>
+            {genderOptions.map((gender) => (
+              <option key={gender.id} value={gender.id}>
+                {gender.lookupValue}
+              </option>
+            ))}
           </select>
 
           <input
@@ -78,6 +134,8 @@ function AddPatient({ onClose }) {
             className={`input ${errors.dob ? "border-red-500" : ""}`}
             value={formData.dob}
             onChange={handleChange}
+            max={maxDate}
+            placeholder={errors.dob || "Date of Birth"}
           />
           {/* <input
             type="text"
@@ -89,16 +147,16 @@ function AddPatient({ onClose }) {
           /> */}
           <input
             type="text"
-            name="address"
-            placeholder="Address"
-            className={`input ${errors.address ? "border-red-500" : ""}`}
-            value={formData.address}
+            name="email"
+            placeholder={errors.email || "Email"}
+            className={`input ${errors.email ? "border-red-500" : ""}`}
+            value={formData.email}
             onChange={handleChange}
           />
           <input
             type="text"
             name="phone"
-            placeholder="Phone Number"
+            placeholder={errors.phone || "Phone Number"}
             className={`input ${errors.phone ? "border-red-500" : ""}`}
             value={formData.phone}
             onChange={handleChange}

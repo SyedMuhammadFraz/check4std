@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { LocationContext } from "../../utils/LocationContext";
 import { webApiInstance } from "../../AxiosInstance";
+import { useLookupData } from "../../utils/GenderLookup";
+import { useLoader } from "../../utils/LoaderContext";
 
 const OrderPage = () => {
   const [testPrices, setTestPrices] = useState({
@@ -17,12 +19,13 @@ const OrderPage = () => {
   const { selectedLocation } = useContext(LocationContext);
   const { authToken } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
   const [Disease, setDisease] = useState(null);
   const [genderLookup, setGenderLookup] = useState([]);
   const [selectedGender, setSelectedGender] = useState(null);
   const [contactMediumLookup, setContactMediumLookup] = useState([]);
   const [selectedContactMedium, setSelectedContactMedium] = useState(null);
+  const [patients, setPatients] = useState([]);
+  const { loading, setLoading } = useLoader();
 
   const location = useLocation();
   const { selectedTests = [] } = location.state || {};
@@ -34,6 +37,26 @@ const OrderPage = () => {
   const onChangeLocation = () => {
     navigate("/test-centers");
   };
+
+  useEffect(() => {
+    const fetchPatients = async () => {
+      setLoading(true);
+      try {
+        const response = await webApiInstance.get("/Patient/by-created-by", {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+        setPatients(response.data.result || []);
+      } catch (error) {
+        console.error("Failed to fetch patients", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPatients();
+  }, [authToken]);
 
   const getData = async (name) => {
     try {
@@ -48,7 +71,6 @@ const OrderPage = () => {
   };
 
   useEffect(() => {
-    console.log(tests);
     const fetchAllDiseaseIds = async () => {
       if (!tests || tests.length === 0) return;
 
@@ -65,11 +87,7 @@ const OrderPage = () => {
     };
 
     fetchAllDiseaseIds();
-  }, [selectedTests]);
-
-  useEffect(() => {
-    console.log("Disease Array: " + Disease);
-  }, [Disease]);
+  }, [selectedTests, tests]);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -95,30 +113,30 @@ const OrderPage = () => {
     dob: "",
   });
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+  // const handleChange = (e) => {
+  //   const { name, value, type, checked } = e.target;
 
-    // Create the updated form data
-    const updatedFormData = {
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    };
+  //   // Create the updated form data
+  //   const updatedFormData = {
+  //     ...formData,
+  //     [name]: type === "checkbox" ? checked : value,
+  //   };
 
-    // Update the state with the new form data
-    setFormData(updatedFormData);
+  //   // Update the state with the new form data
+  //   setFormData(updatedFormData);
 
-    // Dynamically update errors
-    setErrors((prevErrors) => {
-      const newErrors = { ...prevErrors };
+  //   // Dynamically update errors
+  //   setErrors((prevErrors) => {
+  //     const newErrors = { ...prevErrors };
 
-      // Remove specific field errors if the field is no longer invalid
-      if (newErrors[name]) {
-        delete newErrors[name];
-      }
+  //     // Remove specific field errors if the field is no longer invalid
+  //     if (newErrors[name]) {
+  //       delete newErrors[name];
+  //     }
 
-      return newErrors;
-    });
-  };
+  //     return newErrors;
+  //   });
+  // };
   const handleSubmit = (e) => {
     e.preventDefault();
     var fullDate = "";
@@ -207,7 +225,7 @@ const OrderPage = () => {
   );
 
   const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: 90 }, (_, i) => currentYear -10- i);
+  const years = Array.from({ length: 90 }, (_, i) => currentYear - 10 - i);
 
   const handleMonthChange = (e) => {
     setFormData({ ...formData, dobMonth: e.target.value });
@@ -242,44 +260,25 @@ const OrderPage = () => {
     return () => clearTimeout(timer);
   }, [authToken, navigate]);
 
-  useEffect(() => {
-    const FetchLookups = async () => {
-      try {
-        const genderResponse = await webApiInstance.get("/Lookup/get-by-type", {
-          params: { type: "Gender" },
-        });
-        console.log("Gender Lookup:", genderResponse.data.result);
-        setGenderLookup(genderResponse.data.result);
-
-        const contactMediumResponse = await webApiInstance.get(
-          "/Lookup/get-by-type",
-          {
-            params: { type: "ContactMedium" },
-          }
-        );
-        console.log(
-          "Contact Medium Lookup:",
-          contactMediumResponse.data.result
-        );
-        setContactMediumLookup(contactMediumResponse.data.result);
-      } catch (error) {
-        console.error("Error fetching lookup data:", error);
-        setGenderLookup([]);
-        setContactMediumLookup([]);
-      }
-    };
-
-    FetchLookups();
-  }, []);
+  // useEffect(() => {
+  //   useLookupData([
+  //     { type: "Gender", setter: setGenderLookup },
+  //     { type: "ContactMedium", setter: setContactMediumLookup },
+  //   ]);
+  // }, []);
 
   const createCheckoutSession = async (diseases, authToken, patientInfo) => {
     try {
+      console.log({
+        patientinfo: patientInfo.id,
+        diseaseIdList: diseases,
+      });
       // Extract IDs from the diseases array
       const response = await webApiInstance.post(
         "/Payment/create-checkout-session",
         {
           diseaseIdList: diseases,
-          patientinfo: patientInfo,
+          patientId: patientInfo.id,
         },
         {
           headers: {
@@ -287,7 +286,7 @@ const OrderPage = () => {
           },
         }
       );
-
+      console.log("Checkout Session Response:", response.data);
       // Redirect to the checkout session in a new tab
       if (response.data.sessionUrl) {
         window.location.href = response.data.sessionUrl;
@@ -328,49 +327,31 @@ const OrderPage = () => {
     });
   };
 
-  const handleContactMediumChange = (e) => {
-    const { name, value } = e.target;
+  const handleSelect = async (patient) => {
+    const payload = {
+      patientInfo: {
+        id: patient.id,
+        name: patient.name,
+        email: patient.email,
+        phoneNumber: patient.phone,
+        age: patient.age,
+      },
+    };
 
-    // If the user selects a gender, update both genderId and genderValue
-    if (name === "contactTypeId") {
-      const selectedContactMedium = contactMediumLookup.find(
-        (g) => g.id === Number(value)
-      );
-
-      setFormData((prevData) => ({
-        ...prevData,
-        contactTypeId: value, // Numeric ID
-        contactValue: selectedContactMedium
-          ? selectedContactMedium.lookupValue
-          : "", // Actual Gender Text
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
-
-    setErrors((prevErrors) => {
-      const newErrors = { ...prevErrors };
-
-      // Remove specific field errors if the field is no longer invalid
-      if (newErrors[name]) {
-        delete newErrors[name];
-      }
-
-      return newErrors;
-    });
-  };
-
-  const handlePlaceOrder = () => {
-    console.log(authToken);
     if (Disease !== null) {
-      toast.success("Redirecting to Payment Checkout Page");
-      createCheckoutSession(Disease, authToken);
+      setLoading(true); // Show spinner
+      try {
+        await createCheckoutSession(Disease, authToken, payload.patientInfo);
+      } catch (error) {
+        toast.error("Failed to redirect to payment.");
+        console.error(error);
+      } finally {
+        setLoading(false); // Hide spinner
+      }
     }
   };
 
+  //
   useEffect(() => {
     const fetchPrices = async () => {
       try {
@@ -398,10 +379,10 @@ const OrderPage = () => {
     if (testPrices.tenTestPanel && totalCost < testPrices.tenTestPanel) {
       setTests([{ name: "10 Test Panel", price: testPrices.tenTestPanel }]);
       setTotalCost(testPrices.tenTestPanel);
+      setDisease("10 Test Panel"); // ✅ Set Disease name here
     }
   };
 
-  // Handle Upgrade for 10 Test Panel with HIV RNA
   const handleHIVRNAUpgrade = () => {
     if (testPrices.tenTestPanelHIVRNA) {
       setTests([
@@ -411,6 +392,7 @@ const OrderPage = () => {
         },
       ]);
       setTotalCost(testPrices.tenTestPanelHIVRNA);
+      setDisease("10 Test Panel with HIV RNA Early Detection"); // ✅ Set Disease name here
     }
   };
 
@@ -520,7 +502,7 @@ const OrderPage = () => {
       <div className="container">
         <h1>Quick & Confidential STD Testing</h1>
 
-        <form onSubmit={handleSubmit}>
+        <form>
           {/* Section 1: Find a Test Center */}
           <section>
             <h2 className="blue-background">1. Find a Test Center</h2>
@@ -533,9 +515,46 @@ const OrderPage = () => {
               </button>
             </div>
           </section>
+        </form>
+      </div>
 
-          {/* Section 2: Enter Patient Information */}
-          <section>
+      <section className="selectpatient-section">
+        <h2 className="blue-background">2. Select a Patient</h2>
+
+        <table className="patient-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>DOB</th>
+              <th>Contact</th>
+              <th>Select</th>
+            </tr>
+          </thead>
+          <tbody>
+            {patients.map((patient) => (
+              <tr key={patient.id}>
+                <td data-label="Name">{patient.name}</td>
+                <td data-label="DOB">{patient.dob}</td>
+                <td data-label="Contact">{patient.email || patient.phone}</td>
+                <td data-label="Select">
+                  <button onClick={() => handleSelect(patient)}>Select</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+    </div>
+  );
+};
+
+export default OrderPage;
+
+{
+  /* Section 2: Enter Patient Information */
+}
+{
+  /* <section>
             <h2 className="blue-background">2. Enter Patient Information</h2>
             <label className="order-labels">First & Last Name</label>
             <div>
@@ -666,16 +685,20 @@ const OrderPage = () => {
                   )}
                 </div>
               </>
-            )}
+            )} */
+}
 
-            {/* {formData.notificationMethod === "Text Me (SMS)" && (
+{
+  /* {formData.notificationMethod === "Text Me (SMS)" && (
               <div>
                 <label className="order-labels">
                   May we leave a voicemail?
                 </label>
               </div>
-            )} */}
-            {/* 
+            )} */
+}
+{
+  /* 
             {formData.notificationMethod === "Text Me (SMS)" && (
               <div>
                 <div>
@@ -706,20 +729,88 @@ const OrderPage = () => {
                   <span className="error">{errors.voicemail}</span>
                 )}
               </div>
-            )} */}
+            )} */
+}
 
-            {errors.contactTypeId && (
+{
+  /* {errors.contactTypeId && (
               <span className="error">{errors.contactTypeId}</span>
             )}
           </section>
 
           <button type="submit" onClick={handleSubmit}>
             Place Your Order
-          </button>
-        </form>
-      </div>
-    </div>
-  );
-};
+          </button>*/
+}
 
-export default OrderPage;
+// useEffect(() => {
+//   const FetchLookups = async () => {
+//     try {
+//       const genderResponse = await webApiInstance.get("/Lookup/get-by-type", {
+//         params: { type: "Gender" },
+//       });
+//       console.log("Gender Lookup:", genderResponse.data.result);
+//       setGenderLookup(genderResponse.data.result);
+
+//       const contactMediumResponse = await webApiInstance.get(
+//         "/Lookup/get-by-type",
+//         {
+//           params: { type: "ContactMedium" },
+//         }
+//       );
+//       console.log(
+//         "Contact Medium Lookup:",
+//         contactMediumResponse.data.result
+//       );
+//       setContactMediumLookup(contactMediumResponse.data.result);
+//     } catch (error) {
+//       console.error("Error fetching lookup data:", error);
+//       setGenderLookup([]);
+//       setContactMediumLookup([]);
+//     }
+//   };
+
+//   FetchLookups();
+// }, []);
+
+// const handleContactMediumChange = (e) => {
+//   const { name, value } = e.target;
+
+//   // If the user selects a gender, update both genderId and genderValue
+//   if (name === "contactTypeId") {
+//     const selectedContactMedium = contactMediumLookup.find(
+//       (g) => g.id === Number(value)
+//     );
+
+//     setFormData((prevData) => ({
+//       ...prevData,
+//       contactTypeId: value, // Numeric ID
+//       contactValue: selectedContactMedium
+//         ? selectedContactMedium.lookupValue
+//         : "", // Actual Gender Text
+//     }));
+//   } else {
+//     setFormData((prevData) => ({
+//       ...prevData,
+//       [name]: value,
+//     }));
+//   }
+
+//   setErrors((prevErrors) => {
+//     const newErrors = { ...prevErrors };
+
+//     // Remove specific field errors if the field is no longer invalid
+//     if (newErrors[name]) {
+//       delete newErrors[name];
+//     }
+
+//     return newErrors;
+//   });
+// };
+
+// const handlePlaceOrder = () => {
+//   if (Disease !== null) {
+//     toast.success("Redirecting to Payment Checkout Page");
+//     createCheckoutSession(Disease, authToken);
+//   }
+// };

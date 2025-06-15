@@ -1,0 +1,37 @@
+/* DoctorNavBar styles - matches Admin and User NavBar */
+.admin-navbar {
+  background: #fff;
+  color: #222;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 2rem;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+  z-index: 100;
+}
+.admin-navbar-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #1abc9c;
+}
+.admin-navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+.admin-navbar-links li a {
+  color: #222;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: color 0.2s;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+.admin-navbar-links li a:hover {
+  color: #fff;
+  background: #1abc9c;
+}

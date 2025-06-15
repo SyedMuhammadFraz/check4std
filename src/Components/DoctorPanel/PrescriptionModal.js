@@ -1,29 +1,22 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import "./PrescriptionModal.css";
 
-const PrescriptionModal = ({ open, onClose, xml, actionUrl }) => {
-  // Create a ref for the iframe
-  const iframeRef = React.useRef(null);
+const PrescriptionModal = ({ open, onClose, iframeUrl, htmlContent }) => {
+  const iframeRef = useRef(null);
 
-  React.useEffect(() => {
-    if (open && iframeRef.current) {
-      // Create a form and submit the XML to the iframe
-      const form = document.createElement("form");
-      form.method = "POST";
-      form.action = actionUrl;
-      form.target = "prescription-iframe";
-
-      const input = document.createElement("input");
-      input.type = "hidden";
-      input.name = "xml";
-      input.value = xml;
-      form.appendChild(input);
-
-      document.body.appendChild(form);
-      form.submit();
-      document.body.removeChild(form);
+  useEffect(() => {
+    if (open && htmlContent && iframeRef.current) {
+      // Write the HTML content into the iframe
+      const doc = iframeRef.current.contentWindow.document;
+      doc.open();
+      doc.write(htmlContent);
+      doc.close();
     }
-  }, [open, xml, actionUrl]);
+  }, [open, htmlContent]);
+  
+  useEffect(() => {
+    console.log("HTML Content:", htmlContent);
+  }, []);
 
   // Only render when open
   if (!open) return null;
@@ -32,12 +25,21 @@ const PrescriptionModal = ({ open, onClose, xml, actionUrl }) => {
     <div className="prescription-modal-overlay">
       <div className="prescription-modal-content">
         <button className="close-btn" onClick={onClose}>&times;</button>
-        <iframe
-          name="prescription-iframe"
-          ref={iframeRef}
-          title="Prescription"
-          style={{ width: "100%", height: "80vh", border: "none" }}
-        />
+        {htmlContent ? (
+          <iframe
+            ref={iframeRef}
+            title="Prescription HTML"
+            style={{ width: "100%", height: "80vh", border: "none" }}
+          />
+        ) : iframeUrl ? (
+          <iframe
+            src={iframeUrl}
+            title="Prescription"
+            style={{ width: "100%", height: "80vh", border: "none" }}
+          />
+        ) : (
+          <div>No prescription to display.</div>
+        )}
       </div>
     </div>
   );

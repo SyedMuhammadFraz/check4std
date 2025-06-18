@@ -63,6 +63,8 @@ import DoctorForm from "./Modals/DoctorForm";
 import NurseForm from "./Modals/NurseForm";
 import DoctorDashboard from "./Components/DoctorPanel/DoctorDashboard";
 import DoctorNavBar from "./Components/DoctorPanel/DoctorNavBar";
+import StdQuestions from "./Components/Questionares/StdQuestions";
+import SetDoctorPassword from "./Components/Signin/SetDoctorPassword";
 
 function App() {
   const stripePromise = loadStripe(
@@ -85,6 +87,11 @@ function App() {
                 <Routes>
                   <Route element={<LandingPage />}>
                     {/* <Route index path="diseases" element={<Diseases />} /> */}
+                     <Route
+                      index
+                      path="set-doctor-password"
+                      element={<SetDoctorPassword />}
+                    />
                     <Route path="/diseases" element={<Diseases />}>
                       <Route
                         index
@@ -200,6 +207,7 @@ function App() {
                     </Route>
                     <Route index path="signup" element={<SignUp />} />
                     <Route index path="login" element={<SignIn />} />
+                    <Route index path="std-assessment" element={<StdQuestions />} />
                     <Route index path="get-otp" element={<OTPPage />} />
                     <Route index path="test-centers" element={<MapPage />} />
                     <Route
@@ -227,6 +235,7 @@ function App() {
                       path="forgot-password"
                       element={<ForgotPassword />}
                     />
+                   
                     <Route
                       index
                       path="forgot-password-otp"

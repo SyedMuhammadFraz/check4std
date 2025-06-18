@@ -429,7 +429,7 @@ function Nav() {
                   >
                     Logout
                   </button>
-                  <button onClick={()=>setshowAddPatientModal(true)} className="button3">Add Patient</button>
+                  <button onClick={()=>setshowAddPatientModal(true)} className="button3 mx-3">Add Patient</button>
                   {userRole === "admin" && (
                     <NavLink
                       to="/admin-panel"

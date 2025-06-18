@@ -36,14 +36,14 @@ function AddPatient({ onClose }) {
     return newErrors;
   };
 
-  useEffect(() => {
-    useLookupData([
-      {
-        type: "Gender",
-        setter: setGenderOptions,
-      },
-    ]);
-  }, []);
+  useLookupData([
+    {
+      type: "Gender",
+      setter: setGenderOptions,
+    },
+  ]);
+  // useEffect(() => {
+  // }, []);
   const todayMinus18 = new Date();
   todayMinus18.setFullYear(todayMinus18.getFullYear() - 18);
   const maxDate = todayMinus18.toISOString().split("T")[0];

@@ -319,7 +319,7 @@ const AdminManageDoctor = () => {
     }
   };
 
-  };
+  
   const handleBookAppointment = async () => {
     if (!appointmentData.doctorName || !appointmentData.date) {
       setError("All fields are required.");

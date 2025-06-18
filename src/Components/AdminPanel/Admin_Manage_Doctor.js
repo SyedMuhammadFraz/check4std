@@ -317,79 +317,79 @@ const AdminManageDoctor = () => {
       setShowDoctorModal(false);
       setError("");
     }
+  };
 
-    const handleBookAppointment = async () => {
-      if (!appointmentData.doctorName || !appointmentData.date) {
-        setError("All fields are required.");
-        return;
-      }
+  const handleBookAppointment = async () => {
+    if (!appointmentData.doctorName || !appointmentData.date) {
+      setError("All fields are required.");
+      return;
+    }
 
-      const selectedDate = new Date(appointmentData.date);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
+    const selectedDate = new Date(appointmentData.date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
-      if (selectedDate < today) {
-        setError("Date must be today or a future date.");
-        return;
-      }
+    if (selectedDate < today) {
+      setError("Date must be today or a future date.");
+      return;
+    }
 
-      const selectedDoctor = doctors.find(
-        (doc) => doc.name === appointmentData.doctorName
-      );
+    const selectedDoctor = doctors.find(
+      (doc) => doc.name === appointmentData.doctorName
+    );
 
-      if (!selectedDoctor) {
-        setError("Selected doctor not found.");
-        return;
-      }
+    if (!selectedDoctor) {
+      setError("Selected doctor not found.");
+      return;
+    }
 
-      // Check if appointment for this doctor and date already exists
-      const existingAppIndex = appointments.findIndex(
-        (app) =>
-          app.doctorName === appointmentData.doctorName &&
-          app.date === appointmentData.date
-      );
+    // Check if appointment for this doctor and date already exists
+    const existingAppIndex = appointments.findIndex(
+      (app) =>
+        app.doctorName === appointmentData.doctorName &&
+        app.date === appointmentData.date
+    );
 
-      if (existingAppIndex !== -1) {
-        // Add time slot to existing appointment
-        const updatedAppointments = [...appointments];
-        // updatedAppointments[existingAppIndex].timeSlots.push(newTimeSlot);
-        setAppointments(updatedAppointments);
-      } else {
-        const newAppointment = {
-          doctorId: selectedDoctor.id,
-          date: appointmentData.date,
-        };
+    if (existingAppIndex !== -1) {
+      // Add time slot to existing appointment
+      const updatedAppointments = [...appointments];
+      // updatedAppointments[existingAppIndex].timeSlots.push(newTimeSlot);
+      setAppointments(updatedAppointments);
+    } else {
+      const newAppointment = {
+        doctorId: selectedDoctor.id,
+        date: appointmentData.date,
+      };
 
-        try {
-          setLoading(true);
-          const response = await webApiInstance.post(
-            "Doctor/add-availbility",
-            newAppointment,
-            {
-              headers: {
-                Authorization: `Bearer ${authToken}`, // Replace with actual token
-              },
-            }
-          );
-          if (response.data.statusCode === 200) {
-            setAppointments([...appointments, response.data.result]); // Update state with API response
-            toast.success("Data added successfully!");
-          } else {
-            toast.error("There was an error. Please try again");
+      try {
+        setLoading(true);
+        const response = await webApiInstance.post(
+          "Doctor/add-availbility",
+          newAppointment,
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`, // Replace with actual token
+            },
           }
-        } catch (err) {
+        );
+        if (response.data.statusCode === 200) {
+          setAppointments([...appointments, response.data.result]); // Update state with API response
+          toast.success("Data added successfully!");
+        } else {
           toast.error("There was an error. Please try again");
-        } finally {
-          setAppointmentData({
-            doctorName: "",
-            date: "",
-          });
-          setShowAppointmentModal(false);
-          setError("");
-          setLoading(false);
         }
+      } catch (err) {
+        toast.error("There was an error. Please try again");
+      } finally {
+        setAppointmentData({
+          doctorName: "",
+          date: "",
+        });
+        setShowAppointmentModal(false);
+        setError("");
+        setLoading(false);
       }
-    };
+    }
   };
   // Add a new time slot to an existing appointment
   const addTimeSlot = async () => {

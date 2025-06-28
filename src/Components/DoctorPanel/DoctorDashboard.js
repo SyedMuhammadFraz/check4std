@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import "./DoctorNavBar.css";
 import { FaPrescriptionBottleAlt } from "react-icons/fa";
-import PrescriptionModal from "./PrescriptionModal";
 import DoctorApis from "../../utils/DoctorApis";
 import './DoctorDashboard.css';
 
 const DoctorDashboard = () => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [iframeUrl, setIframeUrl] = useState("");
-  const [htmlContent, setHtmlContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -32,30 +28,40 @@ const DoctorDashboard = () => {
     },
   ];
 
-  const handlePrescription = async (patient) => {
-    setLoading(true);
-    setError("");
-    try {
-      const doctorId = 15; // Replace with actual doctor id
-      const patientId = 7; // Replace with actual patient id
-      const response = await DoctorApis.getPrescriptionPage(
-        doctorId,
-        patientId
-      );
-      // response.data may be HTML string
-      if (response.data) {
-        setHtmlContent(response.data); // Set HTML content for modal
-        setIframeUrl("");
-        setModalOpen(true);
-      } else {
-        setError("No HTML returned from NewCrop.");
-      }
-    } catch (err) {
-      setError(err.message || "Error sending prescription");
-    } finally {
-      setLoading(false);
+const BASE_URL = "https://preproduction.newcropaccounts.com"; // Change to your actual base
+
+function rewriteRelativeUrls(html, baseUrl) {
+  // Replace href="/... and src="/... with absolute URLs
+  return html.replace(/(href|src)=["']\/(?!\/)/g, `$1="${baseUrl}/`);
+}
+
+const handlePrescription = async (patient) => {
+  setLoading(true);
+  setError("");
+  try {
+    const doctorId = 15; // Replace with actual doctor id
+    const patientId = 7; // Replace with actual patient id
+    const response = await DoctorApis.getPrescriptionPage(
+      doctorId,
+      patientId
+    );
+    if (response.data) {
+      // Fix relative URLs
+      const fixedHtml = rewriteRelativeUrls(response.data, BASE_URL);
+      // Open the fixed HTML in a new tab using a Blob
+      const blob = new Blob([fixedHtml], { type: "text/html" });
+      const url = URL.createObjectURL(blob);
+      window.open(url, "_blank");
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+    } else {
+      setError("No HTML returned from NewCrop.");
     }
-  };
+  } catch (err) {
+    setError(err.message || "Error sending prescription");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="admin-table-container">
@@ -97,12 +103,6 @@ const DoctorDashboard = () => {
         </table>
         {error && <div style={{ color: "red" }}>{error}</div>}
         {loading && <div>Loading...</div>}
-        <PrescriptionModal
-          open={modalOpen}
-          onClose={() => setModalOpen(false)}
-          iframeUrl={iframeUrl}
-          htmlContent={htmlContent}
-        />
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import "./DoctorConsultation.css";
 import { webApiInstance } from "../../../AxiosInstance";
 import { AuthContext } from "../../../utils/AuthContext";
 import { toast } from "react-toastify";
+import { useLoader } from "../../../utils/LoaderContext";
 
 const DoctorConsultation = () => {
   const { authToken } = useContext(AuthContext);
@@ -12,7 +13,27 @@ const DoctorConsultation = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
-  const [patientName, setPatientName] = useState("");
+  const { setLoading, loading } = useLoader();
+
+  const [patients, setPatients] = useState([]);
+  const [selectedPatient, setSelectedPatient] = useState(null);
+
+  useEffect(() => {
+    const fetchPatients = async () => {
+      try {
+        const response = await webApiInstance.get("/Patient", {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+        setPatients(response.data.result); // Assuming this is the response format
+      } catch (error) {
+        toast.error("Failed to fetch patients.");
+      }
+    };
+
+    fetchPatients();
+  }, []);
 
   // Fetching all doctors and their availability data
 
@@ -64,19 +85,16 @@ const DoctorConsultation = () => {
   }, [availableDoctors]);
 
   const handleAppointment = async () => {
-    if (!patientName || !selectedTime) {
-      alert("Please fill all fields!");
+    if (!selectedPatient || !selectedTime) {
+      alert("Please select all fields!");
       return;
     }
-
     try {
-      // console.log(selectedDoctor.id);
-      // console.log(selectedTime);
-      // console.log(selectedDate);
+      setLoading(true);
       const requestBody = {
         doctorId: selectedTime.doctorId,
-        timeSlotId: selectedTime.id, // Assuming timeSlot has an `id` field
-        patientName: patientName,
+        timeSlotId: selectedTime.id,
+        patientId: selectedPatient.patientId,
       };
 
       const response = await webApiInstance.post(
@@ -89,16 +107,21 @@ const DoctorConsultation = () => {
         }
       );
 
-      console.log("Response:", response.data);
       if (response.data.statusCode === 200) {
+        
         toast.success(
-          `Appointment successfully booked with on ${selectedDate.toDateString()} at ${selectedTime.startTime} - ${selectedTime.endTime}`
+          `Appointment successfully booked with on ${selectedDate.toDateString()} at ${
+            selectedTime.startTime
+          } - ${selectedTime.endTime}`
         );
       } else {
         toast.error("Failed to book appointment. Please try again.");
       }
     } catch (error) {
       toast.error("An error occurred while booking the appointment.");
+    }
+    finally{
+      setLoading(false)
     }
   };
 
@@ -286,21 +309,49 @@ const DoctorConsultation = () => {
           </>
         )}
 
-        <label className="input-label">Enter Patient Name:</label>
-        <input
-          className="styled-input"
-          type="text"
-          placeholder="Enter your name"
-          value={patientName}
-          onChange={(e) => setPatientName(e.target.value)}
-        />
+        <label className="input-label">Select a Patient:</label>
+        <div className="table-container">
+          <table className="styled-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>DOB</th>
+                <th>Contact</th>
+                <th>Select</th>
+              </tr>
+            </thead>
+            <tbody>
+              {patients.map((patient) => (
+                <tr key={patient.id}>
+                  <td>{patient.name}</td>
+                  <td>{patient.dob}</td>
+                  <td>{patient.email || patient.phone}</td>
+                  <td>
+                    <button
+                      className="select-button"
+                      onClick={() => setSelectedPatient(patient)}
+                    >
+                      Select
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {selectedPatient && (
+          <p style={{ marginTop: "10px" }}>
+            Selected Patient: <strong>{selectedPatient.name}</strong>
+          </p>
+        )}
 
         <button
           className="book-button"
           onClick={handleAppointment}
-          disabled={!selectedTime} // Disable if no doctor or time slot is selected
+          disabled={loading || !selectedTime || !selectedPatient}
         >
-          Book Appointment
+          {loading ? "Booking..." : "Book Appointment"}
         </button>
       </div>
     </div>

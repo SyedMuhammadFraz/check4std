@@ -9,7 +9,7 @@
   font-size: 28px;
   font-weight: bold;
   text-align: center;
-  color: var( --Neutral-Logo-Blue); /* Healthcare Blue */
+  color: var(--Neutral-Logo-Blue); /* Healthcare Blue */
   margin-bottom: 15px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -53,7 +53,7 @@
 
 /* Calendar Header */
 .react-calendar__navigation {
-  background: linear-gradient(135deg, var( --Neutral-Logo-Blue), #00a8e8);
+  background: linear-gradient(135deg, var(--Neutral-Logo-Blue), #00a8e8);
   color: white;
   border-radius: 12px;
   padding: 10px;
@@ -80,7 +80,7 @@
 
 /* Selected Date */
 .react-calendar__tile--active {
-  background: var( --Neutral-Logo-Blue) !important;
+  background: var(--Neutral-Logo-Blue) !important;
   color: white;
   font-size: 18px;
   font-weight: bold;
@@ -120,33 +120,33 @@
 
 /* Container for selected date */
 .selected-date-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 15px;
-    padding: 12px 24px;
-    background: rgba(0, 119, 255, 0.208); /* Soft blue background */
-    border-radius: 8px;
-    border-left: 4px solid #007bff; /* Blue left border for subtle emphasis */
-  }
-  
-  /* Selected Date Styling */
-  .selected-date {
-    font-size: 18px;
-    font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  padding: 12px 24px;
+  background: rgba(0, 119, 255, 0.208); /* Soft blue background */
+  border-radius: 8px;
+  border-left: 4px solid #007bff; /* Blue left border for subtle emphasis */
+}
 
-    padding: 8px 15px;
-    border-radius: 6px;
-    color: #0566cd;
-    letter-spacing: 1px;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  /* Hover Effect */
-  .selected-date:hover {
-    transform: scale(1.05);
-    background: white;
-  }
+/* Selected Date Styling */
+.selected-date {
+  font-size: 18px;
+  font-weight: bold;
+
+  padding: 8px 15px;
+  border-radius: 6px;
+  color: #0566cd;
+  letter-spacing: 1px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+.selected-date:hover {
+  transform: scale(1.05);
+  background: white;
+}
 
 /* 📋 Booking Section (Right Side) */
 .booking-section {
@@ -164,7 +164,7 @@
   font-size: 20px;
   font-weight: bold;
   text-align: center;
-  color: var( --Accent-Color);
+  color: var(--Accent-Color);
   margin-bottom: 15px;
   margin-top: 35px;
   text-transform: uppercase;
@@ -208,7 +208,7 @@
 
 /* Selected Doctor */
 .doctor-card.selected {
-  background: linear-gradient(135deg, var( --Neutral-Logo-Blue), #00a8e8);
+  background: linear-gradient(135deg, var(--Neutral-Logo-Blue), #00a8e8);
   color: white;
   border: 2px solid #00a8e8;
   box-shadow: 0px 6px 15px rgba(0, 119, 182, 0.5);
@@ -327,7 +327,7 @@
   width: 60%;
   padding: 12px;
   margin-top: 10px;
-  border: 2px solid var( --Neutral-Logo-Blue); /* Healthcare blue */
+  border: 2px solid var(--Neutral-Logo-Blue); /* Healthcare blue */
   border-radius: 8px;
   font-size: 16px;
   outline: none;
@@ -396,126 +396,166 @@
   opacity: 0.6;
 }
 
-
 /* 🌍 Responsive Design */
 
 /* Tablets and Small Laptops */
 @media screen and (max-width: 1724px) {
-    .consultation-container {
-      flex-direction: column;
-      height: auto;
-      padding: 15px;
-    }
-  
-    .calendar-section, .booking-section {
-      width: 100%;
-      margin-right: 0;
-      margin-bottom: 20px;
-    }
-  
-    .styled-calendar {
-      width: 100%;
-      max-width: 400px;
-    }
-  
-    .doctor-card, .time-slot {
-      min-width: 120px;
-      font-size: 14px;
-    }
-    
-    .styled-input{
-        width: 70%;
-    }
-   
+  .consultation-container {
+    flex-direction: column;
+    height: auto;
+    padding: 15px;
   }
-  
-  /* Mobile Phones */
-  @media screen and (max-width: 768px) {
-    .consultation-container {
-      flex-direction: column;
-      height: auto;
-      padding: 10px;
-    }
-  
-    .section-title {
-      font-size: 22px;
-    }
-  
-    .calendar-section, .booking-section {
-      width: 100%;
-      padding: 20px;
-      margin-bottom: 15px;
-    }
-  
-    .styled-calendar {
-      width: 100%;
-      padding: 15px;
-    }
-  
-    .react-calendar__tile {
-      font-size: 14px;
-      padding: 8px;
-    }
-  
-    .doctor-card, .time-slot {
-      min-width: 100px;
-      font-size: 12px;
-      padding: 10px;
-    }
-  
-    .doctor-list, .time-slot-container {
-      gap: 8px;
-    }
-  
-    .styled-input {
-      font-size: 14px;
-      padding: 10px;
-    }
-  
-    .book-button {
-      font-size: 12px;
-      padding: 12px;
-    }
-  }
-  
-  /* Very Small Screens (below 480px) */
-  @media screen and (max-width: 480px) {
-    .section-title {
-      font-size: 20px;
-    }
-  
-    .selected-date{
-        font-size: 14px;
-    }
 
-    .calendar-section, .booking-section {
-      padding: 15px;
-    }
-  
-    .styled-calendar {
-      padding: 10px;
-    }
-  
-    .react-calendar__tile {
-      font-size: 12px;
-      padding: 6px;
-    }
-  
-    .doctor-card, .time-slot {
-      min-width: 80px;
-      font-size: 10px;
-      padding: 8px;
-    }
-  
-    .styled-input {
-      font-size: 12px;
-      width: 80%;
-      padding: 8px;
-    }
-  
-    .book-button {
-      font-size: 10px;
-      padding: 10px;
-    }
+  .calendar-section,
+  .booking-section {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 20px;
   }
-  
+
+  .styled-calendar {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .doctor-card,
+  .time-slot {
+    min-width: 120px;
+    font-size: 14px;
+  }
+
+  .styled-input {
+    width: 70%;
+  }
+}
+
+/* Mobile Phones */
+@media screen and (max-width: 768px) {
+  .consultation-container {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+
+  .section-title {
+    font-size: 22px;
+  }
+
+  .calendar-section,
+  .booking-section {
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 15px;
+  }
+
+  .styled-calendar {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .react-calendar__tile {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .doctor-card,
+  .time-slot {
+    min-width: 100px;
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .doctor-list,
+  .time-slot-container {
+    gap: 8px;
+  }
+
+  .styled-input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .book-button {
+    font-size: 12px;
+    padding: 12px;
+  }
+}
+
+/* Very Small Screens (below 480px) */
+@media screen and (max-width: 480px) {
+  .section-title {
+    font-size: 20px;
+  }
+
+  .selected-date {
+    font-size: 14px;
+  }
+
+  .calendar-section,
+  .booking-section {
+    padding: 15px;
+  }
+
+  .styled-calendar {
+    padding: 10px;
+  }
+
+  .react-calendar__tile {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  .doctor-card,
+  .time-slot {
+    min-width: 80px;
+    font-size: 10px;
+    padding: 8px;
+  }
+
+  .styled-input {
+    font-size: 12px;
+    width: 80%;
+    padding: 8px;
+  }
+
+  .book-button {
+    font-size: 10px;
+    padding: 10px;
+  }
+}
+
+.table-container {
+  max-height: 300px; /* Adjust based on your layout */
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-top: 8px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Optional: Style scroll bar for better UX */
+.table-container::-webkit-scrollbar {
+  width: 6px;
+}
+.table-container::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 3px;
+}
+.table-container::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.select-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  font-size: 1em;
+  border-radius: 4px;
+  box-sizing: border-box;
+}

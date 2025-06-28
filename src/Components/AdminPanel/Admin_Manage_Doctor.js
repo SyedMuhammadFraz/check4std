@@ -431,6 +431,7 @@ const AdminManageDoctor = () => {
       }
 
       try {
+        setLoading(true)
         // API request to save the time slot
         const response = await webApiInstance.post(
           "/Doctor/add-availbility-timeslot",
@@ -445,7 +446,7 @@ const AdminManageDoctor = () => {
           setAppointments(updatedAppointments);
 
           // Clear inputs & errors
-
+          setLoading(false);
           toast.success("Time slot added successfully!");
         } else {
           throw new Error("Failed to add time slot.");

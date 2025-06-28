@@ -65,6 +65,7 @@ import DoctorDashboard from "./Components/DoctorPanel/DoctorDashboard";
 import DoctorNavBar from "./Components/DoctorPanel/DoctorNavBar";
 import StdQuestions from "./Components/Questionares/StdQuestions";
 import SetDoctorPassword from "./Components/Signin/SetDoctorPassword";
+import { QuestionnaireProvider } from "./utils/QuestionareContext";
 
 function App() {
   const stripePromise = loadStripe(
@@ -80,206 +81,222 @@ function App() {
               autoClose={3000}
               style={{ marginTop: "40px" }} // Moves it lower
             />
-            <LoaderProvider>
-              <Loader />
-              <BrowserRouter>
-                {/* <RedirectHandler /> */}
-                <Routes>
-                  <Route element={<LandingPage />}>
-                    {/* <Route index path="diseases" element={<Diseases />} /> */}
-                     <Route
-                      index
-                      path="set-doctor-password"
-                      element={<SetDoctorPassword />}
-                    />
-                    <Route path="/diseases" element={<Diseases />}>
+            <QuestionnaireProvider>
+              <LoaderProvider>
+                <Loader />
+                <BrowserRouter>
+                  {/* <RedirectHandler /> */}
+                  <Routes>
+                    <Route element={<LandingPage />}>
+                      {/* <Route index path="diseases" element={<Diseases />} /> */}
                       <Route
                         index
-                        path="/diseases/overview"
-                        element={<STDs />}
+                        path="set-doctor-password"
+                        element={<SetDoctorPassword />}
+                      />
+                      <Route path="/diseases" element={<Diseases />}>
+                        <Route
+                          index
+                          path="/diseases/overview"
+                          element={<STDs />}
+                        />
+                        <Route
+                          index
+                          path="/diseases/chlamydia"
+                          element={<Chlamydia />}
+                        />
+                        <Route
+                          index
+                          path="/diseases/gonorrhea"
+                          element={<Gonorrhea />}
+                        />
+                        <Route index path="/diseases/hiv" element={<HIV />} />
+                        <Route
+                          index
+                          path="/diseases/oral-herpes"
+                          element={<OralHerpes />}
+                        />
+                        <Route
+                          index
+                          path="/diseases/symptoms"
+                          element={<UnderstandingSTDs />}
+                        />
+                        <Route
+                          index
+                          path="/diseases/syphilis"
+                          element={<SyphilisInfo />}
+                        />
+                        <Route
+                          index
+                          path="/diseases/hep-a"
+                          element={<HepatitisAInfo />}
+                        />
+                        <Route
+                          index
+                          path="/diseases/hep-b"
+                          element={<HepatitisBInfo />}
+                        />
+                        <Route
+                          index
+                          path="/diseases/hep-c"
+                          element={<HepatitisCInfo />}
+                        />
+                        <Route
+                          index
+                          path="/diseases/genital-herpes"
+                          element={<GenitalHerpesInfo />}
+                        />
+                      </Route>
+                      <Route
+                        index
+                        path="price-packages"
+                        element={<MainPage />}
                       />
                       <Route
                         index
-                        path="/diseases/chlamydia"
-                        element={<Chlamydia />}
+                        path="ten-test-panel"
+                        element={<Testpanel />}
                       />
                       <Route
                         index
-                        path="/diseases/gonorrhea"
-                        element={<Gonorrhea />}
-                      />
-                      <Route index path="/diseases/hiv" element={<HIV />} />
-                      <Route
-                        index
-                        path="/diseases/oral-herpes"
-                        element={<OralHerpes />}
+                        path="chlamydia-gonorrhea-test"
+                        element={<Chlamydia_Gonorrhea />}
                       />
                       <Route
                         index
-                        path="/diseases/symptoms"
-                        element={<UnderstandingSTDs />}
+                        path="chlamydia-test"
+                        element={<Chlamydia_Test />}
                       />
                       <Route
                         index
-                        path="/diseases/syphilis"
-                        element={<SyphilisInfo />}
+                        path="gonorrhea-test"
+                        element={<Gonorrhea_Test />}
+                      />
+                      <Route index path="hep-a-test" element={<HepA_Test />} />
+                      <Route index path="hep-b-test" element={<HepB_Test />} />
+                      <Route index path="hep-c-test" element={<HepC_Test />} />
+                      <Route
+                        index
+                        path="herpes-i-ii-test"
+                        element={<Herpes1_2 />}
                       />
                       <Route
                         index
-                        path="/diseases/hep-a"
-                        element={<HepatitisAInfo />}
+                        path="oral-herpes-test"
+                        element={<Oral_Herpes_Test />}
                       />
                       <Route
                         index
-                        path="/diseases/hep-b"
-                        element={<HepatitisBInfo />}
+                        path="genital-herpes-test"
+                        element={<Genital_Herpes_Test />}
                       />
                       <Route
                         index
-                        path="/diseases/hep-c"
-                        element={<HepatitisCInfo />}
+                        path="hiv-test"
+                        element={<HIV1_2_FourthGen_Test />}
                       />
                       <Route
                         index
-                        path="/diseases/genital-herpes"
-                        element={<GenitalHerpesInfo />}
+                        path="hiv-rna-test"
+                        element={<HIV_RNA_Test />}
+                      />
+                      <Route
+                        index
+                        path="syphilis-test"
+                        element={<Syphilis_Test />}
+                      />
+                      <Route
+                        path="order"
+                        element={<ProtectedRoute allowedRoles={["user"]} />}
+                      >
+                        <Route index element={<OrderPage />} />
+                      </Route>
+                      <Route index path="signup" element={<SignUp />} />
+                      <Route index path="login" element={<SignIn />} />
+                      <Route
+                        index
+                        path="std-assessment"
+                        element={<StdQuestions />}
+                      />
+                      <Route index path="get-otp" element={<OTPPage />} />
+                      <Route index path="test-centers" element={<MapPage />} />
+                      <Route
+                        index
+                        path="doctor-consultation"
+                        element={<DoctorConsultation />}
+                      />
+                      <Route
+                        index
+                        path="doctor-calendar"
+                        element={<DoctorCalendar />}
+                      />
+                      <Route
+                        index
+                        path="unauthorized"
+                        element={<Unauthorized />}
+                      />
+                      <Route
+                        index
+                        path="user-profile"
+                        element={<ProfilePage />}
+                      />
+                      <Route
+                        index
+                        path="forgot-password"
+                        element={<ForgotPassword />}
+                      />
+
+                      <Route
+                        index
+                        path="forgot-password-otp"
+                        element={<ForgotPasswordOtp />}
+                      />
+                      <Route index path="/" element={<Home />} />
+                      <Route
+                        path="/payment-success"
+                        element={<PaymentSuccess />}
+                      />
+                      <Route
+                        path="/payment-failed"
+                        element={<PaymentFailure />}
+                      />
+                      <Route
+                        path="/redirect-handler"
+                        element={<RedirectHandler />}
                       />
                     </Route>
-                    <Route index path="price-packages" element={<MainPage />} />
+                    {/* Protected Admin Routes */}
                     <Route
-                      index
-                      path="ten-test-panel"
-                      element={<Testpanel />}
-                    />
-                    <Route
-                      index
-                      path="chlamydia-gonorrhea-test"
-                      element={<Chlamydia_Gonorrhea />}
-                    />
-                    <Route
-                      index
-                      path="chlamydia-test"
-                      element={<Chlamydia_Test />}
-                    />
-                    <Route
-                      index
-                      path="gonorrhea-test"
-                      element={<Gonorrhea_Test />}
-                    />
-                    <Route index path="hep-a-test" element={<HepA_Test />} />
-                    <Route index path="hep-b-test" element={<HepB_Test />} />
-                    <Route index path="hep-c-test" element={<HepC_Test />} />
-                    <Route
-                      index
-                      path="herpes-i-ii-test"
-                      element={<Herpes1_2 />}
-                    />
-                    <Route
-                      index
-                      path="oral-herpes-test"
-                      element={<Oral_Herpes_Test />}
-                    />
-                    <Route
-                      index
-                      path="genital-herpes-test"
-                      element={<Genital_Herpes_Test />}
-                    />
-                    <Route
-                      index
-                      path="hiv-test"
-                      element={<HIV1_2_FourthGen_Test />}
-                    />
-                    <Route
-                      index
-                      path="hiv-rna-test"
-                      element={<HIV_RNA_Test />}
-                    />
-                    <Route
-                      index
-                      path="syphilis-test"
-                      element={<Syphilis_Test />}
-                    />
-                    <Route
-                      path="order"
-                      element={<ProtectedRoute allowedRoles={["user"]} />}
+                      path="/admin-panel"
+                      element={<ProtectedRoute allowedRoles={["admin"]} />}
                     >
-                      <Route index element={<OrderPage />} />
+                      <Route index element={<AdminDashboard />} />
+                      <Route path="dashboard" element={<AdminDashboard />} />
+                      <Route
+                        path="order-table"
+                        element={<Admin_User_Table />}
+                      />
+                      <Route path="doctors" element={<Admin_Manage_Doctor />} />
+                      <Route
+                        path="test-table"
+                        element={<Admin_Disease_Table />}
+                      />
                     </Route>
-                    <Route index path="signup" element={<SignUp />} />
-                    <Route index path="login" element={<SignIn />} />
-                    <Route index path="std-assessment" element={<StdQuestions />} />
-                    <Route index path="get-otp" element={<OTPPage />} />
-                    <Route index path="test-centers" element={<MapPage />} />
+                    <Route path="/doctorform" element={<DoctorForm />} />
+                    <Route path="/nurse-form" element={<NurseForm />} />
                     <Route
-                      index
-                      path="doctor-consultation"
-                      element={<DoctorConsultation />}
+                      path="/doctor-dashboard"
+                      element={
+                        <>
+                          <DoctorNavBar />
+                          <DoctorDashboard />
+                        </>
+                      }
                     />
-                    <Route
-                      index
-                      path="doctor-calendar"
-                      element={<DoctorCalendar />}
-                    />
-                    <Route
-                      index
-                      path="unauthorized"
-                      element={<Unauthorized />}
-                    />
-                    <Route
-                      index
-                      path="user-profile"
-                      element={<ProfilePage />}
-                    />
-                    <Route
-                      index
-                      path="forgot-password"
-                      element={<ForgotPassword />}
-                    />
-                   
-                    <Route
-                      index
-                      path="forgot-password-otp"
-                      element={<ForgotPasswordOtp />}
-                    />
-                    <Route index path="/" element={<Home />} />
-                    <Route
-                      path="/payment-success"
-                      element={<PaymentSuccess />}
-                    />
-                    <Route
-                      path="/payment-failed"
-                      element={<PaymentFailure />}
-                    />
-                    <Route path="/redirect-handler" element={<RedirectHandler />} />
-                  </Route>
-                  {/* Protected Admin Routes */}
-                  <Route
-                    path="/admin-panel"
-                    element={<ProtectedRoute allowedRoles={["admin"]} />}
-                  >
-                    <Route index element={<AdminDashboard />} />
-                    <Route path="dashboard" element={<AdminDashboard />} />
-                    <Route path="order-table" element={<Admin_User_Table />} />
-                    <Route path="doctors" element={<Admin_Manage_Doctor />} />
-                    <Route
-                      path="test-table"
-                      element={<Admin_Disease_Table />}
-                    />
-                  </Route>
-                  <Route path="/doctorform" element={<DoctorForm />} />
-                  <Route path="/nurse-form" element={<NurseForm />} />
-                  <Route
-                    path="/doctor-dashboard"
-                    element={
-                      <>
-                        <DoctorNavBar />
-                        <DoctorDashboard />
-                      </>
-                    }
-                  />
-                </Routes>
-              </BrowserRouter>
-            </LoaderProvider>
+                  </Routes>
+                </BrowserRouter>
+              </LoaderProvider>
+            </QuestionnaireProvider>
           </AuthProvider>
         </LocationProvider>
       </Elements>

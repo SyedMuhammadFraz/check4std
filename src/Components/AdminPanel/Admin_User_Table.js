@@ -74,14 +74,14 @@ function Admin_User_Table() {
     try {
       // Map newStatus to corresponding numbers
       const statusMapping = {
-        Pending: 1,
-        Processed: 2,
-        Completed: 3,
-        Cancelled: 4,
+        Pending: 16,
+        Processed: 17,
+        Completed: 23,
+        Cancelled: 18,
       };
 
       const statusValue = statusMapping[newStatus] || 0; // Default to 0 if status is invalid
-
+      console.log(statusValue)
       // Use Promise.all to send multiple requests in parallel
       await Promise.all(
         selectedOrders.map(async (orderId) => {

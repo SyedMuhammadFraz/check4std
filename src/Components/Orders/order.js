@@ -10,6 +10,7 @@ import { LocationContext } from "../../utils/LocationContext";
 import { webApiInstance } from "../../AxiosInstance";
 import { useLookupData } from "../../utils/GenderLookup";
 import { useLoader } from "../../utils/LoaderContext";
+import { useQuestionnaire } from "../../utils/QuestionareContext";
 
 const OrderPage = () => {
   const [testPrices, setTestPrices] = useState({
@@ -26,6 +27,8 @@ const OrderPage = () => {
   const [selectedContactMedium, setSelectedContactMedium] = useState(null);
   const [patients, setPatients] = useState([]);
   const { loading, setLoading } = useLoader();
+  const { questionnaireId, hasSymptoms, stdQuestionsFilled } =
+    useQuestionnaire();
 
   const location = useLocation();
   const { selectedTests = [] } = location.state || {};
@@ -37,6 +40,60 @@ const OrderPage = () => {
   const onChangeLocation = () => {
     navigate("/test-centers");
   };
+
+  const [randomDoctor, setRandomDoctor] = useState(null);
+
+  useEffect(() => {
+    const fetchDoctorsAndPickOne = async () => {
+      try {
+        const res = await webApiInstance.get("/Doctor");
+        const doctors = res.data.result;
+
+        // ✅ Filter only doctors
+        const onlyDoctors = doctors.filter(
+          (d) => d.profession?.toLowerCase() === "doctor"
+        );
+
+        console.log("Filtered Doctors: ", onlyDoctors);
+
+        if (onlyDoctors.length > 0) {
+          const randomIndex = Math.floor(Math.random() * onlyDoctors.length);
+          setRandomDoctor(onlyDoctors[randomIndex]);
+        } else {
+          console.error("No doctors found after filtering.");
+        }
+      } catch (error) {
+        console.error("Error fetching doctors:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDoctorsAndPickOne();
+  }, []);
+
+  useEffect(() => {
+  if (randomDoctor) {
+    console.log("Selected Random Doctor: ", randomDoctor);
+  }
+}, [randomDoctor]);
+
+
+  useEffect(() => {
+    if (!stdQuestionsFilled) {
+      navigate("/std-assessment"); // ⛔ Redirect back
+    }
+  }, [stdQuestionsFilled, navigate]);
+
+  useEffect(() => {
+    if (questionnaireId === 2 && hasSymptoms) {
+      // Redirect user or show warning
+      alert(
+        "You are not eligible to order based on your answers. First consult a doctor."
+      );
+      navigate("/doctor-consultation"); // or navigate back
+    }
+  }, [questionnaireId, hasSymptoms, navigate]);
 
   useEffect(() => {
     const fetchPatients = async () => {
@@ -192,8 +249,14 @@ const OrderPage = () => {
     }
     navigate("/#");
     if (Disease !== null) {
+      console.log("Random Doctor:", randomDoctor.id)
       toast.success("Redirecting to Payment Checkout Page");
-      createCheckoutSession(Disease, authToken, payload.patientInfo);
+      createCheckoutSession(
+        Disease,
+        authToken,
+        payload.patientInfo,
+        randomDoctor.id
+      );
     }
   };
 
@@ -267,11 +330,17 @@ const OrderPage = () => {
   //   ]);
   // }, []);
 
-  const createCheckoutSession = async (diseases, authToken, patientInfo) => {
+  const createCheckoutSession = async (
+    diseases,
+    authToken,
+    patientInfo,
+    ordering_doctor_id
+  ) => {
     try {
       console.log({
         patientinfo: patientInfo.id,
         diseaseIdList: diseases,
+        doctorId: 16,
       });
       // Extract IDs from the diseases array
       const response = await webApiInstance.post(
@@ -524,6 +593,7 @@ const OrderPage = () => {
         <table className="patient-table">
           <thead>
             <tr>
+              <th>Doctor Name</th>
               <th>Name</th>
               <th>DOB</th>
               <th>Contact</th>
@@ -533,6 +603,7 @@ const OrderPage = () => {
           <tbody>
             {patients.map((patient) => (
               <tr key={patient.id}>
+                <td data-label="Doctor Name">Dr. Jane Smith</td>
                 <td data-label="Name">{patient.name}</td>
                 <td data-label="DOB">{patient.dob}</td>
                 <td data-label="Contact">{patient.email || patient.phone}</td>

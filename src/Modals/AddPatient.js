@@ -12,9 +12,13 @@ function AddPatient({ onClose }) {
     email: "",
     phone: "",
     dob: "",
-    // address: "",
     primaryInsurance: "",
     secondaryInsurance: "",
+    address: "",
+    city: "",
+    state: "",
+    zip: "",
+    country: "",
   });
 
   const { authToken } = useContext(AuthContext);
@@ -101,91 +105,171 @@ function AddPatient({ onClose }) {
   return (
     <div className="modal-overlay">
       <div className="modal-content1">
-        <h2 className="modal-title">Add Patient</h2>
+        <div className="px-patient-registration-form px-form-fade-in">
+          <form onSubmit={handleSubmit}>
+            {/* Personal Information Section */}
+            <div className="px-section-divider">
+              <h3 className="px-section-heading">Personal Information</h3>
+            </div>
 
-        <form onSubmit={handleSubmit} className="space-y-2">
-          <input
-            type="text"
-            name="name"
-            placeholder={errors.name || "Patient Name"}
-            className={`input ${errors.name ? "border-red-500" : ""}`}
-            value={formData.name}
-            onChange={handleChange}
-          />
-          <select
-            name="gender"
-            className={`input ${errors.gender ? "border-red-500" : ""}`}
-            value={formData.gender}
-            onChange={handleGenderChange}
-          >
-            <option value="" disabled>
-              -- Select Gender --
-            </option>
-            {genderOptions.map((gender) => (
-              <option key={gender.id} value={gender.id}>
-                {gender.lookupValue}
-              </option>
-            ))}
-          </select>
+            {/* Name and Gender Row */}
+            <div className="px-form-grid-dual">
+              <input
+                type="text"
+                name="name"
+                placeholder={errors.name || "Patient Name"}
+                className={`px-text-field ${
+                  errors.name ? "px-field-error" : ""
+                }`}
+                value={formData.name}
+                onChange={handleChange}
+              />
+              <select
+                name="gender"
+                className={`px-dropdown-select ${
+                  errors.gender ? "px-field-error" : ""
+                }`}
+                value={formData.gender}
+                onChange={handleGenderChange}
+              >
+                <option value="" disabled>
+                  -- Select Gender --
+                </option>
+                {genderOptions.map((gender) => (
+                  <option key={gender.id} value={gender.id}>
+                    {gender.lookupValue}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <input
-            type="date"
-            name="dob"
-            className={`input ${errors.dob ? "border-red-500" : ""}`}
-            value={formData.dob}
-            onChange={handleChange}
-            max={maxDate}
-            placeholder={errors.dob || "Date of Birth"}
-          />
-          {/* <input
-            type="text"
-            name="age"
-            placeholder="Age"
-            className={`input ${errors.age ? "border-red-500" : ""}`}
-            value={formData.age}
-            onChange={handleChange}
-          /> */}
-          <input
-            type="text"
-            name="email"
-            placeholder={errors.email || "Email"}
-            className={`input ${errors.email ? "border-red-500" : ""}`}
-            value={formData.email}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="phone"
-            placeholder={errors.phone || "Phone Number"}
-            className={`input ${errors.phone ? "border-red-500" : ""}`}
-            value={formData.phone}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="primaryInsurance"
-            placeholder="Primary Insurance (optional)"
-            className="input"
-            value={formData.primaryInsurance}
-            onChange={handleChange}
-          />
-          <input
-            type="text"
-            name="secondaryInsurance"
-            placeholder="Secondary Insurance (optional)"
-            className="input"
-            value={formData.secondaryInsurance}
-            onChange={handleChange}
-          />
+            {/* Date of Birth and Email Row */}
+            <div className="px-form-grid-dual">
+              <input
+                type="date"
+                name="dob"
+                className={`px-text-field px-date-picker ${
+                  errors.dob ? "px-field-error" : ""
+                }`}
+                value={formData.dob}
+                onChange={handleChange}
+                max={maxDate}
+                placeholder={errors.dob || "Date of Birth"}
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder={errors.email || "Email Address"}
+                className={`px-text-field ${
+                  errors.email ? "px-field-error" : ""
+                }`}
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
 
-          <button type="submit" className="modal-submit-button">
-            Submit
+            {/* Phone and Primary Insurance Row */}
+            <div className="px-form-grid-dual">
+              <input
+                type="tel"
+                name="phone"
+                placeholder={errors.phone || "Phone Number"}
+                className={`px-text-field ${
+                  errors.phone ? "px-field-error" : ""
+                }`}
+                value={formData.phone}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                name="primaryInsurance"
+                placeholder="Primary Insurance (optional)"
+                className="px-text-field"
+                value={formData.primaryInsurance}
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* Secondary Insurance - Full Width */}
+            <div className="px-form-grid-single">
+              <input
+                type="text"
+                name="secondaryInsurance"
+                placeholder="Secondary Insurance (optional)"
+                className="px-text-field"
+                value={formData.secondaryInsurance}
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* Address Section */}
+            <div className="px-section-divider">
+              <h3 className="px-section-heading">Address Information</h3>
+            </div>
+
+            {/* Address - Full Width */}
+            <div className="px-form-grid-single">
+              <input
+                type="text"
+                name="address"
+                placeholder="Street Address"
+                className="px-text-field"
+                value={formData.address}
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* City, State, ZIP Row */}
+            <div className="px-form-grid-triple">
+              <input
+                type="text"
+                name="city"
+                placeholder="City"
+                className="px-text-field"
+                value={formData.city}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                name="state"
+                placeholder="State"
+                className="px-text-field"
+                value={formData.state}
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                name="zip"
+                placeholder="ZIP Code"
+                className="px-text-field"
+                value={formData.zip}
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* Country - Full Width */}
+            <div className="px-form-grid-single">
+              <input
+                type="text"
+                name="country"
+                placeholder="Country"
+                className="px-text-field"
+                value={formData.country}
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* Submit Button */}
+            <button type="submit" className="px-submit-primary">
+              Create Patient Record
+            </button>
+          </form>
+
+          {/* Close Button */}
+          <button onClick={onClose} className="px-cancel-secondary">
+            Cancel
           </button>
-        </form>
-
-        <button onClick={onClose} className="modal-close-button my-3">
-          Close
-        </button>
+        </div>
       </div>
     </div>
   );

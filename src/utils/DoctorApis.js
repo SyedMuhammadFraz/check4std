@@ -38,6 +38,13 @@ const DoctorApis = {
     });
   },
 
+  async getPrescriptionPageToken() {
+    const token = getAuthToken();
+    return webApiInstance.get("/Doctor/prescription-page-token", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  }
+
   // Add more doctor-related API calls here, each including the auth token
 };
 

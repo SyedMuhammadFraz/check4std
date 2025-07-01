@@ -3,6 +3,7 @@ import "./DoctorNavBar.css";
 import { FaPrescriptionBottleAlt } from "react-icons/fa";
 import DoctorApis from "../../utils/DoctorApis";
 import './DoctorDashboard.css';
+import { doctorXml } from "../../utils/ensuraXmlTemplates";
 
 const DoctorDashboard = () => {
   const [loading, setLoading] = useState(false);
@@ -28,34 +29,43 @@ const DoctorDashboard = () => {
     },
   ];
 
-const BASE_URL = "https://preproduction.newcropaccounts.com"; // Change to your actual base
-
-function rewriteRelativeUrls(html, baseUrl) {
-  // Replace href="/... and src="/... with absolute URLs
-  return html.replace(/(href|src)=["']\/(?!\/)/g, `$1="${baseUrl}/`);
-}
+const NEWCROP_URL = "https://preproduction.newcropaccounts.com/UX2/InterfaceV7/ClickThroughRxEntry";
 
 const handlePrescription = async (patient) => {
   setLoading(true);
   setError("");
   try {
-    const doctorId = 15; // Replace with actual doctor id
-    const patientId = 7; // Replace with actual patient id
-    const response = await DoctorApis.getPrescriptionPage(
-      doctorId,
-      patientId
-    );
-    if (response.data) {
-      // Fix relative URLs
-      const fixedHtml = rewriteRelativeUrls(response.data, BASE_URL);
-      // Open the fixed HTML in a new tab using a Blob
-      const blob = new Blob([fixedHtml], { type: "text/html" });
-      const url = URL.createObjectURL(blob);
-      window.open(url, "_blank");
-      setTimeout(() => URL.revokeObjectURL(url), 60000);
-    } else {
-      setError("No HTML returned from NewCrop.");
-    }
+    // 1. Fetch token from DoctorApis
+    const verifResponse = await DoctorApis.getPrescriptionPageToken();
+    const token = verifResponse?.data?.result?.token;
+    if (!token) throw new Error("No token returned");
+
+    // 2. Prepare XML (can be dynamic per patient if needed)
+    const xml = doctorXml;
+
+    // 3. Create and submit a form to NewCrop in a new tab
+    const form = document.createElement('form');
+    form.action = NEWCROP_URL;
+    form.method = 'POST';
+    form.target = '_blank';
+    form.style.display = 'none';
+
+    // Token (as bearerToken field)
+    const tokenInput = document.createElement('input');
+    tokenInput.type = 'hidden';
+    tokenInput.name = 'bearerToken';
+    tokenInput.value = token;
+    form.appendChild(tokenInput);
+
+    // XML
+    const xmlInput = document.createElement('textarea');
+    xmlInput.name = 'RxInput';
+    xmlInput.value = xml;
+    form.appendChild(xmlInput);
+
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
   } catch (err) {
     setError(err.message || "Error sending prescription");
   } finally {

@@ -62,6 +62,7 @@ import DoctorCalendar from "./Components/DoctorPanel/DoctorCalendar";
 import DoctorForm from "./Modals/DoctorForm";
 import NurseForm from "./Modals/NurseForm";
 import DoctorDashboard from "./Components/DoctorPanel/DoctorDashboard";
+import NurseDashboard from "./Components/DoctorPanel/NurseDashboard";
 import DoctorNavBar from "./Components/DoctorPanel/DoctorNavBar";
 import StdQuestions from "./Components/Questionares/StdQuestions";
 import SetDoctorPassword from "./Components/Signin/SetDoctorPassword";
@@ -290,6 +291,15 @@ function App() {
                         <>
                           <DoctorNavBar />
                           <DoctorDashboard />
+                        </>
+                      }
+                    />
+                    <Route
+                      path="/nurse-dashboard"
+                      element={
+                        <>
+                          <DoctorNavBar />
+                          <NurseDashboard />
                         </>
                       }
                     />

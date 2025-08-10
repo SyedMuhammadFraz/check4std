@@ -17,39 +17,40 @@ const DoctorConsultation = () => {
 
   const [patients, setPatients] = useState([]);
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const today=new Date();
 
   useEffect(() => {
-    const fetchPatients = async () => {
-      try {
-        const response = await webApiInstance.get("/Patient", {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
-        setPatients(response.data.result); // Assuming this is the response format
-      } catch (error) {
-        toast.error("Failed to fetch patients.");
-      }
-    };
+  const fetchPatients = async () => {
+    if (!authToken) {
+      return;
+    }
+    
+    try {
+      const response = await webApiInstance.get("/Patient/by-created-by", {
+        headers: { Authorization: `Bearer ${authToken}` }
+      });
+      setPatients(response.data.result);
+      console.log(response);
+    } catch (error) {
+      toast.error("Failed to fetch patients.");
+    }
+  };
 
-    fetchPatients();
-  }, []);
-
+  fetchPatients();
+}, [authToken]);
   // Fetching all doctors and their availability data
 
   const handleTimeSlotSelection = (slot) => {
     console.log("Selected Slot:", slot);
     setSelectedTime({
       id: slot.id, // Store time slot ID
-      time: `${slot.startTime} - ${slot.endTime}`, // Store time range
+      time: `${slot.startTime} - ${slot.endTime}` // Store time range
     });
   };
 
   const convertToAmPm = (timeRange) => {
     if (!timeRange.includes(" - ")) return timeRange; // Ensure valid format
-
     const [start, end] = timeRange.split(" - "); // Split "HH:MM - HH:MM"
-
     const formatTime = (time) => {
       const [hours, minutes] = time.split(":").map(Number);
       return new Date(1970, 0, 1, hours, minutes).toLocaleTimeString([], {
@@ -58,7 +59,6 @@ const DoctorConsultation = () => {
         hour12: true,
       });
     };
-
     return `${formatTime(start)} - ${formatTime(end)}`;
   };
 
@@ -70,10 +70,6 @@ const DoctorConsultation = () => {
   };
 
   const formattedDate = getLocalDateString(selectedDate);
-
-  // const formattedDate = selectedDate.toISOString().split("T")[0];
-  console.log("Selected Date:", selectedDate);
-  console.log("Formatted Date:", formattedDate);
   const availableDoctors = doctors.filter((doctor) =>
     doctor.availableDates.some((d) => d.date === formattedDate)
   );
@@ -94,9 +90,12 @@ const DoctorConsultation = () => {
       const requestBody = {
         doctorId: selectedTime.doctorId,
         timeSlotId: selectedTime.id,
-        patientId: selectedPatient.patientId,
+        patientId: selectedPatient.id,
       };
-
+      if(!authToken){
+        toast.error("You need to login to book appointment");
+      }
+      console.log(requestBody);
       const response = await webApiInstance.post(
         "/Doctor/add-appointment",
         requestBody,
@@ -110,15 +109,15 @@ const DoctorConsultation = () => {
       if (response.data.statusCode === 200) {
         
         toast.success(
-          `Appointment successfully booked with on ${selectedDate.toDateString()} at ${
-            selectedTime.startTime
-          } - ${selectedTime.endTime}`
+          `Appointment successfully booked with on ${selectedDate.toDateString()} at ${selectedTime.startTime} - ${selectedTime.endTime}`
         );
       } else {
         toast.error("Failed to book appointment. Please try again.");
       }
     } catch (error) {
-      toast.error("An error occurred while booking the appointment.");
+      console.error(error)
+      toast.error("An error occurred while booking the appointment.", error);
+
     }
     finally{
       setLoading(false)
@@ -148,9 +147,7 @@ const DoctorConsultation = () => {
                 id: slot.id, // Store ID properly
                 startTime: slot.startTime,
                 endTime: slot.endTime,
-              }));
-
-            console.log(availableTimes);
+              }));          
 
             if (!existingDoctor) {
               // If doctor doesn't exist, create a new doctor entry
@@ -160,13 +157,12 @@ const DoctorConsultation = () => {
                   appointment.doctorName !== "string"
                     ? appointment.doctorName
                     : `Doctor ${appointment.doctorId}`,
-                // specialty: "Unknown", // Since specialty isn't provided in API
                 availableDates: [], // Initialize empty array for dates
               };
               acc.push(existingDoctor);
             }
 
-            // Ensure each date is unique and has separate time slots
+
             let existingDate = existingDoctor.availableDates.find(
               (d) => d.date === appointment.date
             );
@@ -235,6 +231,7 @@ const DoctorConsultation = () => {
           className="styled-calendar"
           value={selectedDate}
           onChange={handleDateChange}
+          minDate={new Date(today.setDate(today.getDate() + 1))} 
         />
       </div>
 

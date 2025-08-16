@@ -47,11 +47,11 @@ const SetDoctorPassword = () => {
         toast.success("Password set successfully! Please log in.");
         navigate("/login");
       } else {
-        toast.error("Something went wrong. Please try again.");
+        toast.error(error);
       }
     } catch (error) {
       console.log(error.response?.data);
-      toast.error(error.response?.data?.message || "Something went wrong.");
+      toast.error(error.response?.data || "Something went wrong.");
     } finally {
       setLoading(false);
     }

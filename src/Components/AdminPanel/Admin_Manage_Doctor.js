@@ -624,11 +624,11 @@ const AdminManageDoctor = () => {
       <AdminNavBar />
       <div className="admin-doctor-wrapper">
         <h1>
-          <strong>Doctor Dashboard</strong>
+          <strong>Doctor / Nurse Practitioner Dashboard</strong>
         </h1>
         <div className="button-container">
           <button className="button3 " onClick={() => setShowDoctorModal(true)}>
-            + Add Doctor
+            + Add Doctor / Nurse Practioner 
           </button>
 
           <button
@@ -653,8 +653,8 @@ const AdminManageDoctor = () => {
             onChange={(e) => setProfessionFilter(e.target.value)}
           >
             <option value="All">All Professions</option>
-            <option value="Nurse">Nurse</option>
-            <option value="Doctor">Doctor</option>
+            <option value="nurse">Nurse Practitioner</option>
+            <option value="doctor">Doctor</option>
           </select>
 
           <input
@@ -667,7 +667,7 @@ const AdminManageDoctor = () => {
 
         {/* Doctor Table */}
         <h2>
-          <strong>Doctors & Nurses</strong>
+          <strong>Doctors & Nurse Practitioners</strong>
         </h2>
         <section className="Admin-Doctor-Table">
           <table className="doctor-list-table">
@@ -1167,7 +1167,7 @@ const AdminManageDoctor = () => {
             <div className="doctor-modal-box">
               <h2>Add Doctor Time Slot</h2>
 
-              <label>Select Doctor/Nurse:</label>
+              <label>Select Doctor/Nurse Practitioner:</label>
               <select
                 className="doctor-modal-input"
                 name="doctorName"
@@ -1175,7 +1175,7 @@ const AdminManageDoctor = () => {
                 onChange={handleAppointmentChange}
                 required
               >
-                <option value="">Select a Doctor/Nurse</option>
+                <option value="">Select a Doctor/Nurse Practitioner</option>
                 {doctors.map((app, index) => (
                   <option key={index} value={app.name}>
                     {app.name} ({app.profession})

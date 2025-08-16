@@ -255,7 +255,7 @@ const OrderPage = () => {
         Disease,
         authToken,
         payload.patientInfo,
-        randomDoctor.id
+        16
       );
     }
   };
@@ -348,6 +348,7 @@ const OrderPage = () => {
         {
           diseaseIdList: diseases,
           patientId: patientInfo.id,
+          doctorId: 16
         },
         {
           headers: {

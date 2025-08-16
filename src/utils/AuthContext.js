@@ -1,3 +1,4 @@
+// Utility to get the user's name from the decoded JWT token (returns null if not found or invalid
 import React, { createContext, useState, useEffect, useContext } from "react";
 import Cookies from "js-cookie";
 import {
@@ -66,6 +67,8 @@ export const AuthProvider = ({ children }) => {
       console.error("Error decoding token:", error);
     }
   };
+
+  
 
   const logout = () => {
     Cookies.remove("authToken");
@@ -185,3 +188,20 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
+
+export function getNameFromAuthToken() {
+  let storedToken = Cookies.get("authToken");
+  if (!storedToken) {
+    storedToken = localStorage.getItem("authToken");
+  }
+  if (storedToken) {
+    try {
+      const decoded = decodeJWT(storedToken);
+      return decoded?.name || null;
+    } catch (e) {
+      console.error("Error decoding auth token:", e);
+      return null;
+    }
+  }
+  return null;
+}

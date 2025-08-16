@@ -1,3 +1,11 @@
+/* Flex layout for action icons in doctor dashboard table */
+.td-action-flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  flex-direction: row-reverse;
+}
 .admin-table-container{
     width: 100vw;
     display: flex;

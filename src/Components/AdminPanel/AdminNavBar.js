@@ -61,7 +61,7 @@ function AdminNavBar() {
     <header className="header">
       <nav className="nav container">
         <div className="nav__logo">
-          <img className="nav-logo-img" src="client-new-logo.png" alt="404" />
+          <img className="nav-logo-img" src="/client-new-logo.png" alt="Check4std Logo" />
           <a>Check4std</a>
         </div>
 

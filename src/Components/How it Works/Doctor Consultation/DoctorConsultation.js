@@ -18,6 +18,7 @@ const DoctorConsultation = () => {
   const [patients, setPatients] = useState([]);
   const [selectedPatient, setSelectedPatient] = useState(null);
   const today=new Date();
+  const today=new Date();
 
   useEffect(() => {
   const fetchPatients = async () => {
@@ -40,21 +41,21 @@ const DoctorConsultation = () => {
 
   fetchPatients();
 }, [authToken]);
+  fetchPatients();
+}, [authToken]);
   // Fetching all doctors and their availability data
 
   const handleTimeSlotSelection = (slot) => {
     console.log("Selected Slot:", slot);
     setSelectedTime({
       id: slot.id, // Store time slot ID
-      time: `${slot.startTime} - ${slot.endTime}`, // Store time range
+      time: `${slot.startTime} - ${slot.endTime}` // Store time range
     });
   };
 
   const convertToAmPm = (timeRange) => {
     if (!timeRange.includes(" - ")) return timeRange; // Ensure valid format
-
     const [start, end] = timeRange.split(" - "); // Split "HH:MM - HH:MM"
-
     const formatTime = (time) => {
       const [hours, minutes] = time.split(":").map(Number);
       return new Date(1970, 0, 1, hours, minutes).toLocaleTimeString([], {
@@ -63,7 +64,6 @@ const DoctorConsultation = () => {
         hour12: true,
       });
     };
-
     return `${formatTime(start)} - ${formatTime(end)}`;
   };
 
@@ -75,10 +75,6 @@ const DoctorConsultation = () => {
   };
 
   const formattedDate = getLocalDateString(selectedDate);
-
-  // const formattedDate = selectedDate.toISOString().split("T")[0];
-  console.log("Selected Date:", selectedDate);
-  console.log("Formatted Date:", formattedDate);
   const availableDoctors = doctors.filter((doctor) =>
     doctor.availableDates.some((d) => d.date === formattedDate)
   );
@@ -118,9 +114,7 @@ const DoctorConsultation = () => {
       if (response.data.statusCode === 200) {
         
         toast.success(
-          `Appointment successfully booked with on ${selectedDate.toDateString()} at ${
-            selectedTime.startTime
-          } - ${selectedTime.endTime}`
+          `Appointment successfully booked with on ${selectedDate.toDateString()} at ${selectedTime.startTime} - ${selectedTime.endTime}`
         );
       } else {
         toast.error("Failed to book appointment. Please try again.");

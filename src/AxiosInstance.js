@@ -4,6 +4,7 @@ import axios from 'axios';
 export const AUTH_SERVER_URL = 'http://localhost:5143/api';
 export const CONNECT_TOKEN_URL = 'http://localhost:5143';
 export const WEB_API_URL = 'https://localhost:7246/api';
+export const GraphQL_URL = 'https://localhost:7246'; // Adjust as needed
 
 // First server instance
 export const authServerInstance = axios.create({
@@ -24,5 +25,10 @@ export const webApiInstance = axios.create({
 
 export const userRegisterInstance = axios.create({
   baseURL: AUTH_SERVER_URL,
+  withCredentials: true,
+});
+
+export const webApiGraphQLInstance = axios.create({
+  baseURL: GraphQL_URL,
   withCredentials: true,
 });

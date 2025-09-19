@@ -18,7 +18,6 @@ const DoctorConsultation = () => {
   const [patients, setPatients] = useState([]);
   const [selectedPatient, setSelectedPatient] = useState(null);
   const today=new Date();
-  const today=new Date();
 
   useEffect(() => {
   const fetchPatients = async () => {
@@ -39,8 +38,6 @@ const DoctorConsultation = () => {
     }
   };
 
-  fetchPatients();
-}, [authToken]);
   fetchPatients();
 }, [authToken]);
   // Fetching all doctors and their availability data

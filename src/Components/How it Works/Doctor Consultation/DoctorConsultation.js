@@ -14,32 +14,7 @@ const DoctorConsultation = () => {
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [selectedTime, setSelectedTime] = useState("");
   const { setLoading, loading } = useLoader();
-
-  const [patients, setPatients] = useState([]);
-  const [selectedPatient, setSelectedPatient] = useState(null);
-  const today=new Date();
-
-  useEffect(() => {
-  const fetchPatients = async () => {
-    if (!authToken) {
-      return;
-    }
-    
-    try {
-      const response = await webApiInstance.get("/Patient/by-created-by", {
-        headers: {
-          Authorization: `Bearer ${authToken}`
-        },
-      });
-      setPatients(response.data.result);
-      console.log(response);
-    } catch (error) {
-      toast.error("Failed to fetch patients.");
-    }
-  };
-
-  fetchPatients();
-}, [authToken]);
+  const today = new Date();
   // Fetching all doctors and their availability data
 
   const handleTimeSlotSelection = (slot) => {
@@ -83,16 +58,15 @@ const DoctorConsultation = () => {
   }, [availableDoctors]);
 
   const handleAppointment = async () => {
-    if (!selectedPatient || !selectedTime) {
-      alert("Please select all fields!");
+    if (!selectedTime) {
+      alert("Please select a time slot!");
       return;
     }
     try {
       setLoading(true);
       const requestBody = {
         doctorId: selectedTime.doctorId,
-        timeSlotId: selectedTime.id,
-        patientId: selectedPatient.id,
+        timeSlotId: selectedTime.id
       };
       if(!authToken){
         toast.error("You need to login to book appointment")
@@ -308,47 +282,10 @@ const DoctorConsultation = () => {
           </>
         )}
 
-        <label className="input-label">Select a Patient:</label>
-        <div className="table-container">
-          <table className="styled-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>DOB</th>
-                <th>Contact</th>
-                <th>Select</th>
-              </tr>
-            </thead>
-            <tbody>
-              {patients.map((patient) => (
-                <tr key={patient.id}>
-                  <td>{patient.name}</td>
-                  <td>{patient.dob}</td>
-                  <td>{patient.email || patient.phone}</td>
-                  <td>
-                    <button
-                      className="select-button"
-                      onClick={() => setSelectedPatient(patient)}
-                    >
-                      Select
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {selectedPatient && (
-          <p style={{ marginTop: "10px" }}>
-            Selected Patient: <strong>{selectedPatient.name}</strong>
-          </p>
-        )}
-
         <button
           className="book-button"
           onClick={handleAppointment}
-          disabled={loading || !selectedTime || !selectedPatient}
+          disabled={loading || !selectedTime}
         >
           {loading ? "Booking..." : "Book Appointment"}
         </button>

@@ -46,8 +46,6 @@ const SetDoctorPassword = () => {
       if (response.status === 200) {
         toast.success("Password set successfully! Please log in.");
         navigate("/login");
-      } else {
-        toast.error(error);
       }
     } catch (error) {
       console.log(error.response?.data);

@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 // Set your base URLs here for easy switching
-export const AUTH_SERVER_URL = 'http://localhost:5143/api';
-export const CONNECT_TOKEN_URL = 'http://localhost:5143';
-export const WEB_API_URL = 'https://localhost:7246/api';
-export const GraphQL_URL = 'https://localhost:7246'; // Adjust as needed
+export const AUTH_SERVER_URL = process.env.REACT_APP_AUTH_SERVER_URL || 'http://localhost:5143/api';
+export const CONNECT_TOKEN_URL = process.env.REACT_APP_CONNECT_TOKEN_URL || 'http://localhost:5143';
+export const WEB_API_URL = process.env.REACT_APP_WEB_API_URL || 'https://localhost:7246/api';
+export const GraphQL_URL = process.env.REACT_APP_GRAPHQL_URL || 'https://localhost:7246';
 
 // First server instance
 export const authServerInstance = axios.create({

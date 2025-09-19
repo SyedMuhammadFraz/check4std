@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import { LocationContext } from "../../utils/LocationContext";
 import { webApiInstance } from "../../AxiosInstance";
-import { useLookupData } from "../../utils/GenderLookup";
 import { useLoader } from "../../utils/LoaderContext";
 import { useQuestionnaire } from "../../utils/QuestionareContext";
 
@@ -22,9 +21,6 @@ const OrderPage = () => {
   const navigate = useNavigate();
   const [Disease, setDisease] = useState(null);
   const [genderLookup, setGenderLookup] = useState([]);
-  const [selectedGender, setSelectedGender] = useState(null);
-  const [contactMediumLookup, setContactMediumLookup] = useState([]);
-  const [selectedContactMedium, setSelectedContactMedium] = useState(null);
   const [patients, setPatients] = useState([]);
   const { loading, setLoading } = useLoader();
   const { questionnaireId, hasSymptoms, stdQuestionsFilled } =
@@ -49,7 +45,6 @@ const OrderPage = () => {
         const res = await webApiInstance.get("/Doctor");
         const doctors = res.data.result;
 
-        // ✅ Filter only doctors
         const onlyDoctors = doctors.filter(
           (d) => d.profession?.toLowerCase() === "doctor"
         );
@@ -81,7 +76,7 @@ const OrderPage = () => {
 
   useEffect(() => {
     if (!stdQuestionsFilled) {
-      navigate("/std-assessment"); // ⛔ Redirect back
+      navigate("/std-assessment");
     }
   }, [stdQuestionsFilled, navigate]);
 
@@ -332,22 +327,15 @@ const OrderPage = () => {
 
   const createCheckoutSession = async (
     diseases,
-    authToken,
-    patientInfo,
-    ordering_doctor_id
+    authToken
   ) => {
     try {
-      console.log({
-        patientinfo: patientInfo.id,
-        diseaseIdList: diseases,
-        doctorId: 16,
-      });
+      console.log(diseases);
       // Extract IDs from the diseases array
       const response = await webApiInstance.post(
         "/Payment/create-checkout-session",
         {
           diseaseIdList: diseases,
-          patientId: patientInfo.id,
           doctorId: 16
         },
         {
@@ -356,8 +344,6 @@ const OrderPage = () => {
           },
         }
       );
-      console.log("Checkout Session Response:", response.data);
-      // Redirect to the checkout session in a new tab
       if (response.data.sessionUrl) {
         window.location.href = response.data.sessionUrl;
       }
@@ -421,35 +407,13 @@ const OrderPage = () => {
     }
   };
 
-  //
-  useEffect(() => {
-    const fetchPrices = async () => {
-      try {
-        const [panelResponse, hivRNAResponse] = await Promise.all([
-          webApiInstance.get(`/Disease/get-by-name/10 Test Panel`),
-          webApiInstance.get(
-            `/Disease/get-by-name/10 Test Panel with HIV RNA Early Detection`
-          ),
-        ]);
-
-        setTestPrices({
-          tenTestPanel: panelResponse.data.result.price,
-          tenTestPanelHIVRNA: hivRNAResponse.data.result.price,
-        });
-      } catch (error) {
-        console.error("Error fetching test prices:", error);
-      }
-    };
-
-    fetchPrices();
-  }, []);
 
   // Handle Upgrade for 10 Test Panel
   const handleUpgrade = () => {
     if (testPrices.tenTestPanel && totalCost < testPrices.tenTestPanel) {
       setTests([{ name: "10 Test Panel", price: testPrices.tenTestPanel }]);
       setTotalCost(testPrices.tenTestPanel);
-      setDisease("10 Test Panel"); // ✅ Set Disease name here
+      setDisease("10 Test Panel");
     }
   };
 
@@ -465,6 +429,10 @@ const OrderPage = () => {
       setDisease("10 Test Panel with HIV RNA Early Detection"); // ✅ Set Disease name here
     }
   };
+
+  useEffect(() => {
+    console.log("Selected Location ", selectedLocation);
+  }, [selectedLocation]);
 
   if (loading) {
     return (
@@ -569,7 +537,7 @@ const OrderPage = () => {
         )}
       </div>
 
-      <div className="container">
+      <div className="container container-min-height">
         <h1>Quick & Confidential STD Testing</h1>
 
         <form>
@@ -585,304 +553,24 @@ const OrderPage = () => {
               </button>
             </div>
           </section>
+          <div className="confirm-order-container">
+            <button
+              type="button"
+              className="confirm-order-btn"
+              disabled={!selectedLocation}
+              onClick={() => {
+                if (Disease !== null) {
+                  createCheckoutSession(Disease, authToken);
+                }
+              }}
+            >
+              Confirm Order
+            </button>
+          </div>
         </form>
       </div>
-
-      <section className="selectpatient-section">
-        <h2 className="blue-background">2. Select a Patient</h2>
-
-        <table className="patient-table">
-          <thead>
-            <tr>
-              <th>Doctor Name</th>
-              <th>Name</th>
-              <th>DOB</th>
-              <th>Contact</th>
-              <th>Select</th>
-            </tr>
-          </thead>
-          <tbody>
-            {patients.map((patient) => (
-              <tr key={patient.id}>
-                <td data-label="Doctor Name">Dr. Jane Smith</td>
-                <td data-label="Name">{patient.name}</td>
-                <td data-label="DOB">{patient.dob}</td>
-                <td data-label="Contact">{patient.email || patient.phone}</td>
-                <td data-label="Select">
-                  <button onClick={() => handleSelect(patient)}>Select</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
     </div>
   );
 };
 
 export default OrderPage;
-
-{
-  /* Section 2: Enter Patient Information */
-}
-{
-  /* <section>
-            <h2 className="blue-background">2. Enter Patient Information</h2>
-            <label className="order-labels">First & Last Name</label>
-            <div>
-              <input
-                type="text"
-                name="firstName"
-                placeholder="First Name"
-                value={formData.firstName}
-                onChange={handleChange}
-              />
-
-              <input
-                type="text"
-                name="lastName"
-                placeholder="Last Name"
-                value={formData.lastName}
-                onChange={handleChange}
-              />
-            </div>
-            {errors.firstName && (
-              <span className="error">{errors.firstName}</span>
-            )}
-            {errors.lastName && (
-              <span className="error">{errors.lastName}</span>
-            )}
-
-            <label className="order-labels">Sex</label>
-            <select
-              name="genderId"
-              value={formData.genderId}
-              onChange={handleGenderChange}
-            >
-              <option value="">Select One</option>
-              {genderLookup.map((gender) => (
-                <option key={gender.id} value={gender.id}>
-                  {gender.lookupValue}
-                </option>
-              ))}
-            </select>
-
-            {errors.genderId && (
-              <span className="error">{errors.genderId}</span>
-            )}
-
-            <label className="order-labels">Date of Birth</label>
-            <div>
-              <select value={formData.dobMonth} onChange={handleMonthChange}>
-                <option value="">Month</option>
-                {months.map((month, index) => (
-                  <option key={index} value={month}>
-                    {month}
-                  </option>
-                ))}
-              </select>
-              <select value={formData.dobDay} onChange={handleDayChange}>
-                <option value="">Day</option>
-                {dates.map((date) => (
-                  <option key={date} value={date}>
-                    {date}
-                  </option>
-                ))}
-              </select>
-              <select value={formData.dobYear} onChange={handleYearChange}>
-                <option value="">Year</option>
-                {years.map((year) => (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </select>
-            </div>
-            {errors.dob && <span className="error">{errors.dob}</span>}
-            <label className="order-labels">
-              How would you like us to notify you when your results are
-              available?
-            </label>
-            <div>
-              <select
-                name="contactTypeId"
-                value={formData.contactTypeId}
-                onChange={handleContactMediumChange}
-              >
-                <option value="">Select One</option>
-                {contactMediumLookup.map((contact) => (
-                  <option key={contact.id} value={contact.id}>
-                    {contact.lookupValue}
-                  </option>
-                ))}
-              </select>
-            </div>
-            {formData.contactValue === "Email" && (
-              <div>
-                <label className="order-labels" htmlFor="email">
-                  Email Address:
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Enter your email address"
-                  required
-                />
-                {errors.email && <span className="error">{errors.email}</span>}
-              </div>
-            )}
-
-            {formData.contactValue === "PhoneNumber" && (
-              <>
-                <div>
-                  <label className="order-labels" htmlFor="sms">
-                    Phone Number (SMS):
-                  </label>
-                </div>
-                <div>
-                  <input
-                    type="tel"
-                    name="phoneNumber"
-                    id="sms"
-                    value={formData.phoneNumer}
-                    onChange={handleChange}
-                    placeholder="(xxx) xxx-xxxx"
-                    required
-                  />
-                  {errors.phoneNumber && (
-                    <span className="error">{errors.phoneNumber}</span>
-                  )}
-                </div>
-              </>
-            )} */
-}
-
-{
-  /* {formData.notificationMethod === "Text Me (SMS)" && (
-              <div>
-                <label className="order-labels">
-                  May we leave a voicemail?
-                </label>
-              </div>
-            )} */
-}
-{
-  /* 
-            {formData.notificationMethod === "Text Me (SMS)" && (
-              <div>
-                <div>
-                  <label>
-                    <input
-                      type="radio"
-                      name="voicemail"
-                      value="Yes"
-                      checked={formData.voicemail === "Yes"}
-                      onChange={handleChange}
-                    />
-                    Yes
-                  </label>
-                </div>
-                <div>
-                  <label>
-                    <input
-                      type="radio"
-                      name="voicemail"
-                      value="No"
-                      checked={formData.voicemail === "No"}
-                      onChange={handleChange}
-                    />
-                    No
-                  </label>
-                </div>
-                {errors.voicemail && (
-                  <span className="error">{errors.voicemail}</span>
-                )}
-              </div>
-            )} */
-}
-
-{
-  /* {errors.contactTypeId && (
-              <span className="error">{errors.contactTypeId}</span>
-            )}
-          </section>
-
-          <button type="submit" onClick={handleSubmit}>
-            Place Your Order
-          </button>*/
-}
-
-// useEffect(() => {
-//   const FetchLookups = async () => {
-//     try {
-//       const genderResponse = await webApiInstance.get("/Lookup/get-by-type", {
-//         params: { type: "Gender" },
-//       });
-//       console.log("Gender Lookup:", genderResponse.data.result);
-//       setGenderLookup(genderResponse.data.result);
-
-//       const contactMediumResponse = await webApiInstance.get(
-//         "/Lookup/get-by-type",
-//         {
-//           params: { type: "ContactMedium" },
-//         }
-//       );
-//       console.log(
-//         "Contact Medium Lookup:",
-//         contactMediumResponse.data.result
-//       );
-//       setContactMediumLookup(contactMediumResponse.data.result);
-//     } catch (error) {
-//       console.error("Error fetching lookup data:", error);
-//       setGenderLookup([]);
-//       setContactMediumLookup([]);
-//     }
-//   };
-
-//   FetchLookups();
-// }, []);
-
-// const handleContactMediumChange = (e) => {
-//   const { name, value } = e.target;
-
-//   // If the user selects a gender, update both genderId and genderValue
-//   if (name === "contactTypeId") {
-//     const selectedContactMedium = contactMediumLookup.find(
-//       (g) => g.id === Number(value)
-//     );
-
-//     setFormData((prevData) => ({
-//       ...prevData,
-//       contactTypeId: value, // Numeric ID
-//       contactValue: selectedContactMedium
-//         ? selectedContactMedium.lookupValue
-//         : "", // Actual Gender Text
-//     }));
-//   } else {
-//     setFormData((prevData) => ({
-//       ...prevData,
-//       [name]: value,
-//     }));
-//   }
-
-//   setErrors((prevErrors) => {
-//     const newErrors = { ...prevErrors };
-
-//     // Remove specific field errors if the field is no longer invalid
-//     if (newErrors[name]) {
-//       delete newErrors[name];
-//     }
-
-//     return newErrors;
-//   });
-// };
-
-// const handlePlaceOrder = () => {
-//   if (Disease !== null) {
-//     toast.success("Redirecting to Payment Checkout Page");
-//     createCheckoutSession(Disease, authToken);
-//   }
-// };

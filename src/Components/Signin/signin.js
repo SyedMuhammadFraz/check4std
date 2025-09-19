@@ -63,7 +63,7 @@ const SignIn = () => {
           },
         }
       );
-      // console.log(response);
+
       if (response.data.access_token) {
         const token = response.data.access_token;
         const decodedData = decodeJWT(token);
@@ -98,21 +98,6 @@ const SignIn = () => {
     } finally {
       setLoading(false); // Hide loader after authentication
     }
-    // Mock authentication
-    // if (email === "test@example.com" && password === "password") {
-    //   // Simulate successful login
-    //   login("mock-auth-token");
-    //   navigate("/user-profile");
-    //   toast.success('Successfully signed in!');
-    // }
-    // else if (email === "admin@admin.com" && password === "admin") {
-    //   // login("mock-auth-token");
-    //   navigate("/admin-panel/");
-    //   toast.success('Successfully signed in!');
-    // }
-    // else {
-    //   toast.error('Please enter valid credentials.');
-    // }
   };
   const handleLogout = () => {
     logout();

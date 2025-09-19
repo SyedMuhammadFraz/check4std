@@ -170,7 +170,6 @@
   display: block;
   font-size: 0.875rem;
   font-weight: 500;
-  color: #374151;
   margin-bottom: 0.75rem;
 }
 
@@ -260,6 +259,7 @@
   background: none;
   padding: 0.5rem 0;
   font-weight: 500;
+  border: none;
 }
 
 .std-questionnaire-btn-back:hover {
@@ -464,45 +464,5 @@
   
   .std-questionnaire-question-container {
     padding: 0.75rem;
-  }
-}
-
-/* Dark Mode Support (Optional) */
-@media (prefers-color-scheme: dark) {
-  .std-questionnaire-container {
-    background-color: #1f2937;
-    color: #f9fafb;
-  }
-  
-  .std-questionnaire-title,
-  .std-questionnaire-section-title,
-  .std-questionnaire-card-title {
-    color: #f9fafb;
-  }
-  
-  .std-questionnaire-subtitle,
-  .std-questionnaire-card-description {
-    color: #d1d5db;
-  }
-  
-  .std-questionnaire-question-container {
-    background-color: #374151;
-  }
-  
-  .std-questionnaire-summary-card {
-    background-color: #374151;
-  }
-  
-  .std-questionnaire-input,
-  .std-questionnaire-textarea,
-  .std-questionnaire-select {
-    background-color: #374151;
-    border-color: #4b5563;
-    color: #f9fafb;
-  }
-  
-  .std-questionnaire-selection-card {
-    border-color: #4b5563;
-    background-color: #374151;
   }
 }

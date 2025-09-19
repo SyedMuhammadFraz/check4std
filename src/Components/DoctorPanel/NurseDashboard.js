@@ -1,20 +1,19 @@
-
 import React from "react";
 import AppointmentDashboard from "../Shared/AppointmentDashboard";
 import DoctorApis from "../../utils/DoctorApis";
 import { generateDoctorXml } from "../../utils/ensuraXmlTemplates";
 import { getNameFromAuthToken } from "../../utils/AuthContext";
 
-const DoctorDashboard = () => {
+const NurseDashboard = () => {
   return (
     <AppointmentDashboard
-      fetchDataFn={DoctorApis.getDoctorAppointmentsGraphQL}
+      fetchDataFn={DoctorApis.getNurseAppointmentsGraphQL}
       getPrescriberName={getNameFromAuthToken}
       generateXmlFn={generateDoctorXml}
       getPrescriptionTokenFn={DoctorApis.getPrescriptionPageToken}
-      roleLabel="Doctor Dashboard"
+      roleLabel="Nurse Dashboard"
     />
   );
 };
 
-export default DoctorDashboard;
+export default NurseDashboard;

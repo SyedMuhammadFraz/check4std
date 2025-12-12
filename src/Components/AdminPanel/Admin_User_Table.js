@@ -333,10 +333,6 @@ function Admin_User_Table() {
                 <th>Sr No.</th>
                 <th>User Email</th>
                 <th>User Name</th>
-                <th>Patient Name</th>
-                <th>Gender</th>
-                <th>DOB</th>
-                <th>Contact</th>
                 <th>Diseases</th>
                 <th>Status</th>
                 <th>Date</th>
@@ -357,14 +353,6 @@ function Admin_User_Table() {
                   <td>{(currentPage - 1) * recordsPerPage + index + 1}</td>
                   <td>{record.userEmail}</td>
                   <td>{record.userName}</td>
-                  <td>{record.patientInfo.name}</td>
-                  <td>{record.patientInfo.genderValue}</td>
-                  <td>
-                    {new Date(record.patientInfo.dob).toLocaleDateString(
-                      "en-US"
-                    )}
-                  </td>
-                  <td>{record.patientInfo.phone}</td>
                   <td>
                     {record.diseases.length > 0 ? (
                       <span

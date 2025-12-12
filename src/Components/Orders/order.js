@@ -330,13 +330,13 @@ const OrderPage = () => {
     authToken
   ) => {
     try {
-      console.log(diseases);
+      console.log(diseases, authToken);
       // Extract IDs from the diseases array
       const response = await webApiInstance.post(
         "/Payment/create-checkout-session",
         {
           diseaseIdList: diseases,
-          doctorId: 16
+          doctorId: 15
         },
         {
           headers: {
@@ -560,6 +560,7 @@ const OrderPage = () => {
               disabled={!selectedLocation}
               onClick={() => {
                 if (Disease !== null) {
+                  console.log(authToken)
                   createCheckoutSession(Disease, authToken);
                 }
               }}

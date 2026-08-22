@@ -409,6 +409,10 @@ function Nav() {
                   >
                     Sign Up
                   </NavLink>
+                  
+                  {/* <NavLink to="/admin-panel" className="button1 mx-3" onClick={closeMenuOnMobile}>
+                    Go to Admin Panel
+                  </NavLink> */}
                 </>
               ) : (
                 <>
@@ -425,7 +429,7 @@ function Nav() {
                   >
                     Logout
                   </button>
-                  
+                  <button onClick={()=>setshowAddPatientModal(true)} className="button3 mx-3">Add Patient</button>
                   {userRole === "admin" && (
                     <NavLink
                       to="/admin-panel"
@@ -454,10 +458,10 @@ function Nav() {
         onClose={cancelLogout}
         onConfirm={confirmLogout}
       />
-      {/* {showAddPatientModal &&
+      {showAddPatientModal &&
       (
         <AddPatient onClose={()=> setshowAddPatientModal(false)}/>
-      )} */}
+      )}
     </header>
   );
 }

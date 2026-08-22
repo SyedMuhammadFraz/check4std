@@ -22,11 +22,12 @@ const AdminManageDoctor = () => {
   const [showTimeSlotsInfoModal, setShowTimeSlotsInfoModal] = useState(false);
   const [editIndex, setEditIndex] = useState(null);
   const [error, setError] = useState("");
-  // Filter statesque
+  // Filter states
   const [nameFilter, setNameFilter] = useState("");
   const [professionFilter, setProfessionFilter] = useState("All");
   const [emailFilter, setEmailFilter] = useState("");
   const [doctorFilter, setDoctorFilter] = useState("");
+  const [availabilityFilter, setAvailabilityFilter] = useState("All");
   const [dateFilter, setDateFilter] = useState({ from: "", to: "" });
   const [timeFilter, setTimeFilter] = useState({ start: "", end: "" });
   const [professionLookup, setProfessionLookup] = useState([]);

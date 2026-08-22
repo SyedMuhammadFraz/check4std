@@ -91,10 +91,7 @@ const SignUp = () => {
     setLoading(true);
     e.preventDefault();
 
-    if (!validateForm()) {
-      setLoading(false);
-      return;
-    }
+    if (!validateForm()) return;
 
     try {
       const [emailValidityResponse, phoneNumberValidityResponse] =
@@ -154,7 +151,13 @@ const SignUp = () => {
         localStorage.setItem("optID", response.data);
         localStorage.setItem("email", apiPayload.email);
 
-        navigate("/get-otp");
+        setTimeout(() => {
+          const storedUser = localStorage.getItem("user");
+          if (storedUser) {
+            setLoading(false);
+            navigate("/get-otp");
+          }
+        }, 100);
         toast.success(
           'Click on "Send OTP" to verify your email or phone number'
         );

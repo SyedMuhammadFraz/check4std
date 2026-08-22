@@ -6,7 +6,6 @@ import { webApiInstance } from "../../AxiosInstance";
 import { useQuestionnaire } from "../../utils/QuestionareContext";
 import { useLocation } from "react-router-dom";
 import { AuthContext } from "../../utils/AuthContext";
-import { toast } from "react-toastify";
 
 const QUESTION_TYPE_MAP = {
   19: "multiselect",
@@ -19,9 +18,11 @@ const STDQuestionnaireSystem = () => {
   const [currentStep, setCurrentStep] = useState("selection");
   const [questionnaireType, setQuestionnaireType] = useState("");
   const [responses, setResponses] = useState({});
+  const [accessRestrictions, setAccessRestrictions] = useState([]);
   const [isCompleted, setIsCompleted] = useState(false);
   const [completionDate, setCompletionDate] = useState(null);
   const { authToken } = useContext(AuthContext);
+  const [hasHighRisk, setHasHighRisk] = useState(false);
   const { setQuestionnaireId, setHasSymptoms, setStdQuestionsFilled } = useQuestionnaire();
   const [alreadyFilled, setAlreadyFilled] = useState(false);
 
@@ -43,9 +44,7 @@ const STDQuestionnaireSystem = () => {
           setAlreadyFilled(true);
         }
       })
-      .catch(() => {
-        toast.error("Failed to verify questionnaire status. Please try again later.");
-      });
+      .catch(() => {});
   }, [authToken]);
 
   useEffect(() => {
@@ -67,8 +66,9 @@ const STDQuestionnaireSystem = () => {
     };
   }, [location]);
 
+  // Fetch questions
   useEffect(() => {
-    if (!questionnaireType || !authToken) return;
+    if (!questionnaireType) return;
     setLoading(true);
     setError(null);
 
@@ -102,6 +102,58 @@ const STDQuestionnaireSystem = () => {
       .finally(() => setLoading(false));
   }, [questionnaireType, setHasSymptoms, setQuestionnaireId]);
 
+  // Restriction logic
+  const calculateRestrictions = () => {
+    const restrictions = [];
+    let highRisk = false;
+
+    const selectedSymptoms = responses[11] || [];
+    const highRiskSymptoms = [
+      "Sores, bumps, or blisters on or around genitals, anus, or mouth",
+      "Genital discharge (penile/vaginal/rectal)",
+      "Fever or flu-like symptoms",
+    ];
+    const urgentSymptoms = [
+      "Burning during urination",
+      "Pelvic or lower abdominal pain",
+      "Unusual vaginal bleeding",
+    ];
+
+    if (questionnaireType === "symptoms") {
+      const hasHighRiskSymptoms = selectedSymptoms?.some((symptom) =>
+        highRiskSymptoms.includes(symptom)
+      );
+      const hasUrgentSymptoms = selectedSymptoms?.some((symptom) =>
+        urgentSymptoms.includes(symptom)
+      );
+
+      if (hasHighRiskSymptoms) {
+        restrictions.push("URGENT_CARE_REQUIRED");
+        restrictions.push("RESTRICTED_SOCIAL_ACTIVITIES");
+        highRisk = true;
+      }
+      if (hasUrgentSymptoms) {
+        restrictions.push("MEDICAL_CONSULTATION_RECOMMENDED");
+        highRisk = true;
+      }
+      if (responses[16] === "Never") {
+        restrictions.push("ENHANCED_TESTING_REQUIRED");
+      }
+      if (responses[18] === "Yes") {
+        restrictions.push("PARTNER_NOTIFICATION_REQUIRED");
+        highRisk = true;
+      }
+      if (responses[13] === "Gotten worse") {
+        restrictions.push("WORSENING_SYMPTOMS");
+        highRisk = true;
+      }
+    }
+
+    setAccessRestrictions(restrictions);
+    setHasHighRisk(highRisk);
+  };
+
+  // Submit
   const handleSubmit = async () => {
     const now = new Date().toISOString();
     const questionnaireId = questionnaireType === "symptoms" ? 2 : 4;
@@ -141,6 +193,7 @@ const STDQuestionnaireSystem = () => {
     responses: responsesArray,
   };
 
+  console.log(payload)
 
   try {
     await webApiInstance.post("/QuestionaireResponse", 
@@ -274,34 +327,20 @@ const STDQuestionnaireSystem = () => {
     </div>
   );
 
-  if(!authToken){
-    return (
-      <div className="std-questionnaire-container std-questionnaire-message">
-        <h1 className="message-title">Login Required</h1>
-        <p className="message-text">
-          Only logged-in users can fill out this STD/STI questionnaire.
-        </p>
-        <p className="message-note">
-          Please log in to continue and ensure your responses are saved securely.
-        </p>
-      </div>
-    );
-  }
-
-  if (alreadyFilled) {
-    return (
-      <div className="std-questionnaire-container std-questionnaire-message">
-        <h1 className="message-title">Assessment Already Completed</h1>
-        <p className="message-text">
-          You have already completed this STD/STI questionnaire.  
-          For your safety and accurate guidance, you cannot retake it at this time.
-        </p>
-        <p className="message-note">
-          If you believe this is an error or need to update your information, please contact your healthcare provider.
-        </p>
-      </div>
-    );
-  }
+ if (alreadyFilled) {
+  return (
+    <div className="std-questionnaire-container std-questionnaire-message">
+      <h1 className="message-title">Assessment Already Completed</h1>
+      <p className="message-text">
+        You have already completed this STD/STI questionnaire.  
+        For your safety and accurate guidance, you cannot retake it at this time.
+      </p>
+      <p className="message-note">
+        If you believe this is an error or need to update your information, please contact your healthcare provider.
+      </p>
+    </div>
+  );
+}
 
   if (currentStep === "selection") {
   return (

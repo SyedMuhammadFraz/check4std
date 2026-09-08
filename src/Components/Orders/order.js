@@ -74,21 +74,21 @@ const OrderPage = () => {
 }, [randomDoctor]);
 
 
-  useEffect(() => {
-    if (!stdQuestionsFilled) {
-      navigate("/std-assessment");
-    }
-  }, [stdQuestionsFilled, navigate]);
+  // useEffect(() => {
+  //   if (!stdQuestionsFilled) {
+  //     navigate("/std-assessment");
+  //   }
+  // }, [stdQuestionsFilled, navigate]);
 
-  useEffect(() => {
-    if (questionnaireId === 2 && hasSymptoms) {
-      // Redirect user or show warning
-      alert(
-        "You are not eligible to order based on your answers. First consult a doctor."
-      );
-      navigate("/doctor-consultation"); // or navigate back
-    }
-  }, [questionnaireId, hasSymptoms, navigate]);
+  // useEffect(() => {
+  //   if (questionnaireId === 2 && hasSymptoms) {
+  //     // Redirect user or show warning
+  //     alert(
+  //       "You are not eligible to order based on your answers. First consult a doctor."
+  //     );
+  //     navigate("/doctor-consultation"); // or navigate back
+  //   }
+  // }, [questionnaireId, hasSymptoms, navigate]);
 
   useEffect(() => {
     const fetchPatients = async () => {

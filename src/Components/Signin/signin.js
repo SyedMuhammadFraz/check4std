@@ -75,7 +75,7 @@ const SignIn = () => {
         if (role1 === "user") {
           login(token);
           toast.success("Successfully signed in!");
-          navigate("/std-assessment");
+          navigate("/");
         } else if (role1 === "admin") {
           login(token);
           console.log("Auth Token:", token);

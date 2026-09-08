@@ -4,13 +4,14 @@ import { AuthContext } from "../../utils/AuthContext";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "./signup.css";
-import { authServerInstance, webApiInstance } from "../../AxiosInstance";
-import { useAuth } from "../../utils/AuthContext";
+import { webApiInstance } from "../../AxiosInstance";
 import { userRegisterInstance } from "../../AxiosInstance";
 import { useLoader } from "../../utils/LoaderContext";
 
+const guidRegex =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 const SignUp = () => {
-  const { setPendingUser } = useAuth();
   const [role, setRole] = useState("");
   const [formData, setFormData] = useState({
     name: "",
@@ -26,9 +27,17 @@ const SignUp = () => {
     const fetchRole = async () => {
       try {
         const response = await webApiInstance.get("/Role/get-by-name/user");
-        setRole(response.data.result.id);
+        const userRoleId =
+          response.data?.result?.roleId || response.data?.result?.id;
+
+        if (!guidRegex.test(userRoleId || "")) {
+          throw new Error("User role ID was not returned by the API.");
+        }
+
+        setRole(userRoleId);
       } catch (error) {
         console.error("Failed to fetch roles", error);
+        toast.error("Unable to load user role. Please refresh and try again.");
       }
     };
 
@@ -88,10 +97,16 @@ const SignUp = () => {
     return true;
   };
   const handleSubmit = async (e) => {
-    setLoading(true);
     e.preventDefault();
 
     if (!validateForm()) return;
+
+    if (!guidRegex.test(role)) {
+      toast.error("Unable to load user role. Please refresh and try again.");
+      return;
+    }
+
+    setLoading(true);
 
     try {
       const [emailValidityResponse, phoneNumberValidityResponse] =
@@ -151,25 +166,27 @@ const SignUp = () => {
         localStorage.setItem("optID", response.data);
         localStorage.setItem("email", apiPayload.email);
 
-        setTimeout(() => {
-          const storedUser = localStorage.getItem("user");
-          if (storedUser) {
-            setLoading(false);
-            navigate("/get-otp");
-          }
-        }, 100);
+        navigate("/get-otp");
         toast.success(
           'Click on "Send OTP" to verify your email or phone number'
         );
       } else {
         toast.error(response.message);
       }
-      setLoading(false);
     } catch (error) {
+      const responseData = error.response?.data;
+      const errorMessage =
+        typeof responseData === "string"
+          ? responseData
+          : responseData?.message ||
+            (responseData?.errors
+              ? Object.values(responseData.errors).flat().join(" ")
+              : "An error occurred. Please try again later.");
+
+      toast.error(errorMessage);
+    } finally {
       setLoading(false);
-      toast.error("An error occurred. Please try again later.");
     }
-    setLoading(false);
   };
 
   const handleLogout = () => {

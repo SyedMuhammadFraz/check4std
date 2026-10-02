@@ -1,820 +1,220 @@
-import React from "react";
-import "./MainPage.css";
-import "./Card.css";
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { ArrowRight, CircleAlert, RefreshCw, ShieldCheck, ShoppingCart } from "lucide-react";
 import { webApiInstance } from "../../AxiosInstance";
-import useGotoOrderPage from "./order-handle";
 import { AuthContext } from "../../utils/AuthContext";
-import { useLoader } from "../../utils/LoaderContext";
-import { toast } from "react-toastify";
+import useGotoOrderPage from "./order-handle";
+import { Button, Hero, ServiceLinks, Steps, TrustStrip } from "../Marketing/MarketingUI";
+import TestCards, { formatTestPrice, TEST_NAMES } from "../Marketing/TestCards";
+import "./Catalogue.css";
+
+const TEST_DETAILS = {
+  "10 Test Panel": { group: "panels", detail: "/ten-test-panel", description: "Our comprehensive panel for the most common STDs." },
+  "10 Test Panel with HIV RNA Early Detection": { group: "panels", detail: "/ten-test-panel", description: "Our comprehensive panel, with HIV RNA early detection included." },
+  Chlamydia: { group: "individual", detail: "/chlamydia-test", description: "Individual chlamydia testing." },
+  Gonorrhea: { group: "individual", detail: "/gonorrhea-test", description: "Individual gonorrhea testing." },
+  "Hepatitis A": { group: "hepatitis", detail: "/hep-a-test", description: "Individual hepatitis A testing." },
+  "Hepatitis B": { group: "hepatitis", detail: "/hep-b-test", description: "Individual hepatitis B testing." },
+  "Hepatitis C": { group: "hepatitis", detail: "/hep-c-test", description: "Individual hepatitis C testing." },
+  "Chlamydia & Gonorrhea": { group: "individual", detail: "/chlamydia-gonorrhea-test", description: "Two common STDs. One convenient test." },
+  "HIV 1 & 2 Antibody (4th Gen)": { group: "hiv", detail: "/hiv-test", description: "Fourth-generation HIV 1 & 2 testing." },
+  "Herpes I": { group: "herpes", detail: "/oral-herpes-test", description: "Individual herpes simplex virus type 1 testing." },
+  "Herpes II": { group: "herpes", detail: "/genital-herpes-test", description: "Individual herpes simplex virus type 2 testing." },
+  Syphilis: { group: "individual", detail: "/syphilis-test", description: "Individual syphilis testing." },
+};
+
+const FILTERS = [
+  { id: "all", label: "All tests" },
+  { id: "panels", label: "Test panels" },
+  { id: "individual", label: "Individual tests" },
+  { id: "hiv", label: "HIV" },
+  { id: "herpes", label: "Herpes" },
+  { id: "hepatitis", label: "Hepatitis" },
+];
+
+const isAvailable = (test) => Boolean(
+  test && typeof test.name === "string" && test.name.trim() &&
+  test.price !== null && test.price !== "" && Number.isFinite(Number(test.price)) && Number(test.price) >= 0
+);
 
 const MainPage = () => {
-  const navigate = useNavigate();
-  const { setLoading } = useLoader();
   const { authToken } = useContext(AuthContext);
   const gotoOrderPage = useGotoOrderPage();
-  const [selectedTests, setSelectedTests] = useState([]);
-  const [Chlamydia, setChlamydia] = useState(null);
-  const [TenTestPanel, setTenTestPanel] = useState(null);
-  const [TenTestPanelEarlyRNA, setTenTestPanelEarlyRNA] = useState(null);
-  const [Gonnorhea, setGonnorhea] = useState(null);
-  const [HepA, setHepA] = useState(null);
-  const [HepB, setHepB] = useState(null);
-  const [HepC, setHepC] = useState(null);
-  const [Chlamydia_Gonorrhea, setChlamydia_Gonorrhea] = useState(null);
-  const [Syphilis, setSyphilis] = useState(null);
-  const [HIV1_24thGen, setHIV1_24thGen] = useState(null);
-  const [Herpes1, setHerpes1] = useState(null);
-  const [Herpes2, setHerpes2] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [catalog, setCatalog] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [failedCount, setFailedCount] = useState(0);
+  const [retry, setRetry] = useState(0);
+  const [selectedNames, setSelectedNames] = useState([]);
+  const catalogueHeading = useRef(null);
+  const showAll = searchParams.get("view") === "all";
+  const requestedCategory = searchParams.get("category");
+  const category = FILTERS.some((filter) => filter.id === requestedCategory) ? requestedCategory : "all";
 
-  const getData = async (name, setter, errorFlag) => {
-    try {
-      const response = await webApiInstance.get(
-        `/Disease/get-by-name/${encodeURIComponent(name)}`,
-        {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      );
-  
-      if (response.data.statusCode === 200) {
-        setter(response.data.result);
-      } else {
-        if (!errorFlag.current) {
-          errorFlag.current = true;
-          setLoading(false);
-          toast.error("There was an error fetching the data. Please try again.");
-          navigate("/");
-        }
-      }
-    } catch (error) {
-      if (!errorFlag.current) {
-        errorFlag.current = true;
-        setLoading(false);
-        toast.error("There was an error fetching the data. Please try again.");
-        navigate("/");
-      }
-      console.error(`Error fetching data for ${name}:`, error);
-    }
-  };
-  
   useEffect(() => {
+    const controller = new AbortController();
+    let active = true;
     setLoading(true);
-    window.scrollTo(0, 0);
-    const errorFlag = { current: false };
-  
-    const testNames = [
-      {
-        name: "10 Test Panel with HIV RNA Early Detection",
-        setter: setTenTestPanelEarlyRNA,
-      },
-      { name: "10 Test Panel", setter: setTenTestPanel },
-      { name: "Chlamydia", setter: setChlamydia },
-      { name: "Gonorrhea", setter: setGonnorhea },
-      { name: "Hepatitis A", setter: setHepA },
-      { name: "Hepatitis B", setter: setHepB },
-      { name: "Hepatitis C", setter: setHepC },
-      { name: "Chlamydia & Gonorrhea", setter: setChlamydia_Gonorrhea },
-      { name: "HIV 1 & 2 Antibody (4th Gen)", setter: setHIV1_24thGen },
-      { name: "Herpes I", setter: setHerpes1 },
-      { name: "Herpes II", setter: setHerpes2 },
-      { name: "Syphilis", setter: setSyphilis },
-    ];
-  
-    const fetchData = async () => {
-      await Promise.all(
-        testNames.map(({ name, setter }) =>
-          getData(name, setter, errorFlag)
-        )
-      );
+    setFailedCount(0);
+
+    const loadCatalogue = async () => {
+      const responses = await Promise.allSettled(TEST_NAMES.map(async (name) => {
+        const response = await webApiInstance.get(`/Disease/get-by-name/${encodeURIComponent(name)}`, {
+          ...(authToken ? { headers: { Authorization: `Bearer ${authToken}` } } : {}),
+          signal: controller.signal,
+          timeout: 15000,
+        });
+        if (response.data.statusCode !== 200 || !isAvailable(response.data.result)) {
+          throw new Error("Test pricing is unavailable.");
+        }
+        return [name, response.data.result];
+      }));
+
+      if (!active) return;
+      const available = {};
+      let failures = 0;
+      responses.forEach((response) => {
+        if (response.status === "fulfilled") {
+          available[response.value[0]] = response.value[1];
+        } else {
+          failures += 1;
+        }
+      });
+      setCatalog(available);
+      setFailedCount(failures);
       setLoading(false);
     };
-  
-    fetchData();
-  }, []);
-  
 
-  const handleCheckboxChange = (testName, price) => {
-    setSelectedTests((prev) => {
-      const exists = prev.find((test) => test.name === testName);
-      if (exists) {
-        return prev.filter((test) => test.name !== testName);
-      } else {
-        return [...prev, { name: testName, price }];
-      }
-    });
-  };
+    loadCatalogue();
+    return () => {
+      active = false;
+      controller.abort();
+    };
+  }, [authToken, retry]);
 
-  const handleOrder = () => {
-    if (selectedTests.length > 0) {
-      navigate("/order", { state: { selectedTests } });
-    } else {
-      alert("Please select at least one test before proceeding.");
+  useEffect(() => {
+    if (showAll) {
+      catalogueHeading.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
-  };
+  }, [showAll, category]);
+
+  const visibleNames = TEST_NAMES.filter((name) => {
+    if (category === "all") return true;
+    if (category === "individual") return TEST_DETAILS[name].group !== "panels";
+    return TEST_DETAILS[name].group === category;
+  });
+  const selectedTests = selectedNames.filter((name) => isAvailable(catalog[name])).map((name) => ({
+    name: catalog[name].name,
+    price: catalog[name].price,
+  }));
+  const total = selectedTests.reduce((sum, test) => sum + Number(test.price), 0);
+
+  const toggleTest = (name) => setSelectedNames((current) => (
+    current.includes(name) ? current.filter((item) => item !== name) : [...current, name]
+  ));
+
+  const chooseFilter = (filter) => setSearchParams({ view: "all", ...(filter === "all" ? {} : { category: filter }) }, { replace: true });
 
   return (
-    <section className="MainPage">
-      <h1 className="center">STD Test Prices & Packages</h1>
-      <hr />
-      <section className="MainPagesection1">
-        <h1>Our Services</h1>
-        <div className="services">
-          <div className="row">
-            <div className="col-md-1"></div>
-            <div className="col-md-5">
-              <div className="service">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="50"
-                  height="50"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="#f57a00"
-                    d="M12 17a2 2 0 0 0 2-2a2 2 0 0 0-2-2a2 2 0 0 0-2 2a2 2 0 0 0 2 2m6-9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2h1V6a5 5 0 0 1 5-5a5 5 0 0 1 5 5v2zm-6-5a3 3 0 0 0-3 3v2h6V6a3 3 0 0 0-3-3"
-                  />
-                </svg>
-                <p>Secure and confidential STD testing services</p>
-              </div>
-            </div>
-            <div className="col-md-5">
-              <div className="service">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="50px"
-                  height="50px"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="#f57a00"
-                    fill-rule="evenodd"
-                    d="M14.25 2.5a.25.25 0 0 0-.25-.25H7A2.75 2.75 0 0 0 4.25 5v14A2.75 2.75 0 0 0 7 21.75h10A2.75 2.75 0 0 0 19.75 19V9.147a.25.25 0 0 0-.25-.25H15a.75.75 0 0 1-.75-.75zm.75 9.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1 0-1.5zm0 4a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1 0-1.5z"
-                    clip-rule="evenodd"
-                  />
-                  <path
-                    fill="#f57a00"
-                    d="M15.75 2.824c0-.184.193-.301.336-.186q.182.147.323.342l3.013 4.197c.068.096-.006.22-.124.22H16a.25.25 0 0 1-.25-.25z"
-                  />
-                </svg>
-                <p>
-                  FDA-approved / cleared tests performed in CLIA-certified labs
-                </p>
-              </div>
-            </div>
-            <div className="col-md-1"></div>
+    <main className="satellite-page sh-catalogue-page">
+      <Hero
+        variant="tests"
+        eyebrow="Tests & Services"
+        title={<>Take <span className="sh-test-hero-title-tail">Charge of</span></>}
+        accent="Your Health Today."
+        description="Affordable, confidential STD testing and sexual health services — all online."
+        tagline="Your Health. A Brighter Tomorrow."
+      >
+        <Button to="/price-packages?view=all" onClick={() => showAll && catalogueHeading.current?.scrollIntoView({ behavior: "smooth", block: "start" })}>Ready to Get Started</Button>
+        <TrustStrip compact />
+      </Hero>
+
+      <section className="sh-test-overview sh-section" aria-labelledby="test-services-heading">
+        <div className="sh-container">
+          <div className="sh-section-heading sh-catalogue-heading">
+            <h2 id="test-services-heading">Our Tests &amp; Services</h2>
+            <p>Choose from our most popular tests or explore all available options.</p>
           </div>
-          <div className="row">
-            <div className="col-md-1"></div>
-            <div className="col-md-5">
-              <div className="service">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="50"
-                  height="50"
-                  viewBox="0 0 24 24"
-                >
-                  <rect width="50" height="50" fill="none" />
-                  <path
-                    fill="#f57a00"
-                    d="M7.75 2.5a.75.75 0 0 0-1.5 0v1.58c-1.44.115-2.384.397-3.078 1.092c-.695.694-.977 1.639-1.093 3.078h19.842c-.116-1.44-.398-2.384-1.093-3.078c-.694-.695-1.639-.977-3.078-1.093V2.5a.75.75 0 0 0-1.5 0v1.513C15.585 4 14.839 4 14 4h-4c-.839 0-1.585 0-2.25.013z"
-                  />
-                  <path
-                    fill="#f57a00"
-                    fill-rule="evenodd"
-                    d="M2 12c0-.839 0-1.585.013-2.25h19.974C22 10.415 22 11.161 22 12v2c0 3.771 0 5.657-1.172 6.828S17.771 22 14 22h-4c-3.771 0-5.657 0-6.828-1.172S2 17.771 2 14zm15 2a1 1 0 1 0 0-2a1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2a1 1 0 0 0 0 2m-4-5a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-6-3a1 1 0 1 0 0-2a1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2a1 1 0 0 0 0 2"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                <p>The fastest results possible - available in 1 to 2 days</p>
-              </div>
-            </div>
-            <div className="col-md-5">
-              <div className="service">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="50"
-                  height="50"
-                  viewBox="0 0 24 24"
-                >
-                  <rect width="50" height="50" fill="none" />
-                  <path
-                    fill="#f57a00"
-                    d="m19.23 15.26l-2.54-.29a1.99 1.99 0 0 0-1.64.57l-1.84 1.84a15.05 15.05 0 0 1-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52a2 2 0 0 0-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07c.53 8.54 7.36 15.36 15.89 15.89c1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98"
-                  />
-                </svg>
-                <p>Private ordering online or by phone</p>
-              </div>
-            </div>
-            <div className="col-md-1"></div>
+          <TestCards catalog={catalog} loading={loading} compact />
+          <div className="sh-catalogue-view-all">
+            <Button to="/price-packages?view=all" variant="outline" onClick={() => showAll && catalogueHeading.current?.scrollIntoView({ behavior: "smooth", block: "start" })}>View All Tests &amp; Services</Button>
           </div>
-          <div className="row">
-            <div className="col-md-1"></div>
-            <div className="col-md-5">
-              <div className="service">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="43.75px"
-                  height="50px"
-                  viewBox="0 0 448 512"
-                >
-                  <path
-                    fill="#f57a00"
-                    d="M224 256a128 128 0 1 0 0-256a128 128 0 1 0 0 256m-96 55.2C54 332.9 0 401.3 0 482.3C0 498.7 13.3 512 29.7 512h388.6c16.4 0 29.7-13.3 29.7-29.7c0-81-54-149.4-128-171.1V362c27.6 7.1 48 32.2 48 62v40c0 8.8-7.2 16-16 16h-16c-8.8 0-16-7.2-16-16s7.2-16 16-16v-24c0-17.7-14.3-32-32-32s-32 14.3-32 32v24c8.8 0 16 7.2 16 16s-7.2 16-16 16h-16c-8.8 0-16-7.2-16-16v-40c0-29.8 20.4-54.9 48-62v-57.1q-9-.9-18.3-.9h-91.4q-9.3 0-18.3.9v65.4c23.1 6.9 40 28.3 40 53.7c0 30.9-25.1 56-56 56s-56-25.1-56-56c0-25.4 16.9-46.8 40-53.7zM144 448a24 24 0 1 0 0-48a24 24 0 1 0 0 48"
-                  />
-                </svg>
-                <p>Doctor consultations available for positive test results</p>
-              </div>
+          {failedCount > 0 && (
+            <div className="sh-pricing-notice" role="status">
+              <CircleAlert size={21} aria-hidden="true" />
+              <p>{failedCount === TEST_NAMES.length ? "Current prices are temporarily unavailable." : "Some test prices are temporarily unavailable."} You can still explore our tests and services.</p>
+              <button type="button" onClick={() => setRetry((value) => value + 1)} disabled={loading}>
+                <RefreshCw size={15} aria-hidden="true" /> Retry prices
+              </button>
             </div>
-            <div className="col-md-5">
-              <div className="service">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="50px"
-                  height="50px"
-                  viewBox="0 0 12 12"
-                >
-                  <path
-                    fill="#f57a00"
-                    d="M4 3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v1h1a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H8v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h1zm3 0H5v1.5a.5.5 0 0 1-.5.5H3v2h1.5a.5.5 0 0 1 .5.5V9h2V7.5a.5.5 0 0 1 .5-.5H9V5H7.5a.5.5 0 0 1-.5-.5z"
-                  />
-                </svg>
-                <p>Care Advisors available at 1-800-456-2323</p>
-              </div>
-            </div>
-            <div className="col-md-1"></div>
-          </div>
+          )}
         </div>
       </section>
-      <section className="MainPagesection2">
-        <h1 className="center">10 Test Panel Pricing</h1>
-        <div className="align">
-          <div className="text">
-            <h4>Doctors recommend our full 10 Test Panel</h4>
-            <p>
-              Our 10-Test Panel is a comprehensive STD testing package that
-              tests for the most common bacterial and viral STDs in the United
-              States. This inclusive STD testing panel has been carefully
-              designed by our physicians to provide you with complete peace of
-              mind.
-            </p>
-            <br />
-            <p>
-              If you are concerned about recent exposure, we recommend adding
-              our HIV RNA Early Detection Test. Our HIV RNA Early Detection Test
-              can detect an HIV infection as early as 6 days after exposure and
-              is conclusive if taken 9-11 days post exposure. Our standard HIV
-              test is a 4th Generation HIV 1 & 2 Antibody/Antigen test that can
-              detect HIV as early as 3 weeks after exposure.
-            </p>
-            <div className="Testss">
-              <div className="tests">
-                <div className="test">
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="50px"
-                      height="50px"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fill="#36ef3c"
-                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
-                      />
-                    </svg>
-                  </span>
-                  <p>
-                    {" "}
-                    <strong>HIV Type 1</strong>
-                  </p>
-                </div>
-                <div className="test">
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="50px"
-                      height="50px"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fill="#36ef3c"
-                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
-                      />
-                    </svg>
-                  </span>
-                  <p>
-                    {" "}
-                    <strong>HIV Type 2</strong>
-                  </p>
-                </div>
-                <div className="test">
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="50px"
-                      height="50px"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fill="#36ef3c"
-                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
-                      />
-                    </svg>
-                  </span>
-                  <p>
-                    {" "}
-                    <strong>Herpes 1</strong>
-                  </p>
-                </div>
-                <div className="test">
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="50px"
-                      height="50px"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fill="#36ef3c"
-                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
-                      />
-                    </svg>
-                  </span>
-                  <p>
-                    {" "}
-                    <strong>Herpes 2</strong>
-                  </p>
-                </div>
-                <div className="test">
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="50px"
-                      height="50px"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fill="#36ef3c"
-                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
-                      />
-                    </svg>
-                  </span>
-                  <p>
-                    {" "}
-                    <strong> Hepatitis A</strong>
-                  </p>
-                </div>
+
+      {showAll && (
+        <section className="sh-section sh-full-catalogue" aria-labelledby="all-tests-heading">
+          <div className="sh-container">
+            <div className="sh-section-heading sh-catalogue-heading" ref={catalogueHeading}>
+              <span className="sh-catalogue-eyebrow">Find the right option for you</span>
+              <h2 id="all-tests-heading">All Tests &amp; Services</h2>
+              <p>Choose a panel or select the individual tests you need.</p>
+            </div>
+            <div className="sh-catalogue-filters" role="group" aria-label="Filter tests">
+              {FILTERS.map((filter) => (
+                <button key={filter.id} type="button" aria-pressed={category === filter.id} onClick={() => chooseFilter(filter.id)}>
+                  {filter.label}
+                </button>
+              ))}
+            </div>
+            <div className="sh-catalogue-list" aria-busy={loading}>
+              {visibleNames.map((name) => {
+                const test = catalog[name];
+                const available = isAvailable(test) && !loading;
+                const selected = selectedNames.includes(name) && available;
+                const details = TEST_DETAILS[name];
+                return (
+                  <article key={name} className={`sh-order-test${selected ? " is-selected" : ""}`}>
+                    <label className="sh-order-test-choice">
+                      <input type="checkbox" checked={selected} disabled={!available} onChange={() => toggleTest(name)} />
+                      <span>
+                        <span className="sh-order-test-kind">{details.group === "panels" ? "Comprehensive panel" : "Individual testing"}</span>
+                        <span className="sh-order-test-name">{name}</span>
+                      </span>
+                    </label>
+                    <p>{details.description}</p>
+                    <div className="sh-order-test-bottom">
+                      <strong>{loading ? "Loading price…" : available ? formatTestPrice(test.price) : "Price unavailable"}</strong>
+                      <Link to={details.detail}>Test details <ArrowRight size={15} aria-hidden="true" /></Link>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+            <div className="sh-selection-summary">
+              <div className="sh-selection-description" aria-live="polite">
+                <ShoppingCart size={25} aria-hidden="true" />
+                <div><strong>{selectedTests.length ? `${selectedTests.length} ${selectedTests.length === 1 ? "test" : "tests"} selected` : "Choose your tests"}</strong><span>{selectedTests.length ? "Your selection is ready to order." : "Select one or more tests to get started."}</span></div>
               </div>
-              <div className="tests">
-                <div className="test">
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="50px"
-                      height="50px"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fill="#36ef3c"
-                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
-                      />
-                    </svg>
-                  </span>
-                  <p>
-                    {" "}
-                    <strong> Hepatitis B</strong>
-                  </p>
-                </div>
-                <div className="test">
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="50px"
-                      height="50px"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fill="#36ef3c"
-                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
-                      />
-                    </svg>
-                  </span>
-                  <p>
-                    {" "}
-                    <strong>Hepatitis C</strong>
-                  </p>
-                </div>
-                <div className="test">
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="50px"
-                      height="50px"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fill="#36ef3c"
-                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
-                      />
-                    </svg>
-                  </span>
-                  <p>
-                    {" "}
-                    <strong>Chlamydia</strong>
-                  </p>
-                </div>
-                <div className="test">
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="50px"
-                      height="50px"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fill="#36ef3c"
-                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
-                      />
-                    </svg>
-                  </span>
-                  <p>
-                    {" "}
-                    <strong>Gonorrhea</strong>
-                  </p>
-                </div>
-                <div className="test">
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="50px"
-                      height="50px"
-                      viewBox="0 0 16 16"
-                    >
-                      <path
-                        fill="#36ef3c"
-                        d="M11.4 6.85a.5.5 0 0 0-.707-.707l-3.65 3.65l-1.65-1.65a.5.5 0 0 0-.707.707l2 2a.5.5 0 0 0 .707 0l4-4z"
-                      />
-                    </svg>
-                  </span>
-                  <p>
-                    {" "}
-                    <strong>Syphilis</strong>
-                  </p>
-                </div>
+              <div className="sh-selection-actions">
+                {selectedTests.length > 0 && <button type="button" className="sh-clear-selection" onClick={() => setSelectedNames([])}>Clear selection</button>}
+                <strong className="sh-selection-total" aria-label={`Total ${formatTestPrice(total)}`}>{formatTestPrice(total)}</strong>
+                <button type="button" className="sh-order-selected" disabled={loading || selectedTests.length === 0} onClick={() => gotoOrderPage(selectedTests)}>
+                  Order Selected Tests <ArrowRight size={18} aria-hidden="true" />
+                </button>
               </div>
             </div>
-            <h1>Choose Your Packages</h1>
-            <div className="cards">
-              <div className="card">
-                <div className="card-header">10 Test Panel</div>
-                <div className="card-price">
-                  {" "}
-                  ${TenTestPanel !== null ? TenTestPanel.price : ""}
-                </div>
-                <div className="card-button">
-                  <button
-                    className="button3"
-                    onClick={() =>
-                      gotoOrderPage([
-                        { name: TenTestPanel.name, price: TenTestPanel.price },
-                      ])
-                    }
-                  >
-                    Get Tested
-                  </button>
-                </div>
-              </div>
-              <div className="card">
-                <div className="card-header">10 Test Panel</div>
-                <div className="card-header italic">
-                  with HIV RNA Early Detection
-                </div>
-                <div className="card-price">
-                  {" "}
-                  $
-                  {TenTestPanelEarlyRNA !== null
-                    ? TenTestPanelEarlyRNA.price
-                    : ""}
-                </div>
-                <div className="card-button">
-                  <button
-                    className="button3"
-                    onClick={() =>
-                      gotoOrderPage([
-                        {
-                          name: TenTestPanelEarlyRNA.name,
-                          price: TenTestPanelEarlyRNA.price,
-                        },
-                      ])
-                    }
-                  >
-                    Get Tested
-                  </button>
-                </div>
-              </div>
+            <p className="sh-catalogue-security"><ShieldCheck size={17} aria-hidden="true" /> Private, secure ordering. Your health, your choice.</p>
+            <div className="sh-catalogue-additional">
+              <div><h3>Looking for additional support?</h3><p>Explore treatment support, retesting, and care for your next step.</p></div>
+              <Button to="/contact" variant="outline">Contact Our Team</Button>
             </div>
           </div>
-          <img className="doctor-image" src="./Doctor.png" />
-        </div>
-      </section>
-      <section className="MainPagesection3">
-        <h1 className="center">Individual Test Pricing</h1>
-        <p>
-          We offer individual tests in case you are concerned about a single
-          infection, or if you are retesting to see if an existing infection has
-          been cleared after treatment.
-          <strong> Please select tests from the list below.</strong>
-        </p>
+        </section>
+      )}
 
-        <div className="section3width">
-          <div className="check">
-            <label className="Dform">
-              <input
-                type="checkbox"
-                onChange={() =>
-                  handleCheckboxChange(Chlamydia.name, Chlamydia.price)
-                }
-              />
-              <p>Chlamydia</p>
-              <div className="check-price">
-                ${Chlamydia !== null ? Chlamydia.price : ""}
-              </div>
-            </label>
-            <label className="Dform">
-              <input
-                type="checkbox"
-                onChange={() => handleCheckboxChange(HepC.name, HepC.price)}
-              />
-              <p>Hepatitis C</p>
-              <div className="check-price">
-                ${HepC !== null ? HepC.price : ""}
-              </div>
-            </label>
-          </div>
-          <div className="check">
-            <label className="Dform">
-              <input
-                type="checkbox"
-                onChange={() =>
-                  handleCheckboxChange(
-                    Chlamydia_Gonorrhea.name,
-                    Chlamydia_Gonorrhea.price
-                  )
-                }
-              />
-              <p>Chlamydia & Gonorrhea</p>
-              <div className="check-price">
-                ${Chlamydia_Gonorrhea !== null ? Chlamydia_Gonorrhea.price : ""}
-              </div>
-            </label>
-            <label className="Dform">
-              <input
-                type="checkbox"
-                onChange={() =>
-                  handleCheckboxChange(Herpes1.name, Herpes1.price)
-                }
-              />
-              <p>Herpes I</p>
-              <div className="check-price">
-                ${Herpes1 !== null ? Herpes1.price : ""}
-              </div>
-            </label>
-          </div>
-          <div className="check">
-            <label className="Dform">
-              <input
-                type="checkbox"
-                onChange={() =>
-                  handleCheckboxChange(Gonnorhea.name, Gonnorhea.price)
-                }
-              />
-              <p>Gonorrhea</p>
-              <div className="check-price">
-                ${Gonnorhea !== null ? Gonnorhea.price : ""}
-              </div>
-            </label>
-            <label className="Dform">
-              <input
-                type="checkbox"
-                onChange={() =>
-                  handleCheckboxChange(Herpes2.name, Herpes2.price)
-                }
-              />
-              <p>Herpes II</p>
-              <div className="check-price">
-                ${Herpes2 !== null ? Herpes2.price : ""}
-              </div>
-            </label>
-          </div>
-          <div className="check">
-            <label className="Dform">
-              <input
-                type="checkbox"
-                onChange={() => handleCheckboxChange(HepA.name, HepA.price)}
-              />
-              <p>Hepatitis A</p>
-              <div className="check-price">
-                ${HepA !== null ? HepA.price : ""}
-              </div>
-            </label>
-            <label className="Dform">
-              <input
-                type="checkbox"
-                onChange={() =>
-                  handleCheckboxChange(HIV1_24thGen.name, HIV1_24thGen.price)
-                }
-              />
-              <p>HIV 1 & 2 Antibody (4th Gen)</p>
-              <div className="check-price">
-                ${HIV1_24thGen !== null ? HIV1_24thGen.price : ""}
-              </div>
-            </label>
-          </div>
-          <div className="check">
-            <label className="Dform">
-              <input
-                type="checkbox"
-                onChange={() => handleCheckboxChange(HepB.name, HepB.price)}
-              />
-              <p>Hepatitis B</p>
-              <div className="check-price">
-                ${HepB !== null ? HepB.price : ""}
-              </div>
-            </label>
-            <label className="Dform">
-              <input
-                type="checkbox"
-                onChange={() =>
-                  handleCheckboxChange(Syphilis.name, Syphilis.price)
-                }
-              />
-              <p>Syphilis</p>
-              <div className="check-price">
-                ${Syphilis !== null ? Syphilis.price : ""}
-              </div>
-            </label>
-          </div>
-        </div>
-        <button className="button2" onClick={handleOrder}>
-          Get Tested
-        </button>
-      </section>
-      <section className="MainPagesection4">
-        <h1 className="center">Complete STD Testing at Unbeatable Prices</h1>
-        <p className="section4-header">
-          You may be concerned about the best time to test for STDs. If you have
-          had unprotected sexual contact, our doctors recommend testing 3 weeks
-          after initial exposure, and again 3 months after to confirm your
-          initial diagnosis. This is the best way to ensure you test at the
-          right time because different sexually transmitted infections become
-          detectable at different times. To know what test is right for you, use
-          our physician-approved Test Recommendation Tool or call our Care
-          Advisors at 1-800-456-2323.
-        </p>
-        <div className="section4text">
-          <section>
-            <h2>Why Choose Check4std.com?</h2>
-            <ul>
-              <li>100% Private and Confidential STD Testing Service</li>
-              <li>Exclusive FDA-approved HIV RNA Early Detection testing</li>
-              <li>Over 4,500 convenient testing locations nationwide</li>
-              <li>
-                Comprehensive 10-Test Panel that checks for all common STDs,
-                including hepatitis A and HIV-2
-              </li>
-              <li>
-                Fast results available in 1-2 days through your secure online
-                account
-              </li>
-              <li>
-                Doctor consultation and treatment options provided for positive
-                results
-              </li>
-              <li>
-                All tests are supervised and approved by qualified physicians
-              </li>
-            </ul>
-          </section>
-          <br />
-
-          <section>
-            <h3>HIV RNA Test vs. HIV 4th Generation Antibody Test</h3>
-            <p>
-              The HIV RNA test identifies HIV as early as 9-11 days after
-              exposure, detecting the virus's genetic material (RNA) in the
-              blood. In contrast, the HIV 4th Generation Antibody test detects
-              antibodies and antigens 3 weeks after exposure. Antibodies are
-              immune system proteins that fight foreign substances, while
-              antigens are the substances causing the response. Both tests offer
-              different detection timelines for early and accurate results.
-            </p>
-          </section>
-          <br />
-
-          <section>
-            <h3>Next Steps</h3>
-            <p>
-              Testing with STDcheck.com is fast and straightforward. Simply
-              select a testing location near you using your zip code. After
-              placing your order, you’ll receive a Lab Requisition Form or test
-              code in your secure online account. Bring this form or code to the
-              testing center, where a technician will collect your
-              samples—usually within 5 minutes. Your results will be available
-              in 1-2 days in your secure account.
-            </p>
-          </section>
-          <br />
-
-          <section>
-            <h3>Do I Need an Appointment?</h3>
-            <p>
-              No appointment is necessary. However, test centers do not accept
-              payments onsite, so you must complete your order and payment
-              online or via phone beforehand. Once your order is placed, you can
-              visit any of our 4,500 test centers during regular business hours,
-              with some open on Saturdays.
-            </p>
-          </section>
-          <br />
-
-          <section>
-            <h3>Will My Visit Be Discreet?</h3>
-            <p>
-              Yes, our lab centers offer complete discretion. Technicians are
-              unaware of the specific tests you're undergoing. The process is
-              quick and private—typically completed within 5 minutes with no
-              waiting area.
-            </p>
-          </section>
-          <br />
-
-          <section>
-            <h3>Is My Information Confidential?</h3>
-            <p>
-              Your privacy is our top priority. We do not share your results
-              with insurance companies or include them in your permanent medical
-              record. All information is handled under HIPAA regulations,
-              ensuring the highest level of confidentiality.
-            </p>
-          </section>
-          <br />
-
-          <section>
-            <h3>Doctor Consultation</h3>
-            <p>
-              If you test positive for an STD, our physicians will explain your
-              results and answer any questions. For an additional fee, treatment
-              options can be prescribed and sent to your local pharmacy.
-            </p>
-          </section>
-          <br />
-
-          <section>
-            <h3>Before and After the Test</h3>
-            <p>
-              For blood tests (e.g., HIV, syphilis, hepatitis, herpes), no
-              preparation is needed. For urine tests (e.g., chlamydia,
-              gonorrhea), avoid urination for at least one hour before testing.
-              After your test, results will be available in 1-2 days. If
-              positive, treatment options will be provided.
-            </p>
-          </section>
-          <br />
-
-          <section>
-            <h3>How Soon Can I Test?</h3>
-            <p>
-              You can test immediately after placing your order and receiving
-              your Lab Requisition Form or test code. Testing centers are open
-              during normal business hours, with some available on Saturdays.
-            </p>
-          </section>
-          <br />
-
-          <section>
-            <h3>How Long is the Lab Visit?</h3>
-            <p>
-              The lab visit takes approximately 5 minutes. Simply present your
-              Lab Requisition Form or test code to the technician, and the
-              required samples will be collected quickly and discreetly.
-            </p>
-          </section>
-          <br />
-
-          <section>
-            <h3>What Should I Bring?</h3>
-            <p>
-              Bring your Lab Requisition Form or test code to the test center.
-              Blood and/or urine samples will be collected as needed. Results
-              will be available within 1-2 days in your secure account.
-            </p>
-          </section>
-          <br />
-        </div>
-      </section>
-    </section>
+      <Steps compact withBenefits />
+      <ServiceLinks />
+    </main>
   );
 };
 

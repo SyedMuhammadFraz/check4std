@@ -1,0 +1,38 @@
+.satellite-site .sh-how-page .sh-how-steps {
+  position: relative;
+  z-index: 1;
+  padding-top: 5px;
+  padding-bottom: 13px;
+  background: #fff;
+}
+
+.satellite-site .sh-how-page .sh-how-steps .sh-section-heading {
+  color: var(--sh-green, #00584b);
+  text-align: center;
+}
+
+.satellite-site .sh-how-page .sh-how-trust {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(105deg, #effaf6, #f2fbff);
+}
+
+.satellite-site .sh-how-page .sh-how-trust::after {
+  position: absolute;
+  right: -140px;
+  bottom: -195px;
+  z-index: -1;
+  width: 580px;
+  height: 320px;
+  transform: rotate(-18deg);
+  border-radius: 50%;
+  background: linear-gradient(110deg, rgba(53, 174, 240, 0.15), rgba(0, 174, 121, 0.21));
+  content: "";
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .satellite-site .sh-how-page .sh-how-steps { padding-top: 0; padding-bottom: 0; }
+  .satellite-site .sh-how-page .sh-how-trust::after { width: 330px; right: -185px; }
+}

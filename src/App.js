@@ -7,6 +7,10 @@ import LandingPage from "./Components/LandingPage";
 import Diseases from "./Components/Diseases/Diseases";
 import MainPage from "./Components/Price&Packages/MainPage";
 import Home from "./Components/Home/Home";
+import AboutUs from "./Components/Marketing/AboutUs";
+import HowItWorks from "./Components/Marketing/HowItWorks";
+import Resources from "./Components/Marketing/Resources";
+import Contact from "./Components/Marketing/Contact";
 import OrderPage from "./Components/Orders/order";
 import SignUp from "./Components/Signup/signup";
 import SignIn from "./Components/Signin/signin";
@@ -89,6 +93,10 @@ function App() {
                   {/* <RedirectHandler /> */}
                   <Routes>
                     <Route element={<LandingPage />}>
+                      <Route path="about-us" element={<AboutUs />} />
+                      <Route path="how-it-works" element={<HowItWorks />} />
+                      <Route path="resources" element={<Resources />} />
+                      <Route path="contact" element={<Contact />} />
                       {/* <Route index path="diseases" element={<Diseases />} /> */}
                       <Route
                         index

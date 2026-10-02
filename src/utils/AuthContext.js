@@ -83,7 +83,7 @@ export const AuthProvider = ({ children }) => {
       const roleResponse = await webApiInstance.get("/Role/get-by-name/user", {
         withCredentials: true,
       });
-      return roleResponse.data.result?.roleId || null;
+      return roleResponse.data?.result?.id || roleResponse.data?.result?.roleId || null;
     } catch (error) {
       console.error("Error fetching role ID:", error);
       return null;

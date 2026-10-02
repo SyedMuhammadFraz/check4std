@@ -13,6 +13,9 @@ const guidRegex =
 
 const SignUp = () => {
   const [role, setRole] = useState("");
+  const [roleLoading, setRoleLoading] = useState(true);
+  const [roleError, setRoleError] = useState("");
+  const [roleAttempt, setRoleAttempt] = useState(0);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,9 +27,13 @@ const SignUp = () => {
   });
 
   useEffect(() => {
+    let active = true;
     const fetchRole = async () => {
+      setRoleLoading(true);
+      setRoleError("");
       try {
         const response = await webApiInstance.get("/Role/get-by-name/user");
+        console.log("Role fetch response:", response.data);
         const userRoleId =
           response.data?.result?.roleId || response.data?.result?.id;
 
@@ -34,15 +41,24 @@ const SignUp = () => {
           throw new Error("User role ID was not returned by the API.");
         }
 
-        setRole(userRoleId);
+        if (active) setRole(userRoleId);
       } catch (error) {
-        console.error("Failed to fetch roles", error);
-        toast.error("Unable to load user role. Please refresh and try again.");
+        if (!active) return;
+        console.error("Failed to fetch user role", error);
+        const message = !error.response && error.request
+          ? "Cannot reach the signup service. Check your connection and try again."
+          : error.response?.status === 404
+            ? "The user role is not configured. Please contact support."
+            : "Unable to load user role. Please try again.";
+        setRoleError(message);
+      } finally {
+        if (active) setRoleLoading(false);
       }
     };
 
     fetchRole();
-  }, []);
+    return () => { active = false; };
+  }, [roleAttempt]);
 
   const { authToken, logout } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -312,8 +328,16 @@ const SignUp = () => {
             <li>One number (0-9)</li>
             <li>One special character (!@#$%^&*)</li>
           </ul>
-          <button type="submit" className="signup-auth-button">
-            Sign Up
+          {roleError && (
+            <div role="alert">
+              <p>{roleError}</p>
+              <button type="button" onClick={() => setRoleAttempt(attempt => attempt + 1)}>
+                Retry
+              </button>
+            </div>
+          )}
+          <button type="submit" className="signup-auth-button" disabled={roleLoading || !role}>
+            {roleLoading ? "Loading signup…" : "Sign Up"}
           </button>
         </form>
       )}

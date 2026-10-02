@@ -1,0 +1,75 @@
+.satellite-site .satellite-page .sh-test-cards {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.satellite-site .satellite-page .sh-test-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  padding: 21px 18px 17px;
+  text-align: center;
+  background: rgba(255, 255, 255, .95);
+  border: 1px solid #d8edf3;
+  border-radius: 17px;
+  box-shadow: 0 4px 8px rgba(17, 95, 111, .025);
+}
+
+.satellite-site .satellite-page .sh-test-icon { width: 47px; height: 47px; margin-bottom: 9px; flex-shrink: 0; }
+.satellite-site .satellite-page .sh-test-icon-red { color: #ee1446; fill: #ee1446; }
+.satellite-site .satellite-page .sh-test-icon-purple { color: #9e16d4; fill: #b42de8; }
+.satellite-site .satellite-page .sh-test-icon-teal { color: #009d9c; fill: #08afa8; }
+.satellite-site .satellite-page .sh-test-icon-blue { color: #035cc6; }
+.satellite-site .satellite-page .sh-test-icon-pink { color: #ec1240; fill: #ed1a47; }
+.satellite-site .satellite-page .sh-test-icon-green { color: #00b877; }
+.satellite-site .satellite-page .sh-test-icon-sky { color: #007dff; }
+
+.satellite-site .satellite-page .sh-test-card h3 {
+  max-width: 220px;
+  min-height: 2.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 7px;
+  color: var(--sh-ink, #07266b);
+  font-size: 17px;
+  line-height: 1.2;
+  font-weight: 750;
+}
+
+.satellite-site .satellite-page .sh-test-card p { max-width: 220px; margin: 0 0 10px; font-size: 15px; line-height: 1.3; color: var(--sh-ink, #07266b); }
+.satellite-site .satellite-page .sh-test-price { display: block; margin-top: auto; padding: 1px 0 9px; color: #00786c; font-size: 18px; line-height: 1.35; font-weight: 800; }
+.satellite-site .satellite-page .sh-test-price-pending { font-size: 12px; font-weight: 650; }
+.satellite-site .satellite-page .sh-test-details { display: inline-flex; min-height: 36px; width: 100%; max-width: 205px; align-items: center; justify-content: center; margin-top: auto; padding: 7px 15px; border-radius: 25px; background: linear-gradient(100deg, #008664, #009c8a); color: #fff; font-size: 14px; line-height: 1.2; font-weight: 700; text-decoration: none; transition: background .2s, transform .2s; }
+.satellite-site .satellite-page .sh-test-details:hover { background: #006d60; color: #fff; transform: translateY(-1px); }
+.satellite-site .satellite-page .sh-test-details:focus-visible { outline: 3px solid #009fe8; outline-offset: 4px; }
+
+@media (min-width: 1450px) {
+  .satellite-site .satellite-page .sh-test-cards-compact { grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 7px; }
+  .satellite-site .satellite-page .sh-test-cards-compact .sh-test-card { padding: 15px 12px 12px; border: 0; border-radius: 20px; }
+  .satellite-site .satellite-page .sh-test-cards-compact .sh-test-card h3 { font-size: 15px; }
+  .satellite-site .satellite-page .sh-test-cards-compact .sh-test-card p { font-size: 13px; min-height: 3.9em; }
+  .satellite-site .satellite-page .sh-test-cards-compact .sh-test-price { font-size: 16px; }
+  .satellite-site .satellite-page .sh-test-cards-compact .sh-test-price-pending { font-size: 11px; }
+  .satellite-site .satellite-page .sh-test-cards-compact .sh-test-details { font-size: 12px; min-height: 33px; padding: 7px 8px; }
+  .satellite-site .satellite-page .sh-test-cards-compact .sh-test-icon { width: 43px; height: 43px; }
+}
+
+@media (min-width: 1100px) and (max-width: 1449px) {
+  .satellite-site .satellite-page .sh-test-cards-compact { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+@media (max-width: 700px) {
+  .satellite-site .satellite-page .sh-test-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .satellite-site .satellite-page .sh-test-card { padding: 18px 12px 13px; }
+  .satellite-site .satellite-page .sh-test-card h3 { font-size: 15px; }
+  .satellite-site .satellite-page .sh-test-card p { font-size: 13px; }
+  .satellite-site .satellite-page .sh-test-price { font-size: 17px; }
+  .satellite-site .satellite-page .sh-test-price-pending { font-size: 11px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .satellite-site .satellite-page .sh-test-details { transition: none; }
+}

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, BookOpen, Check, ChevronRight, Clock3, FileText, Home, Laptop, MapPin, MessageCircle, RefreshCw, ShieldCheck, Stethoscope, Users } from "lucide-react";
+import { coupleSlides } from "./heroSlides";
 
 // Isolate photography from the client's flattened artwork. UI is rendered as HTML.
 const heroArtwork = {
@@ -26,15 +27,49 @@ export function IconBadge({ icon: Icon, tone = "green" }) {
   return <span className={`sh-icon-badge sh-icon-badge--${tone}`}><Icon aria-hidden="true" strokeWidth={1.8} /></span>;
 }
 
-export function Hero({ variant = "home", eyebrow, title, accent, description, tagline, children }) {
+function HeroPhotos({ variant, artwork }) {
+  const rotating = ["home", "tests", "how"].includes(variant);
+  const [active, setActive] = useState(0);
+  const [reducedMotion, setReducedMotion] = useState(true);
+  const [visible, setVisible] = useState(true);
+  const slides = rotating ? coupleSlides : [{ src: `/assets/satellite/${variant}.png`, ...artwork }];
+
+  useEffect(() => {
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const updateMotion = () => setReducedMotion(preference.matches);
+    const updateVisibility = () => setVisible(!document.hidden);
+    updateMotion();
+    updateVisibility();
+    preference.addEventListener("change", updateMotion);
+    document.addEventListener("visibilitychange", updateVisibility);
+    return () => {
+      preference.removeEventListener("change", updateMotion);
+      document.removeEventListener("visibilitychange", updateVisibility);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!rotating || reducedMotion || !visible) return;
+    const timer = window.setInterval(() => setActive(index => (index + 1) % slides.length), 3000);
+    return () => window.clearInterval(timer);
+  }, [rotating, reducedMotion, visible, slides.length]);
+
+  return <div className={`sh-hero-photo ${rotating ? "sh-hero-photo--rotating" : ""}`} aria-hidden="true">
+    {slides.map((slide, index) => <svg key={slide.src} className={`sh-hero-photo-frame ${index === active ? "is-active" : ""}`} viewBox={slide.box} preserveAspectRatio={slide.alignment || "xMidYMid slice"}>
+      <image href={slide.src} width={slide.width} height={slide.height} />
+    </svg>)}
+  </div>;
+}
+
+export function Hero({ variant = "home", eyebrow, title, accent, description, tagline, aside, children }) {
   const artwork = heroArtwork[variant] || heroArtwork.home;
   return <section className={`sh-hero sh-hero--${variant}`}>
-    <div className="sh-hero-photo" aria-hidden="true"><svg viewBox={artwork.box} preserveAspectRatio="xMidYMid slice"><image href={`/assets/satellite/${variant}.png`} width={artwork.width} height={artwork.height} /></svg></div>
+    <HeroPhotos variant={variant} artwork={artwork} />
     <div className="sh-container sh-hero-inner"><div className="sh-hero-copy">
       {eyebrow && <p className="sh-eyebrow">{eyebrow}</p>}
       <h1>{title}{accent && <span>{accent}</span>}</h1>
       {description && <p className="sh-hero-description">{description}</p>}{children}
-    </div>{tagline && <p className="sh-hero-tagline">{tagline}</p>}</div>
+    </div>{(tagline || aside) && <aside className="sh-hero-aside">{tagline && <p className="sh-hero-tagline">{tagline}</p>}{aside}</aside>}</div>
   </section>;
 }
 

@@ -1,84 +1,188 @@
-.sh-contact-page .sh-contact-layout { display: grid; grid-template-columns: 1.3fr 1fr; align-items: start; gap: 30px; padding-top: 22px; padding-bottom: 24px; }
-.sh-contact-subtitle { color: #344e80; font-size: clamp(16px, 1.3vw, 20px); line-height: 1.4; }
-.sh-contact-methods { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 15px; }
-.sh-contact-method { display: flex; flex-direction: column; align-items: center; text-align: center; border: 1px solid #c9ecf6; border-radius: 14px; padding: 15px 12px; gap: 6px; min-width: 0; }
-.sh-contact-page .sh-contact-method h3 { color: var(--sh-ink); font-size: 21px; margin: 2px 0; line-height: 1.15; }
-.sh-contact-method > a { font-weight: 700; color: #003bd0; text-decoration: none; }
-.sh-contact-method > a:hover { text-decoration: underline; text-underline-offset: 3px; }
-.sh-contact-phone { font-size: clamp(17px, 1.25vw, 22px); white-space: nowrap; }
-.sh-contact-email { font-size: clamp(12px, 1vw, 16px); overflow-wrap: anywhere; }
-.sh-contact-method > p { color: #344e80; font-size: 17px; line-height: 1.4; margin-top: 6px; }
-.sh-contact-chat-button { width: 100%; margin-top: auto; padding: 7px 12px; border: 2px solid #0095ff; color: #007bec; background: white; border-radius: 30px; font: inherit; font-size: 17px; font-weight: 600; cursor: pointer; }
-.sh-contact-chat-button:hover { background: #edf8ff; }
-.sh-contact-page a:focus-visible, .sh-contact-chat-button:focus-visible { outline: 3px solid var(--sh-blue); outline-offset: 3px; }
-.sh-contact-chat-info { margin-top: 14px; border-left: 3px solid var(--sh-blue); padding: 12px 15px; background: #f0faff; color: #244c75; font-size: 15px; line-height: 1.5; }
-.sh-contact-chat-info a, .sh-contact-draft-status a { color: #005dd3; text-underline-offset: 3px; }
-.sh-contact-hours { display: flex; gap: 15px; align-items: flex-start; padding: 22px 0 0; color: var(--sh-ink); }
-.sh-contact-hours > svg { flex: none; }
-.sh-contact-page .sh-contact-hours h3 { font-size: 20px; line-height: 1.3; margin: 3px 0 8px; color: var(--sh-ink); }
-.sh-contact-hours p { font-size: 17px; line-height: 1.4; }
-.sh-contact-message { border-radius: 20px; padding: 20px 24px; background: linear-gradient(115deg, #effbfc, #eafaff); }
-.sh-contact-message > .sh-section-heading { font-size: clamp(27px, 2vw, 34px); }
-.sh-contact-message > .sh-contact-subtitle { font-size: 16px; color: var(--sh-ink); }
-.sh-contact-message-content { margin-top: 16px; }
-.sh-contact-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px 20px; }
-.sh-contact-field { min-width: 0; display: flex; flex-direction: column; gap: 5px; }
-.sh-contact-field-full, .sh-contact-form-action, .sh-contact-draft-status { grid-column: 1 / -1; }
-.sh-contact-field label { color: var(--sh-ink); font-size: 14px; font-weight: 600; line-height: 1.3; }
-.sh-contact-field label > span { color: #c62536; }
-.sh-contact-field input, .sh-contact-field select, .sh-contact-field textarea { width: 100%; box-sizing: border-box; border: 1px solid #bfd3ee; border-radius: 6px; background: white; min-height: 40px; padding: 8px 11px; color: var(--sh-ink); font: inherit; font-size: 14px; line-height: 1.35; }
-.sh-contact-field input::placeholder, .sh-contact-field textarea::placeholder { color: #71819b; opacity: 1; }
-.sh-contact-field select:invalid { color: #637593; }
-.sh-contact-field select option { color: var(--sh-ink); }
-.sh-contact-field textarea { resize: vertical; min-height: 85px; }
-.sh-contact-field input:focus, .sh-contact-field select:focus, .sh-contact-field textarea:focus { outline: 2px solid #009fe873; outline-offset: 2px; border-color: #52afdc; }
-.sh-contact-form-action { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 1px; }
-.sh-contact-form-action > button { width: 76%; justify-content: center; }
-.sh-contact-form-action > p { text-align: center; font-size: 12px; color: #40637e; line-height: 1.4; }
-.sh-contact-draft-status { padding: 12px; background: white; border-radius: 8px; color: #264968; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; }
-.sh-contact-benefits { display: none; }
+﻿/* Contact: slide 12 on wide screens, slide 13 below 1250px. */
+.satellite-site .sh-contact-page { color: #082878; }
+.satellite-site .sh-contact-page .sh-contact-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 250px;
+  height: 17.23vw;
+  max-height: 360px;
+  background: linear-gradient(100deg, #f1fbfe, #fff 44%, #edf8fb);
+}
+.satellite-site .sh-contact-page .sh-contact-hero-art { position: absolute; inset: 0 0 0 43.66%; z-index: -1; }
+.satellite-site .sh-contact-page .sh-contact-hero-art svg { display: block; width: 100%; height: 100%; }
+.satellite-site .sh-contact-page .sh-contact-hero-art .sh-contact-art-portrait { display: none; }
+.satellite-site .sh-contact-page .sh-contact-hero-copy { width: 42%; margin-left: 5%; padding-top: clamp(25px, 2.3vw, 44px); }
+.satellite-site .sh-contact-page .sh-contact-eyebrow { color: #00526b; text-transform: uppercase; letter-spacing: 5px; font-size: clamp(14px, 1.25vw, 21px); font-weight: 550; margin-bottom: 6px !important; }
+.satellite-site .sh-contact-page .sh-contact-hero h1 { font-size: clamp(40px, 3.9vw, 72px); line-height: 1.05; letter-spacing: -1.9px; color: #005341; font-weight: 750; white-space: nowrap; }
+.satellite-site .sh-contact-page .sh-contact-hero h1 span { color: #0098f5; }
+.satellite-site .sh-contact-page .sh-contact-hero-description { color: #445b80; font-size: clamp(17px, 1.45vw, 25px); line-height: 1.25; margin-top: 8px; max-width: 650px; }
+.satellite-site .sh-contact-page .sh-contact-hero-copy .sh-button { margin-top: 14px; padding: 10px 32px; min-height: 49px; min-width: 310px; font-size: clamp(17px, 1.45vw, 24px); }
+.satellite-site .sh-contact-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+.satellite-site .sh-contact-page .sh-contact-layout { display: grid; grid-template-columns: 1.29fr 1fr; align-items: start; gap: 32px; width: 92%; max-width: 1700px; padding: 10px 0 14px; }
+.satellite-site .sh-contact-page .sh-contact-get-in-touch { padding: 0 0 0 10px; }
+.satellite-site .sh-contact-page .sh-contact-layout .sh-section-heading { margin: 0; text-align: left; font-size: clamp(29px, 2.15vw, 37px); line-height: 1.12; letter-spacing: -1.2px; }
+.satellite-site .sh-contact-page .sh-contact-subtitle { color: #344e80; font-size: clamp(16px, 1.15vw, 20px); line-height: 1.35; }
+.satellite-site .sh-contact-page .sh-contact-methods { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 12px; }
+.satellite-site .sh-contact-page .sh-contact-method { display: flex; flex-direction: column; align-items: center; text-align: center; border: 1px solid #cfedf8; border-radius: 14px; padding: 14px 10px 12px; gap: 7px; min-width: 0; min-height: 235px; background: #fff; }
+.satellite-site .sh-contact-page .sh-contact-method .sh-icon-badge { width: 82px; height: 82px; background: #ddf5ef; }
+.satellite-site .sh-contact-page .sh-contact-method .sh-icon-badge--blue { background: #def4ff; color: #0098f5; }
+.satellite-site .sh-contact-page .sh-contact-method .sh-icon-badge svg { width: 43px; height: 43px; stroke-width: 2.4; }
+.satellite-site .sh-contact-page .sh-contact-method h3 { color: #082878; font-size: 22px; margin: 0; line-height: 1.12; font-weight: 700; }
+.satellite-site .sh-contact-page .sh-contact-method > a { font-weight: 650; color: #0035b2; text-decoration: none; }
+.satellite-site .sh-contact-page .sh-contact-method > a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.satellite-site .sh-contact-page .sh-contact-phone { font-size: clamp(16px, 1.16vw, 22px); white-space: nowrap; }
+.satellite-site .sh-contact-page .sh-contact-email { font-size: clamp(12px, .96vw, 17px); overflow-wrap: anywhere; }
+.satellite-site .sh-contact-page .sh-contact-method > p { color: #344e80; font-size: clamp(15px, 1.1vw, 19px); line-height: 1.4; margin-top: 5px; }
+.satellite-site .sh-contact-page .sh-contact-chat-button { width: 78%; margin-top: auto; padding: 7px 12px; border: 2px solid #0095ff; color: #007bec; background: white; border-radius: 30px; font: inherit; font-size: 17px; font-weight: 600; cursor: pointer; line-height: 1.25; }
+.satellite-site .sh-contact-page .sh-contact-chat-button:hover { background: #edf8ff; }
+.satellite-site .sh-contact-page .sh-contact-chat-info { margin-top: 14px; border-left: 3px solid #009fe8; padding: 12px 15px; background: #f0faff; color: #244c75; font-size: 15px; line-height: 1.5; }
+.satellite-site .sh-contact-page .sh-contact-chat-info a, .satellite-site .sh-contact-page .sh-contact-draft-status a { color: #005dd3; text-underline-offset: 3px; }
+.satellite-site .sh-contact-page .sh-contact-hours { display: flex; gap: 14px; align-items: flex-start; padding: 20px 0 0; color: #082878; }
+.satellite-site .sh-contact-page .sh-contact-hours > svg { flex: none; }
+.satellite-site .sh-contact-page .sh-contact-hours-content { flex: 1; min-width: 0; }
+.satellite-site .sh-contact-page .sh-contact-hours h3 { font-size: 20px; line-height: 1.3; margin: 3px 0 10px; color: #082878; }
+.satellite-site .sh-contact-page .sh-contact-hours-grid { display: grid; grid-template-columns: 1fr 1fr 1.25fr; }
+.satellite-site .sh-contact-page .sh-contact-hours-grid p { font-size: clamp(13px, .95vw, 17px); line-height: 1.35; padding: 0 14px; border-left: 1px solid #8da5d4; }
+.satellite-site .sh-contact-page .sh-contact-hours-grid p:first-child { padding-left: 0; border: 0; }
+.satellite-site .sh-contact-page .sh-contact-hours-grid strong { font-weight: 600; }
+.satellite-site .sh-contact-page .sh-contact-message { border-radius: 20px; padding: 9px 24px 12px; background: linear-gradient(115deg, #effbfc, #ecfaff); }
+.satellite-site .sh-contact-page .sh-contact-message .sh-section-heading { font-size: clamp(26px, 1.7vw, 31px); }
+.satellite-site .sh-contact-page .sh-contact-message > .sh-contact-subtitle { font-size: clamp(14px, 1vw, 18px); color: #082878; margin-top: 2px; }
+.satellite-site .sh-contact-page .sh-contact-message-content { margin-top: 15px; }
+.satellite-site .sh-contact-page .sh-contact-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 20px; }
+.satellite-site .sh-contact-page .sh-contact-field { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.satellite-site .sh-contact-page .sh-contact-field-full, .satellite-site .sh-contact-page .sh-contact-form-action, .satellite-site .sh-contact-page .sh-contact-draft-status { grid-column: 1 / -1; }
+.satellite-site .sh-contact-page .sh-contact-field label { color: #082878; font-size: 14px; font-weight: 600; line-height: 1.25; margin: 0; }
+.satellite-site .sh-contact-page .sh-contact-field label > span { color: #e21427; }
+.satellite-site .sh-contact-page .sh-contact-field input, .satellite-site .sh-contact-page .sh-contact-field select, .satellite-site .sh-contact-page .sh-contact-field textarea { width: 100%; box-sizing: border-box; border: 1px solid #bfd3ee; border-radius: 6px; background: white; height: 36px; min-height: 36px; margin: 0; padding: 7px 11px; color: #082878; font: inherit; font-size: 14px; line-height: 1.35; box-shadow: 0 0 1px #bfd3ee; }
+.satellite-site .sh-contact-page .sh-contact-field input::placeholder, .satellite-site .sh-contact-page .sh-contact-field textarea::placeholder { color: #77869e; opacity: 1; }
+.satellite-site .sh-contact-page .sh-contact-field select:invalid { color: #637593; }
+.satellite-site .sh-contact-page .sh-contact-field select option { color: #082878; }
+.satellite-site .sh-contact-page .sh-contact-field textarea { resize: vertical; height: 74px; min-height: 74px; }
+.satellite-site .sh-contact-page .sh-contact-field input:focus, .satellite-site .sh-contact-page .sh-contact-field select:focus, .satellite-site .sh-contact-page .sh-contact-field textarea:focus { outline: 2px solid #009fe873; outline-offset: 2px; border-color: #52afdc; }
+.satellite-site .sh-contact-page .sh-contact-form-action { display: flex; flex-direction: column; align-items: center; gap: 3px; margin-top: 1px; }
+.satellite-site .sh-contact-page .sh-contact-form-action > button { width: 67%; justify-content: center; min-height: 48px; font-size: 21px; padding: 9px 20px; }
+.satellite-site .sh-contact-page .sh-contact-form-action > p { text-align: center; font-size: 10px; color: #40637e; line-height: 1.25; }
+.satellite-site .sh-contact-page .sh-contact-draft-status { padding: 12px; background: white; border-radius: 8px; color: #264968; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere; }
+.satellite-site .sh-contact-page .sh-contact-benefits { display: none; }
+.satellite-site .sh-contact-page .sh-contact-trust { padding: 24px 4.6%; background: linear-gradient(110deg, #edf9f5, #f0fbfd); }
+.satellite-site .sh-contact-page .sh-contact-trust-inner { display: flex; justify-content: space-between; gap: 25px; max-width: 1700px; margin: auto; }
+.satellite-site .sh-contact-page .sh-contact-trust-item { display: flex; gap: 14px; align-items: center; min-width: 0; color: #005440; }
+.satellite-site .sh-contact-page .sh-contact-trust-item + .sh-contact-trust-item { border-left: 1px solid #9cc9d7; padding-left: 24px; }
+.satellite-site .sh-contact-page .sh-contact-trust-item > svg { width: 45px; height: 45px; flex: none; stroke-width: 1.7; }
+.satellite-site .sh-contact-page .sh-contact-trust-item:nth-child(2) > svg { color: #0642b6; }
+.satellite-site .sh-contact-page .sh-contact-trust-item strong { display: block; font-size: 14px; line-height: 1.3; font-weight: 600; }
+.satellite-site .sh-contact-page .sh-contact-trust-item p { color: #1c6971; font-size: 12px; line-height: 1.4; margin-top: 2px; }
+.satellite-site .sh-contact-page .sh-contact-trust-labs { display: none; }
+.satellite-site .sh-contact-socials { display: flex; align-items: center; gap: 11px; }
+.satellite-site .sh-contact-socials span { display: inline-flex; }
+.satellite-site .sh-contact-socials svg { width: 23px; height: 23px; }
+.satellite-site .sh-contact-footer { padding: 24px 4.6% 18px; color: #fff; background: linear-gradient(105deg, #006c77, #005660); }
+.satellite-site .sh-contact-footer-top { display: flex; justify-content: space-between; gap: 30px; align-items: center; max-width: 1700px; margin: auto; }
+.satellite-site .sh-contact-footer-motto { font-family: "Segoe Print", "Bradley Hand", cursive; font-size: 29px; font-style: italic; transform: rotate(-6deg); }
+.satellite-site .sh-contact-footer-motto::after { content: ""; display: block; width: 180px; height: 4px; border-radius: 50%; background: #00b9d5; margin: 4px 0 0 40px; transform: rotate(-7deg); }
+.satellite-site .sh-contact-footer-right { display: flex; flex-direction: column; align-items: flex-end; gap: 18px; }
+.satellite-site .sh-contact-footer nav { display: flex; gap: 13px; }
+.satellite-site .sh-contact-footer nav a { font-size: 13px; color: #fff; text-decoration: none; }
+.satellite-site .sh-contact-footer nav a + a { border-left: 1px solid #7fafb2; padding-left: 13px; }
+.satellite-site .sh-contact-footer nav a:hover { text-decoration: underline; }
+.satellite-site .sh-contact-copyright { border-top: 1px solid #359398; margin: 20px auto 0 !important; padding-top: 12px; font-size: 12px; max-width: 1700px; }
 @media (max-width: 1250px) {
-  .sh-contact-page .sh-contact-layout { grid-template-columns: 1fr; gap: 25px; }
-  .sh-contact-methods { gap: 15px; }
-  .sh-contact-method { padding: 16px; }
-  .sh-contact-phone { font-size: 23px; }
-  .sh-contact-email { font-size: 16px; }
-  .sh-contact-chat-button { max-width: 220px; }
-  .sh-contact-hours { padding-top: 18px; }
-  .sh-contact-message { padding: 24px 30px; }
-  .sh-contact-message-content { display: grid; grid-template-columns: 1.9fr 1fr; gap: 30px; }
-  .sh-contact-form { gap: 14px 24px; }
-  .sh-contact-field label { font-size: 15px; }
-  .sh-contact-field input, .sh-contact-field select, .sh-contact-field textarea { font-size: 15px; }
-  .sh-contact-benefits { display: flex; flex-direction: column; justify-content: center; gap: 24px; padding-left: 28px; border-left: 1px solid #b0d4e6; }
-  .sh-contact-benefit { display: flex; align-items: flex-start; gap: 15px; }
-  .sh-contact-benefit > :first-child { flex: none; }
-  .sh-contact-page .sh-contact-benefit h3 { font-size: 16px; line-height: 1.25; margin: 5px 0 5px; color: var(--sh-ink); }
-  .sh-contact-benefit p { font-size: 15px; line-height: 1.35; }
+  .satellite-site .sh-contact-page .sh-contact-hero { height: 31.45vw; min-height: 320px; max-height: 390px; }
+  .satellite-site .sh-contact-page .sh-contact-hero-art { left: 44.92%; }
+  .satellite-site .sh-contact-page .sh-contact-hero-art .sh-contact-art-wide { display: none; }
+  .satellite-site .sh-contact-page .sh-contact-hero-art .sh-contact-art-portrait { display: block; }
+  .satellite-site .sh-contact-page .sh-contact-hero-copy { width: 39%; margin-left: 6.3%; padding-top: 30px; }
+  .satellite-site .sh-contact-page .sh-contact-eyebrow { font-size: 14px; letter-spacing: 4px; margin-bottom: 8px !important; }
+  .satellite-site .sh-contact-page .sh-contact-hero h1 { font-size: clamp(42px, 5.6vw, 65px); white-space: normal; }
+  .satellite-site .sh-contact-page .sh-contact-hero h1 span { display: block; }
+  .satellite-site .sh-contact-page .sh-contact-hero-description { font-size: clamp(16px, 1.8vw, 21px); line-height: 1.25; }
+  .satellite-site .sh-contact-page .sh-contact-hero-copy .sh-button { min-width: 260px; min-height: 44px; font-size: 18px; padding: 10px 25px; margin-top: 12px; }
+  .satellite-site .sh-contact-page .sh-contact-layout { grid-template-columns: 1fr; width: 94%; gap: 22px; padding-top: 10px; padding-bottom: 0; }
+  .satellite-site .sh-contact-page .sh-contact-get-in-touch { padding: 0 22px; }
+  .satellite-site .sh-contact-page .sh-contact-layout .sh-section-heading { font-size: 34px; }
+  .satellite-site .sh-contact-page .sh-contact-subtitle { font-size: 18px; }
+  .satellite-site .sh-contact-page .sh-contact-methods { gap: 13px; margin-top: 16px; }
+  .satellite-site .sh-contact-page .sh-contact-method { min-height: 227px; padding: 14px 14px 12px; }
+  .satellite-site .sh-contact-page .sh-contact-method h3 { font-size: 21px; }
+  .satellite-site .sh-contact-page .sh-contact-method .sh-icon-badge { width: 76px; height: 76px; }
+  .satellite-site .sh-contact-page .sh-contact-phone { font-size: 23px; }
+  .satellite-site .sh-contact-page .sh-contact-email { font-size: 17px; }
+  .satellite-site .sh-contact-page .sh-contact-method > p { font-size: 17px; }
+  .satellite-site .sh-contact-page .sh-contact-chat-button { max-width: 200px; font-size: 19px; padding: 6px 12px; }
+  .satellite-site .sh-contact-page .sh-contact-hours { padding: 18px 18px 0; }
+  .satellite-site .sh-contact-page .sh-contact-hours h3 { margin: 0 0 6px; font-size: 19px; }
+  .satellite-site .sh-contact-page .sh-contact-hours-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .satellite-site .sh-contact-page .sh-contact-hours-grid p { font-size: 16px; padding: 0 35px; }
+  .satellite-site .sh-contact-page .sh-contact-message { padding: 10px 38px 14px; }
+  .satellite-site .sh-contact-page .sh-contact-message-content { display: grid; grid-template-columns: 1.9fr 1fr; gap: 30px; margin-top: 14px; }
+  .satellite-site .sh-contact-page .sh-contact-message > .sh-contact-subtitle { font-size: 17px; }
+  .satellite-site .sh-contact-page .sh-contact-form { gap: 12px 25px; }
+  .satellite-site .sh-contact-page .sh-contact-field label { font-size: 14px; }
+  .satellite-site .sh-contact-page .sh-contact-field textarea { height: 78px; }
+  .satellite-site .sh-contact-page .sh-contact-form-action > button { width: 53%; min-width: 270px; font-size: 19px; }
+  .satellite-site .sh-contact-page .sh-contact-benefits { display: flex; flex-direction: column; justify-content: center; gap: 22px; padding-left: 28px; border-left: 1px solid #b0d4e6; }
+  .satellite-site .sh-contact-page .sh-contact-benefit { display: flex; align-items: center; gap: 17px; }
+  .satellite-site .sh-contact-page .sh-contact-benefit .sh-icon-badge { width: 65px; height: 65px; }
+  .satellite-site .sh-contact-page .sh-contact-benefit .sh-icon-badge svg { width: 36px; height: 36px; }
+  .satellite-site .sh-contact-page .sh-contact-benefit h3 { font-size: 16px; line-height: 1.25; margin: 0 0 3px; color: #082878; }
+  .satellite-site .sh-contact-page .sh-contact-benefit p { font-size: 15px; line-height: 1.3; }
+  .satellite-site .sh-contact-page .sh-contact-trust { padding: 32px 5%; background: #fff; }
+  .satellite-site .sh-contact-page .sh-contact-trust-inner { gap: 16px; }
+  .satellite-site .sh-contact-page .sh-contact-trust-item { gap: 11px; }
+  .satellite-site .sh-contact-page .sh-contact-trust-item + .sh-contact-trust-item { padding-left: 20px; }
+  .satellite-site .sh-contact-page .sh-contact-trust-item > svg { width: 40px; height: 40px; }
+  .satellite-site .sh-contact-page .sh-contact-trust-item strong { font-size: 13px; }
+  .satellite-site .sh-contact-page .sh-contact-trust-item p { font-size: 12px; }
+  .satellite-site .sh-contact-page .sh-contact-trust-labs { display: flex; }
+  .satellite-site .sh-contact-page .sh-contact-trust-tomorrow, .satellite-site .sh-contact-trust .sh-contact-socials { display: none; }
 }
-@media (max-width: 800px) {
-  .sh-contact-page .sh-contact-method h3 { font-size: 19px; }
-  .sh-contact-method { padding: 15px 10px; }
-  .sh-contact-phone { font-size: 18px; }
-  .sh-contact-email { font-size: 13px; }
-  .sh-contact-method > p { font-size: 15px; }
-  .sh-contact-chat-button { font-size: 15px; padding: 7px 9px; }
-  .sh-contact-message { padding: 22px; }
-  .sh-contact-message-content { grid-template-columns: 1fr; }
-  .sh-contact-benefits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding: 24px 0 0; border-left: 0; border-top: 1px solid #b0d4e6; }
-  .sh-contact-form-action > button { width: auto; min-width: 260px; }
+@media (min-width: 681px) and (max-width: 900px) {
+  .satellite-site .sh-contact-page .sh-contact-hero { min-height: 340px; }
+  .satellite-site .sh-contact-page .sh-contact-hero-copy { margin-left: 5%; width: 41%; }
+  .satellite-site .sh-contact-page .sh-contact-hero h1 { font-size: 42px; }
+  .satellite-site .sh-contact-page .sh-contact-hero-copy .sh-button { min-width: 0; font-size: 16px; padding: 10px 20px; }
+  .satellite-site .sh-contact-page .sh-contact-email { font-size: 13px; }
+  .satellite-site .sh-contact-page .sh-contact-phone { font-size: 18px; }
+  .satellite-site .sh-contact-page .sh-contact-message { padding-left: 24px; padding-right: 24px; }
+  .satellite-site .sh-contact-page .sh-contact-message-content { gap: 20px; }
+  .satellite-site .sh-contact-page .sh-contact-benefits { padding-left: 18px; }
+  .satellite-site .sh-contact-page .sh-contact-benefit { gap: 10px; }
+  .satellite-site .sh-contact-page .sh-contact-benefit .sh-icon-badge { width: 44px; height: 44px; }
+  .satellite-site .sh-contact-page .sh-contact-benefit .sh-icon-badge svg { width: 27px; height: 27px; }
+  .satellite-site .sh-contact-page .sh-contact-benefit p { font-size: 13px; }
 }
-@media (max-width: 580px) {
-  .sh-contact-methods { grid-template-columns: 1fr; }
-  .sh-contact-method { padding: 20px; }
-  .sh-contact-phone { font-size: 23px; }
-  .sh-contact-email { font-size: 17px; }
-  .sh-contact-method > p { font-size: 16px; }
-  .sh-contact-chat-button { margin-top: 6px; font-size: 16px; }
-  .sh-contact-message { padding: 22px 18px; }
-  .sh-contact-form { grid-template-columns: 1fr; gap: 16px; }
-  .sh-contact-field input, .sh-contact-field select, .sh-contact-field textarea { font-size: 16px; min-height: 44px; }
-  .sh-contact-benefits { grid-template-columns: 1fr; }
-  .sh-contact-form-action > button { width: 100%; min-width: 0; }
-  .sh-contact-subtitle { font-size: 16px; }
+@media (max-width: 680px) {
+  .satellite-site .sh-contact-page .sh-contact-hero { height: auto; max-height: none; display: flex; flex-direction: column; }
+  .satellite-site .sh-contact-page .sh-contact-hero-copy { width: 90%; margin: 0 auto; padding: 27px 0 24px; }
+  .satellite-site .sh-contact-page .sh-contact-hero h1 { font-size: 44px; }
+  .satellite-site .sh-contact-page .sh-contact-hero-description { font-size: 17px; max-width: 420px; }
+  .satellite-site .sh-contact-page .sh-contact-hero-art { position: relative; inset: auto; order: 1; height: 235px; z-index: 0; }
+  .satellite-site .sh-contact-page .sh-contact-layout { width: 90%; padding-top: 25px; gap: 24px; }
+  .satellite-site .sh-contact-page .sh-contact-get-in-touch { padding: 0; }
+  .satellite-site .sh-contact-page .sh-contact-layout .sh-section-heading { font-size: 30px; }
+  .satellite-site .sh-contact-page .sh-contact-subtitle { font-size: 16px; margin-top: 5px; }
+  .satellite-site .sh-contact-page .sh-contact-methods { grid-template-columns: 1fr; }
+  .satellite-site .sh-contact-page .sh-contact-method { min-height: 0; padding: 22px; }
+  .satellite-site .sh-contact-page .sh-contact-email { font-size: 17px; }
+  .satellite-site .sh-contact-page .sh-contact-chat-button { margin-top: 8px; }
+  .satellite-site .sh-contact-page .sh-contact-hours { padding: 24px 0 0; gap: 10px; }
+  .satellite-site .sh-contact-page .sh-contact-hours-grid { grid-template-columns: 1fr; gap: 12px; }
+  .satellite-site .sh-contact-page .sh-contact-hours-grid p { border: 0; padding: 0; font-size: 15px; }
+  .satellite-site .sh-contact-page .sh-contact-message { padding: 22px 18px; }
+  .satellite-site .sh-contact-page .sh-contact-message-content { grid-template-columns: 1fr; }
+  .satellite-site .sh-contact-page .sh-contact-message > .sh-contact-subtitle { font-size: 15px; }
+  .satellite-site .sh-contact-page .sh-contact-form { grid-template-columns: 1fr; gap: 15px; }
+  .satellite-site .sh-contact-page .sh-contact-field input, .satellite-site .sh-contact-page .sh-contact-field select, .satellite-site .sh-contact-page .sh-contact-field textarea { min-height: 44px; font-size: 16px; }
+  .satellite-site .sh-contact-page .sh-contact-field textarea { height: 110px; }
+  .satellite-site .sh-contact-page .sh-contact-form-action > button { width: 100%; min-width: 0; }
+  .satellite-site .sh-contact-page .sh-contact-benefits { border-left: 0; padding: 24px 0 0; border-top: 1px solid #b0d4e6; }
+  .satellite-site .sh-contact-page .sh-contact-trust-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 15px; }
+  .satellite-site .sh-contact-page .sh-contact-trust-item { flex-direction: column; align-items: flex-start; }
+  .satellite-site .sh-contact-page .sh-contact-trust-item + .sh-contact-trust-item { border: 0; padding: 0; }
+  .satellite-site .sh-contact-footer-top { flex-direction: column; align-items: flex-start; gap: 25px; }
+  .satellite-site .sh-contact-footer-right { align-items: flex-start; }
+  .satellite-site .sh-contact-footer-motto { font-size: 25px; }
+  .satellite-site .sh-contact-footer nav { flex-wrap: wrap; }
 }

@@ -23,20 +23,23 @@
 .satellite-site .sh-icon-badge svg { width:43px; height:43px; }
 .satellite-site .sh-icon-badge--blue { background:#e2f5ff; color:#008fec; }
 .satellite-site .sh-hero { position:relative; isolation:isolate; overflow:hidden; background:#f5fafb; }
-.satellite-site .sh-hero-photo { position:absolute; z-index:-2; inset:0 10% 0 37%; }
+.satellite-site .sh-hero-photo { position:absolute; z-index:0; inset:0 10% 0 37%; }
 .satellite-site .sh-hero-photo svg { height:100%; width:100%; display:block; }
-.satellite-site .sh-hero::before { content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(90deg,#f7fcfd 0%,#f9fcfd 32%,#f9fcfdee 37%,#ffffff00 48%,#ffffff00 84%,#eef9fbee 95%); pointer-events:none; }
-.satellite-site .sh-hero-inner { min-height:410px; position:relative; display:flex; align-items:center; padding:40px 0; }
-.satellite-site .sh-hero-copy { width:45%; max-width:670px; }
+.satellite-site .sh-hero::before { content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(90deg,#f7fcfd 0%,#f9fcfd 32%,#f9fcfdee 37%,#ffffff00 48%,#ffffff00 84%,#eef9fbee 95%); pointer-events:none; }
+.satellite-site .sh-hero-inner { min-height:410px; position:relative; z-index:2; display:flex; align-items:center; padding:40px 0; pointer-events:none; }
+.satellite-site .sh-hero-copy { width:45%; max-width:670px; pointer-events:auto; }
 .satellite-site .sh-eyebrow { text-transform:uppercase; letter-spacing:4px; font-size:14px; font-weight:500; color:#274d6b; margin-bottom:17px!important; }
 .satellite-site .sh-hero h1 span { display:block; color:var(--sh-blue); }
 .satellite-site .sh-hero .sh-hero-description { color:var(--sh-muted); font-size:clamp(17px,1.55vw,24px); line-height:1.3; margin-top:13px; max-width:610px; }
 .satellite-site .sh-hero-copy > .sh-button { margin-top:22px; min-width:280px; font-size:21px; min-height:53px; }
-.satellite-site .sh-hero-tagline { position:absolute; top:16%; right:-1%; width:15%; transform:rotate(-10deg); font-family:"Segoe Print","Bradley Hand",cursive; font-style:italic; font-size:clamp(21px,2vw,34px); line-height:1.4; text-align:center; color:var(--sh-green); }
+.satellite-site .sh-hero-aside { position:absolute; top:16%; right:-1%; width:15%; pointer-events:auto; }
+.satellite-site .sh-hero-tagline { transform:rotate(-10deg); font-family:"Segoe Print","Bradley Hand",cursive; font-style:italic; font-size:clamp(21px,2vw,34px); line-height:1.4; text-align:center; color:var(--sh-green); }
 .satellite-site .sh-hero-tagline::after { content:""; display:block; margin-top:9px; height:4px; border-radius:100%; background:linear-gradient(90deg,var(--sh-green),var(--sh-blue)); transform:rotate(-5deg); }
 .satellite-site .sh-hero--home .sh-hero-inner { min-height:500px; }
 .satellite-site .sh-hero--home .sh-hero-copy { width:46%; }
-.satellite-site .sh-hero--home .sh-hero-photo { right:5%; }
+.satellite-site .sh-hero--home .sh-hero-aside { right:-3%; width:14%; }
+.satellite-site .sh-hero-photo-frame { position:absolute; inset:0; opacity:0; transition:opacity 800ms ease; }
+.satellite-site .sh-hero-photo-frame.is-active { opacity:1; }
 .satellite-site .sh-hero--about h1,.satellite-site .sh-hero--contact h1,.satellite-site .sh-hero--resources h1 { font-size:clamp(42px,4vw,65px); }
 .satellite-site .sh-hero--resources .sh-hero-photo { left:48%; right:14%; }
 .satellite-site .sh-hero--contact .sh-hero-photo { left:46%; right:15%; }
@@ -83,6 +86,8 @@
 .satellite-site .sh-navigation a { color:#16334c; font-size:14px; font-weight:500; white-space:nowrap; position:relative; padding:32px 0; }
 .satellite-site .sh-navigation a.active { color:#00634f; font-weight:650; }
 .satellite-site .sh-navigation a.active::after { content:""; position:absolute; bottom:23px; height:3px; background:#00886a; left:0; right:0; border-radius:4px; }
+.satellite-site .sh-navigation .sh-emr-link { padding:7px 13px; border:1px solid #00886a; border-radius:20px; color:var(--sh-green); font-weight:650; }
+.satellite-site .sh-navigation .sh-emr-link:hover { background:#e4f7ef; }
 .satellite-site .sh-header-actions { display:flex; align-items:center; gap:21px; flex:none; }
 .satellite-site .sh-icon-button { color:var(--sh-green); display:inline-flex; align-items:center; justify-content:center; padding:0; border:0; background:transparent; min-width:30px; min-height:36px; }
 .satellite-site .sh-icon-button svg { width:24px; height:24px; }
@@ -131,3 +136,16 @@
   .satellite-site .sh-footer-top { grid-template-columns:1fr; gap:25px; } .satellite-site .sh-footer-feature { border:0; padding:0; } .satellite-site .sh-footer-motto { padding-bottom:10px; font-size:25px; } .satellite-site .sh-footer-bottom { flex-direction:column; align-items:flex-start; gap:15px; } .satellite-site .sh-search-panel { flex-wrap:wrap; gap:10px; } .satellite-site .sh-search-panel label { width:100%; } .satellite-site .sh-search-panel input { flex:1; min-width:0; } .satellite-site .sh-search-panel .sh-button { padding:10px 18px; }
 }
 @media(prefers-reduced-motion:reduce) { .satellite-site *,.satellite-site *::before,.satellite-site *::after { scroll-behavior:auto!important; transition:none!important; } }
+/* Keep the additional navigation item within the existing mobile layout. */
+@media (min-width: 1051px) and (max-width: 1450px) {
+  .satellite-site .sh-header-inner { gap: 15px; }
+  .satellite-site .sh-navigation { gap: 16px; }
+  .satellite-site .sh-navigation a { font-size: 12px; }
+  .satellite-site .sh-header-actions { gap: 12px; }
+  .satellite-site .sh-brand-logo { width: 195px; }
+}
+@media (max-width: 680px) {
+  .satellite-site .sh-hero-aside, .satellite-site .sh-hero--home .sh-hero-aside { position: static; width: auto; }
+}
+
+.satellite-site .sh-hero .sh-hero-tagline { font-family: "Segoe Print", "Bradley Hand", cursive; }

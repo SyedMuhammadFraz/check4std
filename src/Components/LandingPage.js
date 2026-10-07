@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Footer from "./Footer";
 import Nav from "./Nav";
+import { ContactFooter } from "./Marketing/Contact";
 import "./Marketing/satellite.css";
 
 function LandingPage() {
@@ -15,7 +16,7 @@ function LandingPage() {
     <div className="satellite-site">
       <Nav/>
       <main id="main-content"><Outlet /></main>
-      <Footer/>
+      {pathname === "/contact" ? <ContactFooter /> : <Footer />}
     </div>
   );
 }

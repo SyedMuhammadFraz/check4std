@@ -125,7 +125,7 @@ const MainPage = () => {
         description="Affordable, confidential STD testing and sexual health services — all online."
         tagline="Your Health. A Brighter Tomorrow."
       >
-        <Button to="/price-packages?view=all" onClick={() => showAll && catalogueHeading.current?.scrollIntoView({ behavior: "smooth", block: "start" })}>Ready to Get Started</Button>
+        <Button to="/price-packages?view=all" variant="orange" onClick={() => showAll && catalogueHeading.current?.scrollIntoView({ behavior: "smooth", block: "start" })}>Ready to Get Started</Button>
         <TrustStrip compact />
       </Hero>
 

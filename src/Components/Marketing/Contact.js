@@ -1,10 +1,62 @@
 import React, { useState } from "react";
-import { ArrowRight, Clock3, Heart, Mail, MessageCircle, Phone, ShieldCheck, Users } from "lucide-react";
-import { Button, Hero, IconBadge, TrustStrip } from "./MarketingUI";
+import { Clock3, Heart, Leaf, Mail, MapPin, MessageCircle, Phone, ShieldCheck, Users } from "lucide-react";
+import { FaFacebookSquare, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+import { Button, IconBadge } from "./MarketingUI";
 import "./contact.css";
 
 const supportEmail = "support@satellitehealth.com";
 const supportPhone = "1-833-728-4553";
+
+function ContactSocialIcons() {
+  return <div className="sh-contact-socials" aria-label="Social media">
+    {[['Facebook', FaFacebookSquare], ['Instagram', FaInstagram], ['X', FaXTwitter], ['LinkedIn', FaLinkedin], ['YouTube', FaYoutube]].map(([name, Icon]) => <span key={name} title={name}><Icon aria-label={name} role="img" /></span>)}
+  </div>;
+}
+
+function ContactHero() {
+  return <section className="sh-contact-hero" aria-labelledby="contact-heading">
+    <div className="sh-contact-hero-art" aria-hidden="true">
+      <svg className="sh-contact-art-wide" viewBox="730 92 942 288" preserveAspectRatio="xMidYMid slice"><image href="/assets/satellite/contact.png" width="1672" height="941" /></svg>
+      <svg className="sh-contact-art-portrait" viewBox="460 76 564 322" preserveAspectRatio="xMidYMid slice"><image href="/assets/satellite/contact-portrait.png" width="1024" height="1536" /></svg>
+    </div>
+    <div className="sh-contact-hero-copy">
+      <p className="sh-contact-eyebrow">Contact Us</p>
+      <h1 id="contact-heading">We’re Here <span>for You.</span></h1>
+      <p className="sh-contact-hero-description">Have questions? Our team is ready to support you with testing, results, billing, or anything else you need.</p>
+      <Button to="/price-packages">Order a Test Now</Button>
+    </div>
+    <p className="sh-contact-sr-only">Your Questions Matter. Your Health. A Brighter Tomorrow.</p>
+  </section>;
+}
+
+function ContactTrust() {
+  return <section className="sh-contact-trust" aria-label="Our commitment to you"><div className="sh-contact-trust-inner">
+    <div className="sh-contact-trust-item"><ShieldCheck /><div><strong>100% Confidential</strong><p>Your privacy matters.</p></div></div>
+    <div className="sh-contact-trust-item"><Clock3 /><div><strong>Fast &amp; Friendly Support</strong><p>Real people. Real answers.</p></div></div>
+    <div className="sh-contact-trust-item sh-contact-trust-labs"><MapPin /><div><strong>Nationwide Labs</strong><p>Convenient locations near you.</p></div></div>
+    <div className="sh-contact-trust-item"><Users /><div><strong>Trusted by Thousands</strong><p>Real people. Real results.<br />Real peace of mind.</p></div></div>
+    <div className="sh-contact-trust-item sh-contact-trust-tomorrow"><Leaf /><div><strong>Your Health. A Brighter Tomorrow.</strong><p>We’re here for you every step of the way.</p></div></div>
+    <ContactSocialIcons />
+  </div></section>;
+}
+
+export function ContactFooter() {
+  return <footer className="sh-contact-footer">
+    <div className="sh-contact-footer-top">
+      <p className="sh-contact-footer-motto">Health Looks Good on You.</p>
+      <div className="sh-contact-footer-right">
+        <nav aria-label="Footer navigation">
+          <a href={`mailto:${supportEmail}?subject=Privacy%20Policy%20request`} title="Request the privacy policy by email">Privacy Policy</a>
+          <a href={`mailto:${supportEmail}?subject=Terms%20of%20Service%20request`} title="Request the terms of service by email">Terms of Service</a>
+          <a href="#get-in-touch-heading">Contact</a>
+        </nav>
+        <ContactSocialIcons />
+      </div>
+    </div>
+    <p className="sh-contact-copyright">© {new Date().getFullYear()} Satellite Health. All rights reserved.</p>
+  </footer>;
+}
 
 export default function Contact() {
   const [showChatInfo, setShowChatInfo] = useState(false);
@@ -26,17 +78,8 @@ export default function Contact() {
   };
 
   return (
-    <main className="satellite-page sh-contact-page">
-      <Hero
-        variant="contact"
-        eyebrow="Contact Us"
-        title="We’re Here"
-        accent="for You."
-        description="Have questions? Our team is ready to support you with testing, results, billing, or anything else you need."
-        tagline="Your Questions Matter."
-      >
-        <Button to="/price-packages">Order a Test Now <ArrowRight size={23} aria-hidden="true" /></Button>
-      </Hero>
+    <div className="satellite-page sh-contact-page">
+      <ContactHero />
 
       <div className="sh-container sh-section sh-contact-layout">
         <section className="sh-contact-get-in-touch" aria-labelledby="get-in-touch-heading">
@@ -58,27 +101,31 @@ export default function Contact() {
             <article className="sh-contact-method">
               <IconBadge icon={MessageCircle} />
               <h3>Live Chat</h3>
-              <p>Live chat is currently<br />unavailable.</p>
-              <button className="sh-contact-chat-button" type="button" aria-expanded={showChatInfo} aria-controls="contact-chat-options" onClick={() => setShowChatInfo(!showChatInfo)}>Contact Support</button>
+              <p>Chat with a member<br />of our support team.</p>
+              <button className="sh-contact-chat-button" type="button" aria-expanded={showChatInfo} aria-controls="contact-chat-options" onClick={() => setShowChatInfo(!showChatInfo)}>Start Chat</button>
             </article>
           </div>
           {showChatInfo && (
             <div className="sh-contact-chat-info" id="contact-chat-options" role="status">
-              <strong>We’re here to help.</strong> Call <a href="tel:+18337284553">{supportPhone}</a> Monday–Friday, 8 AM–5 PM ET, or <a href={`mailto:${supportEmail}`}>email our support team</a>.
+              <strong>Live chat is currently unavailable.</strong> Call <a href="tel:+18337284553">{supportPhone}</a> Monday–Friday, 8 AM–5 PM ET, or <a href={`mailto:${supportEmail}`}>email our support team</a>.
             </div>
           )}
           <div className="sh-contact-hours">
             <Clock3 size={38} strokeWidth={1.8} aria-hidden="true" />
-            <div>
+            <div className="sh-contact-hours-content">
               <h3>Support Hours</h3>
-              <p><strong>Monday – Friday</strong><br />8:00 AM – 5:00 PM ET</p>
+              <div className="sh-contact-hours-grid">
+                <p><strong>Monday – Friday</strong><br />8:00 AM – 5:00 PM ET</p>
+                <p><strong>Saturday – Sunday</strong><br />Outside support hours</p>
+                <p><strong>Holidays</strong><br />Limited Support (Email Only)</p>
+              </div>
             </div>
           </div>
         </section>
 
         <section className="sh-contact-message" aria-labelledby="contact-message-heading">
           <h2 className="sh-section-heading" id="contact-message-heading">Send Us a Message</h2>
-          <p className="sh-contact-subtitle">Fill out the form below to prepare an email to our support team.</p>
+          <p className="sh-contact-subtitle">Fill out the form below and we’ll get back to you as soon as possible.</p>
           <div className="sh-contact-message-content">
             <form className="sh-contact-form" onSubmit={prepareEmail} onChange={() => { if (emailDraft) setEmailDraft(""); }}>
               <div className="sh-contact-field">
@@ -114,8 +161,8 @@ export default function Contact() {
                 <textarea id="contact-message" name="message" placeholder="How can we help you?" rows={4} maxLength={3000} required />
               </div>
               <div className="sh-contact-form-action">
-                <Button type="submit">Open Email Draft <ArrowRight size={23} aria-hidden="true" /></Button>
-                <p>Opens your email app. Review and send your message there.</p>
+                <Button type="submit" aria-describedby="contact-email-handoff">Send Message</Button>
+                <p id="contact-email-handoff">Opens your email app to review and send.</p>
               </div>
               {emailDraft && (
                 <p className="sh-contact-draft-status" role="status">Continue in your email app to send your message. If it didn’t open, <a href={emailDraft}>open the draft again</a> or email <a href={`mailto:${supportEmail}`}>{supportEmail}</a>.</p>
@@ -123,7 +170,7 @@ export default function Contact() {
             </form>
             <aside className="sh-contact-benefits" aria-label="Our support team">
               {[
-                { icon: ShieldCheck, title: "Private & Secure", description: "Your privacy matters to us." },
+                { icon: ShieldCheck, title: "Private & Secure", description: "Your information is always protected." },
                 { icon: Users, title: "Friendly Support Team", description: "Real people, ready to help." },
                 { icon: Clock3, title: "Quick Response Times", description: "We aim to respond within 24 hours." },
                 { icon: Heart, title: "Care You Can Count On", description: "Your health and peace of mind matter to us." },
@@ -137,7 +184,7 @@ export default function Contact() {
           </div>
         </section>
       </div>
-      <TrustStrip compact />
-    </main>
+      <ContactTrust />
+    </div>
   );
 }

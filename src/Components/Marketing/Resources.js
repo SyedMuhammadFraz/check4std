@@ -47,6 +47,14 @@ export default function Resources() {
         accent="for a Healthier You."
         description="Helpful resources, expert insights, and tools to support your sexual health journey — because knowledge leads to healthier tomorrows."
         tagline="Knowledge Empowers Healthier Choices."
+        aside={<div className="sh-resource-hero-messages">
+          <ul>
+            <li><BookOpen aria-hidden="true" /><span>Learn.</span></li>
+            <li><Heart aria-hidden="true" /><span>Prevent.</span></li>
+            <li><Users aria-hidden="true" /><span>Thrive.</span></li>
+          </ul>
+          <p>Your Health.<br />A Brighter Tomorrow.</p>
+        </div>}
       >
         <form className="sh-resource-search" role="search" onSubmit={(event) => { event.preventDefault(); setQuery(search.trim()); }}>
           <div className="sh-resource-search-field">

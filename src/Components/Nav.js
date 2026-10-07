@@ -1,4 +1,4 @@
-﻿import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FlaskConical, LogOut, Menu, Search, ShoppingCart, UserRound, X } from "lucide-react";
 import { AuthContext } from "../utils/AuthContext";
@@ -6,6 +6,8 @@ import ConfirmationModal from "../Modals/confirmation-modal";
 import { BrandLogo, Button } from "./Marketing/MarketingUI";
 
 const navigation = [["/", "Home"], ["/price-packages", "Tests & Services"], ["/how-it-works", "How It Works"], ["/about-us", "About Us"], ["/resources", "Resources"], ["/contact", "Contact"]];
+// The existing login is the interim destination until the EMR URL is supplied.
+const emrUrl = process.env.REACT_APP_EMR_URL || "/login";
 
 export default function Nav() {
   const { authToken, userRole, logout } = useContext(AuthContext);
@@ -32,7 +34,10 @@ export default function Nav() {
       <div className="sh-header-inner">
         <Link to="/" className="sh-brand" aria-label="Satellite Health home"><BrandLogo /></Link>
         <nav id="sh-main-navigation" className={`sh-navigation ${menuOpen ? "sh-navigation--open" : ""}`} aria-label="Main navigation">
-          {navigation.map(([to, label]) => <NavLink key={to} to={to} end={to === "/"}>{label}</NavLink>)}
+          {navigation.map(([to, label]) => <React.Fragment key={to}>
+            <NavLink to={to} end={to === "/"}>{label}</NavLink>
+            {to === "/resources" && <a className="sh-emr-link" href={emrUrl}>EMR</a>}
+          </React.Fragment>)}
           {menuOpen && !authToken && <Link to="/signup">Create Account</Link>}
         </nav>
         <div className="sh-header-actions">

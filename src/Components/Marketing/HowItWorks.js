@@ -13,7 +13,7 @@ export default function HowItWorks() {
         description="Private, affordable STD testing — all online."
         tagline="Your Privacy Is Our Priority"
       >
-        <Button to="/price-packages">Order a Test</Button>
+        <Button to="/price-packages?view=all">Order a Test</Button>
       </Hero>
       <div className="sh-how-steps">
         <Steps />

@@ -3,11 +3,13 @@ import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { FlaskConical, LogOut, Menu, Search, ShoppingCart, UserRound, X } from "lucide-react";
 import { AuthContext } from "../utils/AuthContext";
 import ConfirmationModal from "../Modals/confirmation-modal";
+import { useCart } from "../utils/CartContext";
 import { BrandLogo, Button } from "./Marketing/MarketingUI";
 
 const navigation = [["/", "Home"], ["/price-packages", "Tests & Services"], ["/how-it-works", "How It Works"], ["/about-us", "About Us"], ["/resources", "Resources"], ["/contact", "Contact"]];
 // The existing login is the interim destination until the EMR URL is supplied.
 const emrUrl = process.env.REACT_APP_EMR_URL || "/login";
+
 
 export default function Nav() {
   const { authToken, userRole, logout } = useContext(AuthContext);
@@ -17,7 +19,8 @@ export default function Nav() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const navigate = useNavigate();
   const { pathname, state } = useLocation();
-  const selectedTests = state?.selectedTests || [];
+  const { selectedTests: cartTests } = useCart();
+  const selectedTests = cartTests.length ? cartTests : state?.selectedTests || [];
   const labRoute = authToken ? userRole === "admin" ? "/admin-panel" : userRole === "doctor" ? "/doctor-dashboard" : "/user-profile" : "/login";
 
   useEffect(() => { setMenuOpen(false); setSearchOpen(false); }, [pathname]);
@@ -38,6 +41,7 @@ export default function Nav() {
             <NavLink to={to} end={to === "/"}>{label}</NavLink>
             {to === "/resources" && <a className="sh-emr-link" href={emrUrl}>EMR</a>}
           </React.Fragment>)}
+          <NavLink to="/pages">All Pages</NavLink>
           {menuOpen && !authToken && <Link to="/signup">Create Account</Link>}
         </nav>
         <div className="sh-header-actions">

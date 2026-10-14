@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import "./DoctorConsultation.css";
+import "../../Journey/journey.css";
 import { webApiInstance } from "../../../AxiosInstance";
 import { AuthContext } from "../../../utils/AuthContext";
 import { toast } from "react-toastify";
@@ -190,107 +190,94 @@ const DoctorConsultation = () => {
     setSelectedDate(localDate);
   };
 
+  const availableSlots = doctors
+    .flatMap(
+      (doctor) =>
+        doctor.availableDates
+          .find((d) => d.date === formattedDate)
+          ?.times.map((slot) => ({ ...slot, doctorId: doctor.id })) || []
+    )
+    .sort(
+      (a, b) =>
+        new Date(`1970-01-01T${a.startTime}`) - new Date(`1970-01-01T${b.startTime}`)
+    );
+
   return (
-    <div className="consultation-container">
-      {/* Left Side - Calendar */}
-      <div className="calendar-section">
-        <h2 className="section-title">Select a Date</h2>
-        {selectedDate && (
-          <div className="selected-date-container">
-            <p className="selected-date">
-              Selected Date: {selectedDate.toDateString()}
-            </p>
+    <section className="sh-journey">
+      <p className="j-notice">
+        Availability, provider details and pricing are confirmed before your appointment is booked.
+      </p>
+      <div className="j-shell">
+        <div className="j-eyebrow">SATELLITE HEALTH · DOCTOR CONSULTATION</div>
+        <h1 className="j-title">Talk with a clinician.</h1>
+        <p className="j-intro">
+          Discuss testing, review a result, or ask about next steps. Pick a date and a time that
+          works for you.
+        </p>
+
+        <div className="j-summary">
+          <span>
+            Doctor consultation
+            <br />
+            <small>{selectedDate ? selectedDate.toDateString() : "No date selected"}</small>
+          </span>
+          <strong>
+            {selectedTime
+              ? `${convertToAmPm(selectedTime.startTime)} - ${convertToAmPm(
+                  selectedTime.endTime
+                )}`
+              : "No time selected"}
+          </strong>
+        </div>
+
+        <div className="j-booking-layout">
+          <div className="j-panel">
+            <span className="j-tag">STEP 1</span>
+            <h2 className="j-panel-title">Choose a date</h2>
+            <Calendar
+              value={selectedDate}
+              onChange={handleDateChange}
+              minDate={new Date(today.setDate(today.getDate() + 1))}
+            />
           </div>
-        )}
 
-        <Calendar
-          className="styled-calendar"
-          value={selectedDate}
-          onChange={handleDateChange}
-          minDate={new Date(today.setDate(today.getDate() + 1))} 
-        />
-      </div>
-
-      {/* Right Side - Doctor Selection & Booking */}
-      <div className="booking-section">
-        {/* <h2 className="section-title">Book a Consultation</h2>
-
-        <label className="input-label">Select Available Doctors:</label> */}
-        {/* {availableDoctors.length > 0 ? (
-          <div className="doctor-list">
-            {availableDoctors.map((doctor) => (
-              <div
-                key={doctor.id}
-                className={`doctor-card ${
-                  selectedDoctor === doctor ? "selected" : ""
-                }`}
-                onClick={() => {
-                  setSelectedDoctor(doctor);
-                  setSelectedTime("");
-                }}
-              >
-                <h3>{doctor.name}</h3>
+          <div className="j-panel">
+            <span className="j-tag">STEP 2</span>
+            <h2 className="j-panel-title">Choose a time slot</h2>
+            {availableSlots.length > 0 ? (
+              <div className="j-chips">
+                {availableSlots.map((slot) => (
+                  <button
+                    key={slot.id}
+                    type="button"
+                    className={`j-chip ${selectedTime?.id === slot.id ? "is-chosen" : ""}`}
+                    aria-pressed={selectedTime?.id === slot.id}
+                    onClick={() => setSelectedTime(slot)}
+                  >
+                    {convertToAmPm(slot.startTime)} - {convertToAmPm(slot.endTime)}
+                  </button>
+                ))}
               </div>
-            ))}
+            ) : (
+              <p className="j-hint">No time slots are available for this date.</p>
+            )}
+
+            <p className="j-hint">
+              Appointments open from tomorrow. Choose another date if nothing suits you here.
+            </p>
+
+            <button
+              type="button"
+              className="j-button j-pay-button"
+              onClick={handleAppointment}
+              disabled={loading || !selectedTime}
+            >
+              {loading ? "Booking…" : "Book appointment"}
+            </button>
           </div>
-        ) : (
-          <p className="no-doctor">No doctors available on this date.</p>
-        )} */}
-
-        {selectedDate && (
-          <>
-            <label className="input-label">Select a Time Slot:</label>
-
-            {(() => {
-              const availableSlots = doctors
-                .flatMap(
-                  (doctor) =>
-                    doctor.availableDates
-                      .find((d) => d.date === formattedDate)
-                      ?.times.map((slot) => ({
-                        ...slot,
-                        doctorId: doctor.id,
-                      })) || []
-                )
-                .sort(
-                  (a, b) =>
-                    new Date(`1970-01-01T${a.startTime}`) -
-                    new Date(`1970-01-01T${b.startTime}`)
-                );
-
-              return availableSlots.length > 0 ? (
-                <div className="time-slot-container">
-                  {availableSlots.map((slot) => (
-                    <button
-                      key={slot.id}
-                      className={`time-slot ${
-                        selectedTime?.id === slot.id ? "selected" : ""
-                      }`}
-                      onClick={() => setSelectedTime(slot)}
-                    >
-                      {convertToAmPm(slot.startTime)} -{" "}
-                      {convertToAmPm(slot.endTime)}
-                    </button>
-                  ))}
-                </div>
-              ) : (
-                <p className="no-doctor">
-                  No time slots available for this date.
-                </p>
-              );
-            })()}
-          </>
-        )}
-
-        <button
-          className="book-button"
-          onClick={handleAppointment}
-          disabled={loading || !selectedTime}
-        >
-          {loading ? "Booking..." : "Book Appointment"}
-        </button>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

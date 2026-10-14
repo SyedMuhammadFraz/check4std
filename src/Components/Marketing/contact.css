@@ -11,6 +11,13 @@
 }
 .satellite-site .sh-contact-page .sh-contact-hero-art { position: absolute; inset: 0 0 0 43.66%; z-index: -1; }
 .satellite-site .sh-contact-page .sh-contact-hero-art svg { display: block; width: 100%; height: 100%; }
+/* The artwork is a rectangular crop, so where it meets the copy it lands as a
+   hard vertical cut. Feather that edge so it merges into the hero gradient, as
+   the hero photographs elsewhere on the site now do. Skipped below 681px, where
+   the artwork stacks full-width under the copy and has no edge to blend. */
+@media (min-width: 681px) {
+  .satellite-site .sh-contact-page .sh-contact-hero-art { -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 20%, #000 100%); mask-image: linear-gradient(90deg, transparent 0%, #000 20%, #000 100%); }
+}
 .satellite-site .sh-contact-page .sh-contact-hero-art .sh-contact-art-portrait { display: none; }
 .satellite-site .sh-contact-page .sh-contact-hero-copy { width: 42%; margin-left: 5%; padding-top: clamp(25px, 2.3vw, 44px); }
 .satellite-site .sh-contact-page .sh-contact-eyebrow { color: #00526b; text-transform: uppercase; letter-spacing: 5px; font-size: clamp(14px, 1.25vw, 21px); font-weight: 550; margin-bottom: 6px !important; }

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {CheckCircle, AlertCircle, User, FileText, ArrowRight, ArrowLeft, Calendar} from "lucide-react";
-import "./StdQuestions.css";
+import "../Journey/journey.css";
 import { useContext } from "react";
 import { webApiInstance } from "../../AxiosInstance";
 import { useQuestionnaire } from "../../utils/QuestionareContext";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../utils/AuthContext";
 
 const QUESTION_TYPE_MAP = {
@@ -240,200 +239,211 @@ const STDQuestionnaireSystem = () => {
   };
 
   const renderQuestion = (question, index) => (
-    <div key={question.id} className="std-questionnaire-question-container">
-      <label className="std-questionnaire-question-label">
+    <div key={question.id} className="j-question">
+      <label htmlFor={`question-${question.id}`}>
         {index + 1}. {question.question}
       </label>
 
       {question.type === "radio" && (
-        <div className="std-questionnaire-options-container">
+        <div className="j-options">
           {question.options.map((option) => (
-            <label
-              key={option.id}
-              className="std-questionnaire-option-label"
-            >
+            <label key={option.id} className="j-option">
               <input
                 type="radio"
-                name={question.id}
+                name={String(question.id)}
                 value={option.text}
                 checked={responses[question.id] === option.text}
-                onChange={(e) =>
-                  handleResponseChange(question.id, e.target.value)
-                }
-                className="std-questionnaire-input"
+                onChange={(e) => handleResponseChange(question.id, e.target.value)}
               />
-              {option.text}
+              <span>{option.text}</span>
             </label>
           ))}
         </div>
       )}
 
       {question.type === "multiselect" && (
-        <div className="std-questionnaire-options-container">
+        <div className="j-options">
           {question.options.map((option) => (
-            <label
-              key={option.id}
-              className="std-questionnaire-option-label"
-            >
+            <label key={option.id} className="j-option">
               <input
                 type="checkbox"
                 checked={(responses[question.id] || []).includes(option.text)}
-                onChange={() =>
-                  handleMultiSelectChange(question.id, option.text)
-                }
-                className="std-questionnaire-input"
+                onChange={() => handleMultiSelectChange(question.id, option.text)}
               />
-              {option.text}
+              <span>{option.text}</span>
             </label>
           ))}
         </div>
       )}
 
-      {question.type === "text" && (
-        <input
-          type="text"
-          value={responses[question.id] || ""}
-          onChange={(e) => handleResponseChange(question.id, e.target.value)}
-          className="std-questionnaire-input"
-        />
-      )}
-
-      {question.type === "number" && (
-        <input
-          type="number"
-          value={responses[question.id] || ""}
-          onChange={(e) => handleResponseChange(question.id, e.target.value)}
-          className="std-questionnaire-input"
-        />
-      )}
-
-      {question.type === "date" && (
-        <input
-          type="date"
-          value={responses[question.id] || ""}
-          onChange={(e) => handleResponseChange(question.id, e.target.value)}
-          className="std-questionnaire-input"
-        />
+      {(question.type === "text" ||
+        question.type === "number" ||
+        question.type === "date") && (
+        <div className="j-options">
+          <input
+            id={`question-${question.id}`}
+            type={question.type}
+            value={responses[question.id] || ""}
+            onChange={(e) => handleResponseChange(question.id, e.target.value)}
+          />
+        </div>
       )}
 
       {question.type === "textarea" && (
-        <textarea
-          value={responses[question.id] || ""}
-          onChange={(e) => handleResponseChange(question.id, e.target.value)}
-          rows="3"
-          className="std-questionnaire-textarea"
-        />
+        <div className="j-options">
+          <textarea
+            id={`question-${question.id}`}
+            value={responses[question.id] || ""}
+            onChange={(e) => handleResponseChange(question.id, e.target.value)}
+            rows="3"
+          />
+        </div>
       )}
     </div>
   );
 
- if (alreadyFilled) {
-  return (
-    <div className="std-questionnaire-container std-questionnaire-message">
-      <h1 className="message-title">Assessment Already Completed</h1>
-      <p className="message-text">
-        You have already completed this STD/STI questionnaire.  
-        For your safety and accurate guidance, you cannot retake it at this time.
-      </p>
-      <p className="message-note">
-        If you believe this is an error or need to update your information, please contact your healthcare provider.
-      </p>
-    </div>
-  );
-}
-
-  if (currentStep === "selection") {
-  return (
-    <div className="std-questionnaire-container">
-      {/* Title */}
-      <h1 className="std-questionnaire-title">STD/STI Health Assessment</h1>
-
-      {/* Subtitle / Instructions */}
-      <p className="std-questionnaire-subtitle">
-        Please select the questionnaire that best describes your situation.
-        <br />
-        <strong>Instructions:</strong> Click on a card below based on whether 
-        you are experiencing symptoms or have had potential exposure. This will 
-        guide you to the appropriate set of questions.
-      </p>
-
-      {/* Selection Cards */}
-      <div className="std-questionnaire-grid std-questionnaire-grid-2">
-        {/* Symptoms Card */}
-        <div
-          className="std-questionnaire-selection-card symptoms"
-          onClick={() => {
-            setQuestionnaireType("symptoms");
-            setCurrentStep("questionnaire");
-          }}
-        >
-          <h2>I Have Symptoms</h2>
-          <p>
-            Use this questionnaire if you are experiencing any STD/STI related symptoms such as:
-          </p>
-          <ul>
-            <li>Unusual discharge</li>
-            <li>Itching or irritation</li>
-            <li>Pain during urination</li>
-          </ul>
-        </div>
-
-        {/* Exposure Card */}
-        <div
-          className="std-questionnaire-selection-card exposure"
-          onClick={() => {
-            setQuestionnaireType("exposure");
-            setCurrentStep("questionnaire");
-          }}
-        >
-          <h2>Potential Exposure</h2>
-          <p>
-            Use this questionnaire if you may have been exposed to an STD/STI, for example:
-          </p>
-          <ul>
-            <li>Unprotected sexual contact</li>
-            <li>Partner diagnosed with an STD/STI</li>
-            <li>Shared needles or other exposure risks</li>
-          </ul>
-        </div>
+  const shell = (children) => (
+    <section className="sh-journey">
+      <div className="j-shell">
+        <div className="j-eyebrow">SATELLITE HEALTH · STD ASSESSMENT</div>
+        {children}
       </div>
-    </div>
+    </section>
   );
-}
 
-
-  if (currentStep === "questionnaire") {
-    return (
-      <div className="std-questionnaire-container">
-        {loading ? (
-          <div>Loading questions...</div>
-        ) : error ? (
-          <div>{error}</div>
-        ) : (
-          <div>
-            {questions.map((question, index) =>
-              renderQuestion(question, index)
-            )}
-            <div className="std-questionnaire-mt-8">
-              <button
-                onClick={handleSubmit}
-                className="std-questionnaire-btn std-questionnaire-btn-primary"
-              >
-                Complete Assessment
-                <ArrowRight size={20} className="std-questionnaire-ml-2" />
-              </button>
-            </div>
-          </div>
-        )}
+  if (alreadyFilled) {
+    return shell(
+      <div className="j-auth-shell">
+        <h1 className="j-title">Assessment already completed.</h1>
+        <p className="j-intro">
+          You have already completed this STD/STI questionnaire. For your safety and accurate
+          guidance, you cannot retake it at this time.
+        </p>
+        <div className="j-panel">
+          <h3>Need to change an answer?</h3>
+          <p className="j-hint">
+            If you believe this is an error or need to update your information, please contact your
+            healthcare provider.
+          </p>
+        </div>
       </div>
     );
   }
 
+  if (currentStep === "selection") {
+    return shell(
+      <>
+        <h1 className="j-title">Let's understand your needs.</h1>
+        <p className="j-intro">
+          Choose the questionnaire that best describes your situation. Your answers give a clinician
+          discussion points — they do not diagnose an STI or choose a test for you.
+        </p>
+        <div className="j-cards">
+          <button
+            type="button"
+            className="j-card"
+            onClick={() => {
+              setQuestionnaireType("symptoms");
+              setCurrentStep("questionnaire");
+            }}
+          >
+            <span className="j-tag">I HAVE SYMPTOMS</span>
+            <h3>I'm experiencing symptoms</h3>
+            <p>Use this questionnaire if you have STD/STI related symptoms such as:</p>
+            <ul>
+              <li>Unusual discharge</li>
+              <li>Itching or irritation</li>
+              <li>Pain during urination</li>
+            </ul>
+            <span className="j-button">Start this assessment</span>
+          </button>
+
+          <button
+            type="button"
+            className="j-card"
+            onClick={() => {
+              setQuestionnaireType("exposure");
+              setCurrentStep("questionnaire");
+            }}
+          >
+            <span className="j-tag">POTENTIAL EXPOSURE</span>
+            <h3>I may have been exposed</h3>
+            <p>Use this questionnaire if you may have been exposed to an STD/STI, for example:</p>
+            <ul>
+              <li>Unprotected sexual contact</li>
+              <li>Partner diagnosed with an STD/STI</li>
+              <li>Shared needles or other exposure risks</li>
+            </ul>
+            <span className="j-button">Start this assessment</span>
+          </button>
+        </div>
+      </>
+    );
+  }
+
+  if (currentStep === "questionnaire") {
+    return shell(
+      <>
+        <h1 className="j-title">A few questions.</h1>
+        <p className="j-intro">
+          Answer as fully as you can. Your responses are shared with the clinician reviewing your
+          order.
+        </p>
+        {loading ? (
+          <div className="j-panel">
+            <p className="j-hint">Loading questions…</p>
+          </div>
+        ) : error ? (
+          <div className="j-panel">
+            <p className="j-error" role="alert">
+              {error}
+            </p>
+          </div>
+        ) : (
+          <div className="j-panel">
+            {questions.map((question, index) => renderQuestion(question, index))}
+            <div className="j-actions">
+              <button
+                type="button"
+                className="j-button j-button--secondary"
+                onClick={() => setCurrentStep("selection")}
+              >
+                Back
+              </button>
+              <button type="button" className="j-button" onClick={handleSubmit}>
+                Complete assessment
+              </button>
+            </div>
+          </div>
+        )}
+      </>
+    );
+  }
+
   if (currentStep === "results") {
-    return (
-      <div className="std-questionnaire-container">
-        <h1>Assessment Complete</h1>
-        <p>Completed: {new Date(completionDate).toLocaleDateString()}</p>
+    return shell(
+      <div className="j-auth-shell">
+        <div className="j-success">✓</div>
+        <h1 className="j-title">Assessment complete.</h1>
+        <p className="j-intro">
+          Completed {new Date(completionDate).toLocaleDateString()}. Thank you — your answers are
+          saved.
+        </p>
+        <div className="j-banner">
+          <h3>Your next step</h3>
+          <p className="j-hint">
+            Discuss your responses and test timing with a clinician. This assessment does not
+            produce a diagnosis or a risk score.
+          </p>
+          <div className="j-actions">
+            <Link className="j-button" to="/doctor-consultation">
+              Talk to a clinician
+            </Link>
+            <Link className="j-button j-button--secondary" to="/price-packages">
+              Browse testing options
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }

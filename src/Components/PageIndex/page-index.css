@@ -1,0 +1,132 @@
+/*
+ * The index renders a real page component in its right-hand column, so the
+ * nested page's own full-width furniture has to stand down: its outer sidebar is
+ * replaced by this one, and its page background would otherwise paint twice.
+ */
+.sh-page-index .sh-page-index-content {
+  min-width: 0;
+  width: 100%;
+}
+
+.sh-page-index .sh-page-index-content > .sh-journey {
+  background: transparent;
+}
+
+/* A nested page that has its own aside (the disease library) keeps only its
+   inner topic nav -- this index's sidebar stands in for the outer one. */
+.sh-page-index .sh-page-index-content .j-layout {
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 0;
+  max-width: none;
+}
+
+.sh-page-index .sh-page-index-content .j-aside {
+  display: none;
+}
+
+.sh-page-index .sh-page-index-content .j-main,
+.sh-page-index .sh-page-index-content .j-shell {
+  padding: 36px 40px;
+  max-width: none;
+}
+
+@media (max-width: 900px) {
+  .sh-page-index .sh-page-index-content .j-main,
+  .sh-page-index .sh-page-index-content .j-shell {
+    padding: 26px 18px;
+  }
+}
+
+/* The selected test centre, pinned above the page list. The sidebar column is
+   narrow, so this uses tighter padding than a standard .j-panel. */
+.sh-page-index .sh-lab-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px 17px;
+  margin-bottom: 28px;
+}
+
+.sh-page-index .sh-lab-card h3 {
+  font-size: 17px;
+  line-height: 1.3;
+  margin: 8px 0 0;
+  color: var(--ink);
+}
+
+.sh-page-index .sh-lab-card .j-hint {
+  margin-top: 4px !important;
+}
+
+.sh-page-index .sh-lab-card .j-button {
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px 14px;
+}
+
+@media (max-width: 900px) {
+  .sh-page-index .sh-lab-card {
+    margin-bottom: 16px;
+  }
+}
+
+/* The cart, pinned above the test centre. Same narrow-column treatment. */
+.sh-page-index .sh-cart-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px 17px;
+  margin-bottom: 14px;
+}
+
+.sh-page-index .sh-cart-card h3 {
+  font-size: 17px;
+  line-height: 1.3;
+  margin: 8px 0 0;
+  color: var(--ink);
+}
+
+.sh-page-index .sh-cart-card ul {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+}
+
+.sh-page-index .sh-cart-card li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 14px;
+  color: var(--muted);
+  padding: 7px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.sh-page-index .sh-cart-card li strong {
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.sh-page-index .sh-cart-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 11px;
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.sh-page-index .sh-cart-total strong {
+  font-size: 18px;
+}
+
+.sh-page-index .sh-cart-card .j-hint {
+  margin-top: 4px !important;
+}
+
+.sh-page-index .sh-cart-card .j-button {
+  width: 100%;
+  margin-top: 14px;
+  padding: 10px 14px;
+}

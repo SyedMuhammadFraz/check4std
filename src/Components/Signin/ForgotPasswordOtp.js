@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import "../Signup/otp.css";
+import "../Journey/journey.css";
 import { toast } from "react-toastify";
 import { connectTokenInstance } from "../../AxiosInstance";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLoader } from "../../utils/LoaderContext";
 
 function ForgotPasswordOtp() {
@@ -61,44 +61,67 @@ function ForgotPasswordOtp() {
     setLoading(false);
   };
   return (
-    <div className="otp-page__container">
-      <h2 className="otp-page__title">Enter OTP</h2>
-      <p>
-        An OTP has been sent to your email. If you don't see it, check the spam
-        folder.
-      </p>
+    <section className="sh-journey">
+      <div className="j-shell">
+        <div className="j-auth-shell">
+          <div className="j-eyebrow">SATELLITE HEALTH · ACCOUNT</div>
+          <h1 className="j-title">Choose a new password.</h1>
+          <p className="j-intro">
+            Enter the six-digit code we sent to your email, then set your new password. If you
+            don't see the code, check your spam folder.
+          </p>
 
-      <form className="otp-page__form" onSubmit={OnSubmit}>
-        <input
-          type="text"
-          value={otp}
-          onChange={(e) => setOtp(e.target.value)}
-          maxLength="6"
-          required
-          className="otp-page__form-input"
-          placeholder="Enter 6-digit OTP"
-        />
-        <input
-          type="password"
-          value={NewPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          required
-          className="otp-page__form-input my-3"
-          placeholder="Enter New Password"
-        />
-        <input
-          type="password"
-          value={ConfirmNewPassword}
-          onChange={(e) => setConfirmNewPassword(e.target.value)}
-          required
-          className="otp-page__form-input"
-          placeholder="Confirm Password"
-        />
-        <button type="submit" className="otp-page__button--verify">
-          Submit
-        </button>
-      </form>
-    </div>
+          <form className="j-panel" onSubmit={OnSubmit}>
+            <div className="j-grid">
+              <div className="j-full">
+                <label htmlFor="reset-otp">Verification code</label>
+                <input
+                  id="reset-otp"
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]{6}"
+                  maxLength="6"
+                  placeholder="000000"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="reset-new-password">New password</label>
+                <input
+                  id="reset-new-password"
+                  type="password"
+                  autoComplete="new-password"
+                  value={NewPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="reset-confirm-password">Confirm new password</label>
+                <input
+                  id="reset-confirm-password"
+                  type="password"
+                  autoComplete="new-password"
+                  value={ConfirmNewPassword}
+                  onChange={(e) => setConfirmNewPassword(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+            <p className="j-hint">
+              Use at least 8 characters with an uppercase letter, a lowercase letter, a number and
+              a special character.
+            </p>
+            <button type="submit">Reset password</button>
+            <p className="j-auth-foot">
+              <Link to="/login">Back to login</Link>
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
   );
 }
 

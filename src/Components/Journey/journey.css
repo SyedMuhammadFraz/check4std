@@ -1,0 +1,1178 @@
+/*
+ * Satellite Health customer-journey design system.
+ *
+ * Ported from the customer-journey reference build
+ * (satellite-health-customer-journey.nkechiogburia.chatgpt.site). Every colour
+ * below is taken verbatim from that site's stylesheet. Class names are prefixed
+ * `j-` and scoped under `.sh-journey` so the palette cannot leak into — or be
+ * overridden by — the older page styles that are still bundled globally.
+ *
+ * Reference mapping: .j-layout/.j-aside = .layout/aside, .j-panel = .panel,
+ * .j-card = .card, .j-disease-nav = .disease-nav, .j-payment-* = .payment-*.
+ */
+
+.sh-journey {
+  /* The five named colours of the reference build. */
+  --green: #006c55;
+  --ink: #113e37;
+  --blue: #dff3fc;
+  --line: #d7e6e1;
+  --muted: #5d736e;
+
+  /* Every other colour the reference uses, kept verbatim and named here so the
+     remaining journey pages can be built from the same set. */
+  --page: #f8fbfa;             /* page background */
+  --mint: #e8f5ef;             /* summary bar, topic sidebar */
+  --mint-active: #e1f2eb;      /* active sidebar item */
+  --mint-soft: #e4f3eb;        /* result banner */
+  --mint-success: #dbf1e6;     /* success marker */
+  --mint-badge: #eef7f3;       /* header badge */
+  --cyan: #b4edfa;             /* brand mark glyph */
+  --on-blue: #24586b;          /* text on the pale blue bar */
+  --on-blue-pill: #23556b;     /* text on a pale blue pill */
+  --field-line: #bacfc6;       /* input border */
+  --field-disabled: #f2f6f4;
+  --field-disabled-ink: #556e65;
+  --focus: #6cbfe0;            /* focus ring */
+  --alert-bg: #fff0f3;         /* positive-result banner */
+  --alert-ink: #78263c;
+  --fail-bg: #ffe8ee;          /* failed-payment marker */
+  --fail-ink: #982f4c;
+  --error: #9a2545;            /* form error text */
+
+  background: var(--page);
+  color: var(--ink);
+  font: 16px/1.6 "Work Sans", Arial, Helvetica, sans-serif;
+}
+
+/* App.css sets font-family on `*`, which beats inheritance from .sh-journey.
+   Restate it here so these pages pick the family deliberately. The reference
+   build uses Arial; the site's own face is Work Sans, so it leads. */
+.sh-journey,
+.sh-journey * {
+  font-family: "Work Sans", Arial, Helvetica, sans-serif;
+}
+
+.sh-journey *,
+.sh-journey *::before,
+.sh-journey *::after {
+  box-sizing: border-box;
+}
+
+.sh-journey a {
+  color: var(--green);
+}
+
+/* Admin_User_Table.css ships an unscoped `h1 { text-align: center }` that the
+   CRA bundle leaks onto every page; these layouts are left-aligned. */
+.sh-journey h1 {
+  text-align: left;
+}
+
+.sh-journey input:focus,
+.sh-journey select:focus,
+.sh-journey textarea:focus,
+.sh-journey button:focus-visible,
+.sh-journey a:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------- notice bar */
+
+.sh-journey .j-notice {
+  background: var(--blue);
+  color: var(--on-blue);
+  padding: 10px 5%;
+  font-size: 14px;
+}
+
+/* -------------------------------------------------------- aside + main shell */
+
+.sh-journey .j-layout {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  max-width: 1320px;
+  margin: auto;
+  min-height: 760px;
+}
+
+.sh-journey .j-aside {
+  padding: 45px 30px;
+  border-right: 1px solid var(--line);
+}
+
+.sh-journey .j-eyebrow {
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: var(--green);
+}
+
+.sh-journey .j-aside h2 {
+  font-size: 27px;
+  line-height: 1.25;
+  margin: 12px 0;
+  color: var(--ink);
+}
+
+.sh-journey .j-aside > p {
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.sh-journey .j-nav {
+  list-style: none;
+  padding: 0;
+  margin: 34px 0;
+}
+
+.sh-journey .j-nav li {
+  margin: 0 0 8px;
+}
+
+.sh-journey .j-nav-group {
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 20px 8px 7px;
+  color: var(--green);
+}
+
+.sh-journey .j-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  text-decoration: none;
+  padding: 8px;
+  color: var(--muted);
+  font: inherit;
+  font-size: 14px;
+  background: none;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.sh-journey .j-nav-link.is-active {
+  background: var(--mint-active);
+  color: var(--green);
+  font-weight: bold;
+}
+
+.sh-journey .j-num {
+  flex: none;
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  font-size: 12px;
+}
+
+.sh-journey .is-active .j-num {
+  background: var(--green);
+  color: white;
+  border-color: var(--green);
+}
+
+.sh-journey .j-aside-foot {
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+  font-size: 15px;
+  color: var(--green);
+  font-style: italic;
+}
+
+.sh-journey .j-main {
+  padding: 45px 50px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+/* A single-column page (checkout) with the same gutters as .j-main. */
+.sh-journey .j-shell {
+  max-width: 1320px;
+  margin: auto;
+  padding: 45px 50px;
+}
+
+.sh-journey .j-title {
+  font-size: 42px;
+  line-height: 1.15;
+  letter-spacing: -1.5px;
+  margin: 12px 0 18px;
+  color: var(--ink);
+}
+
+.sh-journey .j-intro {
+  color: var(--muted);
+  max-width: 620px;
+  margin-bottom: 30px !important;
+}
+
+/* ---------------------------------------------------------- panels and cards */
+
+.sh-journey .j-card,
+.sh-journey .j-panel {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 26px;
+}
+
+.sh-journey .j-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.sh-journey .j-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.sh-journey .j-card.is-selected {
+  border: 2px solid var(--green);
+  padding: 25px;
+}
+
+.sh-journey .j-tag {
+  font-size: 12px;
+  letter-spacing: 1px;
+  font-weight: bold;
+  color: var(--green);
+}
+
+.sh-journey .j-panel h2,
+.sh-journey .j-card h3 {
+  color: var(--ink);
+}
+
+.sh-journey .j-panel-title {
+  font-size: 27px;
+  line-height: 1.25;
+  margin: 12px 0;
+}
+
+.sh-journey .j-card h3 {
+  font-size: 21px;
+  line-height: 1.3;
+  margin: 12px 0;
+}
+
+.sh-journey .j-panel h3 {
+  font-size: 19px;
+  line-height: 1.3;
+  margin: 22px 0 10px;
+  color: var(--ink);
+}
+
+.sh-journey .j-card p {
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.sh-journey .j-price {
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: auto;
+}
+
+.sh-journey .j-price small {
+  font-size: 13px;
+  font-weight: normal;
+  color: var(--muted);
+  display: block;
+}
+
+.sh-journey .j-pill {
+  font-size: 13px;
+  background: var(--blue);
+  color: var(--on-blue-pill);
+  border-radius: 20px;
+  padding: 5px 12px;
+  display: inline-block;
+}
+
+.sh-journey .j-hint {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* Supporting copy sits between blocks inside a panel; App.css zeroes out every
+   paragraph margin globally, so restate the rhythm at this specificity. */
+.sh-journey .j-panel > .j-hint {
+  margin: 12px 0 !important;
+}
+
+.sh-journey .j-panel > .j-hint:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* ---------------------------------------------------------------- buttons */
+
+.sh-journey .j-button {
+  font: 700 15px/1.4 Arial, Helvetica, sans-serif;
+  border: 0;
+  border-radius: 7px;
+  padding: 13px 20px;
+  background: var(--green);
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.sh-journey .j-button--secondary {
+  background: white;
+  color: var(--green);
+  border: 1px solid var(--line);
+}
+
+.sh-journey .j-button--text {
+  background: none;
+  color: var(--green);
+  padding: 0;
+  text-decoration: underline;
+}
+
+.sh-journey .j-button:disabled {
+  background: var(--mint);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+.sh-journey .j-card .j-button {
+  margin-top: 17px;
+}
+
+.sh-journey .j-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+/* ------------------------------------------------------- summary bar + rows */
+
+.sh-journey .j-summary {
+  background: var(--mint);
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+  font-size: 15px;
+}
+
+.sh-journey .j-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid var(--line);
+  padding: 13px 0;
+}
+
+.sh-journey .j-row:last-child {
+  border: 0;
+}
+
+.sh-journey .j-row strong {
+  text-align: right;
+}
+
+/* --------------------------------------------------------------------- forms */
+
+.sh-journey .j-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.sh-journey .j-full {
+  grid-column: 1 / -1;
+}
+
+.sh-journey .j-grid input {
+  min-width: 0;
+}
+
+.sh-journey label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 7px;
+}
+
+.sh-journey input,
+.sh-journey select,
+.sh-journey textarea {
+  font: 16px Arial, Helvetica, sans-serif;
+  width: 100%;
+  padding: 13px;
+  border: 1px solid var(--field-line);
+  border-radius: 7px;
+  background: white;
+  color: var(--ink);
+}
+
+.sh-journey input:disabled,
+.sh-journey select:disabled,
+.sh-journey textarea:disabled {
+  background: var(--field-disabled);
+  color: var(--field-disabled-ink);
+  opacity: 1;
+}
+
+.sh-journey .j-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 22px 0;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.sh-journey .j-check input {
+  width: 18px;
+  margin-top: 5px;
+}
+
+/* Checkboxes and radios default to the browser's blue; use the brand green. */
+.sh-journey input[type="checkbox"],
+.sh-journey input[type="radio"] {
+  accent-color: var(--green);
+}
+
+.sh-journey .j-error {
+  color: var(--error);
+  font-size: 14px;
+}
+
+/* ------------------------------------------------------------ status markers */
+
+.sh-journey .j-success {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--mint-success);
+  color: var(--green);
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.sh-journey .j-banner {
+  padding: 25px;
+  background: var(--mint-soft);
+  border-radius: 12px;
+  margin: 22px 0;
+}
+
+.sh-journey .j-banner--alert {
+  background: var(--alert-bg);
+  color: var(--alert-ink);
+}
+
+/* --------------------------------------------------- disease information page */
+
+.sh-journey .j-disease-layout {
+  display: grid;
+  grid-template-columns: 215px minmax(0, 1fr);
+  gap: 22px;
+}
+
+.sh-journey .j-disease-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin: 0;
+  align-self: start;
+  background: var(--mint);
+  padding: 10px;
+  border-radius: 12px;
+}
+
+.sh-journey .j-disease-nav button {
+  text-align: left;
+  color: var(--green);
+  background: none;
+  border: 0;
+  border-radius: 7px;
+  font: 700 14px/1.4 Arial, Helvetica, sans-serif;
+  padding: 12px;
+  cursor: pointer;
+}
+
+.sh-journey .j-disease-nav button.is-chosen {
+  background: var(--green);
+  color: white;
+}
+
+/* Typography for the disease articles, which are plain h2/h3/p/ul/ol markup. */
+.sh-journey .j-body {
+  color: var(--muted);
+}
+
+.sh-journey .j-body h2 {
+  font-size: 21px;
+  line-height: 1.3;
+  margin: 28px 0 10px;
+  color: var(--ink);
+}
+
+.sh-journey .j-body h3 {
+  font-size: 17px;
+  line-height: 1.35;
+  margin: 22px 0 8px;
+  color: var(--green);
+}
+
+.sh-journey .j-body p {
+  font-size: 15px;
+  color: var(--muted);
+  margin-bottom: 14px !important;
+}
+
+.sh-journey .j-body strong {
+  color: var(--ink);
+}
+
+.sh-journey .j-body ul,
+.sh-journey .j-body ol {
+  margin: 0 0 14px;
+  padding-left: 22px;
+  font-size: 15px;
+}
+
+.sh-journey .j-body li {
+  margin: 0 0 7px;
+}
+
+.sh-journey .j-body li::marker {
+  color: var(--green);
+}
+
+/* Some articles separate every block with a <br>; the margins above already
+   provide that rhythm, so drop the spacer breaks (those inside a paragraph,
+   which are real line breaks, are left alone). */
+.sh-journey .j-body > br {
+  display: none;
+}
+
+/* ------------------------------------------------------------- checkout page */
+
+.sh-journey .j-payment-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(250px, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.sh-journey .j-payment-heading {
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.sh-journey .j-payment-heading h2 {
+  margin: 0;
+  font-size: 25px;
+}
+
+.sh-journey .j-payment-preview {
+  background: var(--blue);
+  padding: 14px;
+  border-radius: 8px;
+}
+
+.sh-journey .j-payment-summary .j-row {
+  display: block;
+}
+
+.sh-journey .j-payment-summary .j-row strong {
+  display: block;
+  text-align: left;
+  margin-top: 5px;
+}
+
+.sh-journey .j-payment-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px solid var(--green);
+  font-size: 18px;
+}
+
+.sh-journey .j-payment-total strong {
+  font-size: 25px;
+}
+
+.sh-journey .j-payment-next {
+  padding: 15px 8px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.sh-journey .j-payment-next h3 {
+  color: var(--ink);
+  font-size: 21px;
+  margin-bottom: 8px;
+}
+
+.sh-journey .j-pay-button {
+  width: 100%;
+  font-size: 16px;
+}
+
+.sh-journey .j-stack {
+  display: grid;
+  gap: 24px;
+}
+
+/* Upgrade offers reuse the panel shell with the pale-green accent. */
+.sh-journey .j-upgrade {
+  background: var(--mint);
+  border-color: var(--line);
+}
+
+.sh-journey .j-upgrade-tests {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 20px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.sh-journey .j-upgrade-tests li {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 7px;
+}
+
+.sh-journey .j-upgrade-tests svg {
+  flex: none;
+  color: var(--green);
+}
+
+.sh-journey .j-loading {
+  display: grid;
+  place-items: center;
+  min-height: 60vh;
+}
+
+/* ------------------------------------------------------------- auth screens */
+
+.sh-journey .j-auth-shell {
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.sh-journey .j-auth-shell .j-title {
+  font-size: 38px;
+}
+
+.sh-journey .j-auth-shell .j-panel > button {
+  width: 100%;
+  margin-top: 20px;
+  font: 700 15px/1.4 inherit;
+  border: 0;
+  border-radius: 7px;
+  padding: 13px 20px;
+  background: var(--green);
+  color: white;
+  cursor: pointer;
+}
+
+.sh-journey .j-auth-shell .j-panel > button:disabled {
+  background: var(--mint);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+.sh-journey .j-auth-foot {
+  margin-top: 20px !important;
+  font-size: 15px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.sh-journey .j-auth-foot + .j-auth-foot {
+  margin-top: 8px !important;
+}
+
+.sh-journey .j-guidelines {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.sh-journey .j-guidelines li {
+  margin-bottom: 5px;
+}
+
+.sh-journey .j-guidelines li::marker {
+  color: var(--green);
+}
+
+/* Password inputs carry a reveal toggle, which the reference has no case for. */
+.sh-journey .j-password {
+  position: relative;
+}
+
+.sh-journey .j-password input {
+  padding-right: 48px;
+}
+
+.sh-journey .j-password > button {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  width: 38px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.sh-journey .j-password > button:hover {
+  color: var(--green);
+}
+
+/* ----------------------------------------------------------- status screens */
+
+.sh-journey .j-status-card {
+  max-width: 670px;
+  margin: auto;
+  padding-top: 20px;
+}
+
+.sh-journey .j-status-symbol {
+  height: 66px;
+  width: 66px;
+  display: grid;
+  place-items: center;
+  background: var(--blue);
+  border-radius: 50%;
+  font-size: 23px;
+  font-weight: bold;
+  color: var(--on-blue-pill);
+  margin-bottom: 22px;
+}
+
+.sh-journey .j-status-symbol--failed {
+  background: var(--fail-bg);
+  color: var(--fail-ink);
+}
+
+/* ------------------------------------------------------------------ profile */
+
+.sh-journey .j-profile-header {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.sh-journey .j-avatar {
+  width: 66px;
+  height: 66px;
+  flex: none;
+  background: var(--blue);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-weight: bold;
+  font-size: 23px;
+  color: var(--on-blue-pill);
+}
+
+/* Stacked panels on the account page. */
+.sh-journey .j-account-panel {
+  margin-top: 24px;
+}
+
+.sh-journey .j-cards .j-panel .j-button {
+  margin-top: 17px;
+}
+
+.sh-journey .j-profile-header h2 {
+  margin: 0;
+  font-size: 27px;
+  color: var(--ink);
+}
+
+/* ----------------------------------------------------------------- lab list */
+
+.sh-journey .j-lab-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 24px;
+  align-items: start;
+  margin-top: 24px;
+}
+
+.sh-journey .j-lab-list {
+  display: grid;
+  gap: 16px;
+}
+
+.sh-journey .j-lab-list .j-panel {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.sh-journey .j-lab-list .j-button {
+  flex-shrink: 0;
+}
+
+.sh-journey .j-map {
+  height: 620px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  position: sticky;
+  top: 20px;
+}
+
+.sh-journey .j-map .leaflet-container {
+  height: 100%;
+  width: 100%;
+}
+
+/* ------------------------------------------------------------ questionnaire */
+
+.sh-journey .j-question {
+  margin-bottom: 28px;
+}
+
+.sh-journey .j-question:last-of-type {
+  margin-bottom: 0;
+}
+
+.sh-journey .j-question > label {
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+.sh-journey .j-options {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.sh-journey .j-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  padding: 12px 14px;
+  font-size: 15px;
+  font-weight: normal;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.sh-journey .j-option:hover {
+  border-color: var(--green);
+}
+
+.sh-journey .j-option input {
+  flex: none;
+  width: 18px;
+  margin: 3px 0 0;
+}
+
+/* A clickable card, used for the assessment's two entry points. */
+.sh-journey button.j-card {
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+  color: var(--ink);
+}
+
+.sh-journey button.j-card:hover {
+  border-color: var(--green);
+}
+
+.sh-journey button.j-card > ul {
+  margin-bottom: auto;
+}
+
+.sh-journey .j-card ul {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.sh-journey .j-card li {
+  margin-bottom: 5px;
+}
+
+.sh-journey .j-card li::marker {
+  color: var(--green);
+}
+
+/* ------------------------------------------------------- appointment picking */
+
+.sh-journey .j-booking-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.sh-journey .j-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.sh-journey .j-chip {
+  font: 700 14px/1.4 inherit;
+  padding: 11px 15px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: white;
+  color: var(--green);
+  cursor: pointer;
+}
+
+.sh-journey .j-chip:hover {
+  border-color: var(--green);
+}
+
+.sh-journey .j-chip.is-chosen {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+}
+
+/* react-calendar ships its own greys and blues; restate them in the palette. */
+.sh-journey .react-calendar {
+  width: 100%;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px;
+  font-family: inherit;
+  line-height: 1.5;
+}
+
+.sh-journey .react-calendar button {
+  font-family: inherit;
+}
+
+.sh-journey .react-calendar__navigation button {
+  min-width: 38px;
+  background: none;
+  border-radius: 7px;
+  color: var(--green);
+  font-weight: bold;
+}
+
+.sh-journey .react-calendar__navigation button:enabled:hover,
+.sh-journey .react-calendar__navigation button:enabled:focus {
+  background: var(--mint);
+}
+
+.sh-journey .react-calendar__navigation button:disabled {
+  background: none;
+  color: var(--muted);
+  opacity: 0.45;
+}
+
+.sh-journey .react-calendar__month-view__weekdays {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.sh-journey .react-calendar__month-view__weekdays abbr {
+  text-decoration: none;
+}
+
+.sh-journey .react-calendar__tile {
+  border-radius: 7px;
+  background: none;
+  color: var(--ink);
+}
+
+.sh-journey .react-calendar__tile:enabled:hover,
+.sh-journey .react-calendar__tile:enabled:focus {
+  background: var(--mint);
+}
+
+.sh-journey .react-calendar__tile:disabled {
+  background: none;
+  color: var(--muted);
+  opacity: 0.4;
+}
+
+.sh-journey .react-calendar__month-view__days__day--neighboringMonth {
+  color: var(--muted);
+  opacity: 0.55;
+}
+
+.sh-journey .react-calendar__tile--now {
+  background: var(--mint-active);
+  color: var(--green);
+  font-weight: bold;
+}
+
+.sh-journey .react-calendar__tile--active,
+.sh-journey .react-calendar__tile--active:enabled:hover,
+.sh-journey .react-calendar__tile--active:enabled:focus {
+  background: var(--green);
+  color: white;
+}
+
+/* --------------------------------------------------------------- responsive */
+
+@media (max-width: 1100px) {
+  .sh-journey .j-payment-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sh-journey .j-payment-summary {
+    grid-row: 1;
+  }
+
+  .sh-journey .j-payment-heading {
+    flex-wrap: wrap;
+  }
+}
+
+@media (min-width: 1101px) {
+  .sh-journey .j-payment-summary {
+    position: sticky;
+    top: 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  .sh-journey .j-layout {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  /* Grid/flex items default to a min-content minimum, which lets the scrolling
+     nav strips widen the whole page instead of scrolling inside themselves. */
+  .sh-journey .j-aside,
+  .sh-journey .j-main,
+  .sh-journey .j-nav,
+  .sh-journey .j-disease-nav,
+  .sh-journey .j-disease-layout > * {
+    min-width: 0;
+  }
+
+  .sh-journey .j-aside {
+    padding: 20px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .sh-journey .j-aside h2,
+  .sh-journey .j-aside > p,
+  .sh-journey .j-aside-foot,
+  .sh-journey .j-nav-group {
+    display: none;
+  }
+
+  .sh-journey .j-nav {
+    display: flex;
+    overflow: auto;
+    margin: 12px 0 0;
+    gap: 5px;
+  }
+
+  .sh-journey .j-nav li {
+    margin: 0;
+  }
+
+  .sh-journey .j-nav-link {
+    white-space: nowrap;
+  }
+
+  .sh-journey .j-main,
+  .sh-journey .j-shell {
+    padding: 30px 20px;
+  }
+
+  .sh-journey .j-title {
+    font-size: 34px;
+  }
+
+  .sh-journey .j-cards,
+  .sh-journey .j-grid,
+  .sh-journey .j-upgrade-tests {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sh-journey .j-full {
+    grid-column: auto;
+  }
+
+  .sh-journey .j-summary {
+    flex-wrap: wrap;
+  }
+
+  .sh-journey .j-actions {
+    flex-wrap: wrap;
+  }
+
+  .sh-journey .j-disease-layout,
+  .sh-journey .j-lab-layout,
+  .sh-journey .j-booking-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sh-journey .j-map {
+    position: static;
+    height: 420px;
+  }
+
+  .sh-journey .j-lab-list .j-panel {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sh-journey .j-auth-shell .j-title {
+    font-size: 34px;
+  }
+
+  .sh-journey .j-disease-nav {
+    flex-direction: row;
+    overflow: auto;
+    flex-wrap: nowrap;
+  }
+
+  .sh-journey .j-disease-nav button {
+    white-space: nowrap;
+  }
+}

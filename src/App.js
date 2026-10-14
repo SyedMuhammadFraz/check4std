@@ -2,9 +2,11 @@ import "./App.css";
 import "leaflet/dist/leaflet.css";
 import { AuthProvider } from "./utils/AuthContext";
 import { LocationProvider } from "./utils/LocationContext";
+import { CartProvider } from "./utils/CartContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./Components/LandingPage";
 import Diseases from "./Components/Diseases/Diseases";
+import PageIndex from "./Components/PageIndex/PageIndex";
 import MainPage from "./Components/Price&Packages/MainPage";
 import Home from "./Components/Home/Home";
 import AboutUs from "./Components/Marketing/AboutUs";
@@ -37,17 +39,6 @@ import Genital_Herpes_Test from "./Components/Price&Packages/Genital-Herpes-Test
 import HIV1_2_FourthGen_Test from "./Components/Price&Packages/HIV1-2-Antibody-4thGen-Test/HIV1_2_FourthGen_Test";
 import HIV_RNA_Test from "./Components/Price&Packages/HIV-RNA-Early-Detection-Test/HIV_RNA_Test";
 import Syphilis_Test from "./Components/Price&Packages/Syphilis-Test/Syphilis_Test";
-import STDs from "./Components/Diseases/STD Overview/overview";
-import Chlamydia from "./Components/Diseases/Chlamydia/Chlamydia";
-import Gonorrhea from "./Components/Diseases/Gonorrhea/Gonorrhea";
-import HIV from "./Components/Diseases/HIV/HIV";
-import OralHerpes from "./Components/Diseases/Oral Herpes/Oral Herpes2";
-import UnderstandingSTDs from "./Components/Diseases/Symptoms/STD Symptoms";
-import SyphilisInfo from "./Components/Diseases/Syphilis/Syphilis";
-import HepatitisAInfo from "./Components/Diseases/Hepatitis A/Hepatitis A";
-import HepatitisBInfo from "./Components/Diseases/Hepatitis B/Hepatitis B";
-import HepatitisCInfo from "./Components/Diseases/Hepatitis C/Hepatitis C";
-import GenitalHerpesInfo from "./Components/Diseases/Genital Herpes/Genital Herpes";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import ForgotPassword from "./Components/Signin/ForgotPassword";
@@ -80,6 +71,7 @@ function App() {
     <>
       <Elements stripe={stripePromise}>
         <LocationProvider>
+          <CartProvider>
           <AuthProvider>
             <ToastContainer
               position="top-right" // Change to "top-center", "bottom-right", etc.
@@ -103,59 +95,10 @@ function App() {
                         path="set-doctor-password"
                         element={<SetDoctorPassword />}
                       />
-                      <Route path="/diseases" element={<Diseases />}>
-                        <Route
-                          index
-                          path="/diseases/overview"
-                          element={<STDs />}
-                        />
-                        <Route
-                          index
-                          path="/diseases/chlamydia"
-                          element={<Chlamydia />}
-                        />
-                        <Route
-                          index
-                          path="/diseases/gonorrhea"
-                          element={<Gonorrhea />}
-                        />
-                        <Route index path="/diseases/hiv" element={<HIV />} />
-                        <Route
-                          index
-                          path="/diseases/oral-herpes"
-                          element={<OralHerpes />}
-                        />
-                        <Route
-                          index
-                          path="/diseases/symptoms"
-                          element={<UnderstandingSTDs />}
-                        />
-                        <Route
-                          index
-                          path="/diseases/syphilis"
-                          element={<SyphilisInfo />}
-                        />
-                        <Route
-                          index
-                          path="/diseases/hep-a"
-                          element={<HepatitisAInfo />}
-                        />
-                        <Route
-                          index
-                          path="/diseases/hep-b"
-                          element={<HepatitisBInfo />}
-                        />
-                        <Route
-                          index
-                          path="/diseases/hep-c"
-                          element={<HepatitisCInfo />}
-                        />
-                        <Route
-                          index
-                          path="/diseases/genital-herpes"
-                          element={<GenitalHerpesInfo />}
-                        />
-                      </Route>
+                      <Route path="/pages" element={<PageIndex />} />
+                      <Route path="/pages/:slug" element={<PageIndex />} />
+                      <Route path="/diseases" element={<Diseases />} />
+                      <Route path="/diseases/:topic" element={<Diseases />} />
                       <Route
                         index
                         path="price-packages"
@@ -316,6 +259,7 @@ function App() {
               </LoaderProvider>
             </QuestionnaireProvider>
           </AuthProvider>
+          </CartProvider>
         </LocationProvider>
       </Elements>
     </>

@@ -6,7 +6,7 @@ export default function Home() {
     <Hero variant="home" eyebrow="Test. Treat. Thrive." title="Your Health." accent="On Your Terms."
       description="Private, affordable, and convenient STD testing — all online."
       tagline="Your Privacy Is Our Priority">
-      <Button to="/price-packages" variant="orange">Order a Test</Button>
+      <Button to="/price-packages?view=all" variant="orange">Order a Test</Button>
       <TrustStrip compact />
     </Hero>
     <Steps />

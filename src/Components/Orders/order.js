@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import "./order.css";
+import "../Journey/journey.css";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../utils/AuthContext";
 import { toast } from "react-toastify";
 import { ClipLoader } from "react-spinners";
+import { Check } from "lucide-react";
 import { LocationContext } from "../../utils/LocationContext";
 import { webApiInstance } from "../../AxiosInstance";
 import { useLoader } from "../../utils/LoaderContext";
 import { useQuestionnaire } from "../../utils/QuestionareContext";
+import { useCart } from "../../utils/CartContext";
 
 const OrderPage = () => {
   const [testPrices, setTestPrices] = useState({
@@ -17,6 +19,7 @@ const OrderPage = () => {
     tenTestPanelHIVRNA: null,
   });
   const { selectedLocation } = useContext(LocationContext);
+  const { setSelectedTests } = useCart();
   const { authToken } = useContext(AuthContext);
   const navigate = useNavigate();
   const [Disease, setDisease] = useState(null);
@@ -33,11 +36,19 @@ const OrderPage = () => {
     selectedTests.reduce((acc, test) => acc + test.price, 0)
   );
 
+  // Every test detail page routes here with its own location state; keep the
+  // shared cart in step with whatever actually landed on this page.
+  useEffect(() => {
+    setSelectedTests(tests);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tests]);
+
   const onChangeLocation = () => {
     navigate("/test-centers");
   };
 
   const [randomDoctor, setRandomDoctor] = useState(null);
+  const [reviewConfirmed, setReviewConfirmed] = useState(false);
 
   useEffect(() => {
     const fetchDoctorsAndPickOne = async () => {
@@ -436,141 +447,204 @@ const OrderPage = () => {
 
   if (loading) {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <ClipLoader size={50} color={"#36d7b7"} loading={loading} />
-      </div>
+      <section className="sh-journey">
+        <div className="j-loading">
+          <ClipLoader size={50} color={"#006c55"} loading={loading} />
+        </div>
+      </section>
     );
   }
 
+  const showPanelUpgrade =
+    tests.length > 0 &&
+    tests[0].name !== "10 Test Panel" &&
+    tests[0].name !== "10 Test Panel with HIV RNA Early Detection" &&
+    totalCost < 150;
+  const showHivRnaUpgrade = tests.length > 0 && tests[0].name === "10 Test Panel";
+  const panelTests = [
+    "HIV Type 1",
+    "Hepatitis A",
+    "Gonorrhea",
+    "Herpes 2",
+    "Chlamydia",
+    "Herpes 1",
+    "Hepatitis C",
+    "HIV Type 2",
+    "Hepatitis B",
+    "Syphilis",
+  ];
+
   return (
-    <div className="order-page">
-      <div class="responsive-container">
-        <div className="order-card">
-          <div className="order-card-content">
-            <h2>Order Summary</h2>
-            <ul>
-              {tests.map((test, index) => (
-                <li key={index}>
-                  {test.name} - ${test.price.toFixed(2)}
-                </li>
-              ))}
-            </ul>
-            <h3>Total: ${totalCost.toFixed(2)}</h3>
-            <button
-              onClick={() =>
-                navigate("/price-packages", { state: { selectedTests: tests } })
-              }
-            >
-              Add/Edit Tests
-            </button>
-          </div>
-        </div>
+    <section className="sh-journey">
+      <p className="j-notice">
+        Your order is not confirmed until payment succeeds. Card details are entered on our secure
+        payment provider's checkout and never pass through this page.
+      </p>
+      <div className="j-shell">
+        <div className="j-eyebrow">COMPLETE YOUR ORDER</div>
+        <h1 className="j-title">Order &amp; checkout.</h1>
+        <p className="j-intro">
+          Review your tests and collection location, then continue to secure payment.
+        </p>
 
-        {tests.length > 0 &&
-          tests[0].name !== "10 Test Panel" &&
-          tests[0].name !== "10 Test Panel with HIV RNA Early Detection" &&
-          totalCost < 150 && (
-            <div className="upgrade-card">
-              <h3>Save by testing for common STDs</h3>
-              <p>
-                Upgrade to the{" "}
-                <strong className="highlight">10 Test Panel</strong>
-              </p>
-
-              <hr />
-
-              <div className="test-list">
-                <ul>
-                  <li>✔️ HIV Type 1</li>
-                  <li>✔️ Hepatitis A</li>
-                  <li>✔️ Gonorrhea</li>
-                  <li>✔️ Herpes 2</li>
-                  <li>✔️ Chlamydia</li>
-                </ul>
-                <ul>
-                  <li>✔️ Herpes 1</li>
-                  <li>✔️ Hepatitis C</li>
-                  <li>✔️ HIV Type 2</li>
-                  <li>✔️ Hepatitis B</li>
-                  <li>✔️ Syphilis</li>
-                </ul>
-              </div>
-
-              <button className="upgrade-btn" onClick={handleUpgrade}>
-                Upgrade Now{" "}
-                <span className="price">
-                  + $
-                  {Math.max(0, testPrices.tenTestPanel - totalCost).toFixed(2)}
+        <div className="j-payment-layout">
+          <div className="j-stack">
+            <section className="j-panel">
+              <div className="j-payment-heading">
+                <h2 className="j-panel-title">Your tests</h2>
+                <span className="j-pill">
+                  {tests.length} {tests.length === 1 ? "test" : "tests"} selected
                 </span>
-              </button>
-            </div>
-          )}
+              </div>
+              {tests.length === 0 ? (
+                <p className="j-hint">
+                  No tests selected yet. Browse the catalogue to add an individual test or a panel.
+                </p>
+              ) : (
+                tests.map((test, index) => (
+                  <div className="j-row" key={index}>
+                    <span>{test.name}</span>
+                    <strong>${test.price.toFixed(2)}</strong>
+                  </div>
+                ))
+              )}
+              <div className="j-actions">
+                <button
+                  type="button"
+                  className="j-button j-button--secondary"
+                  onClick={() =>
+                    navigate("/price-packages", { state: { selectedTests: tests } })
+                  }
+                >
+                  Add / edit tests
+                </button>
+              </div>
+            </section>
 
-        {/* Show HIV RNA Upgrade Card ONLY if "10 Test Panel" is selected */}
-        {tests.length > 0 && tests[0].name === "10 Test Panel" && (
-          <div className="upgrade-card">
-            <h3 className="highlight">Worried about recent exposure?</h3>
-            <p>
-              Upgrade with the{" "}
-              <strong className="highlight">HIV RNA Early Detection</strong>
-            </p>
+            {showPanelUpgrade && (
+              <section className="j-panel j-upgrade">
+                <span className="j-tag">SAVE ON COMMON STDS</span>
+                <h2 className="j-panel-title">Upgrade to the 10 Test Panel</h2>
+                <p className="j-hint">
+                  Test for the ten most common STDs in a single order.
+                </p>
+                <ul className="j-upgrade-tests">
+                  {panelTests.map((name) => (
+                    <li key={name}>
+                      <Check size={16} aria-hidden="true" />
+                      {name}
+                    </li>
+                  ))}
+                </ul>
+                <div className="j-actions">
+                  <button type="button" className="j-button" onClick={handleUpgrade}>
+                    Upgrade now · + $
+                    {Math.max(0, testPrices.tenTestPanel - totalCost).toFixed(2)}
+                  </button>
+                </div>
+              </section>
+            )}
 
-            <hr />
+            {showHivRnaUpgrade && (
+              <section className="j-panel j-upgrade">
+                <span className="j-tag">WORRIED ABOUT RECENT EXPOSURE?</span>
+                <h2 className="j-panel-title">Add HIV RNA Early Detection</h2>
+                <p className="j-hint">
+                  Early detection testing shortens the window period for an HIV result.
+                </p>
+                <div className="j-actions">
+                  <button type="button" className="j-button" onClick={handleHIVRNAUpgrade}>
+                    Upgrade · + $
+                    {Math.max(0, testPrices.tenTestPanelHIVRNA - totalCost).toFixed(2)}
+                  </button>
+                </div>
+              </section>
+            )}
 
-            <button className="upgrade-btn" onClick={handleHIVRNAUpgrade}>
-              Upgrade
-              <span className="price">
-                + $
-                {Math.max(0, testPrices.tenTestPanelHIVRNA - totalCost).toFixed(
-                  2
-                )}
-              </span>
-            </button>
+            <section className="j-panel">
+              <div className="j-payment-heading">
+                <h2 className="j-panel-title">Find a test center</h2>
+                <span className="j-pill">Collection location</span>
+              </div>
+              <p className="j-hint">Your sample is collected at the lab you choose here.</p>
+              <div className="j-row">
+                <span>Your selected lab</span>
+                <strong>{selectedLocation || "No lab selected yet"}</strong>
+              </div>
+              <div className="j-row">
+                <span>Address</span>
+                <strong>4651 W Kennedy Blvd, Tampa, FL 33609</strong>
+              </div>
+              <div className="j-actions">
+                <button
+                  type="button"
+                  className="j-button j-button--secondary"
+                  onClick={onChangeLocation}
+                >
+                  Change location
+                </button>
+              </div>
+            </section>
           </div>
-        )}
-      </div>
 
-      <div className="container container-min-height">
-        <h1>Quick & Confidential STD Testing</h1>
-
-        <form>
-          {/* Section 1: Find a Test Center */}
-          <section>
-            <h2 className="blue-background">1. Find a Test Center</h2>
-            <div>
-              <label className="order-labels">Your Selected Lab:</label>
-              <p>{selectedLocation}</p>
-              <p>4651 W Kennedy Blvd, Tampa, FL 33609</p>
-              <button type="button" onClick={onChangeLocation}>
-                Change Location
+          <aside className="j-payment-summary">
+            <div className="j-panel">
+              <span className="j-tag">YOUR ORDER</span>
+              <h2 className="j-panel-title">Order summary</h2>
+              <div className="j-row">
+                <span>Test / panel</span>
+                <strong>
+                  {tests.length ? tests.map((test) => test.name).join(", ") : "None selected"}
+                </strong>
+              </div>
+              <div className="j-row">
+                <span>Collection location</span>
+                <strong>{selectedLocation || "Not selected"}</strong>
+              </div>
+              <div className="j-payment-total">
+                <span>Total</span>
+                <strong>${totalCost.toFixed(2)}</strong>
+              </div>
+              <label className="j-check">
+                <input
+                  type="checkbox"
+                  checked={reviewConfirmed}
+                  onChange={(event) => setReviewConfirmed(event.target.checked)}
+                />
+                <span>I have reviewed the selected tests, lab, and total.</span>
+              </label>
+              <button
+                type="button"
+                className="j-button j-pay-button"
+                disabled={!selectedLocation || !reviewConfirmed || !tests.length}
+                onClick={() => {
+                  if (Disease !== null) {
+                    createCheckoutSession(Disease, authToken);
+                  }
+                }}
+              >
+                Confirm order
               </button>
+              {!selectedLocation && (
+                <p className="j-error">Choose a test center to continue.</p>
+              )}
+              <p className="j-hint">
+                You complete payment on our secure checkout. Pricing is confirmed before any charge
+                is taken.
+              </p>
             </div>
-          </section>
-          <div className="confirm-order-container">
-            <button
-              type="button"
-              className="confirm-order-btn"
-              disabled={!selectedLocation}
-              onClick={() => {
-                if (Disease !== null) {
-                  console.log(authToken)
-                  createCheckoutSession(Disease, authToken);
-                }
-              }}
-            >
-              Confirm Order
-            </button>
-          </div>
-        </form>
+            <div className="j-payment-next">
+              <h3>What happens next?</h3>
+              <p>
+                After a confirmed payment you receive an order confirmation and receipt by email and
+                text. Your lab requisition follows separately, with collection instructions for the
+                center you chose.
+              </p>
+            </div>
+          </aside>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

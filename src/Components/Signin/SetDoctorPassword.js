@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import "./SetDoctorPassword.css";
+import "../Journey/journey.css";
 import { connectTokenInstance, webApiInstance } from "../../AxiosInstance";
 import { useLoader } from "../../utils/LoaderContext";
 
@@ -56,40 +56,48 @@ const SetDoctorPassword = () => {
   };
 
   return (
-    <div className="set-password-container">
-      <h2>Set Your Password</h2>
-      <p>Create a password to activate your account.</p>
+    <section className="sh-journey">
+      <div className="j-shell">
+        <div className="j-auth-shell">
+          <div className="j-eyebrow">SATELLITE HEALTH · ACCOUNT</div>
+          <h1 className="j-title">Set your password.</h1>
+          <p className="j-intro">
+            Create a password to activate your account. Use at least 6 characters.
+          </p>
 
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>New Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <form className="j-panel" onSubmit={handleSubmit}>
+            <div className="j-grid">
+              <div>
+                <label htmlFor="set-password">New password</label>
+                <input
+                  id="set-password"
+                  type="password"
+                  autoComplete="new-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="set-confirm-password">Confirm password</label>
+                <input
+                  id="set-confirm-password"
+                  type="password"
+                  autoComplete="new-password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+            <button type="submit">Set password</button>
+            <p className="j-auth-foot">
+              <Link to="/login">Back to login</Link>
+            </p>
+          </form>
         </div>
-
-        <div className="form-group">
-          <label>Confirm Password</label>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </div>
-
-        <button type="submit" className="set-password-button">
-          Set Password
-        </button>
-      </form>
-
-      <button className="back-to-login-button" onClick={() => navigate("/login")}>
-        Back to Login
-      </button>
-    </div>
+      </div>
+    </section>
   );
 };
 

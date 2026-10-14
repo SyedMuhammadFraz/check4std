@@ -3,7 +3,7 @@ import qs from "qs";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-import "./otp.css";
+import "../Journey/journey.css";
 import { AuthContext } from "../../utils/AuthContext";
 import { connectTokenInstance } from "../../AxiosInstance";
 
@@ -15,7 +15,7 @@ const OTPPage = () => {
   const [user, setUser] = useState(null);
   const [attemptsLeft, setAttemptsLeft] = useState(3);
   const [isVerifying, setIsVerifying] = useState(false);
-  const [Resendotp , setResentOtp] = useState(false)
+  const [Resendotp, setResentOtp] = useState(false);
 
   useEffect(() => {
     setOtpID(localStorage.getItem("optID"));
@@ -38,7 +38,7 @@ const OTPPage = () => {
 
       if (response.status === 200) {
         login(response.data.access_token);
-        toast.success("Email verified successfully.")
+        toast.success("Email verified successfully.");
         navigate("/");
       } else {
         toast.error("Invalid OTP. Please try again.");
@@ -74,47 +74,57 @@ const OTPPage = () => {
   };
 
   return (
-    <div className="otp-page__container">
-      <h2 className="otp-page__title">Enter OTP</h2>
-      <p>
-        An OTP has been sent to your email. If you don't see it, check the spam
-        folder.
-      </p>
+    <section className="sh-journey">
+      <div className="j-shell">
+        <div className="j-auth-shell">
+          <div className="j-eyebrow">SATELLITE HEALTH · ACCOUNT</div>
+          <h1 className="j-title">Verify your email.</h1>
+          <p className="j-intro">
+            Enter the six-digit code we sent to your email address. If you don't see it, check your
+            spam folder.
+          </p>
 
-      <p className="my-3">
-        You must wait for <strong>2 minutes </strong>to request another OTP.
-      </p>
-
-      <form className="otp-page__form" onSubmit={VerifyOTP}>
-        <input
-          type="text"
-          value={otp}
-          onChange={(e) => setOtp(e.target.value)}
-          maxLength="6"
-          required
-          className="otp-page__form-input"
-          disabled={isVerifying}
-          placeholder="Enter 6-digit OTP"
-        />
-        <button
-          type="submit"
-          className="otp-page__button--verify"
-          disabled={isVerifying || otp.length !== 6 || attemptsLeft === 0}
-        >
-          {isVerifying ? <ClipLoader size={18} color="#fff" /> : "Verify OTP"}
-        </button>
-      </form>
-
-      <button onClick={resendOtp} className="otp-page__button--resend" >
-      {Resendotp ? <ClipLoader size={18} color="#fff" /> : "Resend OTP"}
-      </button>
-
-      {attemptsLeft === 0 && (
-        <p className="otp-page__message">
-          Too many wrong attempts. Request a new OTP.
-        </p>
-      )}
-    </div>
+          <form className="j-panel" onSubmit={VerifyOTP}>
+            <div className="j-grid">
+              <div className="j-full">
+                <label htmlFor="otp-code">Verification code</label>
+                <input
+                  id="otp-code"
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]{6}"
+                  maxLength="6"
+                  placeholder="000000"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  disabled={isVerifying}
+                  required
+                />
+              </div>
+            </div>
+            <p className="j-hint">
+              You must wait <strong>2 minutes</strong> before requesting another code.
+            </p>
+            {attemptsLeft === 0 && (
+              <p className="j-error" role="alert">
+                Too many wrong attempts. Request a new code.
+              </p>
+            )}
+            <button
+              type="submit"
+              disabled={isVerifying || otp.length !== 6 || attemptsLeft === 0}
+            >
+              {isVerifying ? <ClipLoader size={18} color="#fff" /> : "Verify code"}
+            </button>
+            <p className="j-auth-foot">
+              <button type="button" className="j-button j-button--text" onClick={resendOtp}>
+                {Resendotp ? "Sending…" : "Resend code"}
+              </button>
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
   );
 };
 

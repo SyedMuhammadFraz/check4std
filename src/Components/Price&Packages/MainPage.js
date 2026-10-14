@@ -4,6 +4,7 @@ import { ArrowRight, CircleAlert, RefreshCw, ShieldCheck, ShoppingCart } from "l
 import { webApiInstance } from "../../AxiosInstance";
 import { AuthContext } from "../../utils/AuthContext";
 import useGotoOrderPage from "./order-handle";
+import { useCart } from "../../utils/CartContext";
 import { Button, Hero, ServiceLinks, Steps, TrustStrip } from "../Marketing/MarketingUI";
 import TestCards, { formatTestPrice, TEST_NAMES } from "../Marketing/TestCards";
 import "./Catalogue.css";
@@ -40,6 +41,7 @@ const isAvailable = (test) => Boolean(
 const MainPage = () => {
   const { authToken } = useContext(AuthContext);
   const gotoOrderPage = useGotoOrderPage();
+  const { setSelectedTests } = useCart();
   const [searchParams, setSearchParams] = useSearchParams();
   const [catalog, setCatalog] = useState({});
   const [loading, setLoading] = useState(true);
@@ -47,6 +49,10 @@ const MainPage = () => {
   const [retry, setRetry] = useState(0);
   const [selectedNames, setSelectedNames] = useState([]);
   const catalogueHeading = useRef(null);
+  // Captured once, at mount: true only when the page was opened straight at the
+  // catalogue (e.g. the "Order a Test" CTA on another page).
+  const openedAtCatalogue = useRef(searchParams.get("view") === "all");
+  const firstScrollDone = useRef(false);
   const showAll = searchParams.get("view") === "all";
   const requestedCategory = searchParams.get("category");
   const category = FILTERS.some((filter) => filter.id === requestedCategory) ? requestedCategory : "all";
@@ -93,10 +99,26 @@ const MainPage = () => {
   }, [authToken, retry]);
 
   useEffect(() => {
-    if (showAll) {
-      catalogueHeading.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, [showAll, category]);
+    if (!showAll) return undefined;
+    // LandingPage resets scroll on every route change and, because parent effects
+    // run after child effects, that reset lands after this one. Defer past it, or
+    // arriving from another page drops the visitor at the top of the hero.
+    const instant = openedAtCatalogue.current && !firstScrollDone.current;
+    firstScrollDone.current = true;
+    const frame = requestAnimationFrame(() => {
+      catalogueHeading.current?.scrollIntoView({
+        // Land straight on the catalogue when the visitor arrived there on
+        // purpose; animate when they are already on the page and open the full
+        // list or change a filter.
+        behavior: instant ? "auto" : "smooth",
+        block: "start",
+      });
+    });
+    return () => cancelAnimationFrame(frame);
+    // `loading` is a dependency so the position is re-asserted once prices
+    // resolve: the catalogue changes height when the skeletons fill in, which
+    // would otherwise leave the arrival scroll a couple of hundred pixels short.
+  }, [showAll, category, loading]);
 
   const visibleNames = TEST_NAMES.filter((name) => {
     if (category === "all") return true;
@@ -108,6 +130,13 @@ const MainPage = () => {
     price: catalog[name].price,
   }));
   const total = selectedTests.reduce((sum, test) => sum + Number(test.price), 0);
+
+  // Mirror the live selection into the cart so the header badge and the page
+  // index can see it. Keyed on the inputs, since selectedTests is rebuilt each render.
+  useEffect(() => {
+    setSelectedTests(selectedTests);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedNames, catalog]);
 
   const toggleTest = (name) => setSelectedNames((current) => (
     current.includes(name) ? current.filter((item) => item !== name) : [...current, name]

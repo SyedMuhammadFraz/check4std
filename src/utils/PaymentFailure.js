@@ -1,22 +1,44 @@
-import { useSearchParams } from "react-router-dom";
-import './paymentStatus.css';
+import { Link, useSearchParams } from "react-router-dom";
+import "../Components/Journey/journey.css";
 
 const PaymentFailure = () => {
   const [searchParams] = useSearchParams();
   const canceled = searchParams.get("canceled");
 
   return (
-    <div className="payment-status-wrapper" role="alert" aria-live="assertive">
-      <div className="payment-status-box payment-failure-box">
-        <h1 className="payment-status-title payment-failure-title">❌ Payment Failed</h1>
-        <p className="payment-status-message">
-          {canceled === "true"
-            ? "You canceled the payment process."
-            : "Your payment could not be processed."}
-        </p>
-        <a href="/" className="payment-status-link">Return to Home</a>
+    <section className="sh-journey">
+      <div className="j-shell">
+        <div className="j-status-card" role="alert" aria-live="assertive">
+          <div className="j-status-symbol j-status-symbol--failed">!</div>
+          <span className="j-tag">PAYMENT FAILED</span>
+          <h1 className="j-title">
+            Payment couldn't
+            <br />
+            be completed.
+          </h1>
+          <p className="j-intro">
+            {canceled === "true"
+              ? "You canceled the payment process. Your order is not confirmed until payment succeeds."
+              : "Your payment could not be processed. Your order is not confirmed until payment succeeds."}
+          </p>
+          <div className="j-panel">
+            <h3>What you can do</h3>
+            <p className="j-hint">
+              Check your card details, try a different payment method, or contact your card
+              provider. Nothing has been charged.
+            </p>
+          </div>
+          <div className="j-actions">
+            <Link className="j-button" to="/price-packages">
+              Return to checkout
+            </Link>
+            <Link className="j-button j-button--secondary" to="/">
+              Back to home
+            </Link>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

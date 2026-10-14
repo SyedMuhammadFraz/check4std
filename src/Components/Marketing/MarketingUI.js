@@ -9,7 +9,9 @@ const heroArtwork = {
   tests: { box: "716 79 627 371", width: 1672, height: 941 },
   how: { box: "710 99 766 439", width: 1672, height: 941 },
   about: { box: "555 84 901 351", width: 1672, height: 941 },
-  resources: { box: "491 79 363 376", width: 1024, height: 1536 },
+  // Standalone photograph rather than a crop of the flattened mockup. `src` here
+  // overrides the `/assets/satellite/<variant>.png` default in HeroPhotos.
+  resources: { src: "/assets/satellite/resources-hero.png", box: "0 0 525 288", width: 525, height: 288 },
   contact: { box: "785 92 578 288", width: 1672, height: 941 },
 };
 

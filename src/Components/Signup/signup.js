@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../utils/AuthContext";
 import { toast } from "react-toastify";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import "./signup.css";
+import "../Journey/journey.css";
 import { webApiInstance } from "../../AxiosInstance";
 import { userRegisterInstance } from "../../AxiosInstance";
 import { useLoader } from "../../utils/LoaderContext";
@@ -218,136 +218,168 @@ const SignUp = () => {
   };
 
   return (
-    <div className="signup-auth-container">
-      <h2>{authToken ? "Welcome to Your Profile" : "Create Account"}</h2>
-
-      {authToken ? (
-        <div className="profile-logout-container">
-          <p>
-            You are logged in as <strong>{formData.name || "User"}</strong>.
+    <section className="sh-journey">
+      <div className="j-shell">
+        <div className="j-auth-shell">
+          <div className="j-eyebrow">SATELLITE HEALTH · ACCOUNT</div>
+          <h1 className="j-title">
+            {authToken ? "Your account is ready." : "Create your account."}
+          </h1>
+          <p className="j-intro">
+            {authToken
+              ? "You're already signed in. Continue to your account to review orders and results."
+              : "Use your email address as your username to access your orders and results."}
           </p>
-          <button
-            className="signup-auth-button"
-            onClick={() => navigate("/user-profile")}
-          >
-            Go to Profile
-          </button>
-          <button className="signup-auth-button" onClick={handleLogout}>
-            Logout
-          </button>
-        </div>
-      ) : (
-        <form onSubmit={handleSubmit} className="form-grid">
-          <div className="form-group">
-            <label>Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              placeholder="Enter your name"
-            />
-          </div>
-          <div className="form-group">
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              placeholder="Enter your email (e.g., user@example.com)"
-            />
-          </div>
-          <div className="form-group">
-            <label>Phone Number</label>
-            <input
-              type="tel"
-              name="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-              required
-              placeholder="Enter in fromat (021) 123-4567"
-            />
-          </div>
-          <div className="form-group">
-            <label>Date of Birth</label>
-            <input
-              type="date"
-              name="dob"
-              value={formData.dob}
-              onChange={handleChange}
-              required
-              max={getMaxDOB()}
-            />
-          </div>
-          <div className="form-group password-container">
-            <label>Password</label>
-            <div className="password-wrapper">
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                placeholder="Must be 8+ chars, include uppercase, lowercase, number & symbol"
-              />
-              <span
-                className="toggle-icon"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </span>
-            </div>
-          </div>
 
-          <div className="form-group password-container">
-            <label>Confirm Password</label>
-            <div className="password-wrapper">
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                required
-              />
-              <span
-                className="toggle-icon"
-                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              >
-                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-              </span>
+          {authToken ? (
+            <div className="j-panel">
+              <span className="j-tag">YOU ARE SIGNED IN</span>
+              <h2 className="j-panel-title">
+                Signed in as {formData.name || "your account"}.
+              </h2>
+              <div className="j-actions">
+                <button
+                  type="button"
+                  className="j-button"
+                  onClick={() => navigate("/user-profile")}
+                >
+                  Go to my account
+                </button>
+                <button
+                  type="button"
+                  className="j-button j-button--secondary"
+                  onClick={handleLogout}
+                >
+                  Log out
+                </button>
+              </div>
             </div>
-          </div>
-          <h4 className="password-guidelines-heading">Password Guidelines</h4>
-          <ul className="password-guidelines">
-            <li>At least 8 characters</li>
-            <li>One uppercase letter (A-Z)</li>
-            <li>One lowercase letter (a-z)</li>
-            <li>One number (0-9)</li>
-            <li>One special character (!@#$%^&*)</li>
-          </ul>
-          {roleError && (
-            <div role="alert">
-              <p>{roleError}</p>
-              <button type="button" onClick={() => setRoleAttempt(attempt => attempt + 1)}>
-                Retry
+          ) : (
+            <form className="j-panel" onSubmit={handleSubmit}>
+              <div className="j-grid">
+                <div className="j-full">
+                  <label htmlFor="signup-name">Full name</label>
+                  <input
+                    id="signup-name"
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    placeholder="Enter your name"
+                  />
+                </div>
+                <div className="j-full">
+                  <label htmlFor="signup-email">Email address</label>
+                  <input
+                    id="signup-email"
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    placeholder="you@example.com"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="signup-phone">Phone number</label>
+                  <input
+                    id="signup-phone"
+                    type="tel"
+                    name="phoneNumber"
+                    value={formData.phoneNumber}
+                    onChange={handleChange}
+                    required
+                    placeholder="(021) 123-4567"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="signup-dob">Date of birth</label>
+                  <input
+                    id="signup-dob"
+                    type="date"
+                    name="dob"
+                    value={formData.dob}
+                    onChange={handleChange}
+                    required
+                    max={getMaxDOB()}
+                  />
+                </div>
+                <div className="j-password">
+                  <label htmlFor="signup-password">Password</label>
+                  <input
+                    id="signup-password"
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    autoComplete="new-password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                  />
+                  <button
+                    type="button"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
+                </div>
+                <div className="j-password">
+                  <label htmlFor="signup-confirm">Confirm password</label>
+                  <input
+                    id="signup-confirm"
+                    type={showConfirmPassword ? "text" : "password"}
+                    name="confirmPassword"
+                    autoComplete="new-password"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    required
+                  />
+                  <button
+                    type="button"
+                    aria-label={
+                      showConfirmPassword ? "Hide password" : "Show password"
+                    }
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  >
+                    {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
+                </div>
+              </div>
+
+              <h3>Password guidelines</h3>
+              <ul className="j-guidelines">
+                <li>At least 8 characters</li>
+                <li>One uppercase letter (A-Z)</li>
+                <li>One lowercase letter (a-z)</li>
+                <li>One number (0-9)</li>
+                <li>One special character (!@#$%^&amp;*)</li>
+              </ul>
+
+              {roleError && (
+                <div role="alert">
+                  <p className="j-error">{roleError}</p>
+                  <button
+                    type="button"
+                    className="j-button j-button--text"
+                    onClick={() => setRoleAttempt((attempt) => attempt + 1)}
+                  >
+                    Retry
+                  </button>
+                </div>
+              )}
+
+              <button type="submit" disabled={roleLoading || !role}>
+                {roleLoading ? "Loading signup…" : "Create account"}
               </button>
-            </div>
+              <p className="j-auth-foot">
+                Already have an account? <Link to="/login">Log in</Link>
+              </p>
+            </form>
           )}
-          <button type="submit" className="signup-auth-button" disabled={roleLoading || !role}>
-            {roleLoading ? "Loading signup…" : "Sign Up"}
-          </button>
-        </form>
-      )}
-
-      {!authToken && (
-        <p>
-          Already have an account? <a href="/login">Sign In</a>
-        </p>
-      )}
-    </div>
+        </div>
+      </div>
+    </section>
   );
 };
 

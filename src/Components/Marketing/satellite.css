@@ -43,6 +43,13 @@
 .satellite-site .sh-hero--about h1,.satellite-site .sh-hero--contact h1,.satellite-site .sh-hero--resources h1 { font-size:clamp(42px,4vw,65px); }
 .satellite-site .sh-hero--resources .sh-hero-photo { left:48%; right:14%; }
 .satellite-site .sh-hero--contact .sh-hero-photo { left:46%; right:15%; }
+/* The hero photographs are rectangular crops, so their right-hand edge lands as
+   a hard vertical cut against the hero background. The ::before overlay only
+   reaches about half opacity by the time it gets there, so fade the photo itself
+   out instead. Resources sets its own two-sided mask and wins on specificity. */
+@media (min-width:1051px) {
+  .satellite-site .sh-hero-photo { -webkit-mask-image:linear-gradient(90deg,#000 0%,#000 72%,transparent 100%); mask-image:linear-gradient(90deg,#000 0%,#000 72%,transparent 100%); }
+}
 .satellite-site .sh-trust-strip { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:24px; padding:26px 5%; background:linear-gradient(110deg,#effaf6,#f0faff); }
 .satellite-site .sh-trust-item { display:flex; gap:15px; align-items:center; padding-right:20px; border-right:1px solid #aacbd9; min-width:0; }
 .satellite-site .sh-trust-item:last-child { border:0; padding-right:0; }

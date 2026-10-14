@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import "./ForgotPassword.css";
+import "../Journey/journey.css";
 import { connectTokenInstance, webApiInstance } from "../../AxiosInstance";
 import { useLoader } from "../../utils/LoaderContext";
 
@@ -65,32 +65,37 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="forgot-password-container">
-      <h2>Forgot Password?</h2>
-      <p>Enter your email to receive a password reset link.</p>
+    <section className="sh-journey">
+      <div className="j-shell">
+        <div className="j-auth-shell">
+          <div className="j-eyebrow">SATELLITE HEALTH · ACCOUNT</div>
+          <h1 className="j-title">Reset your password.</h1>
+          <p className="j-intro">
+            Enter the email address on your account and we'll send you a reset code.
+          </p>
 
-      <form onSubmit={ResetLogin}>
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+          <form className="j-panel" onSubmit={ResetLogin}>
+            <div className="j-grid">
+              <div className="j-full">
+                <label htmlFor="reset-email">Email address</label>
+                <input
+                  id="reset-email"
+                  type="email"
+                  autoComplete="username"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+            </div>
+            <button type="submit">Send reset code</button>
+            <p className="j-auth-foot">
+              <Link to="/login">Back to login</Link>
+            </p>
+          </form>
         </div>
-        <button type="submit" className="forgot-password-button">
-          Send Reset Link
-        </button>
-      </form>
-
-      <button
-        className="back-to-login-button"
-        onClick={() => navigate("/login")}
-      >
-        Back to Login
-      </button>
-    </div>
+      </div>
+    </section>
   );
 };
 

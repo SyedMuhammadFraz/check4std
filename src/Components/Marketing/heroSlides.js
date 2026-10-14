@@ -2,5 +2,6 @@
 export const coupleSlides = [
   { src: "/assets/satellite/white-couple.png", box: "0 0 1536 1024", width: 1536, height: 1024, alignment: "xMidYMin slice" },
   { src: "/assets/satellite/latino-couple.png", box: "0 0 1536 1024", width: 1536, height: 1024, alignment: "xMidYMin slice" },
+  { src: "/assets/satellite/same-sex.jpeg", box: "0 0 1408 768", width: 1408, height: 768, alignment: "xMidYMin slice" },
   { src: "/assets/satellite/home.png", box: "650 106 810 510", width: 1672, height: 941 },
 ];

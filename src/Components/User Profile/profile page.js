@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../utils/AuthContext";
-import "./profile page.css";
+import "../Journey/journey.css";
 import ConfirmationModal from "../../Modals/confirmation-modal";
 import { toast } from "react-toastify";
 import { decodeJWT } from "../../utils/JWTDecoder";
@@ -193,136 +193,205 @@ const ProfilePage = () => {
     setPasswordData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const initials = (user.name || "")
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0].toUpperCase())
+    .join("") || "SH";
+
   return (
-    <div className="profile-container">
-      <h2 className="profile-heading">User Profile</h2>
-      <div className="profile-details">
-        <div className="detail">
-          <span className="detail-labels">Name:</span>
-          {isEditing ? (
-            <input
-              type="text"
-              name="name"
-              value={user.name}
-              onChange={handleInputChange}
-              className="edit-input"
-            />
-          ) : (
-            <span className="detail-values">{user.name}</span>
-          )}
-        </div>
-        <div className="detail">
-          <span className="detail-labels">Phone:</span>
-          {isEditing ? (
-            <input
-              type="text"
-              name="phoneNumber"
-              value={user.phoneNumber}
-              onChange={handleInputChange}
-              className="edit-input"
-            />
-          ) : (
-            <span className="detail-values">{user.phoneNumber}</span>
-          )}
-        </div>
-        <div className="detail">
-          <span className="detail-labels">Date of Birth:</span>
-          {isEditing ? (
-            <input
-              type="date"
-              name="dob"
-              value={user.dob || ""}
-              onChange={handleInputChange}
-              className="edit-input"
-            />
-          ) : (
-            <span className="detail-values">{user.dob}</span>
-          )}
-        </div>
-      </div>
-      <div className="profile-actions">
-        <button onClick={handleEditSave} disabled={loading}>
-          {loading ? (
-            <ClipLoader size={20} color={"#fff"} loading={loading} />
-          ) : isEditing ? (
-            "Save"
-          ) : (
-            "Edit Profile"
-          )}
-        </button>
-        <button
-          className="logout-button"
-          onClick={handleLogout}
-          disabled={loading}
-        >
-          Logout
-        </button>
+    <section className="sh-journey">
+      <div className="j-shell">
+        <div className="j-eyebrow">SATELLITE HEALTH · MY ACCOUNT</div>
+        <h1 className="j-title">Your health account.</h1>
+        <p className="j-intro">
+          Manage your details and continue your testing journey.
+        </p>
 
-        <button
-          className="change-password-button"
-          onClick={() => setIsChangingPassword(!isChangingPassword)}
-        >
-          {isChangingPassword ? "Cancel" : "Change Password"}
-        </button>
-      </div>
+        <div className="j-profile-header">
+          <span className="j-avatar">{initials}</span>
+          <div>
+            <h2>{user.name || "Your account"}</h2>
+            <span className="j-hint">{decodedData?.sub}</span>
+          </div>
+        </div>
 
-      {isChangingPassword && (
-        <div className="change-password-container">
-          <div className="password-field">
-            <input
-              type={showPasswords.oldPassword ? "text" : "password"}
-              name="oldPassword"
-              placeholder="Old Password"
-              value={passwordData.oldPassword}
-              onChange={handlePasswordInputChange}
-              className="password-input"
-            />
+        <div className="j-cards">
+          <div className="j-panel">
+            <span className="j-tag">MY ORDERS</span>
+            <h3>Your test orders</h3>
+            <p className="j-hint">Review what you have ordered and start a new order.</p>
+            <Link className="j-button j-button--secondary" to="/price-packages">
+              Browse tests
+            </Link>
+          </div>
+          <div className="j-panel">
+            <span className="j-tag">CONSULTATIONS</span>
+            <h3>Talk to a clinician</h3>
+            <p className="j-hint">Book a follow-up to discuss a result or your next steps.</p>
+            <Link className="j-button j-button--secondary" to="/doctor-consultation">
+              Book a consultation
+            </Link>
+          </div>
+        </div>
+
+        <div className="j-panel j-account-panel">
+          <div className="j-payment-heading">
+            <h2 className="j-panel-title">Patient details</h2>
+            <span className="j-pill">{isEditing ? "Editing" : "Saved"}</span>
+          </div>
+          <div className="j-grid">
+            <div>
+              <label htmlFor="profile-name">Name</label>
+              {isEditing ? (
+                <input
+                  id="profile-name"
+                  type="text"
+                  name="name"
+                  value={user.name}
+                  onChange={handleInputChange}
+                />
+              ) : (
+                <input id="profile-name" type="text" value={user.name || ""} disabled />
+              )}
+            </div>
+            <div>
+              <label htmlFor="profile-phone">Phone number</label>
+              {isEditing ? (
+                <input
+                  id="profile-phone"
+                  type="text"
+                  name="phoneNumber"
+                  value={user.phoneNumber}
+                  onChange={handleInputChange}
+                />
+              ) : (
+                <input id="profile-phone" type="text" value={user.phoneNumber || ""} disabled />
+              )}
+            </div>
+            <div>
+              <label htmlFor="profile-dob">Date of birth</label>
+              {isEditing ? (
+                <input
+                  id="profile-dob"
+                  type="date"
+                  name="dob"
+                  value={user.dob || ""}
+                  onChange={handleInputChange}
+                />
+              ) : (
+                <input id="profile-dob" type="text" value={user.dob || ""} disabled />
+              )}
+            </div>
+          </div>
+          {isEditing && (
+            <p className="j-hint">Use the format (XXX) XXX-XXXX for your phone number.</p>
+          )}
+          <div className="j-actions">
+            <button type="button" className="j-button" onClick={handleEditSave} disabled={loading}>
+              {loading ? (
+                <ClipLoader size={18} color={"#fff"} loading={loading} />
+              ) : isEditing ? (
+                "Save changes"
+              ) : (
+                "Edit profile"
+              )}
+            </button>
             <button
-              className="toggle-password"
-              onClick={() => toggleShowPassword("oldPassword")}
+              type="button"
+              className="j-button j-button--secondary"
+              onClick={() => setIsChangingPassword(!isChangingPassword)}
             >
-              {showPasswords.oldPassword ? <FaEyeSlash /> : <FaEye />}
+              {isChangingPassword ? "Cancel password change" : "Change password"}
             </button>
           </div>
-          <div className="password-field">
-            <input
-              type={showPasswords.newPassword ? "text" : "password"}
-              name="newPassword"
-              placeholder="New Password"
-              value={passwordData.newPassword}
-              onChange={handlePasswordInputChange}
-              className="password-input"
-            />
-            <button
-              className="toggle-password"
-              onClick={() => toggleShowPassword("newPassword")}
-            >
-              {showPasswords.newPassword ? <FaEyeSlash /> : <FaEye />}
-            </button>
+        </div>
+
+        {isChangingPassword && (
+          <div className="j-panel j-account-panel">
+            <span className="j-tag">SECURITY</span>
+            <h2 className="j-panel-title">Change your password</h2>
+            <div className="j-grid">
+              <div className="j-password">
+                <label htmlFor="old-password">Current password</label>
+                <input
+                  id="old-password"
+                  type={showPasswords.oldPassword ? "text" : "password"}
+                  name="oldPassword"
+                  autoComplete="current-password"
+                  value={passwordData.oldPassword}
+                  onChange={handlePasswordInputChange}
+                />
+                <button
+                  type="button"
+                  aria-label={showPasswords.oldPassword ? "Hide password" : "Show password"}
+                  onClick={() => toggleShowPassword("oldPassword")}
+                >
+                  {showPasswords.oldPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
+              <div className="j-password">
+                <label htmlFor="new-password">New password</label>
+                <input
+                  id="new-password"
+                  type={showPasswords.newPassword ? "text" : "password"}
+                  name="newPassword"
+                  autoComplete="new-password"
+                  value={passwordData.newPassword}
+                  onChange={handlePasswordInputChange}
+                />
+                <button
+                  type="button"
+                  aria-label={showPasswords.newPassword ? "Hide password" : "Show password"}
+                  onClick={() => toggleShowPassword("newPassword")}
+                >
+                  {showPasswords.newPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
+            </div>
+            <p className="j-hint">
+              Use at least 8 characters with an uppercase letter, a lowercase letter, a number and
+              a special character.
+            </p>
+            <div className="j-actions">
+              <button
+                type="button"
+                className="j-button"
+                onClick={handlePasswordChange}
+                disabled={passwordLoading}
+              >
+                {passwordLoading ? (
+                  <ClipLoader size={18} color={"#fff"} loading={passwordLoading} />
+                ) : (
+                  "Update password"
+                )}
+              </button>
+            </div>
           </div>
+        )}
+
+        <div className="j-actions">
+          <Link className="j-button j-button--secondary" to="/">
+            Back to home
+          </Link>
           <button
-            onClick={handlePasswordChange}
-            className="confirm-password-button"
+            type="button"
+            className="j-button j-button--secondary"
+            onClick={handleLogout}
             disabled={loading}
           >
-            {passwordLoading ? (
-              <ClipLoader size={20} color={"#fff"} loading={passwordLoading} />
-            ) : (
-              "Confirm"
-            )}
+            Log out
           </button>
         </div>
-      )}
 
-      <p>
-        Want to return to the homepage? <a href="/">Click here</a>.
-      </p>
-      <ConfirmationModal
-        showModal={showModal}
-        onClose={() => setShowModal(false)}
-        onConfirm={confirmLogout}
-      />
-    </div>
+        <ConfirmationModal
+          showModal={showModal}
+          onClose={() => setShowModal(false)}
+          onConfirm={confirmLogout}
+        />
+      </div>
+    </section>
   );
 };
 

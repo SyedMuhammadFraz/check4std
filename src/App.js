@@ -61,6 +61,8 @@ import NurseDashboard from "./Components/DoctorPanel/NurseDashboard";
 import DoctorNavBar from "./Components/DoctorPanel/DoctorNavBar";
 import StdQuestions from "./Components/Questionares/StdQuestions";
 import SetDoctorPassword from "./Components/Signin/SetDoctorPassword";
+import ActivateAccount from "./Components/Signin/ActivateAccount";
+import PatientDetails from "./Components/Orders/PatientDetails";
 import { QuestionnaireProvider } from "./utils/QuestionareContext";
 
 function App() {
@@ -157,12 +159,13 @@ function App() {
                         path="syphilis-test"
                         element={<Syphilis_Test />}
                       />
+                      {/* Open to guests: logged-in users and guests share the order page. */}
+                      <Route path="order" element={<OrderPage />} />
+                      <Route path="patient-details" element={<PatientDetails />} />
                       <Route
-                        path="order"
-                        element={<ProtectedRoute allowedRoles={["user"]} />}
-                      >
-                        <Route index element={<OrderPage />} />
-                      </Route>
+                        path="activate-account"
+                        element={<ActivateAccount />}
+                      />
                       <Route index path="signup" element={<SignUp />} />
                       <Route index path="login" element={<SignIn />} />
                       <Route

@@ -10,7 +10,8 @@ import { webApiInstance } from "../../AxiosInstance";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const ProfilePage = () => {
-  const [user, setUser] = useState({ name: "", phoneNumber: "", dob: "" });
+  const [user, setUser] = useState({ name: "", firstName: "", lastName: "", phoneNumber: "", dob: "" });
+  const [myOrders, setMyOrders] = useState([]);
   const [decodedData, setDecodedData] = useState(null);
   const { authToken, logout } = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
@@ -68,14 +69,17 @@ const ProfilePage = () => {
   };
 
   const updateUser = async () => {
-    if (!user.name || !user.phoneNumber || !user.dob) {
-      console.error("Error: Missing required fields.");
+    if (!user.firstName?.trim() || !user.lastName?.trim() || !user.phoneNumber || !user.dob) {
+      toast.error("First name, last name, phone number and date of birth are required.");
       return;
     }
     const formattedDob = new Date(user.dob).toISOString().split("T")[0]; // "YYYY-MM-DD"
 
+    // The backend rebuilds the full name from first + last name.
     const userData = {
-      name: user.name,
+      name: `${user.firstName.trim()} ${user.lastName.trim()}`,
+      firstName: user.firstName.trim(),
+      lastName: user.lastName.trim(),
       phoneNumber: user.phoneNumber,
       dob: formattedDob,
     };
@@ -107,6 +111,21 @@ const ProfilePage = () => {
   }, [authToken, navigate]);
 
   useEffect(() => {
+    if (!authToken) return;
+    const fetchMyOrders = async () => {
+      try {
+        const response = await webApiInstance.get("/Order/my-orders", {
+          headers: { Authorization: `Bearer ${authToken}` },
+        });
+        setMyOrders(response.data.result || []);
+      } catch (error) {
+        console.error("Failed to fetch orders", error);
+      }
+    };
+    fetchMyOrders();
+  }, [authToken]);
+
+  useEffect(() => {
     if (decodedData) {
       fetchUpdatedUserData();
     }
@@ -123,6 +142,8 @@ const ProfilePage = () => {
       if (response.status === 200) {
         setUser({
           name: response.data.result.name,
+          firstName: response.data.result.firstName || "",
+          lastName: response.data.result.lastName || "",
           phoneNumber: response.data.result.phoneNumber,
           dob: response.data.result.dob,
         });
@@ -222,6 +243,21 @@ const ProfilePage = () => {
             <span className="j-tag">MY ORDERS</span>
             <h3>Your test orders</h3>
             <p className="j-hint">Review what you have ordered and start a new order.</p>
+            {myOrders.length === 0 ? (
+              <p className="j-hint">You haven't placed any orders yet.</p>
+            ) : (
+              myOrders.map((order) => (
+                <div className="j-row" key={order.id}>
+                  <span>
+                    #{order.id} · {(order.diseases || []).map((d) => d.name).join(", ")} ·{" "}
+                    {new Date(order.orderDate).toLocaleDateString()}
+                  </span>
+                  <strong>
+                    {order.orderStatus} · ${Number(order.amount).toFixed(2)}
+                  </strong>
+                </div>
+              ))
+            )}
             <Link className="j-button j-button--secondary" to="/price-packages">
               Browse tests
             </Link>
@@ -243,18 +279,26 @@ const ProfilePage = () => {
           </div>
           <div className="j-grid">
             <div>
-              <label htmlFor="profile-name">Name</label>
-              {isEditing ? (
-                <input
-                  id="profile-name"
-                  type="text"
-                  name="name"
-                  value={user.name}
-                  onChange={handleInputChange}
-                />
-              ) : (
-                <input id="profile-name" type="text" value={user.name || ""} disabled />
-              )}
+              <label htmlFor="profile-first-name">First name</label>
+              <input
+                id="profile-first-name"
+                type="text"
+                name="firstName"
+                value={user.firstName || ""}
+                onChange={handleInputChange}
+                disabled={!isEditing}
+              />
+            </div>
+            <div>
+              <label htmlFor="profile-last-name">Last name</label>
+              <input
+                id="profile-last-name"
+                type="text"
+                name="lastName"
+                value={user.lastName || ""}
+                onChange={handleInputChange}
+                disabled={!isEditing}
+              />
             </div>
             <div>
               <label htmlFor="profile-phone">Phone number</label>

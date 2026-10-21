@@ -10,6 +10,12 @@ import { toast } from "react-toastify";
 import { decodeJWT } from "./JWTDecoder";
 import { LocationContext } from "./LocationContext";
 import { useLocation } from "./LocationContext";
+import {
+  CHECKOUT_TESTS_KEY,
+  GUEST_DETAILS_KEY,
+  POST_LOGIN_REDIRECT_KEY,
+  removeStored,
+} from "./checkoutStorage";
 
 export const AuthContext = createContext();
 
@@ -73,6 +79,11 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     Cookies.remove("authToken");
     localStorage.removeItem("authToken");
+    // Leftovers from signup / forgot password and the saved checkout (cart and the
+    // patient's name, date of birth and address), so the next person on this browser
+    // doesn't see them.
+    ["email", "optID", "User-Otp"].forEach((key) => localStorage.removeItem(key));
+    removeStored(CHECKOUT_TESTS_KEY, GUEST_DETAILS_KEY, POST_LOGIN_REDIRECT_KEY);
     setAuthToken(null);
     setUserRole(null);
     // resetLocation();

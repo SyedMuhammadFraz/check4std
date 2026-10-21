@@ -7,6 +7,11 @@ import "../Journey/journey.css";
 import { webApiInstance } from "../../AxiosInstance";
 import { userRegisterInstance } from "../../AxiosInstance";
 import { useLoader } from "../../utils/LoaderContext";
+import PatientFields, {
+  EMPTY_PATIENT_FIELDS,
+  validatePatientFields,
+  patientFieldsPayload,
+} from "../Shared/PatientFields";
 
 const guidRegex =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -16,8 +21,9 @@ const SignUp = () => {
   const [roleLoading, setRoleLoading] = useState(true);
   const [roleError, setRoleError] = useState("");
   const [roleAttempt, setRoleAttempt] = useState(0);
+  const [patientErrors, setPatientErrors] = useState({});
   const [formData, setFormData] = useState({
-    name: "",
+    ...EMPTY_PATIENT_FIELDS,
     email: "",
     phoneNumber: "",
     password: "",
@@ -78,11 +84,14 @@ const SignUp = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setPatientErrors((previous) => ({ ...previous, [e.target.name]: undefined }));
   };
 
   const validateForm = () => {
-    if (!formData.name.trim()) {
-      toast.error("Name is required");
+    const errors = validatePatientFields(formData);
+    setPatientErrors(errors);
+    if (Object.keys(errors).length > 0) {
+      toast.error("Please check your details.");
       return false;
     }
     if (!emailRegex.test(formData.email)) {
@@ -168,10 +177,11 @@ const SignUp = () => {
       const apiPayload = {
         email: formData.email, // Change the email as required
         password: formData.password,
-        name: formData.name, // Convert name to lowercase if needed
+        name: `${formData.firstName.trim()} ${formData.lastName.trim()}`,
         dob: formData.dob, // Change the DOB as required
         roleId: role,
         phoneNumber: formData.phoneNumber,
+        ...patientFieldsPayload(formData),
       };
 
       const response = await userRegisterInstance.post(
@@ -235,7 +245,7 @@ const SignUp = () => {
             <div className="j-panel">
               <span className="j-tag">YOU ARE SIGNED IN</span>
               <h2 className="j-panel-title">
-                Signed in as {formData.name || "your account"}.
+                Signed in as {formData.firstName || "your account"}.
               </h2>
               <div className="j-actions">
                 <button
@@ -257,18 +267,6 @@ const SignUp = () => {
           ) : (
             <form className="j-panel" onSubmit={handleSubmit}>
               <div className="j-grid">
-                <div className="j-full">
-                  <label htmlFor="signup-name">Full name</label>
-                  <input
-                    id="signup-name"
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    placeholder="Enter your name"
-                  />
-                </div>
                 <div className="j-full">
                   <label htmlFor="signup-email">Email address</label>
                   <input
@@ -305,6 +303,12 @@ const SignUp = () => {
                     max={getMaxDOB()}
                   />
                 </div>
+                <PatientFields
+                  values={formData}
+                  onChange={handleChange}
+                  errors={patientErrors}
+                  idPrefix="signup"
+                />
                 <div className="j-password">
                   <label htmlFor="signup-password">Password</label>
                   <input

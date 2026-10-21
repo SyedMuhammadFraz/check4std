@@ -1,5 +1,31 @@
 .satellite-site .satellite-page.sh-catalogue-page { color: var(--sh-ink, #07266b); }
 .satellite-site .sh-catalogue-page .sh-hero h1 .sh-test-hero-title-tail { display: inline; color: var(--sh-ink, #07266b); }
+.satellite-site .sh-catalogue-support > summary {
+  padding: 10px 5%;
+  color: var(--sh-green);
+  background: #f2fafb;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (min-width: 1051px) and (max-height: 950px) {
+  .satellite-site .satellite-page.sh-catalogue-overview .sh-test-overview { padding: 14px 0; }
+  .satellite-site .sh-catalogue-overview .sh-catalogue-heading { margin-bottom: 12px; }
+  .satellite-site .sh-catalogue-overview .sh-catalogue-heading h2 { font-size: 28px; }
+  .satellite-site .sh-catalogue-overview .sh-catalogue-heading p { font-size: 15px; }
+  .satellite-site .satellite-page.sh-catalogue-overview .sh-catalogue-view-all { margin-top: 12px; }
+  .satellite-site .satellite-page.sh-catalogue-overview .sh-pricing-notice { margin-top: 10px; }
+  .satellite-site .sh-catalogue-overview .sh-test-cards-compact .sh-test-card { padding: 10px; }
+  .satellite-site .sh-catalogue-overview .sh-test-cards-compact .sh-test-icon {
+    width: 30px;
+    height: 30px;
+    margin-bottom: 6px;
+  }
+  .satellite-site:has(.sh-catalogue-overview) .sh-footer-top { padding: 18px 0; }
+  .satellite-site:has(.sh-catalogue-overview) .sh-footer-bottom { padding: 12px 0; }
+}
 .satellite-site .satellite-page .sh-test-overview { background: linear-gradient(110deg, #e7f8fd, #f3fbff 48%, #e5f6fc); padding-top: 30px; padding-bottom: 29px; }
 .satellite-site .satellite-page .sh-catalogue-heading { text-align: center; }
 .satellite-site .satellite-page .sh-catalogue-heading p { margin-bottom: 25px; }

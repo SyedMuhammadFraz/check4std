@@ -30,6 +30,7 @@ export function IconBadge({ icon: Icon, tone = "green" }) {
 }
 
 function HeroPhotos({ variant, artwork }) {
+  const photoId = React.useId();
   const rotating = ["home", "tests", "how"].includes(variant);
   const [active, setActive] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(true);
@@ -57,9 +58,32 @@ function HeroPhotos({ variant, artwork }) {
   }, [rotating, reducedMotion, visible, slides.length]);
 
   return <div className={`sh-hero-photo ${rotating ? "sh-hero-photo--rotating" : ""}`} aria-hidden="true">
-    {slides.map((slide, index) => <svg key={slide.src} className={`sh-hero-photo-frame ${index === active ? "is-active" : ""}`} viewBox={slide.box} preserveAspectRatio={slide.alignment || "xMidYMid slice"}>
-      <image href={slide.src} width={slide.width} height={slide.height} />
-    </svg>)}
+    {slides.map((slide, index) => {
+      const [x, y, width, height] = slide.box.split(" ").map(Number);
+      const clipId = `${photoId}-${index}`;
+      return <div key={slide.src} className={`sh-hero-photo-frame ${index === active ? "is-active" : ""}`}>
+        {rotating && <svg className="sh-hero-photo-backdrop" viewBox={slide.box} preserveAspectRatio="xMidYMid slice">
+          <image href={slide.src} width={slide.width} height={slide.height} clipPath={`url(#${clipId})`} />
+        </svg>}
+        <svg className="sh-hero-photo-subject" viewBox={slide.box} preserveAspectRatio={slide.alignment || "xMidYMid slice"}>
+          <defs>
+            <clipPath id={clipId}><rect x={x} y={y} width={width} height={height} /></clipPath>
+            {rotating && <>
+              <linearGradient id={`${clipId}-fade`} x1={x} x2={x + width} y1={y} y2={y} gradientUnits="userSpaceOnUse">
+                <stop offset="0" stopColor="black" />
+                <stop offset="0.15" stopColor="white" />
+                <stop offset="0.85" stopColor="white" />
+                <stop offset="1" stopColor="black" />
+              </linearGradient>
+              <mask id={`${clipId}-blend`} maskUnits="userSpaceOnUse" x={x} y={y} width={width} height={height}>
+                <rect x={x} y={y} width={width} height={height} fill={`url(#${clipId}-fade)`} />
+              </mask>
+            </>}
+          </defs>
+          <image href={slide.src} width={slide.width} height={slide.height} clipPath={`url(#${clipId})`} mask={rotating ? `url(#${clipId}-blend)` : undefined} />
+        </svg>
+      </div>;
+    })}
   </div>;
 }
 

@@ -145,7 +145,7 @@ const MainPage = () => {
   const chooseFilter = (filter) => setSearchParams({ view: "all", ...(filter === "all" ? {} : { category: filter }) }, { replace: true });
 
   return (
-    <main className="satellite-page sh-catalogue-page">
+    <main className={`satellite-page sh-catalogue-page${showAll ? "" : " sh-catalogue-overview"}`}>
       <Hero
         variant="tests"
         eyebrow="Tests & Services"
@@ -241,8 +241,18 @@ const MainPage = () => {
         </section>
       )}
 
-      <Steps compact withBenefits />
-      <ServiceLinks />
+      {showAll ? (
+        <>
+          <Steps compact withBenefits />
+          <ServiceLinks />
+        </>
+      ) : (
+        <details className="sh-catalogue-support">
+          <summary>How testing works &amp; additional services</summary>
+          <Steps compact withBenefits />
+          <ServiceLinks />
+        </details>
+      )}
     </main>
   );
 };

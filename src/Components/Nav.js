@@ -6,7 +6,7 @@ import ConfirmationModal from "../Modals/confirmation-modal";
 import { useCart } from "../utils/CartContext";
 import { BrandLogo, Button } from "./Marketing/MarketingUI";
 
-const navigation = [["/", "Home"], ["/price-packages", "Tests & Services"], ["/how-it-works", "How It Works"], ["/about-us", "About Us"], ["/resources", "Resources"], ["/contact", "Contact"]];
+const navigation = [["/", "Home"], ["/price-packages", "Tests & Services"], ["/test-centers", "Find a Lab"], ["/how-it-works", "How It Works"], ["/about-us", "About Us"], ["/resources", "Resources"], ["/contact", "Contact"]];
 // The existing login is the interim destination until the EMR URL is supplied.
 const emrUrl = process.env.REACT_APP_EMR_URL || "/login";
 

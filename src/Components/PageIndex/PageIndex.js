@@ -128,7 +128,7 @@ export default function PageIndex() {
                   className="j-button"
                   onClick={() => navigate("/pages/find-a-lab")}
                 >
-                  Find a lab
+                  Find a Lab
                 </button>
               </>
             )}

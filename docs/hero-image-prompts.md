@@ -1,10 +1,20 @@
 # Generated hero photographs
 
-The white-couple and Latino-couple photographs were generated with the built-in image-generation tool at 1536 × 1024 pixels. They appear alongside the original Black couple photograph from the client deck (`public/assets/satellite/home.png`) in the Home, Tests & Services, and How It Works slideshow. Rotation advances every 3 seconds without visible controls; reduced-motion and hidden-tab behavior are retained.
+The white-couple, Latino-couple, and Black-couple photographs were generated with the built-in image-generation tool at 1536 x 1024 pixels. They appear in the Home, Tests & Services, and How It Works slideshow. Rotation advances every 3 seconds without visible controls; reduced-motion and hidden-tab behavior are retained.
 
 A fourth slide, `same-sex.jpeg`, was supplied separately (not generated here) and sits third in the rotation.
 It is 1408 x 768 (aspect 1.83) against the other slides' 1.50, so the couple reads slightly smaller and further
 back than the other three; a tighter crop would even that out if the difference becomes distracting.
+
+## black-couple
+
+Saved asset: public/assets/satellite/black-couple.png
+
+Generated with the built-in image-generation tool on 2026-10-20 at 1536 x 1024 pixels. Replaces the original client-deck Black couple crop in the shared Home, Tests & Services, and How It Works carousel. The original home.png artwork is retained. The new photograph uses the same proportional sizing and blurred edge blending as the other slides.
+
+Prompt:
+
+Use case: photorealistic-natural. Generate one new photorealistic lifestyle photograph for a healthcare website hero carousel, landscape 1536x1024. It must match a cohesive photographic series showing white, Latino, and same-sex adult couples seated together in bright modern homes: soft natural window daylight, airy cream and pale-gray interiors, muted sage clothing accents, gently blurred green houseplants, warm welcoming smiles, natural editorial photography. Subject: a happy adult Black couple, woman and man in their early thirties, seated close together on a light cream sofa. The woman has shoulder-length natural dark curls and wears a muted sage-green knit sweater; the man has short neatly shaped natural black hair, a subtle trimmed beard, and a cream linen casual shirt. Both have natural dark brown skin with realistic skin texture, fully clothed, warm relaxed smiles toward the camera; his arm rests naturally around her shoulders. Waist-up portrait with both complete heads, necks and shoulders visible, ample headroom, faces centered within the middle 55 percent of the frame, breathing room at both sides. Eye-level camera, natural proportions and hands, believable everyday detail. Bright softly out-of-focus modern home with large white-framed windows and restrained leafy greenery. Gentle low-contrast light, accurate skin tones, cream, white and soft sage palette. Produce only the seamless photograph, no design layout, text, letters, logos, watermarks, frame, medical equipment, split panels, vignette, or baked-in edge blur; the website applies its own soft blending. Do not imitate any specific existing person's identity.
 
 ## white-couple
 

@@ -9,7 +9,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { webApiInstance } from "../../AxiosInstance";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-const ProfilePage = () => {
+const ProfilePage = ({ journey = false }) => {
   const [user, setUser] = useState({ name: "", firstName: "", lastName: "", phoneNumber: "", dob: "" });
   const [myOrders, setMyOrders] = useState([]);
   const [decodedData, setDecodedData] = useState(null);
@@ -103,12 +103,12 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (!authToken) {
-      navigate("/login");
+      navigate(journey ? "/journey/login" : "/login");
     } else {
       const decodedToken = decodeJWT(authToken);
       setDecodedData(decodedToken);
     }
-  }, [authToken, navigate]);
+  }, [authToken, navigate, journey]);
 
   useEffect(() => {
     if (!authToken) return;
@@ -258,7 +258,7 @@ const ProfilePage = () => {
                 </div>
               ))
             )}
-            <Link className="j-button j-button--secondary" to="/price-packages">
+            <Link className="j-button j-button--secondary" to={journey ? "/journey/tests" : "/price-packages"}>
               Browse tests
             </Link>
           </div>
@@ -266,12 +266,13 @@ const ProfilePage = () => {
             <span className="j-tag">CONSULTATIONS</span>
             <h3>Talk to a clinician</h3>
             <p className="j-hint">Book a follow-up to discuss a result or your next steps.</p>
-            <Link className="j-button j-button--secondary" to="/doctor-consultation">
+            <Link className="j-button j-button--secondary" to={journey ? "/journey/consultation" : "/doctor-consultation"}>
               Book a consultation
             </Link>
           </div>
         </div>
 
+        {journey && <div className="j-actions"><Link className="j-button j-button--secondary" to="/journey/requisition">View sample requisition</Link><Link className="j-button j-button--secondary" to="/journey/results">View sample results</Link></div>}
         <div className="j-panel j-account-panel">
           <div className="j-payment-heading">
             <h2 className="j-panel-title">Patient details</h2>

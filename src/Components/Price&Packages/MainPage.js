@@ -41,13 +41,13 @@ const isAvailable = (test) => Boolean(
 const MainPage = () => {
   const { authToken } = useContext(AuthContext);
   const gotoOrderPage = useGotoOrderPage();
-  const { setSelectedTests } = useCart();
+  const { selectedTests: savedTests, setSelectedTests } = useCart();
   const [searchParams, setSearchParams] = useSearchParams();
   const [catalog, setCatalog] = useState({});
   const [loading, setLoading] = useState(true);
   const [failedCount, setFailedCount] = useState(0);
   const [retry, setRetry] = useState(0);
-  const [selectedNames, setSelectedNames] = useState([]);
+  const [selectedNames, setSelectedNames] = useState(() => savedTests.map((test) => test.name));
   const catalogueHeading = useRef(null);
   // Captured once, at mount: true only when the page was opened straight at the
   // catalogue (e.g. the "Order a Test" CTA on another page).
@@ -134,9 +134,10 @@ const MainPage = () => {
   // Mirror the live selection into the cart so the header badge and the page
   // index can see it. Keyed on the inputs, since selectedTests is rebuilt each render.
   useEffect(() => {
+    if (loading) return;
     setSelectedTests(selectedTests);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedNames, catalog]);
+  }, [selectedNames, catalog, loading]);
 
   const toggleTest = (name) => setSelectedNames((current) => (
     current.includes(name) ? current.filter((item) => item !== name) : [...current, name]

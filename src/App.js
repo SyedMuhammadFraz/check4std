@@ -3,17 +3,17 @@ import "leaflet/dist/leaflet.css";
 import { AuthProvider } from "./utils/AuthContext";
 import { LocationProvider } from "./utils/LocationContext";
 import { CartProvider } from "./utils/CartContext";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import CustomerJourney from "./Components/Journey/CustomerJourney";
+import JourneyEntry, { JourneyPageAlias } from "./Components/Journey/JourneyEntry";
 import LandingPage from "./Components/LandingPage";
 import Diseases from "./Components/Diseases/Diseases";
-import PageIndex from "./Components/PageIndex/PageIndex";
 import MainPage from "./Components/Price&Packages/MainPage";
 import Home from "./Components/Home/Home";
 import AboutUs from "./Components/Marketing/AboutUs";
 import HowItWorks from "./Components/Marketing/HowItWorks";
 import Resources from "./Components/Marketing/Resources";
 import Contact from "./Components/Marketing/Contact";
-import OrderPage from "./Components/Orders/order";
 import SignUp from "./Components/Signup/signup";
 import SignIn from "./Components/Signin/signin";
 import OTPPage from "./Components/Signup/otp";
@@ -45,8 +45,6 @@ import ForgotPassword from "./Components/Signin/ForgotPassword";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import Loader from "./Loader/Loader";
 import { LoaderProvider } from "./utils/LoaderContext";
-import PaymentFailure from "./utils/PaymentFailure";
-import PaymentSuccess from "./utils/PaymentSuccess";
 import RedirectHandler from "./utils/RedirectHandler";
 import Unauthorized from "./Modals/Unauthorized";
 import DoctorConsultation from "./Components/How it Works/Doctor Consultation/DoctorConsultation";
@@ -61,6 +59,7 @@ import NurseDashboard from "./Components/DoctorPanel/NurseDashboard";
 import DoctorNavBar from "./Components/DoctorPanel/DoctorNavBar";
 import StdQuestions from "./Components/Questionares/StdQuestions";
 import SetDoctorPassword from "./Components/Signin/SetDoctorPassword";
+import ActivateAccount from "./Components/Signin/ActivateAccount";
 import { QuestionnaireProvider } from "./utils/QuestionareContext";
 
 function App() {
@@ -84,6 +83,10 @@ function App() {
                 <BrowserRouter>
                   {/* <RedirectHandler /> */}
                   <Routes>
+                    <Route path="/journey" element={<CustomerJourney />} />
+                    <Route path="/journey/:step" element={<CustomerJourney />} />
+                    <Route path="/payment-success" element={<Navigate to="/journey/payment-success" replace />} />
+                    <Route path="/payment-failed" element={<Navigate to="/journey/payment-failed" replace />} />
                     <Route element={<LandingPage />}>
                       <Route path="about-us" element={<AboutUs />} />
                       <Route path="how-it-works" element={<HowItWorks />} />
@@ -95,8 +98,8 @@ function App() {
                         path="set-doctor-password"
                         element={<SetDoctorPassword />}
                       />
-                      <Route path="/pages" element={<PageIndex />} />
-                      <Route path="/pages/:slug" element={<PageIndex />} />
+                      <Route path="/pages" element={<JourneyPageAlias />} />
+                      <Route path="/pages/:slug" element={<JourneyPageAlias />} />
                       <Route path="/diseases" element={<Diseases />} />
                       <Route path="/diseases/:topic" element={<Diseases />} />
                       <Route
@@ -157,12 +160,13 @@ function App() {
                         path="syphilis-test"
                         element={<Syphilis_Test />}
                       />
+                      {/* Open to guests: logged-in users and guests share the order page. */}
+                      <Route path="order" element={<JourneyEntry />} />
+                      <Route path="patient-details" element={<Navigate to="/journey/details" replace />} />
                       <Route
-                        path="order"
-                        element={<ProtectedRoute allowedRoles={["user"]} />}
-                      >
-                        <Route index element={<OrderPage />} />
-                      </Route>
+                        path="activate-account"
+                        element={<ActivateAccount />}
+                      />
                       <Route index path="signup" element={<SignUp />} />
                       <Route index path="login" element={<SignIn />} />
                       <Route
@@ -204,14 +208,6 @@ function App() {
                         element={<ForgotPasswordOtp />}
                       />
                       <Route index path="/" element={<Home />} />
-                      <Route
-                        path="/payment-success"
-                        element={<PaymentSuccess />}
-                      />
-                      <Route
-                        path="/payment-failed"
-                        element={<PaymentFailure />}
-                      />
                       <Route
                         path="/redirect-handler"
                         element={<RedirectHandler />}

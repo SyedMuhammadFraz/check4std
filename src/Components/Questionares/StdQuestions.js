@@ -13,7 +13,7 @@ const QUESTION_TYPE_MAP = {
   22: "date",
 };
 
-const STDQuestionnaireSystem = () => {
+const STDQuestionnaireSystem = ({ journey = false }) => {
   const [currentStep, setCurrentStep] = useState("selection");
   const [questionnaireType, setQuestionnaireType] = useState("");
   const [responses, setResponses] = useState({});
@@ -28,6 +28,8 @@ const STDQuestionnaireSystem = () => {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [submitError, setSubmitError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const location = useLocation();
 
@@ -47,6 +49,7 @@ const STDQuestionnaireSystem = () => {
   }, [authToken]);
 
   useEffect(() => {
+    if (journey) return undefined;
     window.history.pushState(null, "", location.pathname);
     const blockBack = () => {
       window.history.pushState(null, "", location.pathname);
@@ -63,7 +66,7 @@ const STDQuestionnaireSystem = () => {
       window.removeEventListener("popstate", blockBack);
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, [location]);
+  }, [location, journey]);
 
   // Fetch questions
   useEffect(() => {
@@ -154,6 +157,11 @@ const STDQuestionnaireSystem = () => {
 
   // Submit
   const handleSubmit = async () => {
+    if (submitting) return;
+    setSubmitError("");
+    if (!authToken) { setSubmitError("Please log in before submitting your assessment."); return; }
+    if (!questions.length || !Object.keys(responses).length) { setSubmitError("Answer the assessment questions before continuing."); return; }
+    setSubmitting(true);
     const now = new Date().toISOString();
     const questionnaireId = questionnaireType === "symptoms" ? 2 : 4;
 
@@ -192,8 +200,6 @@ const STDQuestionnaireSystem = () => {
     responses: responsesArray,
   };
 
-  console.log(payload)
-
   try {
     await webApiInstance.post("/QuestionaireResponse", 
       payload, {
@@ -209,8 +215,10 @@ const STDQuestionnaireSystem = () => {
       setStdQuestionsFilled(true);
     }
   } catch (err) {
-    console.error("Failed to save questionnaire:", err);
+    setSubmitError("We couldn't save your assessment. Your answers are still here; please try again.");
     return;
+  } finally {
+    setSubmitting(false);
   }
 
     setIsCompleted(true);
@@ -402,6 +410,7 @@ const STDQuestionnaireSystem = () => {
         ) : (
           <div className="j-panel">
             {questions.map((question, index) => renderQuestion(question, index))}
+            {submitError && <p className="j-error" role="alert">{submitError}</p>}
             <div className="j-actions">
               <button
                 type="button"
@@ -410,8 +419,8 @@ const STDQuestionnaireSystem = () => {
               >
                 Back
               </button>
-              <button type="button" className="j-button" onClick={handleSubmit}>
-                Complete assessment
+              <button type="button" className="j-button" onClick={handleSubmit} disabled={submitting || !questions.length}>
+                {submitting ? "Saving assessment…" : "Complete assessment"}
               </button>
             </div>
           </div>
@@ -436,10 +445,10 @@ const STDQuestionnaireSystem = () => {
             produce a diagnosis or a risk score.
           </p>
           <div className="j-actions">
-            <Link className="j-button" to="/doctor-consultation">
+            <Link className="j-button" to={journey ? "/journey/consultation" : "/doctor-consultation"}>
               Talk to a clinician
             </Link>
-            <Link className="j-button j-button--secondary" to="/price-packages">
+            <Link className="j-button j-button--secondary" to={journey ? "/journey/tests" : "/price-packages"}>
               Browse testing options
             </Link>
           </div>

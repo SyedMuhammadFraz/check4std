@@ -37,6 +37,9 @@ const OTPPage = () => {
       });
 
       if (response.status === 200) {
+        // Verified: the signup keys are no longer needed.
+        localStorage.removeItem("optID");
+        localStorage.removeItem("email");
         login(response.data.access_token);
         toast.success("Email verified successfully.");
         navigate("/");

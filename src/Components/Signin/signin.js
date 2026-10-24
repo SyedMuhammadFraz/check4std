@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../Journey/journey.css";
 import ClipLoader from "react-spinners/ClipLoader";
 import { connectTokenInstance } from "../../AxiosInstance";
+import { POST_LOGIN_REDIRECT_KEY, readStored, removeStored } from "../../utils/checkoutStorage";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -75,7 +76,10 @@ const SignIn = () => {
         if (role1 === "user") {
           login(token);
           toast.success("Successfully signed in!");
-          navigate("/");
+          // e.g. a guest whose email already had an account goes back to their order.
+          const redirect = readStored(POST_LOGIN_REDIRECT_KEY, null);
+          removeStored(POST_LOGIN_REDIRECT_KEY);
+          navigate(redirect || "/");
         } else if (role1 === "admin") {
           login(token);
           console.log("Auth Token:", token);

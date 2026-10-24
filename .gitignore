@@ -25,3 +25,7 @@ yarn-debug.log*
 yarn-error.log*
 
 .codegpt
+
+# Local AI assistant notes and code graph
+CLAUDE.md
+graphify-out/

@@ -6,7 +6,7 @@ import { AuthContext } from "../../utils/AuthContext";
 import { CartProvider } from "../../utils/CartContext";
 import { LocationProvider } from "../../utils/LocationContext";
 import { webApiInstance, connectTokenInstance, userRegisterInstance } from "../../AxiosInstance";
-import { journeyNames, CHECKOUT_ATTEMPT_KEY } from "./journeyModel";
+import { journeyNames, journeySteps, CHECKOUT_ATTEMPT_KEY } from "./journeyModel";
 
 jest.mock("../../AxiosInstance", () => ({ webApiInstance: { get: jest.fn(), post: jest.fn() }, connectTokenInstance: { post: jest.fn() }, userRegisterInstance: { post: jest.fn() } }));
 jest.mock("../../utils/AuthContext", () => ({ AuthContext: require("react").createContext({}) }));
@@ -68,12 +68,6 @@ test("new patient goes from test selection through registration and OTP to payme
   expect(sessionStorage.getItem("checkoutTests")).toContain("Chlamydia & Gonorrhea");
   expect(JSON.stringify(sessionStorage)).not.toContain("Example123!");
 });
-test("sample results support both paths without writing medical records", async () => {
-  await mount("results"); expect(host.textContent).toContain("fictional examples, not medical results");
-  await click(button("Positive example")); expect(link("Schedule follow-up").getAttribute("href")).toBe("/journey/follow-up");
-  await click(button("Negative example")); expect(link("View your order").getAttribute("href")).toBe("/journey/requisition");
-  expect(webApiInstance.post).not.toHaveBeenCalled();
-});
 test("standalone signup collects patient fields and verification opens the account", async () => {
   await mount("sign-up");
   for (const [name, value] of Object.entries({ firstName: "Sample", lastName: "Patient", gender: "1", address: "123 Example Street", city: "Deltona", state: "FL", zip: "32738", dob: "1990-01-01", phoneNumber: "(123) 456-7890", email: "patient@example.com", password: "Example123!", "confirm-password": "Example123!" })) await fill(name, value);
@@ -107,9 +101,9 @@ test("password recovery has separate code and new-password screens", async () =>
   expect(connectTokenInstance.post).toHaveBeenLastCalledWith("/api/UserRegistration/reset-password", { otpId: "reset-reference", otp: "654321", password: "Example123!", confirmPassword: "Example123!" });
   expect(host.querySelector("h1").textContent).toBe("Welcome back.");
 });
-test.each(Object.keys(journeyNames))("route %s renders its screen and all nine steps", async (step) => {
+test.each(Object.keys(journeyNames))("route %s renders its screen and every journey step", async (step) => {
   await mount(step); expect(host.querySelector("h1")).not.toBeNull();
-  expect(host.querySelectorAll('[aria-label="Journey steps"] li')).toHaveLength(9);
+  expect(host.querySelectorAll('[aria-label="Journey steps"] li')).toHaveLength(journeySteps.length);
   expect(host.textContent).not.toContain("undefined");
 });
 
@@ -124,13 +118,13 @@ test("checkout sends real IDs without sending a dummy lab as a real facility", a
   expect(button("Continue to secure payment").disabled).toBe(false);
 });
 
-test("follow-up books only the selected available clinician slot", async () => {
+test("consultation books only the selected available clinician slot", async () => {
   webApiInstance.get.mockResolvedValue({ data: { result: [{ date: "2099-01-01", doctorId: 7, doctorName: "Dr Example", timeSlots: [
     { id: 10, startTime: "09:00", endTime: "09:30", statusName: "Available", isBooked: true },
     { id: 11, startTime: "10:00", endTime: "10:30", statusName: "Available", isBooked: false },
   ] }] } });
   webApiInstance.post.mockResolvedValue({ data: { statusCode: 200 } });
-  await mount("follow-up", true); await fill("visit-date", "2099-01-01");
+  await mount("consultation", true); await fill("visit-date", "2099-01-01");
   expect(host.querySelectorAll('#journey-visit-time option')).toHaveLength(2);
   await fill("visit-time", "7-11"); await submit();
   expect(webApiInstance.post).toHaveBeenCalledWith("/Doctor/add-appointment", { doctorId: 7, timeSlotId: 11 }, { headers: { Authorization: `Bearer ${token}` } });
@@ -138,11 +132,34 @@ test("follow-up books only the selected available clinician slot", async () => {
   expect(host.textContent).toContain("Dr Example");
 });
 
+const placedOrder = (orderStatus) => ({ data: { result: [{ id: 9, orderDate: "2026-10-23T10:00:01Z", orderStatus, amount: 89, diseases: [{ id: 1, name: "10 Test Panel" }] }] } });
+const recordAttempt = () => sessionStorage.setItem(CHECKOUT_ATTEMPT_KEY, JSON.stringify({ startedAt: Date.parse("2026-10-23T10:00:00Z"), testIds: [1] }));
+
 test("current backend-confirmed order displays confirmation", async () => {
-  const startedAt = Date.parse("2026-10-23T10:00:00Z");
-  sessionStorage.setItem(CHECKOUT_ATTEMPT_KEY, JSON.stringify({ startedAt, testIds: [1] }));
-  webApiInstance.get.mockResolvedValue({ data: { result: [{ id: 9, orderDate: "2026-10-23T10:00:01Z", orderStatus: "Processed", amount: 89, diseases: [{ id: 1, name: "10 Test Panel" }] }] } });
+  recordAttempt();
+  webApiInstance.get.mockResolvedValue(placedOrder("Processed"));
   await mount("payment-success", true);
   expect(host.textContent).toContain("Your payment has been confirmed by the order service");
   expect(host.textContent).toContain("#9");
+});
+
+test("a confirmed order announces itself in a dialog that can be dismissed", async () => {
+  recordAttempt();
+  webApiInstance.get.mockResolvedValue(placedOrder("Processed"));
+  await mount("payment-success", true);
+  const dialog = host.querySelector('[role="dialog"]');
+  expect(dialog).not.toBeNull();
+  expect(dialog.getAttribute("aria-modal")).toBe("true");
+  expect(dialog.textContent).toContain("Thank you for choosing Satellite Health.");
+  expect(dialog.textContent).toContain("#9");
+  await click(button("Close"));
+  expect(host.querySelector('[role="dialog"]')).toBeNull();
+});
+
+test("an unpaid order never announces a confirmed dialog", async () => {
+  recordAttempt();
+  webApiInstance.get.mockResolvedValue(placedOrder("Pending"));
+  await mount("payment-success", true);
+  expect(host.querySelector('[role="dialog"]')).toBeNull();
+  expect(host.textContent).not.toContain("Thank you for choosing");
 });

@@ -272,7 +272,6 @@ const ProfilePage = ({ journey = false }) => {
           </div>
         </div>
 
-        {journey && <div className="j-actions"><Link className="j-button j-button--secondary" to="/journey/requisition">View sample requisition</Link><Link className="j-button j-button--secondary" to="/journey/results">View sample results</Link></div>}
         <div className="j-panel j-account-panel">
           <div className="j-payment-heading">
             <h2 className="j-panel-title">Patient details</h2>

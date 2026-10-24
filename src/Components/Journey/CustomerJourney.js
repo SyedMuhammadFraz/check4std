@@ -5,12 +5,13 @@ import { useCart } from "../../utils/CartContext";
 import { LocationContext } from "../../utils/LocationContext";
 import { CHECKOUT_TESTS_KEY, GUEST_DETAILS_KEY, POST_LOGIN_REDIRECT_KEY, readStored, writeStored } from "../../utils/checkoutStorage";
 import { EMPTY_GUEST_DETAILS } from "../Orders/guestDetails";
+import Nav from "../Nav";
 import ProfilePage from "../User Profile/profile page";
 import StdQuestions from "../Questionares/StdQuestions";
-import { journeyNames, journeyPath, journeySections, journeySteps, LOCATION_KEY, savedLocation } from "./journeyModel";
+import { journeyNames, journeyPath, journeySections, journeySteps, listedSections, LOCATION_KEY, money, savedLocation } from "./journeyModel";
 import { Heading, JourneyLink } from "./JourneyUI";
 import JourneyAuth from "./JourneyAuth";
-import { CenterSelection, PatientStep, PaymentStep, SampleDocuments, TestSelection } from "./JourneySteps";
+import { CenterSelection, PatientStep, PaymentStep, TestSelection } from "./JourneySteps";
 import { ConsultationStep, OrderConfirmation } from "./JourneyAftercare";
 import JourneyDiseases from "./JourneyDiseases";
 import "./journey.css";
@@ -46,7 +47,7 @@ export default function CustomerJourney() {
   }, [step]);
   if (!journeyNames[step]) return <Navigate to={journeyPath("tests")} replace />;
   const activeStep = journeySteps.findIndex(([slug]) => slug === step);
-  const aliases = { checkout: "payment", "payment-collection": "payment", "payment-success": "confirmation", "payment-failed": "payment", "find-a-lab": "centers", consultation: "follow-up", "otp-verification": "account" };
+  const aliases = { checkout: "payment", "payment-collection": "payment", "payment-success": "confirmation", "payment-failed": "payment", "find-a-lab": "centers", "otp-verification": "account" };
   const current = aliases[step] || step;
   let content;
   if (step === "tests") content = <TestSelection tests={tests} setTests={setTests} />;
@@ -55,8 +56,7 @@ export default function CustomerJourney() {
   if (authSteps.includes(step)) content = <JourneyAuth key={step} step={step} details={details} setDetails={setDetails} resetCode={resetCode} setResetCode={setResetCode} />;
   if (["payment", "checkout", "payment-collection"].includes(step)) content = <PaymentStep key={step} tests={tests} setTests={setTests} center={center} collection={step === "payment-collection"} />;
   if (["confirmation", "payment-success"].includes(step)) content = <OrderConfirmation step={step} />;
-  if (["requisition", "results"].includes(step)) content = <SampleDocuments key={step} step={step} tests={tests} center={center} />;
-  if (["consultation", "follow-up"].includes(step)) content = <ConsultationStep key={step} followUp={step === "follow-up"} />;
+  if (step === "consultation") content = <ConsultationStep key={step} />;
   if (step === "disease-information") content = <JourneyDiseases />;
   if (step === "assessment") content = authToken ? <div className="cj-embedded"><StdQuestions journey /></div> : <><Heading intro="Sign in to complete the assessment and securely save your responses.">Let’s understand your needs.</Heading><JourneyLink step="login" onClick={() => writeStored(POST_LOGIN_REDIRECT_KEY, journeyPath("assessment"))}>Log in to continue</JourneyLink></>;
   if (step === "profile") content = authToken ? <div className="cj-embedded"><ProfilePage journey /></div> : <>
@@ -64,17 +64,41 @@ export default function CustomerJourney() {
   </>;
   if (step === "payment-failed") content = <div className="j-status-card"><div className="j-status-symbol j-status-symbol--failed">!</div><span className="j-tag">PAYMENT FAILED</span><Heading intro="Review your payment details and try again. Your order is not confirmed until payment succeeds.">Payment couldn’t<br />be completed.</Heading><div className="j-panel"><h3>What you can do</h3><p>Check your card details, use a different payment method, or contact your card provider.</p><p className="j-hint">Check your order status before retrying if you are unsure whether payment completed.</p></div><div className="j-actions"><JourneyLink step="payment">Return to checkout</JourneyLink><JourneyLink step="confirmation" secondary>Check order status</JourneyLink></div></div>;
   if (step === "unauthorized") content = <div className="j-status-card"><div className="j-status-symbol">403</div><Heading intro="Log in with the account associated with this order or result. If you’re already logged in, check that you’re using the correct account.">This page requires access.</Heading><div className="j-actions"><JourneyLink step="login">Go to login</JourneyLink><JourneyLink step="tests" secondary>Return to tests</JourneyLink></div></div>;
-  return <div className="sh-journey cj-site">
-    <a className="cj-skip" href="#customer-journey-content">Skip to content</a>
-    <header className="cj-header"><Link className="cj-brand" to="/"><span className="cj-mark">s</span><span>satellite<span className="cj-light"> health</span></span></Link><nav aria-label="Customer navigation"><Link to={journeyPath("tests")}>Browse tests</Link><Link to={journeyPath("disease-information")}>Disease information</Link><Link to={journeyPath("profile")}>My account</Link><Link to={journeyPath("confirmation")}>My order</Link></nav><span className="cj-badge">Your testing journey</span></header>
-    <div className="j-notice cj-notice">Live account and payment services · Test centers, requisitions, and results currently use clearly labeled sample information.</div>
-    <div className="j-layout"><aside className="j-aside"><div className="j-eyebrow">YOUR NEXT STEP</div><h2>Care on your terms.</h2><p>A clear path from choosing your test to understanding your results.</p>
+  const total = tests.reduce((sum, test) => sum + Number(test.price || 0), 0);
+  // satellite.css is already in the bundle via LandingPage; the wrapper class is
+  // what the shared header's styles are scoped to.
+  return <div className="satellite-site"><div className="sh-journey cj-site">
+    <Nav />
+    <div className="j-notice cj-notice">Live account and payment services · Test centers currently use clearly labeled sample information.</div>
+    <div className="j-layout"><aside className="j-aside">
+      <div className="cj-side-card">
+        <span className="j-tag">YOUR TESTS</span>
+        {tests.length ? <>
+          <ul className="cj-side-list">{tests.map((test) => <li key={test.name}><span>{test.name}</span><strong>{money(test.price)}</strong></li>)}</ul>
+          <div className="cj-side-total"><span>Total</span><strong>{money(total)}</strong></div>
+          <Link className="j-button j-button--secondary" to={journeyPath("tests")}>Change tests</Link>
+        </> : <>
+          <h3>No tests selected</h3><p className="j-hint">Choose a test or panel to begin.</p>
+          <Link className="j-button" to={journeyPath("tests")}>Choose a test</Link>
+        </>}
+      </div>
+      <div className="cj-side-card">
+        <span className="j-tag">YOUR TEST CENTER</span>
+        {center ? <>
+          <h3>{center}</h3>
+          <Link className="j-button j-button--secondary" to={journeyPath("centers")}>Change center</Link>
+        </> : <>
+          <h3>No center selected</h3><p className="j-hint">Choose a collection location.</p>
+          <Link className="j-button" to={journeyPath("centers")}>Choose a center</Link>
+        </>}
+      </div>
+      <div className="j-eyebrow">YOUR NEXT STEP</div><h2>Care on your terms.</h2><p>A clear path from choosing your test to understanding your results.</p>
       <nav aria-label="Journey steps"><ol className="j-nav">{journeySteps.map(([slug, name], index) => <li key={slug}><Link className={`j-nav-link${current === slug ? " is-active" : ""}`} aria-current={current === slug ? "step" : undefined} to={journeyPath(slug)}><span className="j-num">{index + 1}</span>{name}</Link></li>)}</ol></nav>
-      <nav aria-label="Account and patient pages"><ol className="j-nav cj-secondary-nav">{journeySections.map(([label, pages]) => <React.Fragment key={label}><li className="j-nav-group">{label}</li>{pages.map(([slug, name]) => <li key={slug}><Link className={`j-nav-link${step === slug ? " is-active" : ""}`} aria-current={step === slug ? "page" : undefined} to={journeyPath(slug)}>{name}</Link></li>)}</React.Fragment>)}</ol></nav>
+      <nav aria-label="Account and patient pages"><ol className="j-nav cj-secondary-nav">{journeySections.filter(([label]) => listedSections.includes(label)).map(([label, pages]) => <React.Fragment key={label}><li className="j-nav-group">{label}</li>{pages.map(([slug, name]) => <li key={slug}><Link className={`j-nav-link${step === slug ? " is-active" : ""}`} aria-current={step === slug ? "page" : undefined} to={journeyPath(slug)}>{name}</Link></li>)}</React.Fragment>)}</ol></nav>
       <div className="j-aside-foot">Accessible Testing.<br />Healthier Tomorrows.</div>
-    </aside><main className="j-main" id="customer-journey-content" ref={main} tabIndex={-1}>
-      <div className="j-eyebrow">{activeStep >= 0 ? `STEP ${activeStep + 1} OF 9` : "SATELLITE HEALTH · " + (journeySections.find(([, pages]) => pages.some(([slug]) => slug === step))?.[0] || "YOUR JOURNEY").toUpperCase()}</div>
+    </aside><main className="j-main" id="main-content" ref={main} tabIndex={-1}>
+      <div className="j-eyebrow">{activeStep >= 0 ? `STEP ${activeStep + 1} OF ${journeySteps.length}` : "SATELLITE HEALTH · " + (journeySections.find(([, pages]) => pages.some(([slug]) => slug === step))?.[0] || "YOUR JOURNEY").toUpperCase()}</div>
       {authLoading ? <p role="status">Loading your session…</p> : content}
     </main></div><footer className="cj-footer"><Link to="/">Satellite Health</Link><span>Accessible Testing. Healthier Tomorrows.</span></footer>
-  </div>;
+  </div></div>;
 }

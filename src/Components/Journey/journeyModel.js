@@ -4,9 +4,13 @@ export const journeySteps = [
   ["tests", "Choose your test"], ["centers", "Choose a test center"],
   ["details", "Patient details"], ["account", "Create your account"],
   ["payment", "Review & payment"], ["confirmation", "Order confirmation"],
-  ["requisition", "Your requisition"], ["results", "Your results"],
-  ["follow-up", "Follow-up care"],
 ];
+// Sections advertised in the sidebar. The rest stay routable and keep their
+// section label for the page eyebrow -- the flow links to them directly
+// (checkout -> login -> payment), the payment provider returns to
+// /journey/payment-success, and the confirmation modal links to the profile --
+// they are simply no longer listed as a browsable index.
+export const listedSections = ["Information"];
 export const journeySections = [
   ["Information", [["disease-information", "Disease Information"]]],
   ["Account & Authentication", [["sign-up", "Sign Up"], ["login", "Login"], ["otp-verification", "OTP Verification"], ["forgot-password", "Forgot Password"], ["password-reset-otp", "Password Reset OTP"], ["set-new-password", "Set New Password"]]],

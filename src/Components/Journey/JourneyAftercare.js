@@ -4,7 +4,7 @@ import { AuthContext } from "../../utils/AuthContext";
 import { webApiInstance } from "../../AxiosInstance";
 import { CHECKOUT_ATTEMPT_KEY, errorMessage, isPaidOrder, journeyPath, money, ordersForAttempt } from "./journeyModel";
 import { POST_LOGIN_REDIRECT_KEY, readStored, writeStored } from "../../utils/checkoutStorage";
-import { ErrorNotice, Field, Heading, JourneyLink } from "./JourneyUI";
+import { ErrorNotice, Field, Heading, JourneyLink, Modal } from "./JourneyUI";
 
 export function OrderConfirmation({ step }) {
   const { authToken } = useContext(AuthContext);
@@ -13,6 +13,7 @@ export function OrderConfirmation({ step }) {
   const [error, setError] = useState("");
   const [retry, setRetry] = useState(0);
   const [selectedId, setSelectedId] = useState("");
+  const [dismissed, setDismissed] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     if (!authToken) return;
@@ -30,6 +31,10 @@ export function OrderConfirmation({ step }) {
   const matching = ordersForAttempt(orders, attempt);
   const order = selectedId ? orders.find((entry) => String(entry.id) === selectedId) : matching[0];
   const paid = isPaidOrder(order);
+  // The modal announces this checkout specifically, so it keys off the order
+  // matched to the checkout attempt -- not whichever order is selected below.
+  const placed = matching[0];
+  const confirmed = isPaidOrder(placed) && !dismissed;
   return <>
     {paid && <div className="j-success" aria-hidden="true">✓</div>}
     <Heading intro={paid ? "Your payment has been confirmed by the order service." : "Review your order status. Confirmation appears after the payment service updates your order."}>{paid ? <>Thank you for choosing<br />Satellite Health.</> : step === "payment-success" ? "Checking your payment." : "Your order confirmation."}</Heading>
@@ -43,16 +48,27 @@ export function OrderConfirmation({ step }) {
       <p><button className="j-button j-button--secondary" disabled={busy} onClick={() => setRetry(retry + 1)}>Refresh order status</button></p>
     </>}
     {paid && <div className="j-panel"><h3>Your next steps</h3><div className="j-row"><span>1. Order confirmation & receipt</span><strong>Check your email</strong></div><div className="j-row"><span>2. Your test requisition</span><strong>Follow lab instructions</strong></div><div className="j-row"><span>3. Results when received</span><strong>Review your report</strong></div></div>}
-    <div className="j-actions"><JourneyLink step="payment" secondary>Back to order review</JourneyLink><JourneyLink step="requisition">View sample requisition</JourneyLink></div>
+    <div className="j-actions"><JourneyLink step="payment" secondary>Back to order review</JourneyLink><JourneyLink step="profile">Go to my account</JourneyLink></div>
+    {confirmed && <Modal titleId="journey-order-confirmed" onClose={() => setDismissed(true)}>
+      <div className="j-success" aria-hidden="true">✓</div>
+      <span className="j-tag">ORDER CONFIRMED</span>
+      <h2 className="j-panel-title" id="journey-order-confirmed">Thank you for choosing Satellite Health.</h2>
+      <p className="j-hint">Your payment has been confirmed by the order service.</p>
+      <div className="j-row"><span>Order reference</span><strong>#{placed.id}</strong></div>
+      <div className="j-row"><span>Tests</span><strong>{(placed.diseases || []).map((test) => test.name).join(", ")}</strong></div>
+      <div className="j-row"><span>Total</span><strong>{money(placed.amount)}</strong></div>
+      <p className="j-hint">Your confirmation and receipt are on their way by email. Collection instructions come from the lab service with your order.</p>
+      <div className="j-actions"><JourneyLink step="profile">Go to my account</JourneyLink><button className="j-button j-button--secondary" onClick={() => setDismissed(true)}>Close</button></div>
+    </Modal>}
   </>;
 }
 
-export function ConsultationStep({ followUp }) {
+export function ConsultationStep() {
   const { authToken } = useContext(AuthContext);
   const [availability, setAvailability] = useState([]);
   const [date, setDate] = useState("");
   const [slotKey, setSlotKey] = useState("");
-  const [reason, setReason] = useState(followUp ? "Review a positive result" : "");
+  const [reason, setReason] = useState("");
   const [loading, setLoading] = useState(true);
   const [booking, setBooking] = useState(false);
   const [error, setError] = useState("");
@@ -75,7 +91,7 @@ export function ConsultationStep({ followUp }) {
   const today = `${localToday.getFullYear()}-${String(localToday.getMonth() + 1).padStart(2, "0")}-${String(localToday.getDate()).padStart(2, "0")}`;
   const submit = async (event) => {
     event.preventDefault(); if (booking) return;
-    if (!authToken) { writeStored(POST_LOGIN_REDIRECT_KEY, journeyPath(followUp ? "follow-up" : "consultation")); navigate(journeyPath("login")); return; }
+    if (!authToken) { writeStored(POST_LOGIN_REDIRECT_KEY, journeyPath("consultation")); navigate(journeyPath("login")); return; }
     const slot = slots.find((entry) => entry.key === slotKey);
     if (!slot || date < today) { setError("Choose an available future appointment."); return; }
     setBooking(true); setError("");
@@ -87,9 +103,8 @@ export function ConsultationStep({ followUp }) {
     finally { setBooking(false); }
   };
   return <>
-    <Heading intro="Book a follow-up to discuss your results, testing, or treatment options.">{followUp ? <>Take the next step<br />with a clinician.</> : "Talk with a clinician."}</Heading>
+    <Heading intro="Book a consultation to discuss your results, testing, or treatment options.">Talk with a clinician.</Heading>
     <div className="j-summary"><span>Doctor consultation<br /><small>Live appointment availability</small></span></div>
-    {followUp && <p className="j-hint">The results preview uses sample values. Booking here creates a real appointment.</p>}
     {booked ? <div className="j-panel" role="status"><span className="j-pill">Appointment confirmed</span><h3>{booked.doctorName || "Your clinician"}</h3><p>{booked.date} · {booked.startTime} – {booked.endTime}</p><JourneyLink step="profile">Go to my account</JourneyLink></div> : <form className="j-panel" onSubmit={submit}>
       <h3>Choose your preferred time</h3>
       <div className="j-grid"><div className="j-full"><label htmlFor="journey-visit-reason">Reason for visit</label><select id="journey-visit-reason" value={reason} onChange={(event) => setReason(event.target.value)} required><option value="">Select</option><option>Discuss testing</option><option>Review a positive result</option><option>Discuss symptoms</option></select></div>
@@ -99,7 +114,7 @@ export function ConsultationStep({ followUp }) {
       {loading && <p role="status">Loading availability…</p>}{!loading && date && !slots.length && <p role="status">No appointments available for this date. Choose another date.</p>}
       <p className="j-hint">The reason above is for your reference; discuss it with your clinician during the visit.</p>
       <ErrorNotice error={error} /><p><button type="button" className="j-button j-button--text" disabled={loading || booking} onClick={() => { setSlotKey(""); setRetry(retry + 1); }}>Refresh availability</button></p>
-      <div className="j-actions"><JourneyLink step={followUp ? "results" : "assessment"} secondary>Back</JourneyLink><button className="j-button" disabled={loading || booking || !slotKey}>{booking ? "Booking…" : "Book appointment"}</button></div>
+      <div className="j-actions"><JourneyLink step="assessment" secondary>Back</JourneyLink><button className="j-button" disabled={loading || booking || !slotKey}>{booking ? "Booking…" : "Book appointment"}</button></div>
     </form>}
   </>;
 }

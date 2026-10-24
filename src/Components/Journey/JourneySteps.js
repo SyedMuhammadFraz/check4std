@@ -195,24 +195,3 @@ export function PaymentStep({ tests, setTests, center, collection }) {
     <div className="j-actions"><JourneyLink step="account" secondary>Back</JourneyLink><JourneyLink step="profile" secondary>My account</JourneyLink></div>
   </>;
 }
-
-export function SampleDocuments({ step, tests, center }) {
-  const [result, setResult] = useState("negative");
-  const name = tests.map((test) => test.name).join(", ") || "Comprehensive STI panel";
-  return <>
-    <Heading intro={step === "results" ? "Explore the two result paths in your customer journey. These are fictional examples, not medical results." : "Your requisition identifies the tests ordered for you. The final document and collection instructions will come from the connected lab service."}>{step === "results" ? "Your results, clearly." : "Your test requisition."}</Heading>
-    {step === "requisition" ? <>
-      <div className="j-document"><span className="j-eyebrow">SAMPLE DOCUMENT · NOT VALID FOR TESTING</span><h2>Satellite Health<br />Laboratory requisition</h2>
-        {[["Reference", "SH-10001 (sample)"], ["Patient", "Sample Patient"], ["Test / panel", name], ["Selected center", center || sampleCenters[0]]].map(([label, value]) => <div className="j-row" key={label}><span>{label}</span><strong>{value}</strong></div>)}
-        <p className="j-hint">This sample is not linked to a real order. Your issued requisition and collection instructions must come from the lab service.</p>
-      </div><div className="j-actions"><JourneyLink step="confirmation" secondary>Back</JourneyLink><JourneyLink step="results">Preview results</JourneyLink></div>
-    </> : <>
-      <div className="j-results-tabs" role="group" aria-label="Sample result path"><button className={`j-button${result === "negative" ? "" : " j-button--secondary"}`} aria-pressed={result === "negative"} onClick={() => setResult("negative")}>Negative example</button><button className={`j-button${result === "positive" ? "" : " j-button--secondary"}`} aria-pressed={result === "positive"} onClick={() => setResult("positive")}>Positive example</button></div>
-      <div className="j-panel"><span className="j-pill">Sample result · SH-10001</span><h3>{name}</h3>
-        <div className={`j-result-banner${result === "positive" ? " j-result-banner--positive" : ""}`} role="status"><strong>{result === "negative" ? "Negative example" : "Positive example"}</strong><p>{result === "negative" ? "A negative result is the routine completion path in this journey. Follow the instructions provided with your actual report." : "The next step in this journey is to book a clinician visit for review and treatment guidance."}</p></div>
-        <p className="j-hint">Your actual laboratory report and clinician guidance determine any next steps. These sample values do not describe your health.</p>
-        {result === "positive" ? <JourneyLink step="follow-up">Schedule follow-up</JourneyLink> : <JourneyLink step="requisition" secondary>View your order</JourneyLink>}
-      </div>
-    </>}
-  </>;
-}

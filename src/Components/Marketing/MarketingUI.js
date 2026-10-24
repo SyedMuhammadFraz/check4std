@@ -16,7 +16,10 @@ const heroArtwork = {
 };
 
 export function BrandLogo() {
-  return <svg className="sh-brand-logo" viewBox="48 7 244 70" role="img" aria-label="Satellite Health"><image href="/assets/satellite/tests.png" width="1672" height="941" /></svg>;
+  // The lockup's ink runs to y=80 in the source artwork; a 70-high box clipped
+  // the base of "Health" and the bottom of the orbit. Width is unchanged, so the
+  // mark renders at exactly the same scale -- the box just stops cropping it.
+  return <svg className="sh-brand-logo" viewBox="48 7 244 80" role="img" aria-label="Satellite Health"><image href="/assets/satellite/tests.png" width="1672" height="941" /></svg>;
 }
 
 export function Button({ to, children, variant = "green", className = "", arrow = true, ...props }) {

@@ -5,6 +5,7 @@ import { useCart } from "../../utils/CartContext";
 import { LocationContext } from "../../utils/LocationContext";
 import { CHECKOUT_TESTS_KEY, GUEST_DETAILS_KEY, POST_LOGIN_REDIRECT_KEY, readStored, writeStored } from "../../utils/checkoutStorage";
 import { EMPTY_GUEST_DETAILS } from "../Orders/guestDetails";
+import Footer from "../Footer";
 import Nav from "../Nav";
 import ProfilePage from "../User Profile/profile page";
 import StdQuestions from "../Questionares/StdQuestions";
@@ -67,8 +68,9 @@ export default function CustomerJourney() {
   const total = tests.reduce((sum, test) => sum + Number(test.price || 0), 0);
   // satellite.css is already in the bundle via LandingPage; the wrapper class is
   // what the shared header's styles are scoped to.
-  return <div className="satellite-site"><div className="sh-journey cj-site">
+  return <div className="satellite-site">
     <Nav />
+    <div className="sh-journey cj-site">
     <div className="j-notice cj-notice">Live account and payment services · Test centers currently use clearly labeled sample information.</div>
     <div className="j-layout"><aside className="j-aside">
       <div className="cj-side-card">
@@ -99,6 +101,8 @@ export default function CustomerJourney() {
     </aside><main className="j-main" id="main-content" ref={main} tabIndex={-1}>
       <div className="j-eyebrow">{activeStep >= 0 ? `STEP ${activeStep + 1} OF ${journeySteps.length}` : "SATELLITE HEALTH · " + (journeySections.find(([, pages]) => pages.some(([slug]) => slug === step))?.[0] || "YOUR JOURNEY").toUpperCase()}</div>
       {authLoading ? <p role="status">Loading your session…</p> : content}
-    </main></div><footer className="cj-footer"><Link to="/">Satellite Health</Link><span>Accessible Testing. Healthier Tomorrows.</span></footer>
-  </div></div>;
+    </main></div>
+    </div>
+    <Footer />
+  </div>;
 }

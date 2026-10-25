@@ -25,6 +25,12 @@ async function mount(step = "tests", authenticated = false) {
 async function click(element) { expect(element).toBeTruthy(); await act(async () => element.click()); }
 const button = (label) => [...host.querySelectorAll("button")].find((element) => element.textContent === label);
 const link = (label) => [...host.querySelectorAll("a")].find((element) => element.textContent === label);
+// Select a card by its name so the test does not depend on card order.
+async function selectTest(name) {
+  const card = [...host.querySelectorAll(".j-card")].find((element) => element.querySelector("h3")?.textContent === name);
+  expect(card).toBeTruthy();
+  await click(card.querySelector("button"));
+}
 async function fill(name, value) {
   const element = host.querySelector(`[name="${name}"]`); expect(element).toBeTruthy();
   await act(async () => {
@@ -52,7 +58,7 @@ afterEach(async () => { await act(async () => root.unmount()); host.remove(); })
 
 test("new patient goes from test selection through registration and OTP to payment", async () => {
   await mount(); expect(button("Choose a test center").disabled).toBe(true);
-  await click(button("Select test")); await click(button("Choose a test center"));
+  await selectTest("Chlamydia & Gonorrhea"); await click(button("Choose a test center"));
   await click(button("Choose this center")); await click(button("Continue"));
   for (const [name, value] of Object.entries({ firstName: "Sample", lastName: "Patient", gender: "1", address: "123 Example Street", city: "Deltona", state: "FL", zip: "32738", dob: "1990-01-01", phoneNumber: "(123) 456-7890", email: "patient@example.com" })) await fill(name, value);
   await submit(); expect(host.querySelector("h1").textContent).toBe("Your account. Your access.");

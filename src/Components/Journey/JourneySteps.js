@@ -11,10 +11,12 @@ import { Field, Heading, JourneyLink, Summary, ErrorNotice } from "./JourneyUI";
 import { CHECKOUT_ATTEMPT_KEY, errorMessage, isPricedTest, journeyPath, money } from "./journeyModel";
 
 export const sampleCenters = ["Sample Center — Deltona", "Sample Center — Orange City", "Sample Center — Sanford"];
-const featured = ["Chlamydia & Gonorrhea", "10 Test Panel", "HIV 1 & 2 Antibody (4th Gen)", "Syphilis"];
+// The two comprehensive panels lead; individual tests follow.
+const featured = ["10 Test Panel", "10 Test Panel with HIV RNA Early Detection", "Chlamydia & Gonorrhea", "HIV 1 & 2 Antibody (4th Gen)", "Syphilis"];
 const descriptions = {
   "Chlamydia & Gonorrhea": "A focused panel for two common sexually transmitted infections.",
   "10 Test Panel": "A comprehensive panel for the ten most common STDs.",
+  "10 Test Panel with HIV RNA Early Detection": "Our comprehensive panel, with HIV RNA early detection included.",
   "HIV 1 & 2 Antibody (4th Gen)": "An individual testing option for customers seeking HIV screening.",
   Syphilis: "An individual testing option for syphilis screening.",
 };

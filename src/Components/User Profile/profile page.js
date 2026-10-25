@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { decodeJWT } from "../../utils/JWTDecoder";
 import ClipLoader from "react-spinners/ClipLoader";
 import { webApiInstance } from "../../AxiosInstance";
+import { isPaidOrder } from "../Journey/journeyModel";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const ProfilePage = ({ journey = false }) => {
@@ -221,6 +222,15 @@ const ProfilePage = ({ journey = false }) => {
     .map((part) => part[0].toUpperCase())
     .join("") || "SH";
 
+
+  // A consultation is offered once a result comes back positive. /Order/my-orders
+  // returns no result today -- only id, orderDate, orderStatus, amount and
+  // diseases -- so there is nothing yet to detect one from, and the card simply
+  // stops being offered once an order has been placed. When the backend starts
+  // returning a result, this predicate is the only thing that needs to change.
+  const hasPositiveResult = (order) => /^positive$/i.test(order?.resultStatus ?? "");
+  const placedOrder = myOrders.some(isPaidOrder);
+  const showConsultation = !placedOrder || myOrders.some(hasPositiveResult);
   return (
     <section className="sh-journey">
       <div className="j-shell">
@@ -262,14 +272,16 @@ const ProfilePage = ({ journey = false }) => {
               Browse tests
             </Link>
           </div>
-          <div className="j-panel">
-            <span className="j-tag">CONSULTATIONS</span>
-            <h3>Talk to a clinician</h3>
-            <p className="j-hint">Book a follow-up to discuss a result or your next steps.</p>
-            <Link className="j-button j-button--secondary" to={journey ? "/journey/consultation" : "/doctor-consultation"}>
-              Book a consultation
-            </Link>
-          </div>
+          {showConsultation && (
+            <div className="j-panel">
+              <span className="j-tag">CONSULTATIONS</span>
+              <h3>Talk to a clinician</h3>
+              <p className="j-hint">Book a follow-up to discuss a result or your next steps.</p>
+              <Link className="j-button j-button--secondary" to={journey ? "/journey/consultation" : "/doctor-consultation"}>
+                Book a consultation
+              </Link>
+            </div>
+          )}
         </div>
 
         <div className="j-panel j-account-panel">

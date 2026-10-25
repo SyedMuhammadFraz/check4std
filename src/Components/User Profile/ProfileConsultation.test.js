@@ -33,25 +33,16 @@ beforeEach(() => {
 });
 afterEach(async () => { await act(async () => root.unmount()); host.remove(); });
 
-test("a consultation is offered before any order has been placed", async () => {
+// The account page intentionally offers no consultation at the moment. These
+// guard against it being reintroduced by accident; when results arrive and the
+// card returns, replace them with the state-by-state cases.
+test("no consultation is offered before any order has been placed", async () => {
   await mountWith([]);
-  expect(consultationOffered()).toBe(true);
-});
-
-test("a placed order withdraws the consultation card", async () => {
-  await mountWith([order({ orderStatus: "Processed" })]);
-  expect(host.textContent).toContain("#9");
   expect(consultationOffered()).toBe(false);
 });
 
-test("an unpaid order leaves the consultation offered", async () => {
-  await mountWith([order({ orderStatus: "Pending" })]);
-  expect(consultationOffered()).toBe(true);
-});
-
-// Guards the handover: the moment /Order/my-orders returns a positive result,
-// the card must come back without any further change to this component.
-test("a positive result brings the consultation back", async () => {
-  await mountWith([order({ orderStatus: "Processed", resultStatus: "Positive" })]);
-  expect(consultationOffered()).toBe(true);
+test("no consultation is offered once an order has been placed", async () => {
+  await mountWith([order({ orderStatus: "Processed" })]);
+  expect(host.textContent).toContain("#9");
+  expect(consultationOffered()).toBe(false);
 });

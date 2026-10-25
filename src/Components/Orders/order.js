@@ -12,6 +12,25 @@ import { webApiInstance } from "../../AxiosInstance";
 import { useLoader } from "../../utils/LoaderContext";
 import { useQuestionnaire } from "../../utils/QuestionareContext";
 import { useCart } from "../../utils/CartContext";
+import "../../Modals/confirmation-modal.css";
+// Guests leave the site for Stripe (or the login page), so the cart and patient
+// details are kept in sessionStorage for the length of the visit.
+import {
+  CHECKOUT_TESTS_KEY,
+  GUEST_DETAILS_KEY,
+  readStored,
+  writeStored,
+} from "../../utils/checkoutStorage";
+import { EMPTY_GUEST_DETAILS, validateGuestDetails, guestCustomerPayload } from "./guestDetails";
+
+const checkoutErrorMessage = (error) => {
+  if (error.response?.status === 403)
+    return "Your account can't place orders yet. Please book a doctor consultation first.";
+  const data = error.response?.data;
+  if (typeof data === "string" && data) return data;
+  if (data?.errors) return Object.values(data.errors).flat().join(" ");
+  return "We couldn't start checkout. Please try again.";
+};
 
 const OrderPage = () => {
   const [testPrices, setTestPrices] = useState({
@@ -30,18 +49,57 @@ const OrderPage = () => {
     useQuestionnaire();
 
   const location = useLocation();
-  const { selectedTests = [] } = location.state || {};
+  const { selectedTests: routedTests = [] } = location.state || {};
+  // Coming back from Stripe there is no route state, so fall back to the saved cart.
+  const selectedTests = routedTests.length ? routedTests : readStored(CHECKOUT_TESTS_KEY, []);
   const [tests, setTests] = useState(selectedTests);
   const [totalCost, setTotalCost] = useState(
     selectedTests.reduce((acc, test) => acc + test.price, 0)
   );
+  // Entered on /patient-details (step 1 of guest checkout).
+  const [guestDetails] = useState(() => ({
+    ...EMPTY_GUEST_DETAILS,
+    ...readStored(GUEST_DETAILS_KEY, {}),
+  }));
+  const guestDetailsComplete = Object.keys(validateGuestDetails(guestDetails)).length === 0;
+  const [submitting, setSubmitting] = useState(false);
+  // Shown to guests after Confirm order, before they are sent to Stripe.
+  const [guestNotice, setGuestNotice] = useState(null);
 
   // Every test detail page routes here with its own location state; keep the
   // shared cart in step with whatever actually landed on this page.
   useEffect(() => {
     setSelectedTests(tests);
+    writeStored(CHECKOUT_TESTS_KEY, tests);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tests]);
+
+  // Guests fill in the patient's details first (the cart is already saved above).
+  useEffect(() => {
+    if (!authToken && !guestDetailsComplete) navigate("/patient-details", { replace: true });
+  }, [authToken, guestDetailsComplete, navigate]);
+
+  // Upgrade buttons need the real panel prices from the backend.
+  useEffect(() => {
+    const fetchPanelPrices = async () => {
+      try {
+        const [panel, panelWithRna] = await Promise.all([
+          webApiInstance.get(`/Disease/get-by-name/${encodeURIComponent("10 Test Panel")}`),
+          webApiInstance.get(
+            `/Disease/get-by-name/${encodeURIComponent("10 Test Panel with HIV RNA Early Detection")}`
+          ),
+        ]);
+        setTestPrices({
+          tenTestPanel: Number(panel.data.result.price),
+          tenTestPanelHIVRNA: Number(panelWithRna.data.result.price),
+        });
+      } catch (error) {
+        console.error("Error fetching panel prices:", error);
+      }
+    };
+
+    fetchPanelPrices();
+  }, []);
 
   const onChangeLocation = () => {
     navigate("/test-centers");
@@ -102,6 +160,7 @@ const OrderPage = () => {
   // }, [questionnaireId, hasSymptoms, navigate]);
 
   useEffect(() => {
+    if (!authToken) return;
     const fetchPatients = async () => {
       setLoading(true);
       try {
@@ -150,7 +209,7 @@ const OrderPage = () => {
     };
 
     fetchAllDiseaseIds();
-  }, [selectedTests, tests]);
+  }, [tests]);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -317,17 +376,6 @@ const OrderPage = () => {
     });
   }, [formData.dobMonth, formData.dobDay, formData.dobYear]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (authToken === null) {
-        navigate("/login");
-        toast.error("Login to place an order!");
-      }
-      setLoading(false);
-    }, 1000); // Adjust delay as needed
-
-    return () => clearTimeout(timer);
-  }, [authToken, navigate]);
 
   // useEffect(() => {
   //   useLookupData([
@@ -424,7 +472,6 @@ const OrderPage = () => {
     if (testPrices.tenTestPanel && totalCost < testPrices.tenTestPanel) {
       setTests([{ name: "10 Test Panel", price: testPrices.tenTestPanel }]);
       setTotalCost(testPrices.tenTestPanel);
-      setDisease("10 Test Panel");
     }
   };
 
@@ -437,8 +484,54 @@ const OrderPage = () => {
         },
       ]);
       setTotalCost(testPrices.tenTestPanelHIVRNA);
-      setDisease("10 Test Panel with HIV RNA Early Detection"); // ✅ Set Disease name here
     }
+  };
+
+  // Logged-in users keep the existing checkout; guests use the guest endpoint
+  // with the patient's details. Prices are always worked out by the backend.
+  const handleConfirmOrder = async () => {
+    if (!Array.isArray(Disease) || Disease.length !== tests.length) {
+      toast.error("Your tests are still loading. Please try again in a moment.");
+      return;
+    }
+    if (!authToken && !guestDetailsComplete) {
+      navigate("/patient-details");
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const response = authToken
+        ? await webApiInstance.post(
+            "/Payment/create-checkout-session",
+            { diseaseIdList: Disease, doctorId: 15 },
+            { headers: { Authorization: `Bearer ${authToken}` } }
+          )
+        : await webApiInstance.post("/Payment/create-guest-checkout-session", {
+            diseaseIdList: Disease,
+            doctorId: 15,
+            customer: guestCustomerPayload(guestDetails),
+          });
+      if (response.data.sessionUrl) {
+        if (!authToken) {
+          // Tell the guest about their account first; the popup's button goes to Stripe.
+          setGuestNotice({
+            sessionUrl: response.data.sessionUrl,
+            accountActive: response.data.accountActive,
+            emailSent: response.data.emailSent,
+            email: guestDetails.email.trim(),
+          });
+          return;
+        }
+        window.location.href = response.data.sessionUrl;
+        return; // leave the button locked while the browser goes to Stripe
+      }
+      toast.error("We couldn't start checkout. Please try again.");
+    } catch (error) {
+      console.error("Error creating checkout session:", error);
+      toast.error(checkoutErrorMessage(error));
+    }
+    setSubmitting(false);
   };
 
   useEffect(() => {
@@ -456,11 +549,13 @@ const OrderPage = () => {
   }
 
   const showPanelUpgrade =
+    testPrices.tenTestPanel !== null &&
     tests.length > 0 &&
     tests[0].name !== "10 Test Panel" &&
     tests[0].name !== "10 Test Panel with HIV RNA Early Detection" &&
     totalCost < 150;
-  const showHivRnaUpgrade = tests.length > 0 && tests[0].name === "10 Test Panel";
+  const showHivRnaUpgrade =
+    testPrices.tenTestPanelHIVRNA !== null && tests.length > 0 && tests[0].name === "10 Test Panel";
   const panelTests = [
     "HIV Type 1",
     "Hepatitis A",
@@ -476,6 +571,33 @@ const OrderPage = () => {
 
   return (
     <section className="sh-journey">
+      {guestNotice && (
+        <div className="confirmation-modal-overlay">
+          <div className="confirmation-modal-content" role="dialog" aria-modal="true">
+            <h2 className="confirmation-modal-heading">
+              {guestNotice.accountActive ? "You already have an account" : "Check your email"}
+            </h2>
+            <p>
+              {guestNotice.accountActive
+                ? `${guestNotice.email} already has a Satellite Health account. We've added this order to it, so log in after paying to see it.`
+                : `We've sent a link to ${guestNotice.email} to activate the account for this order. The link is valid for 24 hours, and any earlier link no longer works.`}
+            </p>
+            {!guestNotice.emailSent && (
+              <p>We couldn't send the email right now. You can still complete your payment.</p>
+            )}
+            <div className="confirmation-modal-buttons">
+              <button
+                className="button2"
+                onClick={() => {
+                  window.location.href = guestNotice.sessionUrl;
+                }}
+              >
+                Continue to payment
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <p className="j-notice">
         Your order is not confirmed until payment succeeds. Card details are entered on our secure
         payment provider's checkout and never pass through this page.
@@ -585,6 +707,53 @@ const OrderPage = () => {
                 </button>
               </div>
             </section>
+
+            {!authToken && (
+              <section className="j-panel">
+                <div className="j-payment-heading">
+                  <h2 className="j-panel-title">Patient details</h2>
+                  <span className="j-pill">The person being tested</span>
+                </div>
+                <div className="j-row">
+                  <span>Name</span>
+                  <strong>
+                    {guestDetails.firstName} {guestDetails.lastName}
+                  </strong>
+                </div>
+                <div className="j-row">
+                  <span>Email</span>
+                  <strong>{guestDetails.email}</strong>
+                </div>
+                <div className="j-row">
+                  <span>Phone</span>
+                  <strong>{guestDetails.phoneNumber}</strong>
+                </div>
+                <div className="j-row">
+                  <span>Date of birth</span>
+                  <strong>{guestDetails.dob}</strong>
+                </div>
+                <div className="j-row">
+                  <span>Address</span>
+                  <strong>
+                    {guestDetails.address}, {guestDetails.city}, {guestDetails.state}{" "}
+                    {guestDetails.zip}
+                  </strong>
+                </div>
+                <p className="j-hint">
+                  When you confirm the order we create their account and email them a link to
+                  activate it.
+                </p>
+                <div className="j-actions">
+                  <button
+                    type="button"
+                    className="j-button j-button--secondary"
+                    onClick={() => navigate("/patient-details")}
+                  >
+                    Edit details
+                  </button>
+                </div>
+              </section>
+            )}
           </div>
 
           <aside className="j-payment-summary">
@@ -616,14 +785,10 @@ const OrderPage = () => {
               <button
                 type="button"
                 className="j-button j-pay-button"
-                disabled={!selectedLocation || !reviewConfirmed || !tests.length}
-                onClick={() => {
-                  if (Disease !== null) {
-                    createCheckoutSession(Disease, authToken);
-                  }
-                }}
+                disabled={!selectedLocation || !reviewConfirmed || !tests.length || submitting}
+                onClick={handleConfirmOrder}
               >
-                Confirm order
+                {submitting ? "Starting checkout…" : "Confirm order"}
               </button>
               {!selectedLocation && (
                 <p className="j-error">Choose a test center to continue.</p>

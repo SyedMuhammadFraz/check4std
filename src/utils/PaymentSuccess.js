@@ -1,9 +1,23 @@
+import { useContext, useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import "../Components/Journey/journey.css";
+import { AuthContext } from "./AuthContext";
+import { useCart } from "./CartContext";
+import { CHECKOUT_TESTS_KEY, GUEST_DETAILS_KEY, removeStored } from "./checkoutStorage";
 
 const PaymentSuccess = () => {
   const [searchParams] = useSearchParams();
   const success = searchParams.get("success");
+  const { authToken } = useContext(AuthContext);
+  const { clearCart } = useCart();
+
+  // The order is paid, so the saved checkout (see Orders/order.js) is no longer needed.
+  useEffect(() => {
+    if (success !== "true") return;
+    clearCart();
+    removeStored(CHECKOUT_TESTS_KEY, GUEST_DETAILS_KEY);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [success]);
 
   if (success !== "true") {
     return (
@@ -67,9 +81,15 @@ const PaymentSuccess = () => {
               <strong>Email notification</strong>
             </div>
           </div>
+          {!authToken && (
+            <p className="j-hint">
+              Check your inbox: we've emailed the patient a link to activate their account and see
+              this order.
+            </p>
+          )}
           <div className="j-actions">
-            <Link className="j-button" to="/user-profile">
-              Go to my account
+            <Link className="j-button" to={authToken ? "/user-profile" : "/login"}>
+              {authToken ? "Go to my account" : "Log in"}
             </Link>
             <Link className="j-button j-button--secondary" to="/">
               Back to home

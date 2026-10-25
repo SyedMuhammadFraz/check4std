@@ -41,7 +41,7 @@ export default function Nav() {
             <NavLink to={to} end={to === "/"}>{label}</NavLink>
             {to === "/resources" && <a className="sh-emr-link" href={emrUrl}>EMR</a>}
           </React.Fragment>)}
-          <NavLink to="/pages">All Pages</NavLink>
+          <NavLink to="/journey/tests">Customer Journey</NavLink>
           {menuOpen && !authToken && <Link to="/signup">Create Account</Link>}
         </nav>
         <div className="sh-header-actions">

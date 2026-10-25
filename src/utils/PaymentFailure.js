@@ -29,7 +29,7 @@ const PaymentFailure = () => {
             </p>
           </div>
           <div className="j-actions">
-            <Link className="j-button" to="/price-packages">
+            <Link className="j-button" to="/order">
               Return to checkout
             </Link>
             <Link className="j-button j-button--secondary" to="/">

@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useCallback } from "react";
+import { CHECKOUT_TESTS_KEY, readStored, writeStored } from "./checkoutStorage";
 
 /*
  * The selected tests used to live only in react-router location state, so they
@@ -10,8 +11,12 @@ import React, { createContext, useContext, useState } from "react";
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [selectedTests, setSelectedTests] = useState([]);
-  const clearCart = () => setSelectedTests([]);
+  const [selectedTests, updateSelectedTests] = useState(() => readStored(CHECKOUT_TESTS_KEY, []));
+  const setSelectedTests = useCallback((tests) => {
+    updateSelectedTests(tests);
+    writeStored(CHECKOUT_TESTS_KEY, tests);
+  }, []);
+  const clearCart = useCallback(() => setSelectedTests([]), [setSelectedTests]);
 
   return (
     <CartContext.Provider value={{ selectedTests, setSelectedTests, clearCart }}>
